@@ -1,0 +1,24 @@
+{
+  "name": "flybase-graphql",
+  "version": "0.1.0",
+  "description": "FlyBase GraphQL impelementation",
+  "main": "server/index.js",
+  "author": "Josh Goodman <jogoodma@iu.edu>",
+  "license": "MIT",
+  "scripts": {
+    "start": "pm2 start",
+    "pm2": "pm2"
+  },
+  "dependencies": {
+    "apollo-server": "^2.5.0",
+    "graphql": "^14.3.0",
+    "postgraphile": "^4.4.0"
+  },
+  "devDependencies": {
+    "pm2": "^3.5.0"
+  },
+  "resolutions": {
+    "graphql": "14.3.x"
+  }
+
+}
