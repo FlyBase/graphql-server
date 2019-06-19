@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     // {
-    //   name: 'graphql',
+    //   name: 'alleles',
     //   script: './server/index.js',
     //   // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
     //   args: '',
@@ -19,7 +19,7 @@ module.exports = {
     //   }
     // },
     {
-      name: 'gene',
+      name: 'postgraphile',
       script: './node_modules/.bin/postgraphile',
       // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
       args: '-c postgres:///FB2019_02 -s flybase,gene -a -j -M',
