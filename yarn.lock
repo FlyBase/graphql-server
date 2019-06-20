@@ -638,6 +638,14 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@kocal/rollup-plugin-graphql@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@kocal/rollup-plugin-graphql/-/rollup-plugin-graphql-1.0.0.tgz#80132fc27abe9dd77125786e747b6e2eb8af2c6e"
+  integrity sha512-kfj4iWKGE08P7Pe3ysXV7ASH+x6HuBJoOgkxB2bXXlrNAQmMfhWhUbfVX+FeCfHw5hNz1feH1lqf6AqcQmdTxA==
+  dependencies:
+    graphql-tag "^2.2.2"
+    rollup-pluginutils "^2.0.1"
+
 "@opencensus/core@^0.0.8":
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/@opencensus/core/-/core-0.0.8.tgz#df01f200c2d2fbfe14dae129a1a86fb87286db92"
@@ -2308,7 +2316,7 @@ graphql-subscriptions@^1.0.0:
   dependencies:
     iterall "^1.2.1"
 
-graphql-tag@^2.10.1, graphql-tag@^2.9.2:
+graphql-tag@^2.10.1, graphql-tag@^2.2.2, graphql-tag@^2.9.2:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.10.1.tgz#10aa41f1cd8fae5373eaf11f1f67260a3cad5e02"
   integrity sha512-jApXqWBzNXQ8jYa/HLkZJaVw9jgwNqZkywa2zfFn16Iv1Zb7ELNHkJaXHR7Quvd5SIGsy6Ny7SUKATgnu05uEg==
@@ -3800,7 +3808,7 @@ rollup-plugin-babel@^4.3.2:
     "@babel/helper-module-imports" "^7.0.0"
     rollup-pluginutils "^2.3.0"
 
-rollup-pluginutils@^2.3.0:
+rollup-pluginutils@^2.0.1, rollup-pluginutils@^2.3.0:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-2.8.1.tgz#8fa6dd0697344938ef26c2c09d2488ce9e33ce97"
   integrity sha512-J5oAoysWar6GuZo0s+3bZ6sVZAC0pfqKz68De7ZgDi5z63jOVZn1uJL/+z1jeKHNbGII8kAyHF5q8LnxSX5lQg==

@@ -6,9 +6,10 @@
   "author": "Josh Goodman <jogoodma@iu.edu>",
   "license": "MIT",
   "scripts": {
+    "prebuild": "yarn run format",
     "build": "rollup -c",
     "start": "pm2 start",
-    "format": "prettier --write 'server/**/*.js'",
+    "format": "prettier --write 'server/**/*.{js,graphql}'",
     "pm2": "pm2"
   },
   "dependencies": {
@@ -25,6 +26,7 @@
     "@babel/core": "^7.4.5",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
+    "@kocal/rollup-plugin-graphql": "^1.0.0",
     "pm2": "^3.5.0",
     "prettier": "^1.18.2",
     "rollup": "^1.15.6",

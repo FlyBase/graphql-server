@@ -1,0 +1,15 @@
+type Gene {
+  id: ID!
+  symbol: String
+  alleles: [Allele]
+}
+
+type Allele {
+  id: ID!
+  symbol: String
+}
+
+type Query {
+  classicalAndInsertionAllelesByGene(fbgn: String!): Gene
+  classicalAndInsertionAllelesByAllele(fbal: String!): Allele
+}

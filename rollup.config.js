@@ -1,5 +1,6 @@
 // rollup.config.js
 import babel from 'rollup-plugin-babel';
+import graphql from '@kocal/rollup-plugin-graphql';
 
 export default {
   input: 'server/index.js',
@@ -19,6 +20,7 @@ export default {
   plugins: [ 
     babel({
       exclude: 'node_modules/**', // only transpile our source code
-    })
+    }),
+    graphql()
   ]
 };
