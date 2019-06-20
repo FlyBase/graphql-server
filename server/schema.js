@@ -17,4 +17,4 @@ export default gql`
   type Query {
     gene(id: ID!): Gene
   }
-`;
+`
