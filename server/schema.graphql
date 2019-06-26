@@ -2,11 +2,55 @@ type Gene {
   id: ID!
   symbol: String
   alleles: [Allele]
+  insertions: [Insertion]
 }
 
 type Allele {
   id: ID!
   symbol: String
+  isConstruct: Boolean
+  classes: [AlleleClass]
+  insertions: [Insertion]
+  insertedElementTypes: [ToolUse]
+  regRegions: [Tool]
+  encodedTools: [Tool]
+  encodedToolUses: [ToolUse]
+  taggedWith: [Tool]
+  tagUses: [ToolUse]
+  alsoCarries: [Tool]
+  stocks: [Stock]
+  stocksCount: Int
+}
+
+type AlleleClass {
+  id: ID!
+  name: String!
+}
+
+type ToolUse {
+  id: ID!
+  name: String!
+}
+
+type Insertion {
+  id: ID!
+  symbol: String
+  constructs: [Construct]
+}
+
+type Construct {
+  id: ID!
+  symbol: String
+}
+
+type Tool {
+  id: ID!
+  symbol: String
+}
+
+type Stock {
+  id: ID!
+  genotype: String
 }
 
 type Query {

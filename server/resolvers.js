@@ -6,7 +6,9 @@ import { HttpLink } from 'apollo-link-http'
 import {
   ClassicalAndInsertionAllelesByGene,
   ClassicalAndInsertionAllelesByAllele,
-} from './chado/alleles.graphql'
+} from './chado/queries.graphql'
+
+import { reformatGene } from './chado/formatter/alleles'
 
 export const cache = new InMemoryCache()
 export const link = new HttpLink({
@@ -27,15 +29,7 @@ export const resolvers = {
           },
         })
         .catch(e => console.error(e))
-      const gene = result.data.allGenes.nodes[0]
-      return {
-        id: gene.uniquename,
-        symbol: gene.name,
-        alleles: gene.allelesByGeneId.nodes.map(allele => ({
-          id: allele.fbalId,
-          symbol: allele.symbol,
-        })),
-      }
+      return reformatGene(result.data.allGenes.nodes[0])
     },
     classicalAndInsertionAllelesByAllele: async (_, { fbal }, ___, ____) => {
       const result = await psqlClient.query({

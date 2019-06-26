@@ -16,6 +16,9 @@ export default {
     'apollo-cache-inmemory',
     'apollo-link-http',
     'graphql-tag',
+    'lodash.pickby',
+    'lodash.isplainobject',
+    'lodash.mapkeys'
   ],
   plugins: [ 
     babel({
