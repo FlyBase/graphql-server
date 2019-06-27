@@ -59,7 +59,15 @@ fragment alleleFields on Allele {
   fbalId
   isConstruct
   propagateTransgenicUses
+  stocksCount
+  knownLesion
   alleleClassesByAlleleId {
+    nodes {
+      fbcvId
+      name
+    }
+  }
+  alleleMutagensByAlleleId {
     nodes {
       fbcvId
       name

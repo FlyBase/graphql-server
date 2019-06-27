@@ -12,8 +12,8 @@ var pickBy = _interopDefault(require('lodash.pickby'));
 var isPlainObject = _interopDefault(require('lodash.isplainobject'));
 var mapKeys = _interopDefault(require('lodash.mapkeys'));
 
-var doc = {"kind":"Document","definitions":[{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Gene"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"alleles"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Allele"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"insertions"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Insertion"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Allele"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"isConstruct"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"classes"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AlleleClass"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"insertions"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Insertion"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"insertedElementTypes"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ToolUse"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"regRegions"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"encodedTools"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"encodedToolUses"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ToolUse"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"taggedWith"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"tagUses"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ToolUse"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"alsoCarries"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"stocks"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Stock"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"stocksCount"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"AlleleClass"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"name"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"ToolUse"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"name"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Insertion"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"constructs"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Construct"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Construct"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Tool"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Stock"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"genotype"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Query"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"classicalAndInsertionAllelesByGene"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"fbgn"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Gene"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"classicalAndInsertionAllelesByAllele"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"fbal"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Allele"}},"directives":[]}]}],"loc":{"start":0,"end":848}};
-    doc.loc.source = {"body":"type Gene {\n  id: ID!\n  symbol: String\n  alleles: [Allele]\n  insertions: [Insertion]\n}\n\ntype Allele {\n  id: ID!\n  symbol: String\n  isConstruct: Boolean\n  classes: [AlleleClass]\n  insertions: [Insertion]\n  insertedElementTypes: [ToolUse]\n  regRegions: [Tool]\n  encodedTools: [Tool]\n  encodedToolUses: [ToolUse]\n  taggedWith: [Tool]\n  tagUses: [ToolUse]\n  alsoCarries: [Tool]\n  stocks: [Stock]\n  stocksCount: Int\n}\n\ntype AlleleClass {\n  id: ID!\n  name: String!\n}\n\ntype ToolUse {\n  id: ID!\n  name: String!\n}\n\ntype Insertion {\n  id: ID!\n  symbol: String\n  constructs: [Construct]\n}\n\ntype Construct {\n  id: ID!\n  symbol: String\n}\n\ntype Tool {\n  id: ID!\n  symbol: String\n}\n\ntype Stock {\n  id: ID!\n  genotype: String\n}\n\ntype Query {\n  classicalAndInsertionAllelesByGene(fbgn: String!): Gene\n  classicalAndInsertionAllelesByAllele(fbal: String!): Allele\n}\n","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+var doc = {"kind":"Document","definitions":[{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Gene"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"alleles"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Allele"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"insertions"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Insertion"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Allele"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"isConstruct"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"classes"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AlleleClass"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"mutagens"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Mutagen"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"stocks"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Stock"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"stocksCount"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"knownLesion"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"insertions"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Insertion"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"insertedElementTypes"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ToolUse"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"regRegions"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"encodedTools"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"encodedToolUses"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ToolUse"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"taggedWith"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"tagUses"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ToolUse"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"alsoCarries"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"AlleleClass"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"name"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Mutagen"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"name"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"ToolUse"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"name"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Insertion"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"insertedElementTypes"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ToolUse"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"regRegions"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"encodedTools"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"encodedToolUses"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ToolUse"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"taggedWith"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"tagUses"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ToolUse"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"alsoCarries"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Construct"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Tool"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Stock"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"genotype"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"stockNumber"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"center"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Query"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"classicalAndInsertionAllelesByGene"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"fbgn"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Gene"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"classicalAndInsertionAllelesByAllele"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"fbal"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Allele"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"insertionsWithoutAllelesByGene"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"fbgn"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Gene"}},"directives":[]}]}],"loc":{"start":0,"end":1175}};
+    doc.loc.source = {"body":"type Gene {\n  id: ID!\n  symbol: String\n  alleles: [Allele]\n  insertions: [Insertion]\n}\n\ntype Allele {\n  id: ID!\n  symbol: String\n  isConstruct: Boolean\n  classes: [AlleleClass]\n  mutagens: [Mutagen]\n  stocks: [Stock]\n  stocksCount: Int\n  knownLesion: Boolean\n  insertions: [Insertion]\n  insertedElementTypes: [ToolUse]\n  regRegions: [Tool]\n  encodedTools: [Tool]\n  encodedToolUses: [ToolUse]\n  taggedWith: [Tool]\n  tagUses: [ToolUse]\n  alsoCarries: [Tool]\n}\n\ntype AlleleClass {\n  id: ID!\n  name: String!\n}\n\ntype Mutagen {\n  id: ID!\n  name: String!\n}\n\ntype ToolUse {\n  id: ID!\n  name: String!\n}\n\ntype Insertion {\n  id: ID!\n  symbol: String\n  insertedElementTypes: [ToolUse]\n  regRegions: [Tool]\n  encodedTools: [Tool]\n  encodedToolUses: [ToolUse]\n  taggedWith: [Tool]\n  tagUses: [ToolUse]\n  alsoCarries: [Tool]\n}\n\ntype Construct {\n  id: ID!\n  symbol: String\n}\n\ntype Tool {\n  id: ID!\n  symbol: String\n}\n\ntype Stock {\n  id: ID!\n  genotype: String\n  stockNumber: String\n  center: String\n}\n\ntype Query {\n  classicalAndInsertionAllelesByGene(fbgn: String!): Gene\n  classicalAndInsertionAllelesByAllele(fbal: String!): Allele\n  insertionsWithoutAllelesByGene(fbgn: String!): Gene\n}\n","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
@@ -51,6 +51,76 @@ function _asyncToGenerator(fn) {
   };
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    var ownKeys = Object.keys(source);
+
+    if (typeof Object.getOwnPropertySymbols === 'function') {
+      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+      }));
+    }
+
+    ownKeys.forEach(function (key) {
+      _defineProperty(target, key, source[key]);
+    });
+  }
+
+  return target;
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+
+  var target = _objectWithoutPropertiesLoose(source, excluded);
+
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
 }
@@ -71,8 +141,8 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
-var doc$1 = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ClassicalAndInsertionAllelesByGene"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fbgn"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isConstruct"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"defaultValue":{"kind":"BooleanValue","value":false},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allGenes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"uniquename"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fbgn"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"uniquename"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"allelesByGeneId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"isConstruct"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isConstruct"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"alleleFields"},"directives":[]}]}}]}}]}}]}}]}},{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"InsertionsWithoutAllelesByGene"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fbgn"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allGenes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"uniquename"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fbgn"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"uniquename"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"insertionsByGeneId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtiId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"constructsByInsertionId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtpId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolsByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolFields"},"directives":[]}]}}]}}]}}]}}]}}]}}]}}]}}]}},{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ClassicalAndInsertionAllelesByAllele"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fbal"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allAlleles"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"fbalId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fbal"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"alleleFields"},"directives":[]}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"alleleFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Allele"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"fbalId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"isConstruct"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"propagateTransgenicUses"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"alleleClassesByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbcvId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"insertionsByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtiId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"constructsByInsertionId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtpId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolsByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolFields"},"directives":[]}]}}]}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"constructsByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtpId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"toolsByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolFields"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolsByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolFields"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"toolFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtoId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"relType"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByToolId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"toolUses"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ToolUse"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbcvId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}],"loc":{"start":0,"end":2192}};
-    doc$1.loc.source = {"body":"query ClassicalAndInsertionAllelesByGene(\n  $fbgn: String!\n  $isConstruct: Boolean = false\n) {\n  allGenes(condition: { uniquename: $fbgn }) {\n    nodes {\n      name\n      uniquename\n      allelesByGeneId(condition: { isConstruct: $isConstruct }) {\n        nodes {\n          ...alleleFields\n        }\n      }\n    }\n  }\n}\n\nquery InsertionsWithoutAllelesByGene($fbgn: String!) {\n  allGenes(condition: { uniquename: $fbgn }) {\n    nodes {\n      name\n      uniquename\n      insertionsByGeneId {\n        nodes {\n          fbtiId\n          symbol\n          constructsByInsertionId {\n            nodes {\n              fbtpId\n              symbol\n              toolUsesByConstructId {\n                nodes {\n                  ...toolUses\n                }\n              }\n              toolsByConstructId {\n                nodes {\n                  ...toolFields\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n\nquery ClassicalAndInsertionAllelesByAllele($fbal: String!) {\n  allAlleles(condition: { fbalId: $fbal }) {\n    nodes {\n      ...alleleFields\n    }\n  }\n}\n\nfragment alleleFields on Allele {\n  symbol\n  fbalId\n  isConstruct\n  propagateTransgenicUses\n  alleleClassesByAlleleId {\n    nodes {\n      fbcvId\n      name\n    }\n  }\n  insertionsByAlleleId {\n    nodes {\n      fbtiId\n      symbol\n      constructsByInsertionId {\n        nodes {\n          fbtpId\n          symbol\n          toolUsesByConstructId {\n            nodes {\n              ...toolUses\n            }\n          }\n          toolsByConstructId {\n            nodes {\n              ...toolFields\n            }\n          }\n        }\n      }\n    }\n  }\n  constructsByAlleleId {\n    nodes {\n      fbtpId\n      symbol\n      toolsByConstructId {\n        nodes {\n          ...toolFields\n        }\n      }\n      toolUsesByConstructId {\n        nodes {\n          ...toolUses\n        }\n      }\n    }\n  }\n  toolsByAlleleId {\n    nodes {\n      ...toolFields\n    }\n  }\n  toolUsesByAlleleId {\n    nodes {\n      ...toolUses\n    }\n  }\n}\n\nfragment toolFields on Tool {\n  fbtoId\n  symbol\n  relType\n  toolUsesByToolId {\n    nodes {\n      ...toolUses\n    }\n  }\n}\n\nfragment toolUses on ToolUse {\n  fbcvId\n  name\n}\n","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+var doc$1 = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ClassicalAndInsertionAllelesByGene"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fbgn"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isConstruct"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"defaultValue":{"kind":"BooleanValue","value":false},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allGenes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"uniquename"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fbgn"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"uniquename"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"allelesByGeneId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"isConstruct"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isConstruct"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"alleleFields"},"directives":[]}]}}]}}]}}]}}]}},{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"InsertionsWithoutAllelesByGene"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fbgn"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allGenes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"uniquename"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fbgn"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"uniquename"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"insertionsByGeneId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtiId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"constructsByInsertionId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtpId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolsByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolFields"},"directives":[]}]}}]}}]}}]}}]}}]}}]}}]}}]}},{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ClassicalAndInsertionAllelesByAllele"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fbal"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allAlleles"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"fbalId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fbal"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"alleleFields"},"directives":[]}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"alleleFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Allele"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"fbalId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"isConstruct"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"propagateTransgenicUses"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"stocksCount"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"knownLesion"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"alleleClassesByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbcvId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"alleleMutagensByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbcvId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"insertionsByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtiId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"constructsByInsertionId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtpId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolsByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolFields"},"directives":[]}]}}]}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"constructsByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtpId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"toolsByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolFields"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolsByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolFields"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"toolFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtoId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"relType"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByToolId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"toolUses"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ToolUse"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbcvId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}],"loc":{"start":0,"end":2295}};
+    doc$1.loc.source = {"body":"query ClassicalAndInsertionAllelesByGene(\n  $fbgn: String!\n  $isConstruct: Boolean = false\n) {\n  allGenes(condition: { uniquename: $fbgn }) {\n    nodes {\n      name\n      uniquename\n      allelesByGeneId(condition: { isConstruct: $isConstruct }) {\n        nodes {\n          ...alleleFields\n        }\n      }\n    }\n  }\n}\n\nquery InsertionsWithoutAllelesByGene($fbgn: String!) {\n  allGenes(condition: { uniquename: $fbgn }) {\n    nodes {\n      name\n      uniquename\n      insertionsByGeneId {\n        nodes {\n          fbtiId\n          symbol\n          constructsByInsertionId {\n            nodes {\n              fbtpId\n              symbol\n              toolUsesByConstructId {\n                nodes {\n                  ...toolUses\n                }\n              }\n              toolsByConstructId {\n                nodes {\n                  ...toolFields\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n\nquery ClassicalAndInsertionAllelesByAllele($fbal: String!) {\n  allAlleles(condition: { fbalId: $fbal }) {\n    nodes {\n      ...alleleFields\n    }\n  }\n}\n\nfragment alleleFields on Allele {\n  symbol\n  fbalId\n  isConstruct\n  propagateTransgenicUses\n  stocksCount\n  knownLesion\n  alleleClassesByAlleleId {\n    nodes {\n      fbcvId\n      name\n    }\n  }\n  alleleMutagensByAlleleId {\n    nodes {\n      fbcvId\n      name\n    }\n  }\n  insertionsByAlleleId {\n    nodes {\n      fbtiId\n      symbol\n      constructsByInsertionId {\n        nodes {\n          fbtpId\n          symbol\n          toolUsesByConstructId {\n            nodes {\n              ...toolUses\n            }\n          }\n          toolsByConstructId {\n            nodes {\n              ...toolFields\n            }\n          }\n        }\n      }\n    }\n  }\n  constructsByAlleleId {\n    nodes {\n      fbtpId\n      symbol\n      toolsByConstructId {\n        nodes {\n          ...toolFields\n        }\n      }\n      toolUsesByConstructId {\n        nodes {\n          ...toolUses\n        }\n      }\n    }\n  }\n  toolsByAlleleId {\n    nodes {\n      ...toolFields\n    }\n  }\n  toolUsesByAlleleId {\n    nodes {\n      ...toolUses\n    }\n  }\n}\n\nfragment toolFields on Tool {\n  fbtoId\n  symbol\n  relType\n  toolUsesByToolId {\n    nodes {\n      ...toolUses\n    }\n  }\n}\n\nfragment toolUses on ToolUse {\n  fbcvId\n  name\n}\n","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     // Collect any fragment/type references from a node, adding them to the refs Set
@@ -177,79 +247,133 @@ var doc$1 = {"kind":"Document","definitions":[{"kind":"OperationDefinition","ope
         
         const ClassicalAndInsertionAllelesByAllele = oneQuery(doc$1, "ClassicalAndInsertionAllelesByAllele");
 
-var reformatGene = function reformatGene(gene) {
+var reformatAlleleByGene = function reformatAlleleByGene(gene) {
   var alleles = flattenNodes(gene.allelesByGeneId.nodes);
   return {
     id: gene.uniquename,
     symbol: gene.name,
-    alleles: alleles.map(function (allele) {
-      /*
-      The following uses object destructuring.
-      see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Assigning_to_new_variable_names
-      */
-      var id = allele.id,
-          symbol = allele.symbol,
-          propagateTransgenicUses = allele.propagateTransgenicUses,
-          isConstruct = allele.isConstruct,
-          classes = allele.classes,
-          insertions = allele.insertions,
-          constructs = allele.constructs,
-          toolUses = allele.toolUses;
-
-      if (propagateTransgenicUses) {
-        toolUses.push.apply(toolUses, _toConsumableArray(getInsertedElementTypes(insertions, constructs)));
-      }
-
-      var encodedTools = getTools(allele, 'encodes_tool', propagateTransgenicUses);
-      var taggedWith = getTools(allele, 'tagged_with', propagateTransgenicUses);
-      return {
-        id: id,
-        symbol: symbol,
-        isConstruct: isConstruct,
-        classes: classes,
-        insertedElementTypes: toolUses,
-        regRegions: getTools(allele, 'has_reg_region', propagateTransgenicUses),
-        encodedTools: encodedTools,
-        encodedToolUses: getToolUses(encodedTools),
-        taggedWith: taggedWith,
-        tagUses: getToolUses(taggedWith),
-        alsoCarries: getTools(allele, 'carries_tool', propagateTransgenicUses),
-        stocksCount: 0
-      };
-    })
+    alleles: alleles.map(materializeTools)
   };
 };
+var reformatInsertionByGene = function reformatInsertionByGene(gene) {
+  var insertions = flattenNodes(gene.insertionsByGeneId.nodes);
+  return {
+    id: gene.uniquename,
+    symbol: gene.name,
+    insertions: insertions.map(materializeTools)
+  };
+};
+var reformatAllele = function reformatAllele(allele) {
+  var node = flattenNodes([allele])[0];
+  return materializeTools(node);
+};
 
-var getInsertedElementTypes = function getInsertedElementTypes(insertions, constructs) {
+var materializeTools = function materializeTools() {
+  var fbObject = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  /*
+  Pull out attributes that we will need to process.
+   The following uses object destructuring.
+  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Assigning_to_new_variable_names
+  */
+  var id = fbObject.id,
+      _fbObject$propagateTr = fbObject.propagateTransgenicUses,
+      propagateTransgenicUses = _fbObject$propagateTr === void 0 ? true : _fbObject$propagateTr,
+      _fbObject$stocksCount = fbObject.stocksCount,
+      stocksCount = _fbObject$stocksCount === void 0 ? 0 : _fbObject$stocksCount,
+      _fbObject$knownLesion = fbObject.knownLesion,
+      knownLesion = _fbObject$knownLesion === void 0 ? false : _fbObject$knownLesion,
+      _fbObject$insertions = fbObject.insertions,
+      insertions = _fbObject$insertions === void 0 ? [] : _fbObject$insertions,
+      _fbObject$constructs = fbObject.constructs,
+      constructs = _fbObject$constructs === void 0 ? [] : _fbObject$constructs,
+      _fbObject$toolUses = fbObject.toolUses,
+      toolUses = _fbObject$toolUses === void 0 ? [] : _fbObject$toolUses,
+      restProps = _objectWithoutProperties(fbObject, ["id", "propagateTransgenicUses", "stocksCount", "knownLesion", "insertions", "constructs", "toolUses"]);
+
+  var isAllele = /^FBal\d+$/.test(id); // Pull data from construct if we are supposed to.
+
+  if (propagateTransgenicUses) {
+    toolUses.push.apply(toolUses, _toConsumableArray(getInsertedElementTypes(insertions, constructs)));
+  }
+
+  var encodedTools = getTools(fbObject, 'encodes_tool', propagateTransgenicUses);
+  var taggedWith = getTools(fbObject, 'tagged_with', propagateTransgenicUses);
+
+  var materializedFbObject = _objectSpread({}, restProps, {
+    id: id,
+    stocksCount: stocksCount,
+    knownLesion: knownLesion,
+    insertions: insertions,
+    insertedElementTypes: toolUses,
+    regRegions: getTools(fbObject, 'has_reg_region', propagateTransgenicUses),
+    encodedTools: encodedTools,
+    encodedToolUses: getToolUses(encodedTools),
+    taggedWith: taggedWith,
+    tagUses: getToolUses(taggedWith),
+    alsoCarries: getTools(fbObject, 'carries_tool', propagateTransgenicUses)
+  });
+
+  if (!isAllele) {
+    delete materializedFbObject.isConstruct;
+    delete materializedFbObject.stocksCount;
+    delete materializedFbObject.knownLesion;
+    delete materializedFbObject.classes;
+    delete materializedFbObject.mutagens;
+  }
+
+  return materializedFbObject;
+};
+
+var getInsertedElementTypes = function getInsertedElementTypes() {
+  var insertions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var constructs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   // Get tool uses attached to allele->insertion->construct
   var insertionToolUses = insertions.reduce(function (accum, insertion) {
     insertion.constructs.forEach(function (construct) {
       accum.push.apply(accum, _toConsumableArray(construct.toolUses));
     });
     return accum;
-  }, []); // Get tool uses attached to allele->constructs
+  }, []); // Get tool uses attached to allele->constructs or insertion->construct
 
   var constructToolUses = constructs.reduce(function (accum, construct) {
-    return accum.push.apply(accum, _toConsumableArray(construct.toolUses));
+    return [].concat(_toConsumableArray(accum), _toConsumableArray(construct.toolUses));
   }, []);
   return [].concat(_toConsumableArray(insertionToolUses), _toConsumableArray(constructToolUses));
 };
 
 var getTools = function getTools(object, relType) {
   var propagateTransgenicUses = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  var tools = object.tools.filter(function (tool) {
+  var tools = object.tools ? object.tools.filter(function (tool) {
     return tool.relType === relType;
-  });
+  }) : [];
 
   if (propagateTransgenicUses) {
-    // Get tool uses attached to allele->insertion->construct
-    var constructTools = object.insertions.reduce(function (accum, insertion) {
-      insertion.constructs.forEach(function (construct) {
-        // Collect all Encoded tools from the construct
-        accum.push.apply(accum, _toConsumableArray(construct.tools.filter(function (tool) {
+    var toolObjectParents = [];
+
+    if (object.insertions) {
+      toolObjectParents = object.insertions;
+    } else if (object.constructs) {
+      toolObjectParents = object.constructs;
+    } // Get tool uses attached to allele->insertion->construct
+
+
+    var constructTools = toolObjectParents.reduce(function (accum, parent) {
+      if (parent.tools) {
+        accum.push.apply(accum, _toConsumableArray(parent.tools.filter(function (tool) {
           return tool.relType === relType;
         })));
-      });
+      }
+
+      if (parent.constructs) {
+        parent.constructs.forEach(function (construct) {
+          // Collect all Encoded tools from the construct
+          accum.push.apply(accum, _toConsumableArray(construct.tools.filter(function (tool) {
+            return tool.relType === relType;
+          })));
+        });
+      }
+
       return accum;
     }, []);
     tools.push.apply(tools, _toConsumableArray(constructTools));
@@ -268,6 +392,12 @@ var getToolUses = function getToolUses() {
     return accum;
   }, []);
 };
+/*
+Function that takes a field name from a Chado
+Postgraphile GraphQL response and maps it to a simpler
+biologist friendly name.
+*/
+
 
 var getSubFieldName = function getSubFieldName(name) {
   switch (name) {
@@ -276,6 +406,9 @@ var getSubFieldName = function getSubFieldName(name) {
 
     case 'alleleClassesByAlleleId':
       return 'classes';
+
+    case 'alleleMutagensByAlleleId':
+      return 'mutagens';
 
     case 'insertionsByGeneId':
     case 'insertionsByAlleleId':
@@ -346,6 +479,13 @@ var psqlClient = new apolloClient.ApolloClient({
   cache: cache,
   link: link
 });
+/*
+  The following resolvers map to available queries in the schema.graphql file.
+  When called, each resolver calls GraphQL endpoints served by Postgraphile.
+  The results from postgres are reformatted to fit the biological data model
+  (modeled in the schema.graphql) and returned.
+*/
+
 var resolvers = {
   Query: {
     classicalAndInsertionAllelesByGene: function () {
@@ -370,7 +510,7 @@ var resolvers = {
 
               case 3:
                 result = _context.sent;
-                return _context.abrupt("return", reformatGene(result.data.allGenes.nodes[0]));
+                return _context.abrupt("return", result.data.allGenes.nodes.length != 0 ? reformatAlleleByGene(result.data.allGenes.nodes[0]) : null);
 
               case 5:
               case "end":
@@ -386,34 +526,31 @@ var resolvers = {
 
       return classicalAndInsertionAllelesByGene;
     }(),
-    classicalAndInsertionAllelesByAllele: function () {
-      var _classicalAndInsertionAllelesByAllele = _asyncToGenerator(
+    insertionsWithoutAllelesByGene: function () {
+      var _insertionsWithoutAllelesByGene = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2(_, _ref2, ___, ____) {
-        var fbal, result, allele;
+        var fbgn, result;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                fbal = _ref2.fbal;
+                fbgn = _ref2.fbgn;
                 _context2.next = 3;
                 return psqlClient.query({
-                  query: ClassicalAndInsertionAllelesByAllele,
+                  query: InsertionsWithoutAllelesByGene,
                   variables: {
-                    fbal: fbal
+                    fbgn: fbgn
                   }
+                })["catch"](function (e) {
+                  return console.error(e);
                 });
 
               case 3:
                 result = _context2.sent;
-                console.log(result);
-                allele = result.data.allAlleles.nodes[0];
-                return _context2.abrupt("return", {
-                  id: allele.fbalId,
-                  symbol: allele.symbol
-                });
+                return _context2.abrupt("return", result.data.allGenes.nodes.length != 0 ? reformatInsertionByGene(result.data.allGenes.nodes[0]) : null);
 
-              case 7:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -421,7 +558,45 @@ var resolvers = {
         }, _callee2);
       }));
 
-      function classicalAndInsertionAllelesByAllele(_x5, _x6, _x7, _x8) {
+      function insertionsWithoutAllelesByGene(_x5, _x6, _x7, _x8) {
+        return _insertionsWithoutAllelesByGene.apply(this, arguments);
+      }
+
+      return insertionsWithoutAllelesByGene;
+    }(),
+    classicalAndInsertionAllelesByAllele: function () {
+      var _classicalAndInsertionAllelesByAllele = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee3(_, _ref3, ___, ____) {
+        var fbal, result;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                fbal = _ref3.fbal;
+                _context3.next = 3;
+                return psqlClient.query({
+                  query: ClassicalAndInsertionAllelesByAllele,
+                  variables: {
+                    fbal: fbal
+                  }
+                })["catch"](function (e) {
+                  return console.error(e);
+                });
+
+              case 3:
+                result = _context3.sent;
+                return _context3.abrupt("return", result.data.allAlleles.nodes.length != 0 ? reformatAllele(result.data.allAlleles.nodes[0]) : null);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function classicalAndInsertionAllelesByAllele(_x9, _x10, _x11, _x12) {
         return _classicalAndInsertionAllelesByAllele.apply(this, arguments);
       }
 

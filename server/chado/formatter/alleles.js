@@ -2,61 +2,86 @@ import pickBy from 'lodash.pickby'
 import isPlainObject from 'lodash.isplainobject'
 import mapKeys from 'lodash.mapkeys'
 
-export const reformatGene = gene => {
+export const reformatAlleleByGene = gene => {
   const alleles = flattenNodes(gene.allelesByGeneId.nodes)
   return {
     id: gene.uniquename,
     symbol: gene.name,
-    alleles: alleles.map(allele => {
-      /*
-      The following uses object destructuring.
-      see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Assigning_to_new_variable_names
-      */
-      const {
-        id,
-        symbol,
-        propagateTransgenicUses,
-        isConstruct,
-        classes,
-        insertions,
-        constructs,
-        toolUses,
-      } = allele
-
-      if (propagateTransgenicUses) {
-        toolUses.push(...getInsertedElementTypes(insertions, constructs))
-      }
-
-      const encodedTools = getTools(
-        allele,
-        'encodes_tool',
-        propagateTransgenicUses
-      )
-      const taggedWith = getTools(
-        allele,
-        'tagged_with',
-        propagateTransgenicUses
-      )
-
-      return {
-        id,
-        symbol,
-        isConstruct,
-        classes,
-        insertedElementTypes: toolUses,
-        regRegions: getTools(allele, 'has_reg_region', propagateTransgenicUses),
-        encodedTools,
-        encodedToolUses: getToolUses(encodedTools),
-        taggedWith,
-        tagUses: getToolUses(taggedWith),
-        alsoCarries: getTools(allele, 'carries_tool', propagateTransgenicUses),
-        stocksCount: 0,
-      }
-    }),
+    alleles: alleles.map(materializeTools),
   }
 }
 
-const getInsertedElementTypes = (insertions, constructs) => {
+export const reformatInsertionByGene = gene => {
+  const insertions = flattenNodes(gene.insertionsByGeneId.nodes)
+  return {
+    id: gene.uniquename,
+    symbol: gene.name,
+    insertions: insertions.map(materializeTools),
+  }
+}
+
+export const reformatAllele = allele => {
+  const node = flattenNodes([allele])[0]
+  return materializeTools(node)
+}
+
+const materializeTools = (fbObject = {}) => {
+  /*
+  Pull out attributes that we will need to process.
+
+  The following uses object destructuring.
+  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Assigning_to_new_variable_names
+  */
+  const {
+    id,
+    propagateTransgenicUses = true,
+    stocksCount = 0,
+    knownLesion = false,
+    insertions = [],
+    constructs = [],
+    toolUses = [],
+    ...restProps
+  } = fbObject
+
+  const isAllele = /^FBal\d+$/.test(id)
+
+  // Pull data from construct if we are supposed to.
+  if (propagateTransgenicUses) {
+    toolUses.push(...getInsertedElementTypes(insertions, constructs))
+  }
+
+  const encodedTools = getTools(
+    fbObject,
+    'encodes_tool',
+    propagateTransgenicUses
+  )
+  const taggedWith = getTools(fbObject, 'tagged_with', propagateTransgenicUses)
+
+  const materializedFbObject = {
+    ...restProps,
+    id,
+    stocksCount,
+    knownLesion,
+    insertions,
+    insertedElementTypes: toolUses,
+    regRegions: getTools(fbObject, 'has_reg_region', propagateTransgenicUses),
+    encodedTools,
+    encodedToolUses: getToolUses(encodedTools),
+    taggedWith,
+    tagUses: getToolUses(taggedWith),
+    alsoCarries: getTools(fbObject, 'carries_tool', propagateTransgenicUses),
+  }
+  if (!isAllele) {
+    delete materializedFbObject.isConstruct
+    delete materializedFbObject.stocksCount
+    delete materializedFbObject.knownLesion
+    delete materializedFbObject.classes
+    delete materializedFbObject.mutagens
+  }
+  return materializedFbObject
+}
+
+const getInsertedElementTypes = (insertions = [], constructs = []) => {
   // Get tool uses attached to allele->insertion->construct
   const insertionToolUses = insertions.reduce((accum, insertion) => {
     insertion.constructs.forEach(construct => {
@@ -64,22 +89,38 @@ const getInsertedElementTypes = (insertions, constructs) => {
     })
     return accum
   }, [])
-  // Get tool uses attached to allele->constructs
+
+  // Get tool uses attached to allele->constructs or insertion->construct
   const constructToolUses = constructs.reduce((accum, construct) => {
-    return accum.push(...construct.toolUses)
+    return [...accum, ...construct.toolUses]
   }, [])
   return [...insertionToolUses, ...constructToolUses]
 }
 
 const getTools = (object, relType, propagateTransgenicUses = false) => {
-  const tools = object.tools.filter(tool => tool.relType === relType)
+  const tools = object.tools
+    ? object.tools.filter(tool => tool.relType === relType)
+    : []
   if (propagateTransgenicUses) {
+    let toolObjectParents = []
+    if (object.insertions) {
+      toolObjectParents = object.insertions
+    } else if (object.constructs) {
+      toolObjectParents = object.constructs
+    }
     // Get tool uses attached to allele->insertion->construct
-    const constructTools = object.insertions.reduce((accum, insertion) => {
-      insertion.constructs.forEach(construct => {
-        // Collect all Encoded tools from the construct
-        accum.push(...construct.tools.filter(tool => tool.relType === relType))
-      })
+    const constructTools = toolObjectParents.reduce((accum, parent) => {
+      if (parent.tools) {
+        accum.push(...parent.tools.filter(tool => tool.relType === relType))
+      }
+      if (parent.constructs) {
+        parent.constructs.forEach(construct => {
+          // Collect all Encoded tools from the construct
+          accum.push(
+            ...construct.tools.filter(tool => tool.relType === relType)
+          )
+        })
+      }
       return accum
     }, [])
     tools.push(...constructTools)
@@ -96,12 +137,19 @@ const getToolUses = (tools = []) => {
   }, [])
 }
 
+/*
+Function that takes a field name from a Chado
+Postgraphile GraphQL response and maps it to a simpler
+biologist friendly name.
+*/
 const getSubFieldName = name => {
   switch (name) {
     case 'allelesByGeneId':
       return 'alleles'
     case 'alleleClassesByAlleleId':
       return 'classes'
+    case 'alleleMutagensByAlleleId':
+      return 'mutagens'
     case 'insertionsByGeneId':
     case 'insertionsByAlleleId':
       return 'insertions'
@@ -156,22 +204,4 @@ export const flattenNodes = (nodes = []) => {
     })
     return nodeObject
   })
-}
-
-export const format = ({ data = {} } = {}) => {
-  try {
-    const gene = data.allGenes.nodes[0]
-    const alleles = flattenNodes(gene.allelesByGeneId.nodes)
-    // Insertion only alleles will likely have to be in their own table.
-    // const insertions = flattenNodes(gene.insertionsByGeneId.nodes)
-    // alleles.push(insertions.map(insertion => ({ symbol: null, fbalId: null, insertions: insertion})))
-
-    return {
-      fbgnId: gene.uniquename,
-      symbol: gene.name,
-      alleles,
-    }
-  } catch (e) {
-    throw Error(`Failed to parse gene/allele data from server: ${e.message}`)
-  }
 }
