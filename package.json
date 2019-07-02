@@ -9,7 +9,7 @@
     "prebuild": "yarn run format",
     "build": "rollup -c",
     "start": "pm2 start",
-    "format": "prettier --write 'server/**/*.{js,graphql}'",
+    "format": "prettier --write 'server/**/*.{js,gql}'",
     "pm2": "pm2"
   },
   "dependencies": {

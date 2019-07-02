@@ -10,7 +10,7 @@ Import the schema and resolvers for this GraphQL server.
 In GraphSQL speak, resolvers are the functions that perform
 the query and return results formatted according to the schema
 */
-import typeDefs from './schema.graphql'
+import typeDefs from './schema.gql'
 import { resolvers } from './resolvers'
 
 // Create a new GraphQL server

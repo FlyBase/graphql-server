@@ -4,16 +4,16 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { HttpLink } from 'apollo-link-http'
 
 import {
-  ClassicalAndInsertionAllelesByGene,
-  ClassicalAndInsertionAllelesByAllele,
+  AllelesByGene,
+  Allele,
   InsertionsWithoutAllelesByGene,
-} from './chado/queries.graphql'
+} from './chado/queries.gql'
 
 import {
   reformatAllele,
   reformatAlleleByGene,
   reformatInsertionByGene,
-} from './chado/formatter/alleles'
+} from './chado/alleles'
 
 export const cache = new InMemoryCache()
 export const link = new HttpLink({
@@ -31,12 +31,13 @@ export const psqlClient = new ApolloClient({ cache, link })
 */
 export const resolvers = {
   Query: {
-    classicalAndInsertionAllelesByGene: async (_, { fbgn }, ___, ____) => {
+    allelesByGene: async (_, { fbgn, isConstruct = false }, ___, ____) => {
       const result = await psqlClient
         .query({
-          query: ClassicalAndInsertionAllelesByGene,
+          query: AllelesByGene,
           variables: {
-            fbgn: fbgn,
+            fbgn,
+            isConstruct,
           },
         })
         .catch(e => console.error(e))
@@ -57,10 +58,10 @@ export const resolvers = {
         ? reformatInsertionByGene(result.data.allGenes.nodes[0])
         : null
     },
-    classicalAndInsertionAllelesByAllele: async (_, { fbal }, ___, ____) => {
+    allele: async (_, { fbal }, ___, ____) => {
       const result = await psqlClient
         .query({
-          query: ClassicalAndInsertionAllelesByAllele,
+          query: Allele,
           variables: {
             fbal: fbal,
           },

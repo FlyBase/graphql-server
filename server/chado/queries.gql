@@ -1,7 +1,4 @@
-query ClassicalAndInsertionAllelesByGene(
-  $fbgn: String!
-  $isConstruct: Boolean = false
-) {
+query AllelesByGene($fbgn: String!, $isConstruct: Boolean = false) {
   allGenes(condition: { uniquename: $fbgn }) {
     nodes {
       name
@@ -24,6 +21,7 @@ query InsertionsWithoutAllelesByGene($fbgn: String!) {
         nodes {
           fbtiId
           symbol
+          stocksCount
           constructsByInsertionId {
             nodes {
               fbtpId
@@ -46,7 +44,7 @@ query InsertionsWithoutAllelesByGene($fbgn: String!) {
   }
 }
 
-query ClassicalAndInsertionAllelesByAllele($fbal: String!) {
+query Allele($fbal: String!) {
   allAlleles(condition: { fbalId: $fbal }) {
     nodes {
       ...alleleFields
@@ -59,6 +57,7 @@ fragment alleleFields on Allele {
   fbalId
   isConstruct
   propagateTransgenicUses
+  containsRegulatoryRegion
   stocksCount
   knownLesion
   alleleClassesByAlleleId {

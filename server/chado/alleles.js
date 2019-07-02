@@ -4,10 +4,11 @@ import mapKeys from 'lodash.mapkeys'
 
 export const reformatAlleleByGene = gene => {
   const alleles = flattenNodes(gene.allelesByGeneId.nodes)
+  const { uniquename: id, name: symbol } = gene
   return {
-    id: gene.uniquename,
-    symbol: gene.name,
-    alleles: alleles.map(materializeTools),
+    id,
+    symbol,
+    alleles: alleles.map(allele => materializeTools(allele, { id, symbol })),
   }
 }
 
@@ -16,7 +17,7 @@ export const reformatInsertionByGene = gene => {
   return {
     id: gene.uniquename,
     symbol: gene.name,
-    insertions: insertions.map(materializeTools),
+    insertions: insertions.map(insertion => materializeTools(insertion)),
   }
 }
 
@@ -25,7 +26,7 @@ export const reformatAllele = allele => {
   return materializeTools(node)
 }
 
-const materializeTools = (fbObject = {}) => {
+const materializeTools = (fbObject = {}, parent = {}) => {
   /*
   Pull out attributes that we will need to process.
 
@@ -55,6 +56,17 @@ const materializeTools = (fbObject = {}) => {
     'encodes_tool',
     propagateTransgenicUses
   )
+
+  if (
+    fbObject.isConstruct &&
+    encodedTools.length === 0 &&
+    parent &&
+    parent.id
+  ) {
+    const isGene = /^FBgn\d+$/.test(parent.id)
+    if (isGene) encodedTools.push(parent)
+  }
+
   const taggedWith = getTools(fbObject, 'tagged_with', propagateTransgenicUses)
 
   const materializedFbObject = {
@@ -63,6 +75,7 @@ const materializeTools = (fbObject = {}) => {
     stocksCount,
     knownLesion,
     insertions,
+    constructs,
     insertedElementTypes: toolUses,
     regRegions: getTools(fbObject, 'has_reg_region', propagateTransgenicUses),
     encodedTools,
@@ -71,12 +84,23 @@ const materializeTools = (fbObject = {}) => {
     tagUses: getToolUses(taggedWith),
     alsoCarries: getTools(fbObject, 'carries_tool', propagateTransgenicUses),
   }
+
   if (!isAllele) {
+    // Delete these fields if record is not an allele.
     delete materializedFbObject.isConstruct
-    delete materializedFbObject.stocksCount
     delete materializedFbObject.knownLesion
     delete materializedFbObject.classes
     delete materializedFbObject.mutagens
+    delete materializedFbObject.containsRegulatoryRegion
+  } else {
+    if (materializedFbObject.isConstruct) {
+      // Delete insertion related fields for construct alleles.
+      delete materializedFbObject.insertions
+      delete materializedFbObject.insertedElementTypes
+    } else {
+      // Delete constructs field for classical/insertion alleles.
+      delete materializedFbObject.constructs
+    }
   }
   return materializedFbObject
 }
