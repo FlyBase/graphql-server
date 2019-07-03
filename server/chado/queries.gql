@@ -1,0 +1,139 @@
+query AllelesByGene($fbgn: String!, $isConstruct: Boolean = false) {
+  allGenes(condition: { uniquename: $fbgn }) {
+    nodes {
+      name
+      uniquename
+      allelesByGeneId(condition: { isConstruct: $isConstruct }) {
+        nodes {
+          ...alleleFields
+        }
+      }
+    }
+  }
+}
+
+query InsertionsWithoutAllelesByGene($fbgn: String!) {
+  allGenes(condition: { uniquename: $fbgn }) {
+    nodes {
+      name
+      uniquename
+      insertionsByGeneId {
+        nodes {
+          fbtiId
+          symbol
+          stocksCount
+          constructsByInsertionId {
+            nodes {
+              fbtpId
+              symbol
+              toolUsesByConstructId {
+                nodes {
+                  ...toolUses
+                }
+              }
+              toolsByConstructId {
+                nodes {
+                  ...toolFields
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query Allele($fbal: String!) {
+  allAlleles(condition: { fbalId: $fbal }) {
+    nodes {
+      ...alleleFields
+    }
+  }
+}
+
+fragment alleleFields on Allele {
+  symbol
+  fbalId
+  isConstruct
+  propagateTransgenicUses
+  containsRegulatoryRegion
+  stocksCount
+  knownLesion
+  alleleClassesByAlleleId {
+    nodes {
+      fbcvId
+      name
+    }
+  }
+  alleleMutagensByAlleleId {
+    nodes {
+      fbcvId
+      name
+    }
+  }
+  insertionsByAlleleId {
+    nodes {
+      fbtiId
+      symbol
+      constructsByInsertionId {
+        nodes {
+          fbtpId
+          symbol
+          toolUsesByConstructId {
+            nodes {
+              ...toolUses
+            }
+          }
+          toolsByConstructId {
+            nodes {
+              ...toolFields
+            }
+          }
+        }
+      }
+    }
+  }
+  constructsByAlleleId {
+    nodes {
+      fbtpId
+      symbol
+      toolsByConstructId {
+        nodes {
+          ...toolFields
+        }
+      }
+      toolUsesByConstructId {
+        nodes {
+          ...toolUses
+        }
+      }
+    }
+  }
+  toolsByAlleleId {
+    nodes {
+      ...toolFields
+    }
+  }
+  toolUsesByAlleleId {
+    nodes {
+      ...toolUses
+    }
+  }
+}
+
+fragment toolFields on Tool {
+  fbtoId
+  symbol
+  relType
+  toolUsesByToolId {
+    nodes {
+      ...toolUses
+    }
+  }
+}
+
+fragment toolUses on ToolUse {
+  fbcvId
+  name
+}

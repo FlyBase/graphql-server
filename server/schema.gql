@@ -1,0 +1,78 @@
+type Gene {
+  id: ID!
+  symbol: String
+  alleles: [Allele]
+  insertions: [Insertion]
+}
+
+type Allele {
+  id: ID!
+  symbol: String
+  isConstruct: Boolean
+  containsRegulatoryRegion: Boolean
+  classes: [AlleleClass]
+  mutagens: [Mutagen]
+  #stocks: [Stock]
+  stocksCount: Int
+  knownLesion: Boolean
+  constructs: [Construct]
+  insertions: [Insertion]
+  insertedElementTypes: [ToolUse]
+  regRegions: [Tool]
+  encodedTools: [Tool]
+  encodedToolUses: [ToolUse]
+  taggedWith: [Tool]
+  tagUses: [ToolUse]
+  alsoCarries: [Tool]
+}
+
+type AlleleClass {
+  id: ID!
+  name: String!
+}
+
+type Mutagen {
+  id: ID!
+  name: String!
+}
+
+type ToolUse {
+  id: ID!
+  name: String!
+}
+
+type Insertion {
+  id: ID!
+  symbol: String
+  insertedElementTypes: [ToolUse]
+  regRegions: [Tool]
+  encodedTools: [Tool]
+  encodedToolUses: [ToolUse]
+  taggedWith: [Tool]
+  tagUses: [ToolUse]
+  alsoCarries: [Tool]
+  stocksCount: Int
+}
+
+type Construct {
+  id: ID!
+  symbol: String
+}
+
+type Tool {
+  id: ID!
+  symbol: String
+}
+
+type Stock {
+  id: ID!
+  genotype: String
+  stockNumber: String
+  center: String
+}
+
+type Query {
+  allelesByGene(fbgn: String!, isConstruct: Boolean): Gene
+  allele(fbal: String!): Allele
+  insertionsWithoutAllelesByGene(fbgn: String!): Gene
+}
