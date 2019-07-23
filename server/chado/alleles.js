@@ -91,7 +91,7 @@ const materializeTools = (fbObject = {}, parent = {}) => {
     delete materializedFbObject.knownLesion
     delete materializedFbObject.classes
     delete materializedFbObject.mutagens
-    delete materializedFbObject.containsRegulatoryRegion
+    delete materializedFbObject.geneIsRegulatoryRegion
   } else {
     if (materializedFbObject.isConstruct) {
       // Delete insertion related fields for construct alleles.

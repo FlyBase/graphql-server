@@ -9,11 +9,12 @@ type Allele {
   id: ID!
   symbol: String
   isConstruct: Boolean
-  containsRegulatoryRegion: Boolean
+  geneIsRegulatoryRegion: Boolean
   classes: [AlleleClass]
   mutagens: [Mutagen]
   #stocks: [Stock]
   stocksCount: Int
+  pubCount: Int
   knownLesion: Boolean
   constructs: [Construct]
   insertions: [Insertion]
@@ -52,6 +53,7 @@ type Insertion {
   tagUses: [ToolUse]
   alsoCarries: [Tool]
   stocksCount: Int
+  pubCount: Int
 }
 
 type Construct {
@@ -72,7 +74,11 @@ type Stock {
 }
 
 type Query {
-  allelesByGene(fbgn: String!, isConstruct: Boolean): Gene
+  allelesByGene(
+    fbgn: String!
+    isConstruct: Boolean
+    geneIsRegulatoryRegion: Boolean
+  ): Gene
   allele(fbal: String!): Allele
   insertionsWithoutAllelesByGene(fbgn: String!): Gene
 }

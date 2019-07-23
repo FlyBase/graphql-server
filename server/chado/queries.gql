@@ -1,9 +1,18 @@
-query AllelesByGene($fbgn: String!, $isConstruct: Boolean = false) {
+query AllelesByGene(
+  $fbgn: String!
+  $isConstruct: Boolean = false
+  $geneIsRegulatoryRegion: Boolean = false
+) {
   allGenes(condition: { uniquename: $fbgn }) {
     nodes {
       name
       uniquename
-      allelesByGeneId(condition: { isConstruct: $isConstruct }) {
+      allelesByGeneId(
+        condition: {
+          isConstruct: $isConstruct
+          geneIsRegulatoryRegion: $geneIsRegulatoryRegion
+        }
+      ) {
         nodes {
           ...alleleFields
         }
@@ -22,6 +31,7 @@ query InsertionsWithoutAllelesByGene($fbgn: String!) {
           fbtiId
           symbol
           stocksCount
+          pubCount
           constructsByInsertionId {
             nodes {
               fbtpId
@@ -57,8 +67,9 @@ fragment alleleFields on Allele {
   fbalId
   isConstruct
   propagateTransgenicUses
-  containsRegulatoryRegion
+  geneIsRegulatoryRegion
   stocksCount
+  pubCount
   knownLesion
   alleleClassesByAlleleId {
     nodes {

@@ -31,13 +31,19 @@ export const psqlClient = new ApolloClient({ cache, link })
 */
 export const resolvers = {
   Query: {
-    allelesByGene: async (_, { fbgn, isConstruct = false }, ___, ____) => {
+    allelesByGene: async (
+      _,
+      { fbgn, isConstruct = false, geneIsRegulatoryRegion = false },
+      ___,
+      ____
+    ) => {
       const result = await psqlClient
         .query({
           query: AllelesByGene,
           variables: {
             fbgn,
             isConstruct,
+            geneIsRegulatoryRegion,
           },
         })
         .catch(e => console.error(e))
