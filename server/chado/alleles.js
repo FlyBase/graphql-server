@@ -193,7 +193,12 @@ const getSubFieldName = name => {
 }
 
 const remapFbIdKey = key => {
-  return /^fb\w\wId$/.test(key) ? 'id' : key
+  if (/^fb\w\wId$/.test(key)) {
+    return 'id'
+  } else if (/^fbid$/.test(key)) {
+    return 'id'
+  }
+  return key
 }
 
 export const flattenNodes = (nodes = []) => {

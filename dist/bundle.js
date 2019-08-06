@@ -475,7 +475,13 @@ var getSubFieldName = function getSubFieldName(name) {
 };
 
 var remapFbIdKey = function remapFbIdKey(key) {
-  return /^fb\w\wId$/.test(key) ? 'id' : key;
+  if (/^fb\w\wId$/.test(key)) {
+    return 'id';
+  } else if (/^fbid$/.test(key)) {
+    return 'id';
+  }
+
+  return key;
 };
 
 var flattenNodes = function flattenNodes() {
