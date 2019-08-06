@@ -134,7 +134,7 @@ fragment alleleFields on Allele {
 }
 
 fragment toolFields on Tool {
-  fbtoId
+  fbid
   symbol
   relType
   toolUsesByToolId {
