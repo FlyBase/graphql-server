@@ -84,7 +84,7 @@ export const resolvers = {
           variables: { fbal_ids },
         })
         .catch(e => console.error(e))
-      return result.data.allelesByFbal.nodes.length != 0
+      return result.data.allelesByFbal.nodes.length !== 0
         ? reformatAlleles(result.data.allelesByFbal.nodes)
         : null
     },

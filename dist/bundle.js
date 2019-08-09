@@ -683,7 +683,7 @@ var resolvers = {
 
               case 3:
                 result = _context4.sent;
-                return _context4.abrupt("return", result.data.allelesByFbal.nodes.length != 0 ? reformatAlleles(result.data.allelesByFbal.nodes) : null);
+                return _context4.abrupt("return", result.data.allelesByFbal.nodes.length !== 0 ? reformatAlleles(result.data.allelesByFbal.nodes) : null);
 
               case 5:
               case "end":
