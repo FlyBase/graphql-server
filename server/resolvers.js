@@ -6,11 +6,13 @@ import { HttpLink } from 'apollo-link-http'
 import {
   AllelesByGene,
   Allele,
+  Alleles,
   InsertionsWithoutAllelesByGene,
 } from './chado/queries.gql'
 
 import {
   reformatAllele,
+  reformatAlleles,
   reformatAlleleByGene,
   reformatInsertionByGene,
 } from './chado/alleles'
@@ -32,10 +34,10 @@ export const psqlClient = new ApolloClient({ cache, link })
 export const resolvers = {
   Query: {
     allelesByGene: async (
-      _,
+      obj,
       { fbgn, isConstruct = false, geneIsRegulatoryRegion = false },
-      ___,
-      ____
+      context,
+      info_
     ) => {
       const result = await psqlClient
         .query({
@@ -47,11 +49,11 @@ export const resolvers = {
           },
         })
         .catch(e => console.error(e))
-      return result.data.allGenes.nodes.length != 0
+      return result.data.allGenes.nodes.length !== 0
         ? reformatAlleleByGene(result.data.allGenes.nodes[0])
         : null
     },
-    insertionsWithoutAllelesByGene: async (_, { fbgn }, ___, ____) => {
+    insertionsWithoutAllelesByGene: async (obj, { fbgn }, context, info) => {
       const result = await psqlClient
         .query({
           query: InsertionsWithoutAllelesByGene,
@@ -60,21 +62,30 @@ export const resolvers = {
           },
         })
         .catch(e => console.error(e))
-      return result.data.allGenes.nodes.length != 0
+      return result.data.allGenes.nodes.length !== 0
         ? reformatInsertionByGene(result.data.allGenes.nodes[0])
         : null
     },
-    allele: async (_, { fbal }, ___, ____) => {
+    allele: async (obj, { fbal }, context, info) => {
       const result = await psqlClient
         .query({
           query: Allele,
-          variables: {
-            fbal: fbal,
-          },
+          variables: { fbal },
         })
         .catch(e => console.error(e))
-      return result.data.allAlleles.nodes.length != 0
+      return result.data.allAlleles.nodes.length !== 0
         ? reformatAllele(result.data.allAlleles.nodes[0])
+        : null
+    },
+    alleles: async (obj, { fbal_ids }, context, info) => {
+      const result = await psqlClient
+        .query({
+          query: Alleles,
+          variables: { fbal_ids },
+        })
+        .catch(e => console.error(e))
+      return result.data.allelesByFbal.nodes.length != 0
+        ? reformatAlleles(result.data.allelesByFbal.nodes)
         : null
     },
   },

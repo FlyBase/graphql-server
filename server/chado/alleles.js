@@ -12,6 +12,11 @@ export const reformatAlleleByGene = gene => {
   }
 }
 
+export const reformatAlleles = nodes => {
+  const alleles = flattenNodes(nodes)
+  return alleles.map(allele => materializeTools(allele))
+}
+
 export const reformatInsertionByGene = gene => {
   const insertions = flattenNodes(gene.insertionsByGeneId.nodes)
   return {

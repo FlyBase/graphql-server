@@ -12,7 +12,6 @@ type Allele {
   geneIsRegulatoryRegion: Boolean
   classes: [AlleleClass]
   mutagens: [Mutagen]
-  #stocks: [Stock]
   stocksCount: Int
   pubCount: Int
   knownLesion: Boolean
@@ -80,5 +79,6 @@ type Query {
     geneIsRegulatoryRegion: Boolean
   ): Gene
   allele(fbal: String!): Allele
+  alleles(fbal_ids: [String]!): [Allele]
   insertionsWithoutAllelesByGene(fbgn: String!): Gene
 }

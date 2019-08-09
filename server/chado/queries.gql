@@ -62,6 +62,14 @@ query Allele($fbal: String!) {
   }
 }
 
+query Alleles($fbal_ids: [String]!) {
+  allelesByFbal(ids: $fbal_ids) {
+    nodes {
+      ...alleleFields
+    }
+  }
+}
+
 fragment alleleFields on Allele {
   symbol
   fbalId
