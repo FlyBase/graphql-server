@@ -500,6 +500,8 @@ class FlyBaseAPI extends apolloDatasourceRest.RESTDataSource {
 const server = new apolloServer.ApolloServer({
   typeDefs: doc,
   resolvers,
+  introspection: true,
+  playground: true,
   dataSources: () => {
     return {
       flyBaseAPI: new FlyBaseAPI()
