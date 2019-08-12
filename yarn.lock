@@ -931,15 +931,10 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.1.tgz#dc488842312a7f075149312905b5e3c0b054c79d"
   integrity sha512-FwI9gX75FgVBJ7ywgnq/P7tw+/o1GUbtP0KzbtusLigAOgIgNISRK0ZPl4qertvXSIE8YbsVJueQ90cDt9YYyw==
 
-"@types/node@*", "@types/node@^12.6.9":
+"@types/node@*", "@types/node@>=6", "@types/node@^12.6.9":
   version "12.7.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.7.1.tgz#3b5c3a26393c19b400844ac422bd0f631a94d69d"
   integrity sha512-aK9jxMypeSrhiYofWWBf/T7O+KwaiAHzM4sveCdWPn71lzUSMimRnKzhXDKfKwV1kWoBo2P1aGgaIYGLf9/ljw==
-
-"@types/node@>=6":
-  version "12.0.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.8.tgz#551466be11b2adc3f3d47156758f610bd9f6b1d8"
-  integrity sha512-b8bbUOTwzIY3V5vDTY1fIJ+ePKDUBqt2hC2woVGotdQQhG/2Sh62HOKHrT7ab+VerXAcPyAiTEipPu/FsreUtg==
 
 "@types/node@^10.1.0":
   version "10.14.14"
@@ -1089,13 +1084,13 @@ apollo-cache-control@0.8.1:
     graphql-extensions "0.8.1"
 
 apollo-cache-inmemory@^1.6.2:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/apollo-cache-inmemory/-/apollo-cache-inmemory-1.6.2.tgz#bbf2e4e1eacdf82b2d526f5c2f3b37e5acee3c5e"
-  integrity sha512-AyCl3PGFv5Qv1w4N9vlg63GBPHXgMCekZy5mhlS042ji0GW84uTySX+r3F61ZX3+KM1vA4m9hQyctrEGiv5XjQ==
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/apollo-cache-inmemory/-/apollo-cache-inmemory-1.6.3.tgz#826861d20baca4abc45f7ca7a874105905b8525d"
+  integrity sha512-S4B/zQNSuYc0M/1Wq8dJDTIO9yRgU0ZwDGnmlqxGGmFombOZb9mLjylewSfQKmjNpciZ7iUIBbJ0mHlPJTzdXg==
   dependencies:
     apollo-cache "^1.3.2"
     apollo-utilities "^1.3.2"
-    optimism "^0.9.0"
+    optimism "^0.10.0"
     ts-invariant "^0.4.0"
     tslib "^1.9.3"
 
@@ -1108,9 +1103,9 @@ apollo-cache@1.3.2, apollo-cache@^1.3.2:
     tslib "^1.9.3"
 
 apollo-client@^2.6.3:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-2.6.3.tgz#9bb2d42fb59f1572e51417f341c5f743798d22db"
-  integrity sha512-DS8pmF5CGiiJ658dG+mDn8pmCMMQIljKJSTeMNHnFuDLV0uAPZoeaAwVFiAmB408Ujqt92oIZ/8yJJAwSIhd4A==
+  version "2.6.4"
+  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-2.6.4.tgz#872c32927263a0d34655c5ef8a8949fbb20b6140"
+  integrity sha512-oWOwEOxQ9neHHVZrQhHDbI6bIibp9SHgxaLRVPoGvOFy7OH5XUykZE7hBQAVxq99tQjBzgytaZffQkeWo1B4VQ==
   dependencies:
     "@types/zen-observable" "^0.8.0"
     apollo-cache "1.3.2"
@@ -1120,6 +1115,17 @@ apollo-client@^2.6.3:
     ts-invariant "^0.4.0"
     tslib "^1.9.3"
     zen-observable "^0.8.0"
+
+apollo-datasource-rest@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/apollo-datasource-rest/-/apollo-datasource-rest-0.6.1.tgz#0d79c41599deab06a7ed93715d4aeb4fdb59d892"
+  integrity sha512-jRynPLtkk0JqucWbC4VGkDqn6fvo+JLL+yfvQ7gh56N61RkUfSzZUlskGHgPes8YdVqvf4B80NyZq+Yq31uipQ==
+  dependencies:
+    apollo-datasource "0.6.1"
+    apollo-server-caching "0.5.0"
+    apollo-server-env "2.4.1"
+    apollo-server-errors "2.3.1"
+    http-cache-semantics "^4.0.0"
 
 apollo-datasource@0.6.1:
   version "0.6.1"
@@ -2472,6 +2478,11 @@ has@^1.0.1, has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
+http-cache-semantics@^4.0.0:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/http-cache-semantics/-/http-cache-semantics-4.0.3.tgz#495704773277eeef6e43f9ab2c2c7d259dda25c5"
+  integrity sha512-TcIMG3qeVLgDr1TEd2XvHaTnMPwYQUQMIBLy+5pLSDKYFc7UIqj39w8EGzZkaxoLv/l2K8HaI0t5AVA+YYgUew==
+
 http-errors@1.7.2:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.7.2.tgz#4f5029cf13239f31036e5b2e55292bcfbcc85c8f"
@@ -3311,10 +3322,10 @@ once@^1.3.0:
   dependencies:
     wrappy "1"
 
-optimism@^0.9.0:
-  version "0.9.5"
-  resolved "https://registry.yarnpkg.com/optimism/-/optimism-0.9.5.tgz#b8b5dc9150e97b79ddbf2d2c6c0e44de4d255527"
-  integrity sha512-lNvmuBgONAGrUbj/xpH69FjMOz1d0jvMNoOCKyVynUPzq2jgVlGL4jFYJqrUHzUfBv+jAFSCP61x5UkfbduYJA==
+optimism@^0.10.0:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/optimism/-/optimism-0.10.2.tgz#626b6fd28b0923de98ecb36a3fd2d3d4e5632dd9"
+  integrity sha512-zPfBIxFFWMmQboM9+Z4MSJqc1PXp82v1PFq/GfQaufI69mHKlup7ykGNnfuGIGssXJQkmhSodQ/k9EWwjd8O8A==
   dependencies:
     "@wry/context" "^0.4.0"
 

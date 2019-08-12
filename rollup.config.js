@@ -14,6 +14,7 @@ export default {
     'apollo-server',
     'apollo-client',
     'apollo-cache-inmemory',
+    'apollo-datasource-rest',
     'apollo-link-http',
     'graphql-tag',
     'lodash.pickby',

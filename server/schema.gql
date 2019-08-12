@@ -10,33 +10,23 @@ type Allele {
   symbol: String
   isConstruct: Boolean
   geneIsRegulatoryRegion: Boolean
-  classes: [AlleleClass]
-  mutagens: [Mutagen]
+  classes: [CVTerm]
+  mutagens: [CVTerm]
   stocksCount: Int
   pubCount: Int
   knownLesion: Boolean
   constructs: [Construct]
   insertions: [Insertion]
-  insertedElementTypes: [ToolUse]
+  insertedElementTypes: [CVTerm]
   regRegions: [Tool]
   encodedTools: [Tool]
-  encodedToolUses: [ToolUse]
+  encodedToolUses: [CVTerm]
   taggedWith: [Tool]
-  tagUses: [ToolUse]
+  tagUses: [CVTerm]
   alsoCarries: [Tool]
 }
 
-type AlleleClass {
-  id: ID!
-  name: String!
-}
-
-type Mutagen {
-  id: ID!
-  name: String!
-}
-
-type ToolUse {
+type CVTerm {
   id: ID!
   name: String!
 }
@@ -44,12 +34,12 @@ type ToolUse {
 type Insertion {
   id: ID!
   symbol: String
-  insertedElementTypes: [ToolUse]
+  insertedElementTypes: [CVTerm]
   regRegions: [Tool]
   encodedTools: [Tool]
-  encodedToolUses: [ToolUse]
+  encodedToolUses: [CVTerm]
   taggedWith: [Tool]
-  tagUses: [ToolUse]
+  tagUses: [CVTerm]
   alsoCarries: [Tool]
   stocksCount: Int
   pubCount: Int
@@ -72,13 +62,43 @@ type Stock {
   center: String
 }
 
+type ExpressionToolSearchResult {
+  id: ID!
+  expression_terms: [CVTerm]!
+}
+
+input ExpressionSearchInput {
+  stage: String
+  anatomy: String
+  subcellular: String
+}
+
+union Result = ExpressionToolSearchResult
+
+type FlyBaseAPIResult {
+  resultset: ResultSet!
+}
+
+type ResultSet {
+  api_version: String!
+  data_version: String!
+  query_url: String!
+  query_time: String!
+  data_provider: String!
+  result: [Result!]!
+}
+
 type Query {
   allelesByGene(
     fbgn: String!
     isConstruct: Boolean
     geneIsRegulatoryRegion: Boolean
   ): Gene
-  allele(fbal: String!): Allele
-  alleles(fbal_ids: [String]!): [Allele]
+  alleleById(fbal: String!): Allele
+  allelesByIds(fbal_ids: [String]!): [Allele]
   insertionsWithoutAllelesByGene(fbgn: String!): Gene
+  searchExpressionTools(
+    expression: ExpressionSearchInput
+    gene: String
+  ): [ExpressionToolSearchResult]
 }

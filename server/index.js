@@ -12,9 +12,18 @@ the query and return results formatted according to the schema
 */
 import typeDefs from './schema.gql'
 import { resolvers } from './resolvers'
+import FlyBaseAPI from './datasources/FlyBaseAPI'
 
 // Create a new GraphQL server
-const server = new ApolloServer({ typeDefs, resolvers })
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  dataSources: () => {
+    return {
+      flyBaseAPI: new FlyBaseAPI(),
+    }
+  },
+})
 
 // Start it up!
 server.listen().then(({ url }) => {

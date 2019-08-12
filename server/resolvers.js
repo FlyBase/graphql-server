@@ -32,12 +32,26 @@ export const psqlClient = new ApolloClient({ cache, link })
   (modeled in the schema.graphql) and returned.
 */
 export const resolvers = {
+  /**
+   * Need to resolve Union types from the GraphQL schema.  That is a single type
+   * that can of one or more sub types.
+   * see
+   * https://www.apollographql.com/docs/apollo-server/features/unions-interfaces/#union-type
+   */
+  Result: {
+    __resolveType(obj, context, info) {
+      if (obj.expression_terms) {
+        return 'ExpressionToolSearchResult'
+      }
+      return null
+    },
+  },
   Query: {
     allelesByGene: async (
-      obj,
+      _obj,
       { fbgn, isConstruct = false, geneIsRegulatoryRegion = false },
-      context,
-      info_
+      _context,
+      _info_
     ) => {
       const result = await psqlClient
         .query({
@@ -53,7 +67,7 @@ export const resolvers = {
         ? reformatAlleleByGene(result.data.allGenes.nodes[0])
         : null
     },
-    insertionsWithoutAllelesByGene: async (obj, { fbgn }, context, info) => {
+    insertionsWithoutAllelesByGene: async (obj, { fbgn }, _context, _info) => {
       const result = await psqlClient
         .query({
           query: InsertionsWithoutAllelesByGene,
@@ -66,7 +80,7 @@ export const resolvers = {
         ? reformatInsertionByGene(result.data.allGenes.nodes[0])
         : null
     },
-    allele: async (obj, { fbal }, context, info) => {
+    alleleById: async (_obj, { fbal }, _context, _info) => {
       const result = await psqlClient
         .query({
           query: Allele,
@@ -77,7 +91,7 @@ export const resolvers = {
         ? reformatAllele(result.data.allAlleles.nodes[0])
         : null
     },
-    alleles: async (obj, { fbal_ids }, context, info) => {
+    allelesByIds: async (_obj, { fbal_ids }, _context, _info) => {
       const result = await psqlClient
         .query({
           query: Alleles,
@@ -87,6 +101,35 @@ export const resolvers = {
       return result.data.allelesByFbal.nodes.length !== 0
         ? reformatAlleles(result.data.allelesByFbal.nodes)
         : null
+    },
+    searchExpressionTools: async (
+      _obj,
+      { expression, gene },
+      { dataSources },
+      _info
+    ) => {
+      try {
+        if (gene && gene.length !== 0) {
+          const data = await dataSources.flyBaseAPI.searchExpressionToolsByGene(
+            {
+              gene,
+            }
+          )
+          return data.resultset.result
+        } else if (
+          expression &&
+          typeof expression === 'object' &&
+          Object.keys(expression).length > 0
+        ) {
+          const data = await dataSources.flyBaseAPI.searchExpressionToolsByExpression(
+            { expression }
+          )
+          return data.resultset.result
+        }
+      } catch (e) {
+        console.error(e)
+      }
+      return []
     },
   },
 }
