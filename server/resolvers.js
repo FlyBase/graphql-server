@@ -110,17 +110,24 @@ export const resolvers = {
     ) => {
       try {
         if (gene && gene.length !== 0) {
+          /**
+           * Search by gene.
+           */
           const data = await dataSources.flyBaseAPI.searchExpressionToolsByGene(
             {
               gene,
             }
           )
           return data.resultset.result
+
         } else if (
           expression &&
           typeof expression === 'object' &&
           Object.keys(expression).length > 0
         ) {
+          /**
+           * Search by expression
+           */
           const data = await dataSources.flyBaseAPI.searchExpressionToolsByExpression(
             { expression }
           )
@@ -129,7 +136,7 @@ export const resolvers = {
       } catch (e) {
         console.error(e)
       }
-      return []
+      return null
     },
   },
 }
