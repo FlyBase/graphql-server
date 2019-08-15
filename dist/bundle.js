@@ -124,6 +124,13 @@ var doc$1 = {"kind":"Document","definitions":[{"kind":"OperationDefinition","ope
         
         const Alleles = oneQuery(doc$1, "Alleles");
 
+/**
+ *  Reformats the allele by gene response from Chado via Postgraphile.
+ *
+ * @param gene Gene object from Chado
+ * @returns {{symbol: *, id: *, alleles: *}}
+ */
+
 const reformatAlleleByGene = gene => {
   const alleles = flattenNodes(gene.allelesByGeneId.nodes);
   const {
@@ -139,10 +146,23 @@ const reformatAlleleByGene = gene => {
     }))
   };
 };
+/**
+ * Reformats an allele response from Chado via Postgraphile
+ *
+ * @param nodes An array of allele nodes.
+ * @returns {{knownLesion: *, stocksCount: *, insertions: *, alsoCarries: *, taggedWith: *, encodedToolUses: *, insertedElementTypes: *, regRegions: *, tagUses: *, id: *, constructs: *, encodedTools: *}[]}
+ */
+
 const reformatAlleles = nodes => {
   const alleles = flattenNodes(nodes);
   return alleles.map(allele => materializeTools(allele));
 };
+/**
+ * Reformats the insertion by gene response from Chado via Postgraphile
+ * @param gene
+ * @returns {{symbol: *, insertions: *, id: *}}
+ */
+
 const reformatInsertionByGene = gene => {
   const insertions = flattenNodes(gene.insertionsByGeneId.nodes);
   return {
@@ -151,10 +171,22 @@ const reformatInsertionByGene = gene => {
     insertions: insertions.map(insertion => materializeTools(insertion))
   };
 };
+/**
+ * Reformats a single allele response from Chado via Postgraphile
+ * @param allele
+ * @returns {{knownLesion: *, stocksCount: *, insertions: *, alsoCarries: *, taggedWith: *, encodedToolUses: *, insertedElementTypes: *, regRegions: *, tagUses: *, id: *, constructs: *, encodedTools: *}}
+ */
+
 const reformatAllele = allele => {
   const node = flattenNodes([allele])[0];
   return materializeTools(node);
 };
+/**
+ *
+ * @param fbObject
+ * @param parent
+ * @returns {{knownLesion: *, stocksCount: *, insertions: *, alsoCarries: *, taggedWith: *, encodedToolUses: *, insertedElementTypes: *, regRegions: *, tagUses: *, id: *, constructs: *, encodedTools: *}}
+ */
 
 const materializeTools = (fbObject = {}, parent = {}) => {
   /*
@@ -318,6 +350,13 @@ const getSubFieldName = name => {
       return name;
   }
 };
+/**
+ * Remaps various ID fields in the Chado / Postgraphile materialized views from their name
+ * to 'id'.
+ * @param key
+ * @returns {string|*}
+ */
+
 
 const remapFbIdKey = key => {
   if (/^fb\w\wId$/.test(key)) {
@@ -361,9 +400,20 @@ const link = new apolloLinkHttp.HttpLink({
   uri: 'http://localhost:5000/graphql',
   fetch: crossFetch.fetch
 });
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'ignore'
+  },
+  query: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all'
+  }
+};
 const psqlClient = new apolloClient.ApolloClient({
   cache,
-  link
+  link,
+  defaultOptions
 });
 /*
   The following resolvers map to available queries in the schema.graphql file.
@@ -430,12 +480,14 @@ const resolvers = {
     allelesByIds: async (_obj, {
       fbal_ids
     }, _context, _info) => {
+      console.log(`Fetching ${fbal_ids.length} alleles by IDs from Chado.`);
       const result = await psqlClient.query({
         query: Alleles,
         variables: {
           fbal_ids
         }
       }).catch(e => console.error(e));
+      console.log('Retrieved alleles, reformatting results.');
       return result.data.allelesByFbal.nodes.length !== 0 ? reformatAlleles(result.data.allelesByFbal.nodes) : null;
     },
     searchExpressionTools: async (_obj, {
@@ -444,23 +496,32 @@ const resolvers = {
     }, {
       dataSources
     }, _info) => {
+      console.log('Querying FlyBase API for expression tools.');
+
       try {
         if (gene && gene.length !== 0) {
+          /**
+           * Search by gene.
+           */
           const data = await dataSources.flyBaseAPI.searchExpressionToolsByGene({
             gene
           });
           return data.resultset.result;
         } else if (expression && typeof expression === 'object' && Object.keys(expression).length > 0) {
+          /**
+           * Search by expression
+           */
           const data = await dataSources.flyBaseAPI.searchExpressionToolsByExpression({
             expression
           });
+          console.log('Done querying, returning results.');
           return data.resultset.result;
         }
       } catch (e) {
         console.error(e);
       }
 
-      return [];
+      return null;
     }
   }
 };
