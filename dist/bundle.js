@@ -4,7 +4,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 require('@babel/polyfill');
 var apolloServer = require('apollo-server');
-var crossFetch = require('cross-fetch');
+var fetch = _interopDefault(require('cross-fetch'));
 var apolloClient = require('apollo-client');
 var apolloCacheInmemory = require('apollo-cache-inmemory');
 var apolloLinkHttp = require('apollo-link-http');
@@ -398,7 +398,7 @@ const flattenNodes = (nodes = []) => {
 const cache = new apolloCacheInmemory.InMemoryCache();
 const link = new apolloLinkHttp.HttpLink({
   uri: 'http://localhost:5000/graphql',
-  fetch: crossFetch.fetch
+  fetch: fetch
 });
 const defaultOptions = {
   watchQuery: {
