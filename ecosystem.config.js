@@ -22,7 +22,8 @@ module.exports = {
     {
       name: 'postgraphile',
       script: './node_modules/.bin/postgraphile',
-      // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
+      // Options reference: http://pm2.keymetrics.io/docs/usage/application-declaration/
+      args: '-s flybase,gene -j -M -l 5MB --timeout 60000 --disable-query-log',
       instances: 1,
       autorestart: true,
       watch: false,
@@ -31,11 +32,9 @@ module.exports = {
       error: './logs/postgraphile.err',
       env: {
         NODE_ENV: 'development',
-        args: '-s flybase,gene -j -M -l 5MB --timeout 60000',
       },
       env_production: {
         NODE_ENV: 'production',
-        args: '-s flybase,gene -j -M -l 5MB --timeout 60000 --disable-query-log',
       }
     }
   ],
