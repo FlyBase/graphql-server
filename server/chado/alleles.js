@@ -2,6 +2,12 @@ import pickBy from 'lodash.pickby'
 import isPlainObject from 'lodash.isplainobject'
 import mapKeys from 'lodash.mapkeys'
 
+/**
+ *  Reformats the allele by gene response from Chado via Postgraphile.
+ *
+ * @param gene Gene object from Chado
+ * @returns {{symbol: *, id: *, alleles: *}}
+ */
 export const reformatAlleleByGene = gene => {
   const alleles = flattenNodes(gene.allelesByGeneId.nodes)
   const { uniquename: id, name: symbol } = gene
@@ -12,11 +18,22 @@ export const reformatAlleleByGene = gene => {
   }
 }
 
+/**
+ * Reformats an allele response from Chado via Postgraphile
+ *
+ * @param nodes An array of allele nodes.
+ * @returns {{knownLesion: *, stocksCount: *, insertions: *, alsoCarries: *, taggedWith: *, encodedToolUses: *, insertedElementTypes: *, regRegions: *, tagUses: *, id: *, constructs: *, encodedTools: *}[]}
+ */
 export const reformatAlleles = nodes => {
   const alleles = flattenNodes(nodes)
   return alleles.map(allele => materializeTools(allele))
 }
 
+/**
+ * Reformats the insertion by gene response from Chado via Postgraphile
+ * @param gene
+ * @returns {{symbol: *, insertions: *, id: *}}
+ */
 export const reformatInsertionByGene = gene => {
   const insertions = flattenNodes(gene.insertionsByGeneId.nodes)
   return {
@@ -26,11 +43,22 @@ export const reformatInsertionByGene = gene => {
   }
 }
 
+/**
+ * Reformats a single allele response from Chado via Postgraphile
+ * @param allele
+ * @returns {{knownLesion: *, stocksCount: *, insertions: *, alsoCarries: *, taggedWith: *, encodedToolUses: *, insertedElementTypes: *, regRegions: *, tagUses: *, id: *, constructs: *, encodedTools: *}}
+ */
 export const reformatAllele = allele => {
   const node = flattenNodes([allele])[0]
   return materializeTools(node)
 }
 
+/**
+ *
+ * @param fbObject
+ * @param parent
+ * @returns {{knownLesion: *, stocksCount: *, insertions: *, alsoCarries: *, taggedWith: *, encodedToolUses: *, insertedElementTypes: *, regRegions: *, tagUses: *, id: *, constructs: *, encodedTools: *}}
+ */
 const materializeTools = (fbObject = {}, parent = {}) => {
   /*
   Pull out attributes that we will need to process.
@@ -197,6 +225,12 @@ const getSubFieldName = name => {
   }
 }
 
+/**
+ * Remaps various ID fields in the Chado / Postgraphile materialized views from their name
+ * to 'id'.
+ * @param key
+ * @returns {string|*}
+ */
 const remapFbIdKey = key => {
   if (/^fb\w\wId$/.test(key)) {
     return 'id'

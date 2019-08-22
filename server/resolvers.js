@@ -1,4 +1,4 @@
-import { fetch } from 'cross-fetch'
+import fetch from 'cross-fetch'
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { HttpLink } from 'apollo-link-http'
@@ -17,13 +17,23 @@ import {
   reformatInsertionByGene,
 } from './chado/alleles'
 
-export const cache = new InMemoryCache()
-export const link = new HttpLink({
+const cache = new InMemoryCache()
+const link = new HttpLink({
   uri: 'http://localhost:5000/graphql',
   fetch: fetch,
 })
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'ignore',
+  },
+  query: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all',
+  },
+}
 
-export const psqlClient = new ApolloClient({ cache, link })
+export const psqlClient = new ApolloClient({ cache, link, defaultOptions })
 
 /*
   The following resolvers map to available queries in the schema.graphql file.
@@ -92,12 +102,14 @@ export const resolvers = {
         : null
     },
     allelesByIds: async (_obj, { fbal_ids }, _context, _info) => {
+      console.log(`Fetching ${fbal_ids.length} alleles by IDs from Chado.`)
       const result = await psqlClient
         .query({
           query: Alleles,
           variables: { fbal_ids },
         })
         .catch(e => console.error(e))
+      console.log('Retrieved alleles, reformatting results.')
       return result.data.allelesByFbal.nodes.length !== 0
         ? reformatAlleles(result.data.allelesByFbal.nodes)
         : null
@@ -108,8 +120,12 @@ export const resolvers = {
       { dataSources },
       _info
     ) => {
+      console.log('Querying FlyBase API for expression tools.')
       try {
         if (gene && gene.length !== 0) {
+          /**
+           * Search by gene.
+           */
           const data = await dataSources.flyBaseAPI.searchExpressionToolsByGene(
             {
               gene,
@@ -121,15 +137,19 @@ export const resolvers = {
           typeof expression === 'object' &&
           Object.keys(expression).length > 0
         ) {
+          /**
+           * Search by expression
+           */
           const data = await dataSources.flyBaseAPI.searchExpressionToolsByExpression(
             { expression }
           )
+          console.log('Done querying, returning results.')
           return data.resultset.result
         }
       } catch (e) {
         console.error(e)
       }
-      return []
+      return null
     },
   },
 }

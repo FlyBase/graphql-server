@@ -18,6 +18,8 @@ import FlyBaseAPI from './datasources/FlyBaseAPI'
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  introspection: true,
+  playground: true,
   dataSources: () => {
     return {
       flyBaseAPI: new FlyBaseAPI(),

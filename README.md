@@ -13,8 +13,8 @@ should be passed to the script (see https://www.postgresql.org/docs/current/libp
 
 ## Overview
      GraphQL server ---> Postgraphile ---> Chado Database
-                                     \
-                                      ---> Other sources
+                  \
+                   ----> Other sources
 ## Description
 
 This package provides a GraphQL server on top of Chado and other services for FlyBase.

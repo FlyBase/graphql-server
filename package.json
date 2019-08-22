@@ -1,7 +1,7 @@
 {
   "name": "flybase-graphql",
   "version": "0.1.0",
-  "description": "FlyBase GraphQL impelementation",
+  "description": "FlyBase GraphQL implementation",
   "main": "server/index.js",
   "author": "Josh Goodman <jogoodma@iu.edu>",
   "license": "MIT",
