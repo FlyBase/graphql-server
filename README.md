@@ -4,6 +4,7 @@
 ```bash
 git clone https://github.com/FlyBase/graphql-server
 cd graphql-server
+yarn install
 PGPASSWORD=mypassword PGDATABASE=mydb yarn run prod
 ```
 
