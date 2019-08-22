@@ -1,0 +1,104 @@
+type Gene {
+  id: ID!
+  symbol: String
+  alleles: [Allele]
+  insertions: [Insertion]
+}
+
+type Allele {
+  id: ID!
+  symbol: String
+  isConstruct: Boolean
+  geneIsRegulatoryRegion: Boolean
+  classes: [CVTerm]
+  mutagens: [CVTerm]
+  stocksCount: Int
+  pubCount: Int
+  knownLesion: Boolean
+  constructs: [Construct]
+  insertions: [Insertion]
+  insertedElementTypes: [CVTerm]
+  regRegions: [Tool]
+  encodedTools: [Tool]
+  encodedToolUses: [CVTerm]
+  taggedWith: [Tool]
+  tagUses: [CVTerm]
+  alsoCarries: [Tool]
+}
+
+type CVTerm {
+  id: ID!
+  name: String!
+}
+
+type Insertion {
+  id: ID!
+  symbol: String
+  insertedElementTypes: [CVTerm]
+  regRegions: [Tool]
+  encodedTools: [Tool]
+  encodedToolUses: [CVTerm]
+  taggedWith: [Tool]
+  tagUses: [CVTerm]
+  alsoCarries: [Tool]
+  stocksCount: Int
+  pubCount: Int
+}
+
+type Construct {
+  id: ID!
+  symbol: String
+}
+
+type Tool {
+  id: ID!
+  symbol: String
+}
+
+type Stock {
+  id: ID!
+  genotype: String
+  stockNumber: String
+  center: String
+}
+
+type ExpressionToolSearchResult {
+  id: ID!
+  expression_terms: [CVTerm]!
+}
+
+input ExpressionSearchInput {
+  stage: String
+  anatomy: String
+  subcellular: String
+}
+
+union Result = ExpressionToolSearchResult
+
+type FlyBaseAPIResult {
+  resultset: ResultSet!
+}
+
+type ResultSet {
+  api_version: String!
+  data_version: String!
+  query_url: String!
+  query_time: String!
+  data_provider: String!
+  result: [Result!]!
+}
+
+type Query {
+  allelesByGene(
+    fbgn: String!
+    isConstruct: Boolean
+    geneIsRegulatoryRegion: Boolean
+  ): Gene
+  alleleById(fbal: String!): Allele
+  allelesByIds(fbal_ids: [String]!): [Allele]
+  insertionsWithoutAllelesByGene(fbgn: String!): Gene
+  searchExpressionTools(
+    expression: ExpressionSearchInput
+    gene: String
+  ): [ExpressionToolSearchResult]
+}

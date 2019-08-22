@@ -1,24 +1,33 @@
-const { ApolloServer } = require('apollo-server');
-const typeDefs = require('./schema.js');
+/*
+ Required due to a RegeneratorRuntime error being thrown.
+ see https://stackoverflow.com/a/54490329
+*/
+import '@babel/polyfill'
+import { ApolloServer } from 'apollo-server'
 
+/*
+Import the schema and resolvers for this GraphQL server.
+In GraphSQL speak, resolvers are the functions that perform
+the query and return results formatted according to the schema
+*/
+import typeDefs from './schema.gql'
+import { resolvers } from './resolvers'
+import FlyBaseAPI from './datasources/FlyBaseAPI'
 
-// Resolvers define the technique for fetching the types in the
-// schema.  We'll retrieve books from the "books" array above.
-const resolvers = {
-  Query: {
-    gene: (_, { id }, __, ___) => {
-      return {id: id, symbol: 'dpp'}
-    },
+// Create a new GraphQL server
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  introspection: true,
+  playground: true,
+  dataSources: () => {
+    return {
+      flyBaseAPI: new FlyBaseAPI(),
+    }
   },
-};
+})
 
-// In the most basic sense, the ApolloServer can be started
-// by passing type definitions (typeDefs) and the resolvers
-// responsible for fetching the data for those types.
-const server = new ApolloServer({ typeDefs, resolvers });
-
-// This `listen` method launches a web-server.  Existing apps
-// can utilize middleware options, which we'll discuss later.
+// Start it up!
 server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+  console.log(`🚀  Server ready at ${url}`)
+})
