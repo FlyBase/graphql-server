@@ -15,6 +15,7 @@ type Allele {
   stocksCount: Int
   pubCount: Int
   knownLesion: Boolean
+  hasImage: Boolean
   constructs: [Construct]
   insertions: [Insertion]
   insertedElementTypes: [CVTerm]

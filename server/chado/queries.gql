@@ -79,6 +79,7 @@ fragment alleleFields on Allele {
   stocksCount
   pubCount
   knownLesion
+  hasImage
   alleleClassesByAlleleId {
     nodes {
       fbcvId
