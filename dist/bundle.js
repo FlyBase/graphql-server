@@ -1,128 +1,2702 @@
-'use strict';
+// modules are defined as an array
+// [ module function, map of requires ]
+//
+// map of requires is short require name -> numeric require
+//
+// anything defined in a previous bundle is accessed via the
+// orig method which is the require for previous bundles
+parcelRequire = (function (modules, cache, entry, globalName) {
+  // Save the require from previous bundle to this closure if any
+  var previousRequire = typeof parcelRequire === 'function' && parcelRequire;
+  var nodeRequire = typeof require === 'function' && require;
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-require('@babel/polyfill');
-var apolloServer = require('apollo-server');
-var fetch = _interopDefault(require('cross-fetch'));
-var apolloClient = require('apollo-client');
-var apolloCacheInmemory = require('apollo-cache-inmemory');
-var apolloLinkHttp = require('apollo-link-http');
-var pickBy = _interopDefault(require('lodash.pickby'));
-var isPlainObject = _interopDefault(require('lodash.isplainobject'));
-var mapKeys = _interopDefault(require('lodash.mapkeys'));
-var apolloDatasourceRest = require('apollo-datasource-rest');
-
-var doc = {"kind":"Document","definitions":[{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Gene"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"alleles"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Allele"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"insertions"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Insertion"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Allele"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"isConstruct"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"geneIsRegulatoryRegion"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"classes"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CVTerm"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"mutagens"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CVTerm"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"stocksCount"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"pubCount"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"knownLesion"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"hasImage"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"constructs"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Construct"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"insertions"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Insertion"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"insertedElementTypes"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CVTerm"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"regRegions"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"encodedTools"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"encodedToolUses"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CVTerm"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"taggedWith"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"tagUses"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CVTerm"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"alsoCarries"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"CVTerm"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"name"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Insertion"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"insertedElementTypes"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CVTerm"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"regRegions"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"encodedTools"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"encodedToolUses"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CVTerm"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"taggedWith"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"tagUses"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CVTerm"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"alsoCarries"},"arguments":[],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"stocksCount"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"pubCount"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Construct"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Tool"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"symbol"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Stock"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"genotype"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"stockNumber"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"center"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"ExpressionToolSearchResult"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"expression_terms"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CVTerm"}}}},"directives":[]}]},{"kind":"InputObjectTypeDefinition","name":{"kind":"Name","value":"ExpressionSearchInput"},"directives":[],"fields":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"stage"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"stageq"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"anatomy"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"anatomyq"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"subcellular"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"subcellularq"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"UnionTypeDefinition","name":{"kind":"Name","value":"Result"},"directives":[],"types":[{"kind":"NamedType","name":{"kind":"Name","value":"ExpressionToolSearchResult"}}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"FlyBaseAPIResult"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"resultset"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ResultSet"}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"ResultSet"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"api_version"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"data_version"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"query_url"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"query_time"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"data_provider"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"result"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Result"}}}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Query"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"allelesByGene"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"fbgn"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"isConstruct"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"geneIsRegulatoryRegion"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Gene"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"alleleById"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"fbal"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Allele"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"allelesByIds"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"fbal_ids"},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},"directives":[]}],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Allele"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"insertionsWithoutAllelesByGene"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"fbgn"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Gene"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"searchExpressionTools"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"expression"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ExpressionSearchInput"}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"gene"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}],"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ExpressionToolSearchResult"}}},"directives":[]}]}],"loc":{"start":0,"end":1840}};
-    doc.loc.source = {"body":"type Gene {\n  id: ID!\n  symbol: String\n  alleles: [Allele]\n  insertions: [Insertion]\n}\n\ntype Allele {\n  id: ID!\n  symbol: String\n  isConstruct: Boolean\n  geneIsRegulatoryRegion: Boolean\n  classes: [CVTerm]\n  mutagens: [CVTerm]\n  stocksCount: Int\n  pubCount: Int\n  knownLesion: Boolean\n  hasImage: Boolean\n  constructs: [Construct]\n  insertions: [Insertion]\n  insertedElementTypes: [CVTerm]\n  regRegions: [Tool]\n  encodedTools: [Tool]\n  encodedToolUses: [CVTerm]\n  taggedWith: [Tool]\n  tagUses: [CVTerm]\n  alsoCarries: [Tool]\n}\n\ntype CVTerm {\n  id: ID!\n  name: String!\n}\n\ntype Insertion {\n  id: ID!\n  symbol: String\n  insertedElementTypes: [CVTerm]\n  regRegions: [Tool]\n  encodedTools: [Tool]\n  encodedToolUses: [CVTerm]\n  taggedWith: [Tool]\n  tagUses: [CVTerm]\n  alsoCarries: [Tool]\n  stocksCount: Int\n  pubCount: Int\n}\n\ntype Construct {\n  id: ID!\n  symbol: String\n}\n\ntype Tool {\n  id: ID!\n  symbol: String\n}\n\ntype Stock {\n  id: ID!\n  genotype: String\n  stockNumber: String\n  center: String\n}\n\ntype ExpressionToolSearchResult {\n  id: ID!\n  expression_terms: [CVTerm]!\n}\n\ninput ExpressionSearchInput {\n  stage: String\n  stageq: String\n  anatomy: String\n  anatomyq: String\n  subcellular: String\n  subcellularq: String\n}\n\nunion Result = ExpressionToolSearchResult\n\ntype FlyBaseAPIResult {\n  resultset: ResultSet!\n}\n\ntype ResultSet {\n  api_version: String!\n  data_version: String!\n  query_url: String!\n  query_time: String!\n  data_provider: String!\n  result: [Result!]!\n}\n\ntype Query {\n  allelesByGene(\n    fbgn: String!\n    isConstruct: Boolean\n    geneIsRegulatoryRegion: Boolean\n  ): Gene\n  alleleById(fbal: String!): Allele\n  allelesByIds(fbal_ids: [String]!): [Allele]\n  insertionsWithoutAllelesByGene(fbgn: String!): Gene\n  searchExpressionTools(\n    expression: ExpressionSearchInput\n    gene: String\n  ): [ExpressionToolSearchResult]\n}\n","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
-
-var doc$1 = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllelesByGene"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fbgn"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isConstruct"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"defaultValue":{"kind":"BooleanValue","value":false},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"geneIsRegulatoryRegion"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"defaultValue":{"kind":"BooleanValue","value":false},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allGenes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"uniquename"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fbgn"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"uniquename"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"allelesByGeneId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"isConstruct"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isConstruct"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"geneIsRegulatoryRegion"},"value":{"kind":"Variable","name":{"kind":"Name","value":"geneIsRegulatoryRegion"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"alleleFields"},"directives":[]}]}}]}}]}}]}}]}},{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"InsertionsWithoutAllelesByGene"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fbgn"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allGenes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"uniquename"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fbgn"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"uniquename"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"insertionsByGeneId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtiId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"stocksCount"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"pubCount"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"constructsByInsertionId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtpId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolsByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolFields"},"directives":[]}]}}]}}]}}]}}]}}]}}]}}]}}]}},{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Allele"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fbal"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allAlleles"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"fbalId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fbal"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"alleleFields"},"directives":[]}]}}]}}]}},{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Alleles"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fbal_ids"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allelesByFbal"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fbal_ids"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"alleleFields"},"directives":[]}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"alleleFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Allele"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"fbalId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"isConstruct"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"propagateTransgenicUses"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"geneIsRegulatoryRegion"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"stocksCount"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"pubCount"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"knownLesion"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"hasImage"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"alleleClassesByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbcvId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"alleleMutagensByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbcvId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"insertionsByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtiId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"constructsByInsertionId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtpId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolsByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolFields"},"directives":[]}]}}]}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"constructsByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbtpId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"toolsByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolFields"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByConstructId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolsByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolFields"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByAlleleId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"toolFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Tool"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbid"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"symbol"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"relType"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"toolUsesByToolId"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"toolUses"},"directives":[]}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"toolUses"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ToolUse"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fbcvId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}],"loc":{"start":0,"end":2584}};
-    doc$1.loc.source = {"body":"query AllelesByGene(\n  $fbgn: String!\n  $isConstruct: Boolean = false\n  $geneIsRegulatoryRegion: Boolean = false\n) {\n  allGenes(condition: { uniquename: $fbgn }) {\n    nodes {\n      name\n      uniquename\n      allelesByGeneId(\n        condition: {\n          isConstruct: $isConstruct\n          geneIsRegulatoryRegion: $geneIsRegulatoryRegion\n        }\n      ) {\n        nodes {\n          ...alleleFields\n        }\n      }\n    }\n  }\n}\n\nquery InsertionsWithoutAllelesByGene($fbgn: String!) {\n  allGenes(condition: { uniquename: $fbgn }) {\n    nodes {\n      name\n      uniquename\n      insertionsByGeneId {\n        nodes {\n          fbtiId\n          symbol\n          stocksCount\n          pubCount\n          constructsByInsertionId {\n            nodes {\n              fbtpId\n              symbol\n              toolUsesByConstructId {\n                nodes {\n                  ...toolUses\n                }\n              }\n              toolsByConstructId {\n                nodes {\n                  ...toolFields\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n\nquery Allele($fbal: String!) {\n  allAlleles(condition: { fbalId: $fbal }) {\n    nodes {\n      ...alleleFields\n    }\n  }\n}\n\nquery Alleles($fbal_ids: [String]!) {\n  allelesByFbal(ids: $fbal_ids) {\n    nodes {\n      ...alleleFields\n    }\n  }\n}\n\nfragment alleleFields on Allele {\n  symbol\n  fbalId\n  isConstruct\n  propagateTransgenicUses\n  geneIsRegulatoryRegion\n  stocksCount\n  pubCount\n  knownLesion\n  hasImage\n  alleleClassesByAlleleId {\n    nodes {\n      fbcvId\n      name\n    }\n  }\n  alleleMutagensByAlleleId {\n    nodes {\n      fbcvId\n      name\n    }\n  }\n  insertionsByAlleleId {\n    nodes {\n      fbtiId\n      symbol\n      constructsByInsertionId {\n        nodes {\n          fbtpId\n          symbol\n          toolUsesByConstructId {\n            nodes {\n              ...toolUses\n            }\n          }\n          toolsByConstructId {\n            nodes {\n              ...toolFields\n            }\n          }\n        }\n      }\n    }\n  }\n  constructsByAlleleId {\n    nodes {\n      fbtpId\n      symbol\n      toolsByConstructId {\n        nodes {\n          ...toolFields\n        }\n      }\n      toolUsesByConstructId {\n        nodes {\n          ...toolUses\n        }\n      }\n    }\n  }\n  toolsByAlleleId {\n    nodes {\n      ...toolFields\n    }\n  }\n  toolUsesByAlleleId {\n    nodes {\n      ...toolUses\n    }\n  }\n}\n\nfragment toolFields on Tool {\n  fbid\n  symbol\n  relType\n  toolUsesByToolId {\n    nodes {\n      ...toolUses\n    }\n  }\n}\n\nfragment toolUses on ToolUse {\n  fbcvId\n  name\n}\n","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
-  
-
-    // Collect any fragment/type references from a node, adding them to the refs Set
-    function collectFragmentReferences(node, refs) {
-      if (node.kind === "FragmentSpread") {
-        refs.add(node.name.value);
-      } else if (node.kind === "VariableDefinition") {
-        var type = node.type;
-        if (type.kind === "NamedType") {
-          refs.add(type.name.value);
+  function newRequire(name, jumped) {
+    if (!cache[name]) {
+      if (!modules[name]) {
+        // if we cannot find the module within our internal map or
+        // cache jump to the current global require ie. the last bundle
+        // that was added to the page.
+        var currentRequire = typeof parcelRequire === 'function' && parcelRequire;
+        if (!jumped && currentRequire) {
+          return currentRequire(name, true);
         }
+
+        // If there are other bundles on this page the require from the
+        // previous one is saved to 'previousRequire'. Repeat this as
+        // many times as there are bundles until the module is found or
+        // we exhaust the require chain.
+        if (previousRequire) {
+          return previousRequire(name, true);
+        }
+
+        // Try the node require function if it exists.
+        if (nodeRequire && typeof name === 'string') {
+          return nodeRequire(name);
+        }
+
+        var err = new Error('Cannot find module \'' + name + '\'');
+        err.code = 'MODULE_NOT_FOUND';
+        throw err;
       }
 
-      if (node.selectionSet) {
-        node.selectionSet.selections.forEach(function(selection) {
-          collectFragmentReferences(selection, refs);
-        });
-      }
+      localRequire.resolve = resolve;
+      localRequire.cache = {};
 
-      if (node.variableDefinitions) {
-        node.variableDefinitions.forEach(function(def) {
-          collectFragmentReferences(def, refs);
-        });
-      }
+      var module = cache[name] = new newRequire.Module(name);
 
-      if (node.definitions) {
-        node.definitions.forEach(function(def) {
-          collectFragmentReferences(def, refs);
-        });
-      }
+      modules[name][0].call(module.exports, localRequire, module, module.exports, this);
     }
 
-    var definitionRefs = {};
-    (function extractReferences() {
-      doc$1.definitions.forEach(function(def) {
-        if (def.name) {
-          var refs = new Set();
-          collectFragmentReferences(def, refs);
-          definitionRefs[def.name.value] = refs;
-        }
-      });
-    })();
+    return cache[name].exports;
 
-    function findOperation(doc, name) {
-      for (var i = 0; i < doc.definitions.length; i++) {
-        var element = doc.definitions[i];
-        if (element.name && element.name.value == name) {
-          return element;
-        }
-      }
+    function localRequire(x){
+      return newRequire(localRequire.resolve(x));
     }
 
-    function oneQuery(doc, operationName) {
-      // Copy the DocumentNode, but clear out the definitions
-      var newDoc = {
-        kind: doc.kind,
-        definitions: [findOperation(doc, operationName)]
-      };
-      if (doc.hasOwnProperty("loc")) {
-        newDoc.loc = doc.loc;
+    function resolve(x){
+      return modules[name][1][x] || x;
+    }
+  }
+
+  function Module(moduleName) {
+    this.id = moduleName;
+    this.bundle = newRequire;
+    this.exports = {};
+  }
+
+  newRequire.isParcelRequire = true;
+  newRequire.Module = Module;
+  newRequire.modules = modules;
+  newRequire.cache = cache;
+  newRequire.parent = previousRequire;
+  newRequire.register = function (id, exports) {
+    modules[id] = [function (require, module) {
+      module.exports = exports;
+    }, {}];
+  };
+
+  var error;
+  for (var i = 0; i < entry.length; i++) {
+    try {
+      newRequire(entry[i]);
+    } catch (e) {
+      // Save first error but execute all entries
+      if (!error) {
+        error = e;
       }
+    }
+  }
 
-      // Now, for the operation we're running, find any fragments referenced by
-      // it or the fragments it references
-      var opRefs = definitionRefs[operationName] || new Set();
-      var allRefs = new Set();
-      var newRefs = new Set();
+  if (entry.length) {
+    // Expose entry point to Node, AMD or browser globals
+    // Based on https://github.com/ForbesLindesay/umd/blob/master/template.js
+    var mainExports = newRequire(entry[entry.length - 1]);
 
-      // IE 11 doesn't support "new Set(iterable)", so we add the members of opRefs to newRefs one by one
-      opRefs.forEach(function(refName) {
-        newRefs.add(refName);
-      });
+    // CommonJS
+    if (typeof exports === "object" && typeof module !== "undefined") {
+      module.exports = mainExports;
 
-      while (newRefs.size > 0) {
-        var prevRefs = newRefs;
-        newRefs = new Set();
+    // RequireJS
+    } else if (typeof define === "function" && define.amd) {
+     define(function () {
+       return mainExports;
+     });
 
-        prevRefs.forEach(function(refName) {
-          if (!allRefs.has(refName)) {
-            allRefs.add(refName);
-            var childRefs = definitionRefs[refName] || new Set();
-            childRefs.forEach(function(childRef) {
-              newRefs.add(childRef);
-            });
+    // <script>
+    } else if (globalName) {
+      this[globalName] = mainExports;
+    }
+  }
+
+  // Override the current require with this new one
+  parcelRequire = newRequire;
+
+  if (error) {
+    // throw error from earlier, _after updating parcelRequire_
+    throw error;
+  }
+
+  return newRequire;
+})({"j9dv":[function(require,module,exports) {
+module.exports = {
+  "kind": "Document",
+  "definitions": [{
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "Gene"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "id"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "ID"
           }
-        });
-      }
-
-      allRefs.forEach(function(refName) {
-        var op = findOperation(doc, refName);
-        if (op) {
-          newDoc.definitions.push(op);
         }
-      });
-
-      return newDoc;
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "symbol"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "alleles"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Allele"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "insertions"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Insertion"
+          }
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "Allele"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "id"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "ID"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "symbol"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "isConstruct"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Boolean"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "geneIsRegulatoryRegion"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Boolean"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "classes"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "CVTerm"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "mutagens"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "CVTerm"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "stocksCount"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Int"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "pubCount"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Int"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "knownLesion"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Boolean"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "hasImage"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Boolean"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "constructs"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Construct"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "insertions"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Insertion"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "insertedElementTypes"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "CVTerm"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "regRegions"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Tool"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "encodedTools"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Tool"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "encodedToolUses"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "CVTerm"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "taggedWith"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Tool"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "tagUses"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "CVTerm"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "alsoCarries"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Tool"
+          }
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "CVTerm"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "id"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "ID"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "name"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "Insertion"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "id"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "ID"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "symbol"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "insertedElementTypes"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "CVTerm"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "regRegions"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Tool"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "encodedTools"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Tool"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "encodedToolUses"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "CVTerm"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "taggedWith"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Tool"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "tagUses"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "CVTerm"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "alsoCarries"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Tool"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "stocksCount"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Int"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "pubCount"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Int"
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "Construct"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "id"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "ID"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "symbol"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "Tool"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "id"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "ID"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "symbol"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "Stock"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "id"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "ID"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "genotype"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "stockNumber"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "center"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "ExpressionToolSearchResult"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "id"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "ID"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "expression_terms"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "ListType",
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "CVTerm"
+            }
+          }
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "InputObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "ExpressionSearchInput"
+    },
+    "directives": [],
+    "fields": [{
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "stage"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "stageq"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "anatomy"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "anatomyq"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "subcellular"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "subcellularq"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "UnionTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "Result"
+    },
+    "directives": [],
+    "types": [{
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ExpressionToolSearchResult"
+      }
+    }]
+  }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "FlyBaseAPIResult"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "resultset"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "ResultSet"
+          }
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "ResultSet"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "api_version"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "data_version"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "query_url"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "query_time"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "data_provider"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "result"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "ListType",
+          "type": {
+            "kind": "NonNullType",
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "Result"
+              }
+            }
+          }
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "Query"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "allelesByGene"
+      },
+      "arguments": [{
+        "kind": "InputValueDefinition",
+        "name": {
+          "kind": "Name",
+          "value": "fbgn"
+        },
+        "type": {
+          "kind": "NonNullType",
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "String"
+            }
+          }
+        },
+        "directives": []
+      }, {
+        "kind": "InputValueDefinition",
+        "name": {
+          "kind": "Name",
+          "value": "isConstruct"
+        },
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Boolean"
+          }
+        },
+        "directives": []
+      }, {
+        "kind": "InputValueDefinition",
+        "name": {
+          "kind": "Name",
+          "value": "geneIsRegulatoryRegion"
+        },
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Boolean"
+          }
+        },
+        "directives": []
+      }],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Gene"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "alleleById"
+      },
+      "arguments": [{
+        "kind": "InputValueDefinition",
+        "name": {
+          "kind": "Name",
+          "value": "fbal"
+        },
+        "type": {
+          "kind": "NonNullType",
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "String"
+            }
+          }
+        },
+        "directives": []
+      }],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Allele"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "allelesByIds"
+      },
+      "arguments": [{
+        "kind": "InputValueDefinition",
+        "name": {
+          "kind": "Name",
+          "value": "fbal_ids"
+        },
+        "type": {
+          "kind": "NonNullType",
+          "type": {
+            "kind": "ListType",
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "String"
+              }
+            }
+          }
+        },
+        "directives": []
+      }],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Allele"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "insertionsWithoutAllelesByGene"
+      },
+      "arguments": [{
+        "kind": "InputValueDefinition",
+        "name": {
+          "kind": "Name",
+          "value": "fbgn"
+        },
+        "type": {
+          "kind": "NonNullType",
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "String"
+            }
+          }
+        },
+        "directives": []
+      }],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Gene"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "searchExpressionTools"
+      },
+      "arguments": [{
+        "kind": "InputValueDefinition",
+        "name": {
+          "kind": "Name",
+          "value": "expression"
+        },
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "ExpressionSearchInput"
+          }
+        },
+        "directives": []
+      }, {
+        "kind": "InputValueDefinition",
+        "name": {
+          "kind": "Name",
+          "value": "gene"
+        },
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        },
+        "directives": []
+      }],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "ExpressionToolSearchResult"
+          }
+        }
+      },
+      "directives": []
+    }]
+  }],
+  "loc": {
+    "start": 0,
+    "end": 1840
+  }
+};
+},{}],"YSip":[function(require,module,exports) {
+module.exports = {
+  "kind": "Document",
+  "definitions": [{
+    "kind": "OperationDefinition",
+    "operation": "query",
+    "name": {
+      "kind": "Name",
+      "value": "AllelesByGene"
+    },
+    "variableDefinitions": [{
+      "kind": "VariableDefinition",
+      "variable": {
+        "kind": "Variable",
+        "name": {
+          "kind": "Name",
+          "value": "fbgn"
+        }
+      },
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "VariableDefinition",
+      "variable": {
+        "kind": "Variable",
+        "name": {
+          "kind": "Name",
+          "value": "isConstruct"
+        }
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Boolean"
+        }
+      },
+      "defaultValue": {
+        "kind": "BooleanValue",
+        "value": false
+      },
+      "directives": []
+    }, {
+      "kind": "VariableDefinition",
+      "variable": {
+        "kind": "Variable",
+        "name": {
+          "kind": "Name",
+          "value": "geneIsRegulatoryRegion"
+        }
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Boolean"
+        }
+      },
+      "defaultValue": {
+        "kind": "BooleanValue",
+        "value": false
+      },
+      "directives": []
+    }],
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "allGenes"
+        },
+        "arguments": [{
+          "kind": "Argument",
+          "name": {
+            "kind": "Name",
+            "value": "condition"
+          },
+          "value": {
+            "kind": "ObjectValue",
+            "fields": [{
+              "kind": "ObjectField",
+              "name": {
+                "kind": "Name",
+                "value": "uniquename"
+              },
+              "value": {
+                "kind": "Variable",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbgn"
+                }
+              }
+            }]
+          }
+        }],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "name"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "uniquename"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "allelesByGeneId"
+                },
+                "arguments": [{
+                  "kind": "Argument",
+                  "name": {
+                    "kind": "Name",
+                    "value": "condition"
+                  },
+                  "value": {
+                    "kind": "ObjectValue",
+                    "fields": [{
+                      "kind": "ObjectField",
+                      "name": {
+                        "kind": "Name",
+                        "value": "isConstruct"
+                      },
+                      "value": {
+                        "kind": "Variable",
+                        "name": {
+                          "kind": "Name",
+                          "value": "isConstruct"
+                        }
+                      }
+                    }, {
+                      "kind": "ObjectField",
+                      "name": {
+                        "kind": "Name",
+                        "value": "geneIsRegulatoryRegion"
+                      },
+                      "value": {
+                        "kind": "Variable",
+                        "name": {
+                          "kind": "Name",
+                          "value": "geneIsRegulatoryRegion"
+                        }
+                      }
+                    }]
+                  }
+                }],
+                "directives": [],
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": [{
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "nodes"
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "selectionSet": {
+                      "kind": "SelectionSet",
+                      "selections": [{
+                        "kind": "FragmentSpread",
+                        "name": {
+                          "kind": "Name",
+                          "value": "alleleFields"
+                        },
+                        "directives": []
+                      }]
+                    }
+                  }]
+                }
+              }]
+            }
+          }]
+        }
+      }]
     }
-    
-        const AllelesByGene = oneQuery(doc$1, "AllelesByGene");
-        
-        const InsertionsWithoutAllelesByGene = oneQuery(doc$1, "InsertionsWithoutAllelesByGene");
-        
-        const Allele = oneQuery(doc$1, "Allele");
-        
-        const Alleles = oneQuery(doc$1, "Alleles");
+  }, {
+    "kind": "OperationDefinition",
+    "operation": "query",
+    "name": {
+      "kind": "Name",
+      "value": "InsertionsWithoutAllelesByGene"
+    },
+    "variableDefinitions": [{
+      "kind": "VariableDefinition",
+      "variable": {
+        "kind": "Variable",
+        "name": {
+          "kind": "Name",
+          "value": "fbgn"
+        }
+      },
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        }
+      },
+      "directives": []
+    }],
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "allGenes"
+        },
+        "arguments": [{
+          "kind": "Argument",
+          "name": {
+            "kind": "Name",
+            "value": "condition"
+          },
+          "value": {
+            "kind": "ObjectValue",
+            "fields": [{
+              "kind": "ObjectField",
+              "name": {
+                "kind": "Name",
+                "value": "uniquename"
+              },
+              "value": {
+                "kind": "Variable",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbgn"
+                }
+              }
+            }]
+          }
+        }],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "name"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "uniquename"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "insertionsByGeneId"
+                },
+                "arguments": [],
+                "directives": [],
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": [{
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "nodes"
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "selectionSet": {
+                      "kind": "SelectionSet",
+                      "selections": [{
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "fbtiId"
+                        },
+                        "arguments": [],
+                        "directives": []
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "symbol"
+                        },
+                        "arguments": [],
+                        "directives": []
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "stocksCount"
+                        },
+                        "arguments": [],
+                        "directives": []
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "pubCount"
+                        },
+                        "arguments": [],
+                        "directives": []
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "constructsByInsertionId"
+                        },
+                        "arguments": [],
+                        "directives": [],
+                        "selectionSet": {
+                          "kind": "SelectionSet",
+                          "selections": [{
+                            "kind": "Field",
+                            "name": {
+                              "kind": "Name",
+                              "value": "nodes"
+                            },
+                            "arguments": [],
+                            "directives": [],
+                            "selectionSet": {
+                              "kind": "SelectionSet",
+                              "selections": [{
+                                "kind": "Field",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "fbtpId"
+                                },
+                                "arguments": [],
+                                "directives": []
+                              }, {
+                                "kind": "Field",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "symbol"
+                                },
+                                "arguments": [],
+                                "directives": []
+                              }, {
+                                "kind": "Field",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "toolUsesByConstructId"
+                                },
+                                "arguments": [],
+                                "directives": [],
+                                "selectionSet": {
+                                  "kind": "SelectionSet",
+                                  "selections": [{
+                                    "kind": "Field",
+                                    "name": {
+                                      "kind": "Name",
+                                      "value": "nodes"
+                                    },
+                                    "arguments": [],
+                                    "directives": [],
+                                    "selectionSet": {
+                                      "kind": "SelectionSet",
+                                      "selections": [{
+                                        "kind": "FragmentSpread",
+                                        "name": {
+                                          "kind": "Name",
+                                          "value": "toolUses"
+                                        },
+                                        "directives": []
+                                      }]
+                                    }
+                                  }]
+                                }
+                              }, {
+                                "kind": "Field",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "toolsByConstructId"
+                                },
+                                "arguments": [],
+                                "directives": [],
+                                "selectionSet": {
+                                  "kind": "SelectionSet",
+                                  "selections": [{
+                                    "kind": "Field",
+                                    "name": {
+                                      "kind": "Name",
+                                      "value": "nodes"
+                                    },
+                                    "arguments": [],
+                                    "directives": [],
+                                    "selectionSet": {
+                                      "kind": "SelectionSet",
+                                      "selections": [{
+                                        "kind": "FragmentSpread",
+                                        "name": {
+                                          "kind": "Name",
+                                          "value": "toolFields"
+                                        },
+                                        "directives": []
+                                      }]
+                                    }
+                                  }]
+                                }
+                              }]
+                            }
+                          }]
+                        }
+                      }]
+                    }
+                  }]
+                }
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "OperationDefinition",
+    "operation": "query",
+    "name": {
+      "kind": "Name",
+      "value": "Allele"
+    },
+    "variableDefinitions": [{
+      "kind": "VariableDefinition",
+      "variable": {
+        "kind": "Variable",
+        "name": {
+          "kind": "Name",
+          "value": "fbal"
+        }
+      },
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        }
+      },
+      "directives": []
+    }],
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "allAlleles"
+        },
+        "arguments": [{
+          "kind": "Argument",
+          "name": {
+            "kind": "Name",
+            "value": "condition"
+          },
+          "value": {
+            "kind": "ObjectValue",
+            "fields": [{
+              "kind": "ObjectField",
+              "name": {
+                "kind": "Name",
+                "value": "fbalId"
+              },
+              "value": {
+                "kind": "Variable",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbal"
+                }
+              }
+            }]
+          }
+        }],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "alleleFields"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "OperationDefinition",
+    "operation": "query",
+    "name": {
+      "kind": "Name",
+      "value": "Alleles"
+    },
+    "variableDefinitions": [{
+      "kind": "VariableDefinition",
+      "variable": {
+        "kind": "Variable",
+        "name": {
+          "kind": "Name",
+          "value": "fbal_ids"
+        }
+      },
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "ListType",
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "String"
+            }
+          }
+        }
+      },
+      "directives": []
+    }],
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "allelesByFbal"
+        },
+        "arguments": [{
+          "kind": "Argument",
+          "name": {
+            "kind": "Name",
+            "value": "ids"
+          },
+          "value": {
+            "kind": "Variable",
+            "name": {
+              "kind": "Name",
+              "value": "fbal_ids"
+            }
+          }
+        }],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "alleleFields"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "alleleFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Allele"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbalId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "isConstruct"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "propagateTransgenicUses"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "geneIsRegulatoryRegion"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "stocksCount"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "pubCount"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "knownLesion"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "hasImage"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "alleleClassesByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbcvId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "name"
+                },
+                "arguments": [],
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "alleleMutagensByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbcvId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "name"
+                },
+                "arguments": [],
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "insertionsByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbtiId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "symbol"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "constructsByInsertionId"
+                },
+                "arguments": [],
+                "directives": [],
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": [{
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "nodes"
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "selectionSet": {
+                      "kind": "SelectionSet",
+                      "selections": [{
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "fbtpId"
+                        },
+                        "arguments": [],
+                        "directives": []
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "symbol"
+                        },
+                        "arguments": [],
+                        "directives": []
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolUsesByConstructId"
+                        },
+                        "arguments": [],
+                        "directives": [],
+                        "selectionSet": {
+                          "kind": "SelectionSet",
+                          "selections": [{
+                            "kind": "Field",
+                            "name": {
+                              "kind": "Name",
+                              "value": "nodes"
+                            },
+                            "arguments": [],
+                            "directives": [],
+                            "selectionSet": {
+                              "kind": "SelectionSet",
+                              "selections": [{
+                                "kind": "FragmentSpread",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "toolUses"
+                                },
+                                "directives": []
+                              }]
+                            }
+                          }]
+                        }
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolsByConstructId"
+                        },
+                        "arguments": [],
+                        "directives": [],
+                        "selectionSet": {
+                          "kind": "SelectionSet",
+                          "selections": [{
+                            "kind": "Field",
+                            "name": {
+                              "kind": "Name",
+                              "value": "nodes"
+                            },
+                            "arguments": [],
+                            "directives": [],
+                            "selectionSet": {
+                              "kind": "SelectionSet",
+                              "selections": [{
+                                "kind": "FragmentSpread",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "toolFields"
+                                },
+                                "directives": []
+                              }]
+                            }
+                          }]
+                        }
+                      }]
+                    }
+                  }]
+                }
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "constructsByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbtpId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "symbol"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolsByConstructId"
+                },
+                "arguments": [],
+                "directives": [],
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": [{
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "nodes"
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "selectionSet": {
+                      "kind": "SelectionSet",
+                      "selections": [{
+                        "kind": "FragmentSpread",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolFields"
+                        },
+                        "directives": []
+                      }]
+                    }
+                  }]
+                }
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUsesByConstructId"
+                },
+                "arguments": [],
+                "directives": [],
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": [{
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "nodes"
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "selectionSet": {
+                      "kind": "SelectionSet",
+                      "selections": [{
+                        "kind": "FragmentSpread",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolUses"
+                        },
+                        "directives": []
+                      }]
+                    }
+                  }]
+                }
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolsByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolFields"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Tool"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbid"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "relType"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByToolId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolUses"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ToolUse"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbcvId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "name"
+        },
+        "arguments": [],
+        "directives": []
+      }]
+    }
+  }],
+  "loc": {
+    "start": 0,
+    "end": 2584
+  }
+};
+},{}],"m8SM":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.flattenNodes = exports.reformatAllele = exports.reformatInsertionByGene = exports.reformatAlleles = exports.reformatAlleleByGene = void 0;
+
+var _lodash = _interopRequireDefault(require("lodash.pickby"));
+
+var _lodash2 = _interopRequireDefault(require("lodash.isplainobject"));
+
+var _lodash3 = _interopRequireDefault(require("lodash.mapkeys"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 /**
  *  Reformats the allele by gene response from Chado via Postgraphile.
@@ -130,7 +2704,6 @@ var doc$1 = {"kind":"Document","definitions":[{"kind":"OperationDefinition","ope
  * @param gene Gene object from Chado
  * @returns {{symbol: *, id: *, alleles: *}}
  */
-
 const reformatAlleleByGene = gene => {
   const alleles = flattenNodes(gene.allelesByGeneId.nodes);
   const {
@@ -153,6 +2726,9 @@ const reformatAlleleByGene = gene => {
  * @returns {{knownLesion: *, stocksCount: *, insertions: *, alsoCarries: *, taggedWith: *, encodedToolUses: *, insertedElementTypes: *, regRegions: *, tagUses: *, id: *, constructs: *, encodedTools: *}[]}
  */
 
+
+exports.reformatAlleleByGene = reformatAlleleByGene;
+
 const reformatAlleles = nodes => {
   const alleles = flattenNodes(nodes);
   return alleles.map(allele => materializeTools(allele));
@@ -162,6 +2738,9 @@ const reformatAlleles = nodes => {
  * @param gene
  * @returns {{symbol: *, insertions: *, id: *}}
  */
+
+
+exports.reformatAlleles = reformatAlleles;
 
 const reformatInsertionByGene = gene => {
   const insertions = flattenNodes(gene.insertionsByGeneId.nodes);
@@ -177,6 +2756,9 @@ const reformatInsertionByGene = gene => {
  * @returns {{knownLesion: *, stocksCount: *, insertions: *, alsoCarries: *, taggedWith: *, encodedToolUses: *, insertedElementTypes: *, regRegions: *, tagUses: *, id: *, constructs: *, encodedTools: *}}
  */
 
+
+exports.reformatInsertionByGene = reformatInsertionByGene;
+
 const reformatAllele = allele => {
   const node = flattenNodes([allele])[0];
   return materializeTools(node);
@@ -187,6 +2769,9 @@ const reformatAllele = allele => {
  * @param parent
  * @returns {{knownLesion: *, stocksCount: *, insertions: *, alsoCarries: *, taggedWith: *, encodedToolUses: *, insertedElementTypes: *, regRegions: *, tagUses: *, id: *, constructs: *, encodedTools: *}}
  */
+
+
+exports.reformatAllele = reformatAllele;
 
 const materializeTools = (fbObject = {}, parent = {}) => {
   /*
@@ -201,9 +2786,10 @@ const materializeTools = (fbObject = {}, parent = {}) => {
     knownLesion = false,
     insertions = [],
     constructs = [],
-    toolUses = [],
-    ...restProps
-  } = fbObject;
+    toolUses = []
+  } = fbObject,
+        restProps = _objectWithoutProperties(fbObject, ["id", "propagateTransgenicUses", "stocksCount", "knownLesion", "insertions", "constructs", "toolUses"]);
+
   const isAllele = /^FBal\d+$/.test(id); // Pull data from construct if we are supposed to.
 
   if (propagateTransgenicUses) {
@@ -218,7 +2804,8 @@ const materializeTools = (fbObject = {}, parent = {}) => {
   }
 
   const taggedWith = getTools(fbObject, 'tagged_with', propagateTransgenicUses);
-  const materializedFbObject = { ...restProps,
+
+  const materializedFbObject = _objectSpread({}, restProps, {
     id,
     stocksCount,
     knownLesion,
@@ -231,7 +2818,7 @@ const materializeTools = (fbObject = {}, parent = {}) => {
     taggedWith,
     tagUses: getToolUses(taggedWith),
     alsoCarries: getTools(fbObject, 'carries_tool', propagateTransgenicUses)
-  };
+  });
 
   if (!isAllele) {
     // Delete these fields if record is not an allele.
@@ -381,9 +2968,9 @@ const flattenNodes = (nodes = []) => {
        pickBy  - https://lodash.com/docs#pickBy
        mapKeys - https://lodash.com/docs#mapKeys
     */
-    const nodeObject = mapKeys(pickBy(node, (val, key) => key !== '__typename' && !isPlainObject(val)), (value, key) => remapFbIdKey(key)); // Extract object type fields.
+    const nodeObject = (0, _lodash3.default)((0, _lodash.default)(node, (val, key) => key !== '__typename' && !(0, _lodash2.default)(val)), (value, key) => remapFbIdKey(key)); // Extract object type fields.
 
-    const subObjects = pickBy(node, val => isPlainObject(val)); // Recurse through the sub object fields.
+    const subObjects = (0, _lodash.default)(node, val => (0, _lodash2.default)(val)); // Recurse through the sub object fields.
 
     Object.keys(subObjects).forEach(subField => {
       // Check if sub field has a 'nodes' property
@@ -395,10 +2982,33 @@ const flattenNodes = (nodes = []) => {
   });
 };
 
-const cache = new apolloCacheInmemory.InMemoryCache();
-const link = new apolloLinkHttp.HttpLink({
+exports.flattenNodes = flattenNodes;
+},{}],"OJnd":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.resolvers = exports.psqlClient = void 0;
+
+var _crossFetch = _interopRequireDefault(require("cross-fetch"));
+
+var _apolloClient = require("apollo-client");
+
+var _apolloCacheInmemory = require("apollo-cache-inmemory");
+
+var _apolloLinkHttp = require("apollo-link-http");
+
+var _queries = require("./chado/queries.gql");
+
+var _alleles = require("./chado/alleles");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const cache = new _apolloCacheInmemory.InMemoryCache();
+const link = new _apolloLinkHttp.HttpLink({
   uri: 'http://localhost:5000/graphql',
-  fetch: fetch
+  fetch: _crossFetch.default
 });
 const defaultOptions = {
   watchQuery: {
@@ -410,7 +3020,7 @@ const defaultOptions = {
     errorPolicy: 'all'
   }
 };
-const psqlClient = new apolloClient.ApolloClient({
+const psqlClient = new _apolloClient.ApolloClient({
   cache,
   link,
   defaultOptions
@@ -422,6 +3032,7 @@ const psqlClient = new apolloClient.ApolloClient({
   (modeled in the schema.graphql) and returned.
 */
 
+exports.psqlClient = psqlClient;
 const resolvers = {
   /**
    * Need to resolve Union types from the GraphQL schema.  That is a single type
@@ -446,49 +3057,49 @@ const resolvers = {
       geneIsRegulatoryRegion = false
     }, _context, _info_) => {
       const result = await psqlClient.query({
-        query: AllelesByGene,
+        query: _queries.AllelesByGene,
         variables: {
           fbgn,
           isConstruct,
           geneIsRegulatoryRegion
         }
       }).catch(e => console.error(e));
-      return result.data.allGenes.nodes.length !== 0 ? reformatAlleleByGene(result.data.allGenes.nodes[0]) : null;
+      return result.data.allGenes.nodes.length !== 0 ? (0, _alleles.reformatAlleleByGene)(result.data.allGenes.nodes[0]) : null;
     },
     insertionsWithoutAllelesByGene: async (obj, {
       fbgn
     }, _context, _info) => {
       const result = await psqlClient.query({
-        query: InsertionsWithoutAllelesByGene,
+        query: _queries.InsertionsWithoutAllelesByGene,
         variables: {
           fbgn: fbgn
         }
       }).catch(e => console.error(e));
-      return result.data.allGenes.nodes.length !== 0 ? reformatInsertionByGene(result.data.allGenes.nodes[0]) : null;
+      return result.data.allGenes.nodes.length !== 0 ? (0, _alleles.reformatInsertionByGene)(result.data.allGenes.nodes[0]) : null;
     },
     alleleById: async (_obj, {
       fbal
     }, _context, _info) => {
       const result = await psqlClient.query({
-        query: Allele,
+        query: _queries.Allele,
         variables: {
           fbal
         }
       }).catch(e => console.error(e));
-      return result.data.allAlleles.nodes.length !== 0 ? reformatAllele(result.data.allAlleles.nodes[0]) : null;
+      return result.data.allAlleles.nodes.length !== 0 ? (0, _alleles.reformatAllele)(result.data.allAlleles.nodes[0]) : null;
     },
     allelesByIds: async (_obj, {
       fbal_ids
     }, _context, _info) => {
       console.log(`Fetching ${fbal_ids.length} alleles by IDs from Chado.`);
       const result = await psqlClient.query({
-        query: Alleles,
+        query: _queries.Alleles,
         variables: {
           fbal_ids
         }
       }).catch(e => console.error(e));
       console.log('Retrieved alleles, reformatting results.');
-      return result.data.allelesByFbal.nodes.length !== 0 ? reformatAlleles(result.data.allelesByFbal.nodes) : null;
+      return result.data.allelesByFbal.nodes.length !== 0 ? (0, _alleles.reformatAlleles)(result.data.allelesByFbal.nodes) : null;
     },
     searchExpressionTools: async (_obj, {
       expression,
@@ -525,12 +3136,24 @@ const resolvers = {
     }
   }
 };
+exports.resolvers = resolvers;
+},{"./chado/queries.gql":"YSip","./chado/alleles":"m8SM"}],"bEVX":[function(require,module,exports) {
+"use strict";
 
-/**
- * An Apollo REST data source for using the FlyBase API
- */
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 
-class FlyBaseAPI extends apolloDatasourceRest.RESTDataSource {
+var _apolloDatasourceRest = require("apollo-datasource-rest");
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+class FlyBaseAPI extends _apolloDatasourceRest.RESTDataSource {
   constructor() {
     super();
     this.baseURL = 'http://localhost:7082/api/';
@@ -547,25 +3170,55 @@ class FlyBaseAPI extends apolloDatasourceRest.RESTDataSource {
   async searchExpressionToolsByExpression({
     expression
   }) {
-    return this.get('/expression/tools', { ...expression
-    });
+    return this.get('/expression/tools', _objectSpread({}, expression));
   }
 
 }
 
-/*
- Required due to a RegeneratorRuntime error being thrown.
- see https://stackoverflow.com/a/54490329
-*/
+var _default = FlyBaseAPI;
+exports.default = _default;
+},{}],"Focm":[function(require,module,exports) {
+"use strict";
 
-const server = new apolloServer.ApolloServer({
-  typeDefs: doc,
-  resolvers,
+require("core-js/modules/es7.array.flat-map");
+
+require("core-js/modules/es6.array.sort");
+
+require("core-js/modules/es7.object.define-getter");
+
+require("core-js/modules/es7.object.define-setter");
+
+require("core-js/modules/es7.object.lookup-getter");
+
+require("core-js/modules/es7.object.lookup-setter");
+
+require("core-js/modules/es7.promise.finally");
+
+require("core-js/modules/es7.symbol.async-iterator");
+
+require("core-js/modules/es7.string.trim-left");
+
+require("core-js/modules/es7.string.trim-right");
+
+var _apolloServer = require("apollo-server");
+
+var _schema = _interopRequireDefault(require("./schema.gql"));
+
+var _resolvers = require("./resolvers");
+
+var _FlyBaseAPI = _interopRequireDefault(require("./datasources/FlyBaseAPI"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Create a new GraphQL server
+const server = new _apolloServer.ApolloServer({
+  typeDefs: _schema.default,
+  resolvers: _resolvers.resolvers,
   introspection: true,
   playground: true,
   dataSources: () => {
     return {
-      flyBaseAPI: new FlyBaseAPI()
+      flyBaseAPI: new _FlyBaseAPI.default()
     };
   }
 }); // Start it up!
@@ -575,3 +3228,4 @@ server.listen().then(({
 }) => {
   console.log(`🚀  Server ready at ${url}`);
 });
+},{"./schema.gql":"j9dv","./resolvers":"OJnd","./datasources/FlyBaseAPI":"bEVX"}]},{},["Focm"], null)
