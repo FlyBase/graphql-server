@@ -1454,7 +1454,7 @@ module.exports = {
     "end": 1840
   }
 };
-},{}],"YSip":[function(require,module,exports) {
+},{}],"XHMw":[function(require,module,exports) {
 module.exports = {
   "kind": "Document",
   "definitions": [{
@@ -1663,33 +1663,18 @@ module.exports = {
       }]
     }
   }, {
-    "kind": "OperationDefinition",
-    "operation": "query",
+    "kind": "FragmentDefinition",
     "name": {
       "kind": "Name",
-      "value": "InsertionsWithoutAllelesByGene"
+      "value": "alleleFields"
     },
-    "variableDefinitions": [{
-      "kind": "VariableDefinition",
-      "variable": {
-        "kind": "Variable",
-        "name": {
-          "kind": "Name",
-          "value": "fbgn"
-        }
-      },
-      "type": {
-        "kind": "NonNullType",
-        "type": {
-          "kind": "NamedType",
-          "name": {
-            "kind": "Name",
-            "value": "String"
-          }
-        }
-      },
-      "directives": []
-    }],
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Allele"
+      }
+    },
     "directives": [],
     "selectionSet": {
       "kind": "SelectionSet",
@@ -1697,32 +1682,81 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "allGenes"
+          "value": "symbol"
         },
-        "arguments": [{
-          "kind": "Argument",
-          "name": {
-            "kind": "Name",
-            "value": "condition"
-          },
-          "value": {
-            "kind": "ObjectValue",
-            "fields": [{
-              "kind": "ObjectField",
-              "name": {
-                "kind": "Name",
-                "value": "uniquename"
-              },
-              "value": {
-                "kind": "Variable",
-                "name": {
-                  "kind": "Name",
-                  "value": "fbgn"
-                }
-              }
-            }]
-          }
-        }],
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbalId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "isConstruct"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "propagateTransgenicUses"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "geneIsRegulatoryRegion"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "stocksCount"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "pubCount"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "knownLesion"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "hasImage"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "alleleClassesByAlleleId"
+        },
+        "arguments": [],
         "directives": [],
         "selectionSet": {
           "kind": "SelectionSet",
@@ -1740,15 +1774,47 @@ module.exports = {
                 "kind": "Field",
                 "name": {
                   "kind": "Name",
+                  "value": "fbcvId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
                   "value": "name"
                 },
                 "arguments": [],
                 "directives": []
-              }, {
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "alleleMutagensByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
                 "kind": "Field",
                 "name": {
                   "kind": "Name",
-                  "value": "uniquename"
+                  "value": "fbcvId"
                 },
                 "arguments": [],
                 "directives": []
@@ -1756,7 +1822,55 @@ module.exports = {
                 "kind": "Field",
                 "name": {
                   "kind": "Name",
-                  "value": "insertionsByGeneId"
+                  "value": "name"
+                },
+                "arguments": [],
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "insertionsByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbtiId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "symbol"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "constructsByInsertionId"
                 },
                 "arguments": [],
                 "directives": [],
@@ -1776,7 +1890,7 @@ module.exports = {
                         "kind": "Field",
                         "name": {
                           "kind": "Name",
-                          "value": "fbtiId"
+                          "value": "fbtpId"
                         },
                         "arguments": [],
                         "directives": []
@@ -1792,23 +1906,7 @@ module.exports = {
                         "kind": "Field",
                         "name": {
                           "kind": "Name",
-                          "value": "stocksCount"
-                        },
-                        "arguments": [],
-                        "directives": []
-                      }, {
-                        "kind": "Field",
-                        "name": {
-                          "kind": "Name",
-                          "value": "pubCount"
-                        },
-                        "arguments": [],
-                        "directives": []
-                      }, {
-                        "kind": "Field",
-                        "name": {
-                          "kind": "Name",
-                          "value": "constructsByInsertionId"
+                          "value": "toolUsesByConstructId"
                         },
                         "arguments": [],
                         "directives": [],
@@ -1825,83 +1923,43 @@ module.exports = {
                             "selectionSet": {
                               "kind": "SelectionSet",
                               "selections": [{
-                                "kind": "Field",
+                                "kind": "FragmentSpread",
                                 "name": {
                                   "kind": "Name",
-                                  "value": "fbtpId"
+                                  "value": "toolUses"
                                 },
-                                "arguments": [],
                                 "directives": []
-                              }, {
-                                "kind": "Field",
+                              }]
+                            }
+                          }]
+                        }
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolsByConstructId"
+                        },
+                        "arguments": [],
+                        "directives": [],
+                        "selectionSet": {
+                          "kind": "SelectionSet",
+                          "selections": [{
+                            "kind": "Field",
+                            "name": {
+                              "kind": "Name",
+                              "value": "nodes"
+                            },
+                            "arguments": [],
+                            "directives": [],
+                            "selectionSet": {
+                              "kind": "SelectionSet",
+                              "selections": [{
+                                "kind": "FragmentSpread",
                                 "name": {
                                   "kind": "Name",
-                                  "value": "symbol"
+                                  "value": "toolFields"
                                 },
-                                "arguments": [],
                                 "directives": []
-                              }, {
-                                "kind": "Field",
-                                "name": {
-                                  "kind": "Name",
-                                  "value": "toolUsesByConstructId"
-                                },
-                                "arguments": [],
-                                "directives": [],
-                                "selectionSet": {
-                                  "kind": "SelectionSet",
-                                  "selections": [{
-                                    "kind": "Field",
-                                    "name": {
-                                      "kind": "Name",
-                                      "value": "nodes"
-                                    },
-                                    "arguments": [],
-                                    "directives": [],
-                                    "selectionSet": {
-                                      "kind": "SelectionSet",
-                                      "selections": [{
-                                        "kind": "FragmentSpread",
-                                        "name": {
-                                          "kind": "Name",
-                                          "value": "toolUses"
-                                        },
-                                        "directives": []
-                                      }]
-                                    }
-                                  }]
-                                }
-                              }, {
-                                "kind": "Field",
-                                "name": {
-                                  "kind": "Name",
-                                  "value": "toolsByConstructId"
-                                },
-                                "arguments": [],
-                                "directives": [],
-                                "selectionSet": {
-                                  "kind": "SelectionSet",
-                                  "selections": [{
-                                    "kind": "Field",
-                                    "name": {
-                                      "kind": "Name",
-                                      "value": "nodes"
-                                    },
-                                    "arguments": [],
-                                    "directives": [],
-                                    "selectionSet": {
-                                      "kind": "SelectionSet",
-                                      "selections": [{
-                                        "kind": "FragmentSpread",
-                                        "name": {
-                                          "kind": "Name",
-                                          "value": "toolFields"
-                                        },
-                                        "directives": []
-                                      }]
-                                    }
-                                  }]
-                                }
                               }]
                             }
                           }]
@@ -1914,9 +1972,289 @@ module.exports = {
             }
           }]
         }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "constructsByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbtpId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "symbol"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolsByConstructId"
+                },
+                "arguments": [],
+                "directives": [],
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": [{
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "nodes"
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "selectionSet": {
+                      "kind": "SelectionSet",
+                      "selections": [{
+                        "kind": "FragmentSpread",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolFields"
+                        },
+                        "directives": []
+                      }]
+                    }
+                  }]
+                }
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUsesByConstructId"
+                },
+                "arguments": [],
+                "directives": [],
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": [{
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "nodes"
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "selectionSet": {
+                      "kind": "SelectionSet",
+                      "selections": [{
+                        "kind": "FragmentSpread",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolUses"
+                        },
+                        "directives": []
+                      }]
+                    }
+                  }]
+                }
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolsByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolFields"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
       }]
     }
   }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Tool"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbid"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "relType"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByToolId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolUses"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ToolUse"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbcvId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "name"
+        },
+        "arguments": [],
+        "directives": []
+      }]
+    }
+  }],
+  "loc": {
+    "start": 0,
+    "end": 1702
+  }
+};
+},{}],"n8UT":[function(require,module,exports) {
+module.exports = {
+  "kind": "Document",
+  "definitions": [{
     "kind": "OperationDefinition",
     "operation": "query",
     "name": {
@@ -2004,6 +2342,598 @@ module.exports = {
       }]
     }
   }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "alleleFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Allele"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbalId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "isConstruct"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "propagateTransgenicUses"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "geneIsRegulatoryRegion"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "stocksCount"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "pubCount"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "knownLesion"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "hasImage"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "alleleClassesByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbcvId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "name"
+                },
+                "arguments": [],
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "alleleMutagensByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbcvId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "name"
+                },
+                "arguments": [],
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "insertionsByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbtiId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "symbol"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "constructsByInsertionId"
+                },
+                "arguments": [],
+                "directives": [],
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": [{
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "nodes"
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "selectionSet": {
+                      "kind": "SelectionSet",
+                      "selections": [{
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "fbtpId"
+                        },
+                        "arguments": [],
+                        "directives": []
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "symbol"
+                        },
+                        "arguments": [],
+                        "directives": []
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolUsesByConstructId"
+                        },
+                        "arguments": [],
+                        "directives": [],
+                        "selectionSet": {
+                          "kind": "SelectionSet",
+                          "selections": [{
+                            "kind": "Field",
+                            "name": {
+                              "kind": "Name",
+                              "value": "nodes"
+                            },
+                            "arguments": [],
+                            "directives": [],
+                            "selectionSet": {
+                              "kind": "SelectionSet",
+                              "selections": [{
+                                "kind": "FragmentSpread",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "toolUses"
+                                },
+                                "directives": []
+                              }]
+                            }
+                          }]
+                        }
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolsByConstructId"
+                        },
+                        "arguments": [],
+                        "directives": [],
+                        "selectionSet": {
+                          "kind": "SelectionSet",
+                          "selections": [{
+                            "kind": "Field",
+                            "name": {
+                              "kind": "Name",
+                              "value": "nodes"
+                            },
+                            "arguments": [],
+                            "directives": [],
+                            "selectionSet": {
+                              "kind": "SelectionSet",
+                              "selections": [{
+                                "kind": "FragmentSpread",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "toolFields"
+                                },
+                                "directives": []
+                              }]
+                            }
+                          }]
+                        }
+                      }]
+                    }
+                  }]
+                }
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "constructsByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbtpId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "symbol"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolsByConstructId"
+                },
+                "arguments": [],
+                "directives": [],
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": [{
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "nodes"
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "selectionSet": {
+                      "kind": "SelectionSet",
+                      "selections": [{
+                        "kind": "FragmentSpread",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolFields"
+                        },
+                        "directives": []
+                      }]
+                    }
+                  }]
+                }
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUsesByConstructId"
+                },
+                "arguments": [],
+                "directives": [],
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": [{
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "nodes"
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "selectionSet": {
+                      "kind": "SelectionSet",
+                      "selections": [{
+                        "kind": "FragmentSpread",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolUses"
+                        },
+                        "directives": []
+                      }]
+                    }
+                  }]
+                }
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolsByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolFields"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Tool"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbid"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "relType"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByToolId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolUses"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ToolUse"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbcvId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "name"
+        },
+        "arguments": [],
+        "directives": []
+      }]
+    }
+  }],
+  "loc": {
+    "start": 0,
+    "end": 1390
+  }
+};
+},{}],"eXdW":[function(require,module,exports) {
+module.exports = {
+  "kind": "Document",
+  "definitions": [{
     "kind": "OperationDefinition",
     "operation": "query",
     "name": {
@@ -2669,7 +3599,853 @@ module.exports = {
   }],
   "loc": {
     "start": 0,
-    "end": 2584
+    "end": 1386
+  }
+};
+},{}],"wlhe":[function(require,module,exports) {
+module.exports = {
+  "kind": "Document",
+  "definitions": [{
+    "kind": "OperationDefinition",
+    "operation": "query",
+    "name": {
+      "kind": "Name",
+      "value": "InsertionsWithoutAllelesByGene"
+    },
+    "variableDefinitions": [{
+      "kind": "VariableDefinition",
+      "variable": {
+        "kind": "Variable",
+        "name": {
+          "kind": "Name",
+          "value": "fbgn"
+        }
+      },
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        }
+      },
+      "directives": []
+    }],
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "allGenes"
+        },
+        "arguments": [{
+          "kind": "Argument",
+          "name": {
+            "kind": "Name",
+            "value": "condition"
+          },
+          "value": {
+            "kind": "ObjectValue",
+            "fields": [{
+              "kind": "ObjectField",
+              "name": {
+                "kind": "Name",
+                "value": "uniquename"
+              },
+              "value": {
+                "kind": "Variable",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbgn"
+                }
+              }
+            }]
+          }
+        }],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "name"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "uniquename"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "insertionsByGeneId"
+                },
+                "arguments": [],
+                "directives": [],
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": [{
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "nodes"
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "selectionSet": {
+                      "kind": "SelectionSet",
+                      "selections": [{
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "fbtiId"
+                        },
+                        "arguments": [],
+                        "directives": []
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "symbol"
+                        },
+                        "arguments": [],
+                        "directives": []
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "stocksCount"
+                        },
+                        "arguments": [],
+                        "directives": []
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "pubCount"
+                        },
+                        "arguments": [],
+                        "directives": []
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "constructsByInsertionId"
+                        },
+                        "arguments": [],
+                        "directives": [],
+                        "selectionSet": {
+                          "kind": "SelectionSet",
+                          "selections": [{
+                            "kind": "Field",
+                            "name": {
+                              "kind": "Name",
+                              "value": "nodes"
+                            },
+                            "arguments": [],
+                            "directives": [],
+                            "selectionSet": {
+                              "kind": "SelectionSet",
+                              "selections": [{
+                                "kind": "Field",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "fbtpId"
+                                },
+                                "arguments": [],
+                                "directives": []
+                              }, {
+                                "kind": "Field",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "symbol"
+                                },
+                                "arguments": [],
+                                "directives": []
+                              }, {
+                                "kind": "Field",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "toolUsesByConstructId"
+                                },
+                                "arguments": [],
+                                "directives": [],
+                                "selectionSet": {
+                                  "kind": "SelectionSet",
+                                  "selections": [{
+                                    "kind": "Field",
+                                    "name": {
+                                      "kind": "Name",
+                                      "value": "nodes"
+                                    },
+                                    "arguments": [],
+                                    "directives": [],
+                                    "selectionSet": {
+                                      "kind": "SelectionSet",
+                                      "selections": [{
+                                        "kind": "FragmentSpread",
+                                        "name": {
+                                          "kind": "Name",
+                                          "value": "toolUses"
+                                        },
+                                        "directives": []
+                                      }]
+                                    }
+                                  }]
+                                }
+                              }, {
+                                "kind": "Field",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "toolsByConstructId"
+                                },
+                                "arguments": [],
+                                "directives": [],
+                                "selectionSet": {
+                                  "kind": "SelectionSet",
+                                  "selections": [{
+                                    "kind": "Field",
+                                    "name": {
+                                      "kind": "Name",
+                                      "value": "nodes"
+                                    },
+                                    "arguments": [],
+                                    "directives": [],
+                                    "selectionSet": {
+                                      "kind": "SelectionSet",
+                                      "selections": [{
+                                        "kind": "FragmentSpread",
+                                        "name": {
+                                          "kind": "Name",
+                                          "value": "toolFields"
+                                        },
+                                        "directives": []
+                                      }]
+                                    }
+                                  }]
+                                }
+                              }]
+                            }
+                          }]
+                        }
+                      }]
+                    }
+                  }]
+                }
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "alleleFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Allele"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbalId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "isConstruct"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "propagateTransgenicUses"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "geneIsRegulatoryRegion"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "stocksCount"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "pubCount"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "knownLesion"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "hasImage"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "alleleClassesByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbcvId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "name"
+                },
+                "arguments": [],
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "alleleMutagensByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbcvId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "name"
+                },
+                "arguments": [],
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "insertionsByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbtiId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "symbol"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "constructsByInsertionId"
+                },
+                "arguments": [],
+                "directives": [],
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": [{
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "nodes"
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "selectionSet": {
+                      "kind": "SelectionSet",
+                      "selections": [{
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "fbtpId"
+                        },
+                        "arguments": [],
+                        "directives": []
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "symbol"
+                        },
+                        "arguments": [],
+                        "directives": []
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolUsesByConstructId"
+                        },
+                        "arguments": [],
+                        "directives": [],
+                        "selectionSet": {
+                          "kind": "SelectionSet",
+                          "selections": [{
+                            "kind": "Field",
+                            "name": {
+                              "kind": "Name",
+                              "value": "nodes"
+                            },
+                            "arguments": [],
+                            "directives": [],
+                            "selectionSet": {
+                              "kind": "SelectionSet",
+                              "selections": [{
+                                "kind": "FragmentSpread",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "toolUses"
+                                },
+                                "directives": []
+                              }]
+                            }
+                          }]
+                        }
+                      }, {
+                        "kind": "Field",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolsByConstructId"
+                        },
+                        "arguments": [],
+                        "directives": [],
+                        "selectionSet": {
+                          "kind": "SelectionSet",
+                          "selections": [{
+                            "kind": "Field",
+                            "name": {
+                              "kind": "Name",
+                              "value": "nodes"
+                            },
+                            "arguments": [],
+                            "directives": [],
+                            "selectionSet": {
+                              "kind": "SelectionSet",
+                              "selections": [{
+                                "kind": "FragmentSpread",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "toolFields"
+                                },
+                                "directives": []
+                              }]
+                            }
+                          }]
+                        }
+                      }]
+                    }
+                  }]
+                }
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "constructsByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "fbtpId"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "symbol"
+                },
+                "arguments": [],
+                "directives": []
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolsByConstructId"
+                },
+                "arguments": [],
+                "directives": [],
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": [{
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "nodes"
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "selectionSet": {
+                      "kind": "SelectionSet",
+                      "selections": [{
+                        "kind": "FragmentSpread",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolFields"
+                        },
+                        "directives": []
+                      }]
+                    }
+                  }]
+                }
+              }, {
+                "kind": "Field",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUsesByConstructId"
+                },
+                "arguments": [],
+                "directives": [],
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": [{
+                    "kind": "Field",
+                    "name": {
+                      "kind": "Name",
+                      "value": "nodes"
+                    },
+                    "arguments": [],
+                    "directives": [],
+                    "selectionSet": {
+                      "kind": "SelectionSet",
+                      "selections": [{
+                        "kind": "FragmentSpread",
+                        "name": {
+                          "kind": "Name",
+                          "value": "toolUses"
+                        },
+                        "directives": []
+                      }]
+                    }
+                  }]
+                }
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolsByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolFields"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByAlleleId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Tool"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbid"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "relType"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByToolId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolUses"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ToolUse"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbcvId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "name"
+        },
+        "arguments": [],
+        "directives": []
+      }]
+    }
+  }],
+  "loc": {
+    "start": 0,
+    "end": 1933
   }
 };
 },{}],"m8SM":[function(require,module,exports) {
@@ -2999,7 +4775,13 @@ var _apolloCacheInmemory = require("apollo-cache-inmemory");
 
 var _apolloLinkHttp = require("apollo-link-http");
 
-var _queries = require("./chado/queries.gql");
+var _AllelesByGene = _interopRequireDefault(require("./chado/AllelesByGene.gql"));
+
+var _Allele = _interopRequireDefault(require("./chado/Allele.gql"));
+
+var _Alleles = _interopRequireDefault(require("./chado/Alleles.gql"));
+
+var _InsertionsWithoutAllelesByGene = _interopRequireDefault(require("./chado/InsertionsWithoutAllelesByGene.gql"));
 
 var _alleles = require("./chado/alleles");
 
@@ -3057,7 +4839,7 @@ const resolvers = {
       geneIsRegulatoryRegion = false
     }, _context, _info_) => {
       const result = await psqlClient.query({
-        query: _queries.AllelesByGene,
+        query: _AllelesByGene.default,
         variables: {
           fbgn,
           isConstruct,
@@ -3070,7 +4852,7 @@ const resolvers = {
       fbgn
     }, _context, _info) => {
       const result = await psqlClient.query({
-        query: _queries.InsertionsWithoutAllelesByGene,
+        query: _InsertionsWithoutAllelesByGene.default,
         variables: {
           fbgn: fbgn
         }
@@ -3081,7 +4863,7 @@ const resolvers = {
       fbal
     }, _context, _info) => {
       const result = await psqlClient.query({
-        query: _queries.Allele,
+        query: _Allele.default,
         variables: {
           fbal
         }
@@ -3093,7 +4875,7 @@ const resolvers = {
     }, _context, _info) => {
       console.log(`Fetching ${fbal_ids.length} alleles by IDs from Chado.`);
       const result = await psqlClient.query({
-        query: _queries.Alleles,
+        query: _Alleles.default,
         variables: {
           fbal_ids
         }
@@ -3137,7 +4919,7 @@ const resolvers = {
   }
 };
 exports.resolvers = resolvers;
-},{"./chado/queries.gql":"YSip","./chado/alleles":"m8SM"}],"bEVX":[function(require,module,exports) {
+},{"./chado/AllelesByGene.gql":"XHMw","./chado/Allele.gql":"n8UT","./chado/Alleles.gql":"eXdW","./chado/InsertionsWithoutAllelesByGene.gql":"wlhe","./chado/alleles":"m8SM"}],"bEVX":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3179,26 +4961,6 @@ var _default = FlyBaseAPI;
 exports.default = _default;
 },{}],"Focm":[function(require,module,exports) {
 "use strict";
-
-require("core-js/modules/es7.array.flat-map");
-
-require("core-js/modules/es6.array.sort");
-
-require("core-js/modules/es7.object.define-getter");
-
-require("core-js/modules/es7.object.define-setter");
-
-require("core-js/modules/es7.object.lookup-getter");
-
-require("core-js/modules/es7.object.lookup-setter");
-
-require("core-js/modules/es7.promise.finally");
-
-require("core-js/modules/es7.symbol.async-iterator");
-
-require("core-js/modules/es7.string.trim-left");
-
-require("core-js/modules/es7.string.trim-right");
 
 var _apolloServer = require("apollo-server");
 

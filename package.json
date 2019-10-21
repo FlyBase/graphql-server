@@ -14,29 +14,25 @@
     "pm2": "pm2"
   },
   "dependencies": {
-    "apollo-cache-inmemory": "^1.6.2",
-    "apollo-client": "^2.6.3",
-    "apollo-datasource-rest": "^0.6.1",
-    "apollo-link-http": "^1.5.15",
-    "apollo-server": "^2.8.1",
+    "apollo-cache-inmemory": "^1.6.3",
+    "apollo-client": "^2.6.4",
+    "apollo-datasource-rest": "^0.6.5",
+    "apollo-link-http": "^1.5.16",
+    "apollo-server": "^2.9.6",
     "cross-fetch": "^3.0.4",
-    "graphql": "^14.3.1",
-    "graphql-tag": "^2.10.1",
+    "graphql": "^14.5.8",
     "lodash.isplainobject": "^4.0.6",
     "lodash.mapkeys": "^4.6.0",
     "lodash.pickby": "^4.6.0",
-    "pm2": "3.5.1",
-    "postgraphile": "^4.4.0"
+    "pm2": "4.1.2",
+    "postgraphile": "^4.4.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/polyfill": "^7.4.4",
-    "@babel/preset-env": "^7.4.5",
     "parcel-bundler": "^1.12.4",
     "prettier": "^1.18.2"
   },
   "resolutions": {
-    "graphql": "14.3.x"
+    "graphql": "14.5.x"
   },
   "prettier": {
     "semi": false,

@@ -1,8 +1,3 @@
-/*
- Required due to a RegeneratorRuntime error being thrown.
- see https://stackoverflow.com/a/54490329
-*/
-import '@babel/polyfill'
 import { ApolloServer } from 'apollo-server'
 
 /*

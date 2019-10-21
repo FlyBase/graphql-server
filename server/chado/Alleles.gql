@@ -1,0 +1,8 @@
+#import "./fragments.gql"
+query Alleles($fbal_ids: [String]!) {
+  allelesByFbal(ids: $fbal_ids) {
+    nodes {
+      ...alleleFields
+    }
+  }
+}

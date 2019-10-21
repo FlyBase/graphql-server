@@ -3,12 +3,10 @@ import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { HttpLink } from 'apollo-link-http'
 
-import {
-  AllelesByGene,
-  Allele,
-  Alleles,
-  InsertionsWithoutAllelesByGene,
-} from './chado/queries.gql'
+import AllelesByGene from './chado/AllelesByGene.gql'
+import Allele from './chado/Allele.gql'
+import Alleles from './chado/Alleles.gql'
+import InsertionsWithoutAllelesByGene from './chado/InsertionsWithoutAllelesByGene.gql'
 
 import {
   reformatAllele,

@@ -1,0 +1,87 @@
+fragment alleleFields on Allele {
+  symbol
+  fbalId
+  isConstruct
+  propagateTransgenicUses
+  geneIsRegulatoryRegion
+  stocksCount
+  pubCount
+  knownLesion
+  hasImage
+  alleleClassesByAlleleId {
+    nodes {
+      fbcvId
+      name
+    }
+  }
+  alleleMutagensByAlleleId {
+    nodes {
+      fbcvId
+      name
+    }
+  }
+  insertionsByAlleleId {
+    nodes {
+      fbtiId
+      symbol
+      constructsByInsertionId {
+        nodes {
+          fbtpId
+          symbol
+          toolUsesByConstructId {
+            nodes {
+              ...toolUses
+            }
+          }
+          toolsByConstructId {
+            nodes {
+              ...toolFields
+            }
+          }
+        }
+      }
+    }
+  }
+  constructsByAlleleId {
+    nodes {
+      fbtpId
+      symbol
+      toolsByConstructId {
+        nodes {
+          ...toolFields
+        }
+      }
+      toolUsesByConstructId {
+        nodes {
+          ...toolUses
+        }
+      }
+    }
+  }
+  toolsByAlleleId {
+    nodes {
+      ...toolFields
+    }
+  }
+  toolUsesByAlleleId {
+    nodes {
+      ...toolUses
+    }
+  }
+}
+
+fragment toolFields on Tool {
+  fbid
+  symbol
+  relType
+  toolUsesByToolId {
+    nodes {
+      ...toolUses
+    }
+  }
+}
+
+fragment toolUses on ToolUse {
+  fbcvId
+  name
+}
