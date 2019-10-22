@@ -1,0 +1,1 @@
+export const CHADO_QUERY_ERROR = 'CHADO_QUERY_ERROR'

@@ -1,0 +1,33 @@
+#import "./ToolFields.gql"
+query InsertionsWithoutAllelesByGene($fbgn: String!) {
+  allGenes(condition: { uniquename: $fbgn }) {
+    nodes {
+      name
+      uniquename
+      insertionsByGeneId {
+        nodes {
+          fbtiId
+          symbol
+          stocksCount
+          pubCount
+          constructsByInsertionId {
+            nodes {
+              fbtpId
+              symbol
+              toolUsesByConstructId {
+                nodes {
+                  ...toolUses
+                }
+              }
+              toolsByConstructId {
+                nodes {
+                  ...toolFields
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

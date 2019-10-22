@@ -1,0 +1,9 @@
+# import "./ToolFields.gql"
+# import "./AlleleFields.gql"
+query Allele($fbal: String!) {
+  allAlleles(condition: { fbalId: $fbal }) {
+    nodes {
+      ...alleleFields
+    }
+  }
+}
