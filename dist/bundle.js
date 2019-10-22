@@ -1666,6 +1666,113 @@ module.exports = {
     "kind": "FragmentDefinition",
     "name": {
       "kind": "Name",
+      "value": "toolFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Tool"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbid"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "relType"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByToolId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolUses"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ToolUse"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbcvId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "name"
+        },
+        "arguments": [],
+        "directives": []
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
       "value": "alleleFields"
     },
     "typeCondition": {
@@ -2138,117 +2245,10 @@ module.exports = {
         }
       }]
     }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
-      "value": "toolFields"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "Tool"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbid"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "symbol"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "relType"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "toolUsesByToolId"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "FragmentSpread",
-                "name": {
-                  "kind": "Name",
-                  "value": "toolUses"
-                },
-                "directives": []
-              }]
-            }
-          }]
-        }
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
-      "value": "toolUses"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "ToolUse"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbcvId"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "name"
-        },
-        "arguments": [],
-        "directives": []
-      }]
-    }
   }],
   "loc": {
     "start": 0,
-    "end": 1702
+    "end": 1734
   }
 };
 },{}],"n8UT":[function(require,module,exports) {
@@ -2927,7 +2927,7 @@ module.exports = {
   }],
   "loc": {
     "start": 0,
-    "end": 1390
+    "end": 1422
   }
 };
 },{}],"eXdW":[function(require,module,exports) {
@@ -3011,6 +3011,113 @@ module.exports = {
             }
           }]
         }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Tool"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbid"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "relType"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByToolId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolUses"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ToolUse"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbcvId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "name"
+        },
+        "arguments": [],
+        "directives": []
       }]
     }
   }, {
@@ -3489,117 +3596,10 @@ module.exports = {
         }
       }]
     }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
-      "value": "toolFields"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "Tool"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbid"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "symbol"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "relType"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "toolUsesByToolId"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "FragmentSpread",
-                "name": {
-                  "kind": "Name",
-                  "value": "toolUses"
-                },
-                "directives": []
-              }]
-            }
-          }]
-        }
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
-      "value": "toolUses"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "ToolUse"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbcvId"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "name"
-        },
-        "arguments": [],
-        "directives": []
-      }]
-    }
   }],
   "loc": {
     "start": 0,
-    "end": 1386
+    "end": 1418
   }
 };
 },{}],"wlhe":[function(require,module,exports) {
@@ -3863,482 +3863,6 @@ module.exports = {
     "kind": "FragmentDefinition",
     "name": {
       "kind": "Name",
-      "value": "alleleFields"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "Allele"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "symbol"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbalId"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "isConstruct"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "propagateTransgenicUses"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "geneIsRegulatoryRegion"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "stocksCount"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "pubCount"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "knownLesion"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "hasImage"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "alleleClassesByAlleleId"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "Field",
-                "name": {
-                  "kind": "Name",
-                  "value": "fbcvId"
-                },
-                "arguments": [],
-                "directives": []
-              }, {
-                "kind": "Field",
-                "name": {
-                  "kind": "Name",
-                  "value": "name"
-                },
-                "arguments": [],
-                "directives": []
-              }]
-            }
-          }]
-        }
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "alleleMutagensByAlleleId"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "Field",
-                "name": {
-                  "kind": "Name",
-                  "value": "fbcvId"
-                },
-                "arguments": [],
-                "directives": []
-              }, {
-                "kind": "Field",
-                "name": {
-                  "kind": "Name",
-                  "value": "name"
-                },
-                "arguments": [],
-                "directives": []
-              }]
-            }
-          }]
-        }
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "insertionsByAlleleId"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "Field",
-                "name": {
-                  "kind": "Name",
-                  "value": "fbtiId"
-                },
-                "arguments": [],
-                "directives": []
-              }, {
-                "kind": "Field",
-                "name": {
-                  "kind": "Name",
-                  "value": "symbol"
-                },
-                "arguments": [],
-                "directives": []
-              }, {
-                "kind": "Field",
-                "name": {
-                  "kind": "Name",
-                  "value": "constructsByInsertionId"
-                },
-                "arguments": [],
-                "directives": [],
-                "selectionSet": {
-                  "kind": "SelectionSet",
-                  "selections": [{
-                    "kind": "Field",
-                    "name": {
-                      "kind": "Name",
-                      "value": "nodes"
-                    },
-                    "arguments": [],
-                    "directives": [],
-                    "selectionSet": {
-                      "kind": "SelectionSet",
-                      "selections": [{
-                        "kind": "Field",
-                        "name": {
-                          "kind": "Name",
-                          "value": "fbtpId"
-                        },
-                        "arguments": [],
-                        "directives": []
-                      }, {
-                        "kind": "Field",
-                        "name": {
-                          "kind": "Name",
-                          "value": "symbol"
-                        },
-                        "arguments": [],
-                        "directives": []
-                      }, {
-                        "kind": "Field",
-                        "name": {
-                          "kind": "Name",
-                          "value": "toolUsesByConstructId"
-                        },
-                        "arguments": [],
-                        "directives": [],
-                        "selectionSet": {
-                          "kind": "SelectionSet",
-                          "selections": [{
-                            "kind": "Field",
-                            "name": {
-                              "kind": "Name",
-                              "value": "nodes"
-                            },
-                            "arguments": [],
-                            "directives": [],
-                            "selectionSet": {
-                              "kind": "SelectionSet",
-                              "selections": [{
-                                "kind": "FragmentSpread",
-                                "name": {
-                                  "kind": "Name",
-                                  "value": "toolUses"
-                                },
-                                "directives": []
-                              }]
-                            }
-                          }]
-                        }
-                      }, {
-                        "kind": "Field",
-                        "name": {
-                          "kind": "Name",
-                          "value": "toolsByConstructId"
-                        },
-                        "arguments": [],
-                        "directives": [],
-                        "selectionSet": {
-                          "kind": "SelectionSet",
-                          "selections": [{
-                            "kind": "Field",
-                            "name": {
-                              "kind": "Name",
-                              "value": "nodes"
-                            },
-                            "arguments": [],
-                            "directives": [],
-                            "selectionSet": {
-                              "kind": "SelectionSet",
-                              "selections": [{
-                                "kind": "FragmentSpread",
-                                "name": {
-                                  "kind": "Name",
-                                  "value": "toolFields"
-                                },
-                                "directives": []
-                              }]
-                            }
-                          }]
-                        }
-                      }]
-                    }
-                  }]
-                }
-              }]
-            }
-          }]
-        }
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "constructsByAlleleId"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "Field",
-                "name": {
-                  "kind": "Name",
-                  "value": "fbtpId"
-                },
-                "arguments": [],
-                "directives": []
-              }, {
-                "kind": "Field",
-                "name": {
-                  "kind": "Name",
-                  "value": "symbol"
-                },
-                "arguments": [],
-                "directives": []
-              }, {
-                "kind": "Field",
-                "name": {
-                  "kind": "Name",
-                  "value": "toolsByConstructId"
-                },
-                "arguments": [],
-                "directives": [],
-                "selectionSet": {
-                  "kind": "SelectionSet",
-                  "selections": [{
-                    "kind": "Field",
-                    "name": {
-                      "kind": "Name",
-                      "value": "nodes"
-                    },
-                    "arguments": [],
-                    "directives": [],
-                    "selectionSet": {
-                      "kind": "SelectionSet",
-                      "selections": [{
-                        "kind": "FragmentSpread",
-                        "name": {
-                          "kind": "Name",
-                          "value": "toolFields"
-                        },
-                        "directives": []
-                      }]
-                    }
-                  }]
-                }
-              }, {
-                "kind": "Field",
-                "name": {
-                  "kind": "Name",
-                  "value": "toolUsesByConstructId"
-                },
-                "arguments": [],
-                "directives": [],
-                "selectionSet": {
-                  "kind": "SelectionSet",
-                  "selections": [{
-                    "kind": "Field",
-                    "name": {
-                      "kind": "Name",
-                      "value": "nodes"
-                    },
-                    "arguments": [],
-                    "directives": [],
-                    "selectionSet": {
-                      "kind": "SelectionSet",
-                      "selections": [{
-                        "kind": "FragmentSpread",
-                        "name": {
-                          "kind": "Name",
-                          "value": "toolUses"
-                        },
-                        "directives": []
-                      }]
-                    }
-                  }]
-                }
-              }]
-            }
-          }]
-        }
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "toolsByAlleleId"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "FragmentSpread",
-                "name": {
-                  "kind": "Name",
-                  "value": "toolFields"
-                },
-                "directives": []
-              }]
-            }
-          }]
-        }
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "toolUsesByAlleleId"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "FragmentSpread",
-                "name": {
-                  "kind": "Name",
-                  "value": "toolUses"
-                },
-                "directives": []
-              }]
-            }
-          }]
-        }
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
       "value": "toolFields"
     },
     "typeCondition": {
@@ -4445,7 +3969,7 @@ module.exports = {
   }],
   "loc": {
     "start": 0,
-    "end": 1933
+    "end": 862
   }
 };
 },{}],"m8SM":[function(require,module,exports) {
@@ -4759,13 +4283,22 @@ const flattenNodes = (nodes = []) => {
 };
 
 exports.flattenNodes = flattenNodes;
+},{}],"iJA9":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.CHADO_QUERY_ERROR = void 0;
+const CHADO_QUERY_ERROR = 'CHADO_QUERY_ERROR';
+exports.CHADO_QUERY_ERROR = CHADO_QUERY_ERROR;
 },{}],"OJnd":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.resolvers = exports.psqlClient = void 0;
+exports.resolvers = exports.handleError = exports.psqlClient = void 0;
 
 var _crossFetch = _interopRequireDefault(require("cross-fetch"));
 
@@ -4774,6 +4307,8 @@ var _apolloClient = require("apollo-client");
 var _apolloCacheInmemory = require("apollo-cache-inmemory");
 
 var _apolloLinkHttp = require("apollo-link-http");
+
+var _apolloServer = require("apollo-server");
 
 var _AllelesByGene = _interopRequireDefault(require("./chado/AllelesByGene.gql"));
 
@@ -4785,8 +4320,11 @@ var _InsertionsWithoutAllelesByGene = _interopRequireDefault(require("./chado/In
 
 var _alleles = require("./chado/alleles");
 
+var _constants = require("./constants");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// Functions for reformatting Chado GraphQL results
 const cache = new _apolloCacheInmemory.InMemoryCache();
 const link = new _apolloLinkHttp.HttpLink({
   uri: 'http://localhost:5000/graphql',
@@ -4801,12 +4339,34 @@ const defaultOptions = {
     fetchPolicy: 'no-cache',
     errorPolicy: 'all'
   }
-};
+}; // Initialize the client that we will use to query the Chado GraphQL endpoint.
+
 const psqlClient = new _apolloClient.ApolloClient({
   cache,
   link,
   defaultOptions
 });
+/**
+ * Error handler for GraphQL resolvers.
+ * This code attempts to trap failures that happen at upstream GraphQL servers
+ * and rethrow them as wrapped ApolloError objects.
+ *
+ * see https://www.apollographql.com/docs/apollo-server/data/errors/
+ *
+ * @param err Error object thrown by ApolloClient when contacting upstream GraphQL servers.
+ * @param code Code for the error.
+ * @param additionalProperties
+ */
+
+exports.psqlClient = psqlClient;
+
+const handleError = (err, code = null, additionalProperties = null) => {
+  if (err.networkError && err.networkError.result && err.networkError.result.errors) {
+    throw new _apolloServer.ApolloError(err.networkError.result.errors.map(e => e.message).join(' '), code, additionalProperties);
+  }
+
+  throw err;
+};
 /*
   The following resolvers map to available queries in the schema.graphql file.
   When called, each resolver calls GraphQL endpoints served by Postgraphile.
@@ -4814,7 +4374,8 @@ const psqlClient = new _apolloClient.ApolloClient({
   (modeled in the schema.graphql) and returned.
 */
 
-exports.psqlClient = psqlClient;
+
+exports.handleError = handleError;
 const resolvers = {
   /**
    * Need to resolve Union types from the GraphQL schema.  That is a single type
@@ -4832,7 +4393,9 @@ const resolvers = {
     }
 
   },
+  // Query resolvers.
   Query: {
+    // Query Chado for all alleles by gene and reformat result.
     allelesByGene: async (_obj, {
       fbgn,
       isConstruct = false,
@@ -4845,20 +4408,26 @@ const resolvers = {
           isConstruct,
           geneIsRegulatoryRegion
         }
-      }).catch(e => console.error(e));
-      return result.data.allGenes.nodes.length !== 0 ? (0, _alleles.reformatAlleleByGene)(result.data.allGenes.nodes[0]) : null;
+      }).catch(err => handleError(err, _constants.CHADO_QUERY_ERROR, {
+        clientError: err
+      }));
+      return result && result.data && result.data.allGenes && result.data.allGenes.nodes && result.data.allGenes.nodes.length !== 0 ? (0, _alleles.reformatAlleleByGene)(result.data.allGenes.nodes[0]) : null;
     },
+    // Query for insertions associated with a gene but no alleles.
     insertionsWithoutAllelesByGene: async (obj, {
       fbgn
     }, _context, _info) => {
       const result = await psqlClient.query({
         query: _InsertionsWithoutAllelesByGene.default,
         variables: {
-          fbgn: fbgn
+          fbgn
         }
-      }).catch(e => console.error(e));
-      return result.data.allGenes.nodes.length !== 0 ? (0, _alleles.reformatInsertionByGene)(result.data.allGenes.nodes[0]) : null;
+      }).catch(err => handleError(err, _constants.CHADO_QUERY_ERROR, {
+        clientError: err
+      }));
+      return result && result.data && result.data.allGenes && result.data.allGenes.nodes && result.data.allGenes.nodes.length !== 0 ? (0, _alleles.reformatInsertionByGene)(result.data.allGenes.nodes[0]) : null;
     },
+    // Query for an allele by ID.
     alleleById: async (_obj, {
       fbal
     }, _context, _info) => {
@@ -4867,9 +4436,12 @@ const resolvers = {
         variables: {
           fbal
         }
-      }).catch(e => console.error(e));
-      return result.data.allAlleles.nodes.length !== 0 ? (0, _alleles.reformatAllele)(result.data.allAlleles.nodes[0]) : null;
+      }).catch(err => handleError(err, _constants.CHADO_QUERY_ERROR, {
+        clientError: err
+      }));
+      return result && result.data && result.data.allAlleles && result.data.allAlleles.nodes && result.data.allAlleles.nodes.length !== 0 ? (0, _alleles.reformatAllele)(result.data.allAlleles.nodes[0]) : null;
     },
+    // Query for multiple alleles by ID.
     allelesByIds: async (_obj, {
       fbal_ids
     }, _context, _info) => {
@@ -4879,10 +4451,14 @@ const resolvers = {
         variables: {
           fbal_ids
         }
-      }).catch(e => console.error(e));
+      }).catch(err => handleError(err, _constants.CHADO_QUERY_ERROR, {
+        clientError: err
+      }));
       console.log('Retrieved alleles, reformatting results.');
+      return result && result.data && result.data.allelesByFbal && result.data.allelesByFbal.nodes && result.data.allelesByFbal.nodes.length !== 0;
       return result.data.allelesByFbal.nodes.length !== 0 ? (0, _alleles.reformatAlleles)(result.data.allelesByFbal.nodes) : null;
     },
+    // Search expression tools using the REST endpoint datasource.
     searchExpressionTools: async (_obj, {
       expression,
       gene
@@ -4891,27 +4467,23 @@ const resolvers = {
     }, _info) => {
       console.log('Querying FlyBase API for expression tools.');
 
-      try {
-        if (gene && gene.length !== 0) {
-          /**
-           * Search by gene.
-           */
-          const data = await dataSources.flyBaseAPI.searchExpressionToolsByGene({
-            gene
-          });
-          return data.resultset.result;
-        } else if (expression && typeof expression === 'object' && Object.keys(expression).length > 0) {
-          /**
-           * Search by expression
-           */
-          const data = await dataSources.flyBaseAPI.searchExpressionToolsByExpression({
-            expression
-          });
-          console.log('Done querying, returning results.');
-          return data.resultset.result;
-        }
-      } catch (e) {
-        console.error(e);
+      if (gene && gene.length !== 0) {
+        /**
+         * Search by gene.
+         */
+        const data = await dataSources.flyBaseAPI.searchExpressionToolsByGene({
+          gene
+        });
+        return data.resultset.result;
+      } else if (expression && typeof expression === 'object' && Object.keys(expression).length > 0) {
+        /**
+         * Search by expression
+         */
+        const data = await dataSources.flyBaseAPI.searchExpressionToolsByExpression({
+          expression
+        });
+        console.log('Done querying, returning results.');
+        return data.resultset.result;
       }
 
       return null;
@@ -4919,7 +4491,7 @@ const resolvers = {
   }
 };
 exports.resolvers = resolvers;
-},{"./chado/AllelesByGene.gql":"XHMw","./chado/Allele.gql":"n8UT","./chado/Alleles.gql":"eXdW","./chado/InsertionsWithoutAllelesByGene.gql":"wlhe","./chado/alleles":"m8SM"}],"bEVX":[function(require,module,exports) {
+},{"./chado/AllelesByGene.gql":"XHMw","./chado/Allele.gql":"n8UT","./chado/Alleles.gql":"eXdW","./chado/InsertionsWithoutAllelesByGene.gql":"wlhe","./chado/alleles":"m8SM","./constants":"iJA9"}],"bEVX":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4964,6 +4536,8 @@ exports.default = _default;
 
 var _apolloServer = require("apollo-server");
 
+var Sentry = _interopRequireWildcard(require("@sentry/node"));
+
 var _schema = _interopRequireDefault(require("./schema.gql"));
 
 var _resolvers = require("./resolvers");
@@ -4972,12 +4546,30 @@ var _FlyBaseAPI = _interopRequireDefault(require("./datasources/FlyBaseAPI"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Create a new GraphQL server
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+/*
+Import the schema and resolvers for this GraphQL server.
+In GraphSQL speak, resolvers are the functions that perform
+the query and return results formatted according to the schema
+*/
+Sentry.init({
+  dsn: 'https://a44fd5f15e834e20a0770d626e0e25c5@sentry.io/1788453'
+}); // Create a new GraphQL server
+
 const server = new _apolloServer.ApolloServer({
   typeDefs: _schema.default,
   resolvers: _resolvers.resolvers,
+  // Allow query introspection.
   introspection: true,
+  // Turn on GraphQL playground
   playground: true,
+  formatError: err => {
+    Sentry.captureException(err.originalError);
+    return err;
+  },
   dataSources: () => {
     return {
       flyBaseAPI: new _FlyBaseAPI.default()

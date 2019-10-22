@@ -1,4 +1,4 @@
-#import "./fragments.gql"
+#import "./ToolFields.gql"
 query InsertionsWithoutAllelesByGene($fbgn: String!) {
   allGenes(condition: { uniquename: $fbgn }) {
     nodes {
