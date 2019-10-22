@@ -156,14 +156,11 @@ export const resolvers = {
         })
         .catch(err => handleError(err, CHADO_QUERY_ERROR, { clientError: err }))
       console.log('Retrieved alleles, reformatting results.')
-      return (
-        result &&
+      return result &&
         result.data &&
         result.data.allelesByFbal &&
         result.data.allelesByFbal.nodes &&
         result.data.allelesByFbal.nodes.length !== 0
-      )
-      return result.data.allelesByFbal.nodes.length !== 0
         ? reformatAlleles(result.data.allelesByFbal.nodes)
         : null
     },
