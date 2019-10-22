@@ -69,8 +69,11 @@ type ExpressionToolSearchResult {
 
 input ExpressionSearchInput {
   stage: String
+  stageq: String
   anatomy: String
+  anatomyq: String
   subcellular: String
+  subcellularq: String
 }
 
 union Result = ExpressionToolSearchResult
