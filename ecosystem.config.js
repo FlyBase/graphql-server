@@ -6,7 +6,7 @@ module.exports = {
       // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
       args: '',
       node_args: '--max_old_space_size=2000',
-      instances: -1,
+      instances: 3,
       autorestart: true,
       watch: false,
       max_memory_restart: '2G',
@@ -24,7 +24,7 @@ module.exports = {
       script: './node_modules/.bin/postgraphile',
       // Options reference: http://pm2.keymetrics.io/docs/usage/application-declaration/
       args: '-s flybase,gene -j -M -l 5MB --timeout 60000 --disable-query-log',
-      instances: -1,
+      instances: 3,
       autorestart: true,
       watch: false,
       max_memory_restart: '500M',
