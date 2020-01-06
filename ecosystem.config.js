@@ -17,14 +17,15 @@ module.exports = {
       },
       env_production: {
         NODE_ENV: 'production',
-      }
+      },
     },
     {
       name: 'postgraphile',
       script: './node_modules/.bin/postgraphile',
       // Options reference: http://pm2.keymetrics.io/docs/usage/application-declaration/
-      args: '-s flybase,gene -j -M -l 5MB --timeout 60000 --disable-query-log',
-      instances: 3,
+      args:
+        '-s flybase,gene -j -M -l 5MB --timeout 60000 --disable-query-log --disable-graphiql --legacy-relations omit --no-setof-functions-contain-nulls --max-pool-size 100',
+      instances: 1,
       autorestart: true,
       watch: false,
       max_memory_restart: '500M',
@@ -35,12 +36,12 @@ module.exports = {
       },
       env_production: {
         NODE_ENV: 'production',
-      }
-    }
+      },
+    },
   ],
-  deploy : {
-    production : {},
+  deploy: {
+    production: {},
     staging: {},
     development: {},
-  }
-};
+  },
+}
