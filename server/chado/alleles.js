@@ -9,7 +9,7 @@ import mapKeys from 'lodash.mapkeys'
  * @returns {{symbol: *, id: *, alleles: *}}
  */
 export const reformatAlleleByGene = gene => {
-  const alleles = flattenNodes(gene.alleles.nodes)
+  const alleles = flattenNodes(gene.allelesByGeneId.nodes)
   const { uniquename: id, name: symbol } = gene
   return {
     id,
@@ -35,7 +35,7 @@ export const reformatAlleles = nodes => {
  * @returns {{symbol: *, insertions: *, id: *}}
  */
 export const reformatInsertionByGene = gene => {
-  const insertions = flattenNodes(gene.insertions.nodes)
+  const insertions = flattenNodes(gene.insertionsByGeneId.nodes)
   return {
     id: gene.uniquename,
     symbol: gene.name,
@@ -201,10 +201,25 @@ biologist friendly name.
 */
 const getSubFieldName = name => {
   switch (name) {
-    case 'alleleClasses':
+    case 'allelesByGeneId':
+      return 'alleles'
+    case 'alleleClassesByAlleleId':
       return 'classes'
-    case 'alleleMutagens':
+    case 'alleleMutagensByAlleleId':
       return 'mutagens'
+    case 'insertionsByGeneId':
+    case 'insertionsByAlleleId':
+      return 'insertions'
+    case 'constructsByInsertionId':
+    case 'constructsByAlleleId':
+      return 'constructs'
+    case 'toolsByConstructId':
+    case 'toolsByAlleleId':
+      return 'tools'
+    case 'toolUsesByToolId':
+    case 'toolUsesByAlleleId':
+    case 'toolUsesByConstructId':
+      return 'toolUses'
     default:
       return name
   }

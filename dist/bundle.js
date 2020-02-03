@@ -1534,7 +1534,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "genes"
+          "value": "allGenes"
         },
         "arguments": [{
           "kind": "Argument",
@@ -1593,7 +1593,7 @@ module.exports = {
                 "kind": "Field",
                 "name": {
                   "kind": "Name",
-                  "value": "alleles"
+                  "value": "allelesByGeneId"
                 },
                 "arguments": [{
                   "kind": "Argument",
@@ -1666,113 +1666,6 @@ module.exports = {
     "kind": "FragmentDefinition",
     "name": {
       "kind": "Name",
-      "value": "toolFields"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "Tool"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbid"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "symbol"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "relType"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "toolUses"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "FragmentSpread",
-                "name": {
-                  "kind": "Name",
-                  "value": "toolUses"
-                },
-                "directives": []
-              }]
-            }
-          }]
-        }
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
-      "value": "toolUses"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "ToolUse"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbcvId"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "name"
-        },
-        "arguments": [],
-        "directives": []
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
       "value": "alleleFields"
     },
     "typeCondition": {
@@ -1861,7 +1754,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "alleleClasses"
+          "value": "alleleClassesByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -1901,7 +1794,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "alleleMutagens"
+          "value": "alleleMutagensByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -1941,7 +1834,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "insertions"
+          "value": "insertionsByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -1977,7 +1870,7 @@ module.exports = {
                 "kind": "Field",
                 "name": {
                   "kind": "Name",
-                  "value": "constructs"
+                  "value": "constructsByInsertionId"
                 },
                 "arguments": [],
                 "directives": [],
@@ -2013,7 +1906,7 @@ module.exports = {
                         "kind": "Field",
                         "name": {
                           "kind": "Name",
-                          "value": "toolUses"
+                          "value": "toolUsesByConstructId"
                         },
                         "arguments": [],
                         "directives": [],
@@ -2044,7 +1937,7 @@ module.exports = {
                         "kind": "Field",
                         "name": {
                           "kind": "Name",
-                          "value": "tools"
+                          "value": "toolsByConstructId"
                         },
                         "arguments": [],
                         "directives": [],
@@ -2083,7 +1976,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "constructs"
+          "value": "constructsByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -2119,7 +2012,7 @@ module.exports = {
                 "kind": "Field",
                 "name": {
                   "kind": "Name",
-                  "value": "tools"
+                  "value": "toolsByConstructId"
                 },
                 "arguments": [],
                 "directives": [],
@@ -2150,7 +2043,7 @@ module.exports = {
                 "kind": "Field",
                 "name": {
                   "kind": "Name",
-                  "value": "toolUses"
+                  "value": "toolUsesByConstructId"
                 },
                 "arguments": [],
                 "directives": [],
@@ -2185,7 +2078,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "tools"
+          "value": "toolsByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -2216,7 +2109,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "toolUses"
+          "value": "toolUsesByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -2245,10 +2138,117 @@ module.exports = {
         }
       }]
     }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Tool"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbid"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "relType"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByToolId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolUses"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ToolUse"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbcvId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "name"
+        },
+        "arguments": [],
+        "directives": []
+      }]
+    }
   }],
   "loc": {
     "start": 0,
-    "end": 1590
+    "end": 1734
   }
 };
 },{}],"n8UT":[function(require,module,exports) {
@@ -2289,7 +2289,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "alleles"
+          "value": "allAlleles"
         },
         "arguments": [{
           "kind": "Argument",
@@ -2345,6 +2345,113 @@ module.exports = {
     "kind": "FragmentDefinition",
     "name": {
       "kind": "Name",
+      "value": "toolFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Tool"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbid"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "relType"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByToolId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolUses"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ToolUse"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbcvId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "name"
+        },
+        "arguments": [],
+        "directives": []
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
       "value": "alleleFields"
     },
     "typeCondition": {
@@ -2433,7 +2540,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "alleleClasses"
+          "value": "alleleClassesByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -2473,7 +2580,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "alleleMutagens"
+          "value": "alleleMutagensByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -2513,7 +2620,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "insertions"
+          "value": "insertionsByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -2549,7 +2656,7 @@ module.exports = {
                 "kind": "Field",
                 "name": {
                   "kind": "Name",
-                  "value": "constructs"
+                  "value": "constructsByInsertionId"
                 },
                 "arguments": [],
                 "directives": [],
@@ -2585,7 +2692,7 @@ module.exports = {
                         "kind": "Field",
                         "name": {
                           "kind": "Name",
-                          "value": "toolUses"
+                          "value": "toolUsesByConstructId"
                         },
                         "arguments": [],
                         "directives": [],
@@ -2616,7 +2723,7 @@ module.exports = {
                         "kind": "Field",
                         "name": {
                           "kind": "Name",
-                          "value": "tools"
+                          "value": "toolsByConstructId"
                         },
                         "arguments": [],
                         "directives": [],
@@ -2655,7 +2762,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "constructs"
+          "value": "constructsByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -2691,7 +2798,7 @@ module.exports = {
                 "kind": "Field",
                 "name": {
                   "kind": "Name",
-                  "value": "tools"
+                  "value": "toolsByConstructId"
                 },
                 "arguments": [],
                 "directives": [],
@@ -2722,7 +2829,7 @@ module.exports = {
                 "kind": "Field",
                 "name": {
                   "kind": "Name",
-                  "value": "toolUses"
+                  "value": "toolUsesByConstructId"
                 },
                 "arguments": [],
                 "directives": [],
@@ -2757,7 +2864,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "tools"
+          "value": "toolsByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -2788,7 +2895,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "toolUses"
+          "value": "toolUsesByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -2815,119 +2922,12 @@ module.exports = {
             }
           }]
         }
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
-      "value": "toolFields"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "Tool"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbid"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "symbol"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "relType"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "toolUses"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "FragmentSpread",
-                "name": {
-                  "kind": "Name",
-                  "value": "toolUses"
-                },
-                "directives": []
-              }]
-            }
-          }]
-        }
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
-      "value": "toolUses"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "ToolUse"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbcvId"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "name"
-        },
-        "arguments": [],
-        "directives": []
       }]
     }
   }],
   "loc": {
     "start": 0,
-    "end": 1286
+    "end": 1422
   }
 };
 },{}],"eXdW":[function(require,module,exports) {
@@ -3057,7 +3057,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "toolUses"
+          "value": "toolUsesByToolId"
         },
         "arguments": [],
         "directives": [],
@@ -3212,7 +3212,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "alleleClasses"
+          "value": "alleleClassesByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -3252,7 +3252,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "alleleMutagens"
+          "value": "alleleMutagensByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -3292,7 +3292,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "insertions"
+          "value": "insertionsByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -3328,7 +3328,7 @@ module.exports = {
                 "kind": "Field",
                 "name": {
                   "kind": "Name",
-                  "value": "constructs"
+                  "value": "constructsByInsertionId"
                 },
                 "arguments": [],
                 "directives": [],
@@ -3364,7 +3364,7 @@ module.exports = {
                         "kind": "Field",
                         "name": {
                           "kind": "Name",
-                          "value": "toolUses"
+                          "value": "toolUsesByConstructId"
                         },
                         "arguments": [],
                         "directives": [],
@@ -3395,7 +3395,7 @@ module.exports = {
                         "kind": "Field",
                         "name": {
                           "kind": "Name",
-                          "value": "tools"
+                          "value": "toolsByConstructId"
                         },
                         "arguments": [],
                         "directives": [],
@@ -3434,7 +3434,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "constructs"
+          "value": "constructsByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -3470,7 +3470,7 @@ module.exports = {
                 "kind": "Field",
                 "name": {
                   "kind": "Name",
-                  "value": "tools"
+                  "value": "toolsByConstructId"
                 },
                 "arguments": [],
                 "directives": [],
@@ -3501,7 +3501,7 @@ module.exports = {
                 "kind": "Field",
                 "name": {
                   "kind": "Name",
-                  "value": "toolUses"
+                  "value": "toolUsesByConstructId"
                 },
                 "arguments": [],
                 "directives": [],
@@ -3536,7 +3536,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "tools"
+          "value": "toolsByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -3567,7 +3567,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "toolUses"
+          "value": "toolUsesByAlleleId"
         },
         "arguments": [],
         "directives": [],
@@ -3599,7 +3599,7 @@ module.exports = {
   }],
   "loc": {
     "start": 0,
-    "end": 1285
+    "end": 1418
   }
 };
 },{}],"wlhe":[function(require,module,exports) {
@@ -3640,7 +3640,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "genes"
+          "value": "allGenes"
         },
         "arguments": [{
           "kind": "Argument",
@@ -3699,7 +3699,7 @@ module.exports = {
                 "kind": "Field",
                 "name": {
                   "kind": "Name",
-                  "value": "insertions"
+                  "value": "insertionsByGeneId"
                 },
                 "arguments": [],
                 "directives": [],
@@ -3751,7 +3751,7 @@ module.exports = {
                         "kind": "Field",
                         "name": {
                           "kind": "Name",
-                          "value": "constructs"
+                          "value": "constructsByInsertionId"
                         },
                         "arguments": [],
                         "directives": [],
@@ -3787,7 +3787,7 @@ module.exports = {
                                 "kind": "Field",
                                 "name": {
                                   "kind": "Name",
-                                  "value": "toolUses"
+                                  "value": "toolUsesByConstructId"
                                 },
                                 "arguments": [],
                                 "directives": [],
@@ -3818,7 +3818,7 @@ module.exports = {
                                 "kind": "Field",
                                 "name": {
                                   "kind": "Name",
-                                  "value": "tools"
+                                  "value": "toolsByConstructId"
                                 },
                                 "arguments": [],
                                 "directives": [],
@@ -3903,7 +3903,7 @@ module.exports = {
         "kind": "Field",
         "name": {
           "kind": "Name",
-          "value": "toolUses"
+          "value": "toolUsesByToolId"
         },
         "arguments": [],
         "directives": [],
@@ -3969,7 +3969,7 @@ module.exports = {
   }],
   "loc": {
     "start": 0,
-    "end": 804
+    "end": 862
   }
 };
 },{}],"m8SM":[function(require,module,exports) {
@@ -4005,7 +4005,7 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
  * @returns {{symbol: *, id: *, alleles: *}}
  */
 const reformatAlleleByGene = gene => {
-  const alleles = flattenNodes(gene.alleles.nodes);
+  const alleles = flattenNodes(gene.allelesByGeneId.nodes);
   const {
     uniquename: id,
     name: symbol
@@ -4043,7 +4043,7 @@ const reformatAlleles = nodes => {
 exports.reformatAlleles = reformatAlleles;
 
 const reformatInsertionByGene = gene => {
-  const insertions = flattenNodes(gene.insertions.nodes);
+  const insertions = flattenNodes(gene.insertionsByGeneId.nodes);
   return {
     id: gene.uniquename,
     symbol: gene.name,
@@ -4207,11 +4207,31 @@ biologist friendly name.
 
 const getSubFieldName = name => {
   switch (name) {
-    case 'alleleClasses':
+    case 'allelesByGeneId':
+      return 'alleles';
+
+    case 'alleleClassesByAlleleId':
       return 'classes';
 
-    case 'alleleMutagens':
+    case 'alleleMutagensByAlleleId':
       return 'mutagens';
+
+    case 'insertionsByGeneId':
+    case 'insertionsByAlleleId':
+      return 'insertions';
+
+    case 'constructsByInsertionId':
+    case 'constructsByAlleleId':
+      return 'constructs';
+
+    case 'toolsByConstructId':
+    case 'toolsByAlleleId':
+      return 'tools';
+
+    case 'toolUsesByToolId':
+    case 'toolUsesByAlleleId':
+    case 'toolUsesByConstructId':
+      return 'toolUses';
 
     default:
       return name;
