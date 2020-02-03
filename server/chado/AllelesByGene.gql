@@ -5,11 +5,11 @@ query AllelesByGene(
   $isConstruct: Boolean = false
   $geneIsRegulatoryRegion: Boolean = false
 ) {
-  allGenes(condition: { uniquename: $fbgn }) {
+  genes(condition: { uniquename: $fbgn }) {
     nodes {
       name
       uniquename
-      allelesByGeneId(
+      alleles(
         condition: {
           isConstruct: $isConstruct
           geneIsRegulatoryRegion: $geneIsRegulatoryRegion

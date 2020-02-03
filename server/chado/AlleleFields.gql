@@ -8,32 +8,32 @@ fragment alleleFields on Allele {
   pubCount
   knownLesion
   hasImage
-  alleleClassesByAlleleId {
+  alleleClasses {
     nodes {
       fbcvId
       name
     }
   }
-  alleleMutagensByAlleleId {
+  alleleMutagens {
     nodes {
       fbcvId
       name
     }
   }
-  insertionsByAlleleId {
+  insertions {
     nodes {
       fbtiId
       symbol
-      constructsByInsertionId {
+      constructs {
         nodes {
           fbtpId
           symbol
-          toolUsesByConstructId {
+          toolUses {
             nodes {
               ...toolUses
             }
           }
-          toolsByConstructId {
+          tools {
             nodes {
               ...toolFields
             }
@@ -42,28 +42,28 @@ fragment alleleFields on Allele {
       }
     }
   }
-  constructsByAlleleId {
+  constructs {
     nodes {
       fbtpId
       symbol
-      toolsByConstructId {
+      tools {
         nodes {
           ...toolFields
         }
       }
-      toolUsesByConstructId {
+      toolUses {
         nodes {
           ...toolUses
         }
       }
     }
   }
-  toolsByAlleleId {
+  tools {
     nodes {
       ...toolFields
     }
   }
-  toolUsesByAlleleId {
+  toolUses {
     nodes {
       ...toolUses
     }
