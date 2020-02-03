@@ -24,8 +24,24 @@ module.exports = {
       script: './node_modules/.bin/postgraphile',
       // Options reference: http://pm2.keymetrics.io/docs/usage/application-declaration/
       args:
-        '-s flybase,gene -j -M -l 5MB --timeout 60000 --disable-query-log --disable-graphiql --legacy-relations omit --no-setof-functions-contain-nulls --max-pool-size 100',
-      instances: 1,
+        '--subscriptions ' +
+        '--retry-on-init-fail ' +
+        '--dynamic-json ' +
+        '--no-setof-functions-contain-nulls ' +
+        '--no-ignore-rbac ' +
+        '--no-ignore-indexes ' +
+        '--extended-errors errcode ' +
+        '--append-plugins @graphile-contrib/pg-simplify-inflector ' +
+        '--disable-default-mutations ' +
+        '--body-size-limit 5MB ' +
+        '--timeout 60000 ' +
+        '--disable-query-log ' +
+        '--legacy-relations omit ' +
+        '--max-pool-size 100 ' +
+        '--graphiql "/" ' +
+        '--enhance-graphiql ' +
+        '-s flybase,gene,gene_group',
+        instances: 1,
       autorestart: true,
       watch: false,
       max_memory_restart: '500M',
