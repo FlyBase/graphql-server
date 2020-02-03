@@ -2,7 +2,7 @@ fragment toolFields on Tool {
   fbid
   symbol
   relType
-  toolUsesByToolId {
+  toolUses {
     nodes {
       ...toolUses
     }
