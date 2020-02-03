@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'flybase-graphql',
-      script: 'dist/bundle.js',
+      script: 'dist/tools.js',
       // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
       args: '',
       node_args: '--max_old_space_size=2000',
@@ -24,7 +24,7 @@ module.exports = {
       script: './node_modules/.bin/postgraphile',
       // Options reference: http://pm2.keymetrics.io/docs/usage/application-declaration/
       args:
-        '-s flybase,gene -j -M -l 5MB --timeout 60000 --disable-query-log --disable-graphiql --legacy-relations omit --no-setof-functions-contain-nulls --max-pool-size 100',
+        '-s flybase,gene,gene_group -j -M -l 5MB --timeout 60000 --append-plugins @graphile/federation --disable-query-log --enhance-graphiql --dynamic-json --legacy-relations omit --no-setof-functions-contain-nulls --max-pool-size 100',
       instances: 1,
       autorestart: true,
       watch: false,

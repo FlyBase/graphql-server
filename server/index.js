@@ -18,6 +18,7 @@ Sentry.init({
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  subscriptions: false,
   // Allow query introspection.
   introspection: true,
   // Turn on GraphQL playground
@@ -34,6 +35,11 @@ const server = new ApolloServer({
 })
 
 // Start it up!
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`)
-})
+server
+  .listen({
+    host: 'localhost',
+    port: 4001,
+  })
+  .then(({ url }) => {
+    console.log(`🚀  Server ready at ${url}`)
+  })

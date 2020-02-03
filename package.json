@@ -7,13 +7,16 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "yarn run format",
-    "build": "parcel build server/index.js --target node -o dist/bundle.js --no-minify --no-source-maps",
-    "prod": "pm2 start --env production",
-    "dev": "pm2 start",
+    "build": "parcel build server/index.js --target node -o dist/tools.js --no-minify --no-source-maps && parcel build server/federation.js --target node -o dist/federation.js --no-minify --no-source-maps",
+    "prod": "pm2 start --env production ecosystem.config.js && sleep 5 && pm2 start --env production federation_ecosystem.config.js",
+    "dev": "pm2 start ecosystem.config.js && sleep 5 && pm2 start federation_ecosystem.config.js",
     "format": "prettier --write 'server/**/*.{js,gql}'",
     "pm2": "pm2"
   },
   "dependencies": {
+    "@apollo/federation": "^0.11.3",
+    "@apollo/gateway": "^0.11.7",
+    "@graphile/federation": "^0.0.3",
     "@sentry/node": "5.7.1",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
@@ -21,7 +24,7 @@
     "apollo-link-http": "^1.5.16",
     "apollo-server": "^2.9.6",
     "cross-fetch": "^3.0.4",
-    "graphql": "^14.5.8",
+    "graphql": "^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.mapkeys": "^4.6.0",
     "lodash.pickby": "^4.6.0",
@@ -29,6 +32,7 @@
     "postgraphile": "^4.4.4"
   },
   "devDependencies": {
+    "graphql-tag": "^2.10.1",
     "parcel-bundler": "^1.12.4",
     "prettier": "^1.18.2"
   },
