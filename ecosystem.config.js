@@ -31,7 +31,6 @@ module.exports = {
         '--no-ignore-rbac ' +
         '--no-ignore-indexes ' +
         '--extended-errors errcode ' +
-        '--append-plugins @graphile-contrib/pg-simplify-inflector ' +
         '--disable-default-mutations ' +
         '--body-size-limit 5MB ' +
         '--timeout 60000 ' +
