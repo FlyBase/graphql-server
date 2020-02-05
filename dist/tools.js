@@ -1666,113 +1666,6 @@ module.exports = {
     "kind": "FragmentDefinition",
     "name": {
       "kind": "Name",
-      "value": "toolFields"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "Tool"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbid"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "symbol"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "relType"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "toolUsesByToolId"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "FragmentSpread",
-                "name": {
-                  "kind": "Name",
-                  "value": "toolUses"
-                },
-                "directives": []
-              }]
-            }
-          }]
-        }
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
-      "value": "toolUses"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "ToolUse"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbcvId"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "name"
-        },
-        "arguments": [],
-        "directives": []
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
       "value": "alleleFields"
     },
     "typeCondition": {
@@ -2243,6 +2136,113 @@ module.exports = {
             }
           }]
         }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Tool"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbid"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "relType"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByToolId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolUses"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ToolUse"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbcvId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "name"
+        },
+        "arguments": [],
+        "directives": []
       }]
     }
   }],
@@ -3017,113 +3017,6 @@ module.exports = {
     "kind": "FragmentDefinition",
     "name": {
       "kind": "Name",
-      "value": "toolFields"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "Tool"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbid"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "symbol"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "relType"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "toolUsesByToolId"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "FragmentSpread",
-                "name": {
-                  "kind": "Name",
-                  "value": "toolUses"
-                },
-                "directives": []
-              }]
-            }
-          }]
-        }
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
-      "value": "toolUses"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "ToolUse"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbcvId"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "name"
-        },
-        "arguments": [],
-        "directives": []
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
       "value": "alleleFields"
     },
     "typeCondition": {
@@ -3594,6 +3487,113 @@ module.exports = {
             }
           }]
         }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Tool"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbid"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "relType"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByToolId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolUses"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ToolUse"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbcvId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "name"
+        },
+        "arguments": [],
+        "directives": []
       }]
     }
   }],
@@ -4535,6 +4535,8 @@ exports.default = _default;
 
 var _apolloServer = require("apollo-server");
 
+var _federation = require("@apollo/federation");
+
 var Sentry = _interopRequireWildcard(require("@sentry/node"));
 
 var _schema = _interopRequireDefault(require("./schema.gql"));
@@ -4559,8 +4561,10 @@ Sentry.init({
 }); // Create a new GraphQL server
 
 const server = new _apolloServer.ApolloServer({
-  typeDefs: _schema.default,
-  resolvers: _resolvers.resolvers,
+  schema: (0, _federation.buildFederatedSchema)([{
+    typeDefs: _schema.default,
+    resolvers: _resolvers.resolvers
+  }]),
   subscriptions: false,
   // Allow query introspection.
   introspection: true,

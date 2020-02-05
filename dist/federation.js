@@ -127,10 +127,10 @@ var _gateway = require("@apollo/gateway");
 const gateway = new _gateway.ApolloGateway({
   serviceList: [{
     name: 'tools',
-    url: 'http://localhost:4001/graphql'
+    url: 'http://localhost:4001/'
   }, {
     name: 'chado',
-    url: 'http://localhost:5000/graphql'
+    url: 'http://localhost:5000/'
   }]
 });
 const server = new _apolloServer.ApolloServer({

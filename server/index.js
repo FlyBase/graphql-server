@@ -1,4 +1,5 @@
 import { ApolloServer } from 'apollo-server'
+import { buildFederatedSchema } from '@apollo/federation'
 import * as Sentry from '@sentry/node'
 
 /*
@@ -16,8 +17,7 @@ Sentry.init({
 
 // Create a new GraphQL server
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema: buildFederatedSchema([{ typeDefs, resolvers }]),
   subscriptions: false,
   // Allow query introspection.
   introspection: true,
