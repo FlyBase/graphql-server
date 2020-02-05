@@ -4327,7 +4327,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Functions for reformatting Chado GraphQL results
 const cache = new _apolloCacheInmemory.InMemoryCache();
 const link = new _apolloLinkHttp.HttpLink({
-  uri: 'http://localhost:5000/graphql',
+  uri: 'http://localhost:5000/chado-graphql',
   fetch: _crossFetch.default
 });
 const defaultOptions = {

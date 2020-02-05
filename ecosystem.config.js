@@ -37,7 +37,8 @@ module.exports = {
         '--disable-query-log ' +
         '--legacy-relations omit ' +
         '--max-pool-size 100 ' +
-        '--graphiql "/" ' +
+        '--graphql "/chado-graphql" ' +
+        '--graphiql "/chado-graphiql" ' +
         '--enhance-graphiql ' +
         '-s flybase,gene,gene_group',
         instances: 1,
