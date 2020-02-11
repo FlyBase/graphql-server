@@ -1,0 +1,15 @@
+fragment toolFields on Tool {
+  fbid
+  symbol
+  relType
+  toolUsesByToolId {
+    nodes {
+      ...toolUses
+    }
+  }
+}
+
+fragment toolUses on ToolUse {
+  fbcvId
+  name
+}

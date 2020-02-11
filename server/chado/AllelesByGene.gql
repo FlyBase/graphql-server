@@ -1,0 +1,24 @@
+# import "./ToolFields.gql"
+# import "./AlleleFields.gql"
+query AllelesByGene(
+  $fbgn: String!
+  $isConstruct: Boolean = false
+  $geneIsRegulatoryRegion: Boolean = false
+) {
+  allGenes(condition: { uniquename: $fbgn }) {
+    nodes {
+      name
+      uniquename
+      allelesByGeneId(
+        condition: {
+          isConstruct: $isConstruct
+          geneIsRegulatoryRegion: $geneIsRegulatoryRegion
+        }
+      ) {
+        nodes {
+          ...alleleFields
+        }
+      }
+    }
+  }
+}
