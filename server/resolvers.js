@@ -23,7 +23,7 @@ import { CHADO_QUERY_ERROR } from './constants'
 // Set Apollo client dependencies and cache policies.
 const cache = new InMemoryCache()
 const link = new HttpLink({
-  uri: 'http://localhost:5000/graphql',
+  uri: 'http://localhost:5000/chado-graphql',
   fetch: fetch,
 })
 const defaultOptions = {
