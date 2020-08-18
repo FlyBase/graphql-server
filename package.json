@@ -1,6 +1,6 @@
 {
   "name": "flybase-graphql",
-  "version": "FB2020_01.1",
+  "version": "FB2020_04.0",
   "description": "FlyBase GraphQL implementation",
   "main": "server/index.js",
   "author": "Josh Goodman <jogoodma@iu.edu>",
