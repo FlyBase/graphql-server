@@ -8,13 +8,13 @@ import mapKeys from 'lodash.mapkeys'
  * @param gene Gene object from Chado
  * @returns {{symbol: *, id: *, alleles: *}}
  */
-export const reformatAlleleByGene = gene => {
+export const reformatAlleleByGene = (gene) => {
   const alleles = flattenNodes(gene.allelesByGeneId.nodes)
   const { uniquename: id, name: symbol } = gene
   return {
     id,
     symbol,
-    alleles: alleles.map(allele => materializeTools(allele, { id, symbol })),
+    alleles: alleles.map((allele) => materializeTools(allele, { id, symbol })),
   }
 }
 
@@ -24,9 +24,9 @@ export const reformatAlleleByGene = gene => {
  * @param nodes An array of allele nodes.
  * @returns {{knownLesion: *, stocksCount: *, insertions: *, alsoCarries: *, taggedWith: *, encodedToolUses: *, insertedElementTypes: *, regRegions: *, tagUses: *, id: *, constructs: *, encodedTools: *}[]}
  */
-export const reformatAlleles = nodes => {
+export const reformatAlleles = (nodes) => {
   const alleles = flattenNodes(nodes)
-  return alleles.map(allele => materializeTools(allele))
+  return alleles.map((allele) => materializeTools(allele))
 }
 
 /**
@@ -34,12 +34,12 @@ export const reformatAlleles = nodes => {
  * @param gene
  * @returns {{symbol: *, insertions: *, id: *}}
  */
-export const reformatInsertionByGene = gene => {
+export const reformatInsertionByGene = (gene) => {
   const insertions = flattenNodes(gene.insertionsByGeneId.nodes)
   return {
     id: gene.uniquename,
     symbol: gene.name,
-    insertions: insertions.map(insertion => materializeTools(insertion)),
+    insertions: insertions.map((insertion) => materializeTools(insertion)),
   }
 }
 
@@ -48,7 +48,7 @@ export const reformatInsertionByGene = gene => {
  * @param allele
  * @returns {{knownLesion: *, stocksCount: *, insertions: *, alsoCarries: *, taggedWith: *, encodedToolUses: *, insertedElementTypes: *, regRegions: *, tagUses: *, id: *, constructs: *, encodedTools: *}}
  */
-export const reformatAllele = allele => {
+export const reformatAllele = (allele) => {
   const node = flattenNodes([allele])[0]
   return materializeTools(node)
 }
@@ -141,7 +141,7 @@ const materializeTools = (fbObject = {}, parent = {}) => {
 const getInsertedElementTypes = (insertions = [], constructs = []) => {
   // Get tool uses attached to allele->insertion->construct
   const insertionToolUses = insertions.reduce((accum, insertion) => {
-    insertion.constructs.forEach(construct => {
+    insertion.constructs.forEach((construct) => {
       accum.push(...construct.toolUses)
     })
     return accum
@@ -156,7 +156,7 @@ const getInsertedElementTypes = (insertions = [], constructs = []) => {
 
 const getTools = (object, relType, propagateTransgenicUses = false) => {
   const tools = object.tools
-    ? object.tools.filter(tool => tool.relType === relType)
+    ? object.tools.filter((tool) => tool.relType === relType)
     : []
   if (propagateTransgenicUses) {
     let toolObjectParents = []
@@ -168,13 +168,13 @@ const getTools = (object, relType, propagateTransgenicUses = false) => {
     // Get tool uses attached to allele->insertion->construct
     const constructTools = toolObjectParents.reduce((accum, parent) => {
       if (parent.tools) {
-        accum.push(...parent.tools.filter(tool => tool.relType === relType))
+        accum.push(...parent.tools.filter((tool) => tool.relType === relType))
       }
       if (parent.constructs) {
-        parent.constructs.forEach(construct => {
+        parent.constructs.forEach((construct) => {
           // Collect all Encoded tools from the construct
           accum.push(
-            ...construct.tools.filter(tool => tool.relType === relType)
+            ...construct.tools.filter((tool) => tool.relType === relType)
           )
         })
       }
@@ -199,7 +199,7 @@ Function that takes a field name from a Chado
 Postgraphile GraphQL response and maps it to a simpler
 biologist friendly name.
 */
-const getSubFieldName = name => {
+const getSubFieldName = (name) => {
   switch (name) {
     case 'allelesByGeneId':
       return 'alleles'
@@ -231,7 +231,7 @@ const getSubFieldName = name => {
  * @param key
  * @returns {string|*}
  */
-const remapFbIdKey = key => {
+const remapFbIdKey = (key) => {
   if (/^fb\w\wId$/.test(key)) {
     return 'id'
   } else if (/^fbid$/.test(key)) {
@@ -241,7 +241,7 @@ const remapFbIdKey = key => {
 }
 
 export const flattenNodes = (nodes = []) => {
-  return nodes.map(node => {
+  return nodes.map((node) => {
     /* Extract fields that have scalar values and also remap fields with 
        names like 'fbtpId' to 'id'.  PickBy takes an object and returns 
        a new object with fields for which the function passed in returns true.
@@ -260,9 +260,9 @@ export const flattenNodes = (nodes = []) => {
     )
 
     // Extract object type fields.
-    const subObjects = pickBy(node, val => isPlainObject(val))
+    const subObjects = pickBy(node, (val) => isPlainObject(val))
     // Recurse through the sub object fields.
-    Object.keys(subObjects).forEach(subField => {
+    Object.keys(subObjects).forEach((subField) => {
       // Check if sub field has a 'nodes' property
       if (subObjects[subField].nodes) {
         nodeObject[getSubFieldName(subField)] = flattenNodes(

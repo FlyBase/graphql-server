@@ -57,7 +57,7 @@ export const handleError = (err, code = null, additionalProperties = null) => {
     err.networkError.result.errors
   ) {
     throw new ApolloError(
-      err.networkError.result.errors.map(e => e.message).join(' '),
+      err.networkError.result.errors.map((e) => e.message).join(' '),
       code,
       additionalProperties
     )
@@ -104,7 +104,9 @@ export const resolvers = {
             geneIsRegulatoryRegion,
           },
         })
-        .catch(err => handleError(err, CHADO_QUERY_ERROR, { clientError: err }))
+        .catch((err) =>
+          handleError(err, CHADO_QUERY_ERROR, { clientError: err })
+        )
 
       return result &&
         result.data &&
@@ -121,7 +123,9 @@ export const resolvers = {
           query: InsertionsWithoutAllelesByGene,
           variables: { fbgn },
         })
-        .catch(err => handleError(err, CHADO_QUERY_ERROR, { clientError: err }))
+        .catch((err) =>
+          handleError(err, CHADO_QUERY_ERROR, { clientError: err })
+        )
       return result &&
         result.data &&
         result.data.allGenes &&
@@ -137,7 +141,9 @@ export const resolvers = {
           query: Allele,
           variables: { fbal },
         })
-        .catch(err => handleError(err, CHADO_QUERY_ERROR, { clientError: err }))
+        .catch((err) =>
+          handleError(err, CHADO_QUERY_ERROR, { clientError: err })
+        )
       return result &&
         result.data &&
         result.data.allAlleles &&
@@ -154,7 +160,9 @@ export const resolvers = {
           query: Alleles,
           variables: { fbal_ids },
         })
-        .catch(err => handleError(err, CHADO_QUERY_ERROR, { clientError: err }))
+        .catch((err) =>
+          handleError(err, CHADO_QUERY_ERROR, { clientError: err })
+        )
       console.log('Retrieved alleles, reformatting results.')
       return result &&
         result.data &&
