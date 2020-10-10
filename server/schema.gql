@@ -95,7 +95,7 @@ type Variant {
   location: Location
   transcriptList: String
   displayName: String
-  nuceotideChange: String
+  nucleotideChange: String
   consequence: String
 }
 
