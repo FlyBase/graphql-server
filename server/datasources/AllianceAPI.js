@@ -32,6 +32,13 @@ class AllianceAPI extends RESTDataSource {
       AllianceAPI._reformatParamKeys(params)
     )
   }
+
+  async getVariantsByAllele({ id, params }) {
+    return this.get(
+      `/allele/FB:${id}/variants`,
+      AllianceAPI._reformatParamKeys(params)
+    )
+  }
 }
 
 export default AllianceAPI

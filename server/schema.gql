@@ -96,6 +96,7 @@ type Variant {
   transcriptList: String
   displayName: String
   nuceotideChange: String
+  consequence: String
 }
 
 input AllianceVariantsByGene {
@@ -112,8 +113,20 @@ input AllianceVariantsByGene {
   sortBy: String
 }
 
+input AllianceVariantsByAllele {
+  filter_variantConsequence: String
+  filter_variantType: String
+  limit: Int
+  page: Int
+  sortBy: String
+}
+
 type VariantsByGeneResult {
   alleles: [Allele]
+}
+
+type VariantsByAlleleResult {
+  variants: [Variant]
 }
 
 union Result = ExpressionToolSearchResult
@@ -148,4 +161,8 @@ type Query {
     id: String
     params: AllianceVariantsByGene
   ): VariantsByGeneResult
+  getAllianceVariantsByAllele(
+    id: String
+    params: AllianceVariantsByAllele
+  ): VariantsByAlleleResult
 }

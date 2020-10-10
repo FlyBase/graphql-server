@@ -1315,6 +1315,21 @@ module.exports = {
         }
       },
       "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "consequence"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
     }]
   }, {
     "kind": "InputObjectTypeDefinition",
@@ -1479,6 +1494,84 @@ module.exports = {
       "directives": []
     }]
   }, {
+    "kind": "InputObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "AllianceVariantsByAllele"
+    },
+    "directives": [],
+    "fields": [{
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "filter_variantConsequence"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "filter_variantType"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "limit"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Int"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "page"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Int"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "sortBy"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }]
+  }, {
     "kind": "ObjectTypeDefinition",
     "name": {
       "kind": "Name",
@@ -1500,6 +1593,33 @@ module.exports = {
           "name": {
             "kind": "Name",
             "value": "Allele"
+          }
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "VariantsByAlleleResult"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "variants"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Variant"
           }
         }
       },
@@ -1928,11 +2048,54 @@ module.exports = {
         }
       },
       "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "getAllianceVariantsByAllele"
+      },
+      "arguments": [{
+        "kind": "InputValueDefinition",
+        "name": {
+          "kind": "Name",
+          "value": "id"
+        },
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        },
+        "directives": []
+      }, {
+        "kind": "InputValueDefinition",
+        "name": {
+          "kind": "Name",
+          "value": "params"
+        },
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "AllianceVariantsByAllele"
+          }
+        },
+        "directives": []
+      }],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "VariantsByAlleleResult"
+        }
+      },
+      "directives": []
     }]
   }],
   "loc": {
     "start": 0,
-    "end": 2618
+    "end": 2949
   }
 };
 },{}],"XHMw":[function(require,module,exports) {
@@ -3498,6 +3661,113 @@ module.exports = {
     "kind": "FragmentDefinition",
     "name": {
       "kind": "Name",
+      "value": "toolFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Tool"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbid"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "relType"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByToolId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolUses"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ToolUse"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbcvId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "name"
+        },
+        "arguments": [],
+        "directives": []
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
       "value": "alleleFields"
     },
     "typeCondition": {
@@ -3968,113 +4238,6 @@ module.exports = {
             }
           }]
         }
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
-      "value": "toolFields"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "Tool"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbid"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "symbol"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "relType"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "toolUsesByToolId"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "FragmentSpread",
-                "name": {
-                  "kind": "Name",
-                  "value": "toolUses"
-                },
-                "directives": []
-              }]
-            }
-          }]
-        }
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
-      "value": "toolUses"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "ToolUse"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbcvId"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "name"
-        },
-        "arguments": [],
-        "directives": []
       }]
     }
   }],
@@ -5005,6 +5168,23 @@ const resolvers = {
       return {
         alleles
       };
+    },
+    getAllianceVariantsByAllele: async (_obj, _ref2, {
+      dataSources
+    }, _info) => {
+      let {
+        id
+      } = _ref2,
+          params = _objectWithoutProperties(_ref2, ["id"]);
+
+      const {
+        results: variants = []
+      } = await (dataSources === null || dataSources === void 0 ? void 0 : dataSources.allianceAPI.getVariantsByAllele(_objectSpread({
+        id
+      }, params)));
+      return {
+        variants
+      };
     }
   }
 };
@@ -5096,6 +5276,13 @@ class AllianceAPI extends _apolloDatasourceRest.RESTDataSource {
     params
   }) {
     return this.get(`/gene/FB:${id}/alleles`, AllianceAPI._reformatParamKeys(params));
+  }
+
+  async getVariantsByAllele({
+    id,
+    params
+  }) {
+    return this.get(`/allele/FB:${id}/variants`, AllianceAPI._reformatParamKeys(params));
   }
 
 }
