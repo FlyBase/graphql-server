@@ -5,10 +5,11 @@ module.exports = {
       script: 'dist/bundle.js',
       // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
       args: '',
-      node_args: '--max_old_space_size=2000',
-      instances: 3,
+      node_args: ['--max_old_space_size=2000'],
+      instances: 1,
       autorestart: true,
-      watch: false,
+      watch: ['dist'],
+      watch_delay: 1000,
       max_memory_restart: '2G',
       output: './logs/flybase-graphql.log',
       error: './logs/flybase-graphql.err',
@@ -41,7 +42,7 @@ module.exports = {
         '--graphiql "/chado-graphiql" ' +
         '--enhance-graphiql ' +
         '-s flybase,gene,gene_group',
-        instances: 1,
+      instances: 1,
       autorestart: true,
       watch: false,
       max_memory_restart: '500M',

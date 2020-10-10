@@ -204,5 +204,24 @@ export const resolvers = {
       }
       return null
     },
+    getAllianceVariantsByGene: async (
+      _obj,
+      { id, ...params },
+      { dataSources },
+      _info
+    ) => {
+      const { results = [] } = await dataSources?.allianceAPI.getAllelesByGene({
+        id,
+        ...params,
+      })
+      const alleles = results
+        .filter(({ variants = [] }) => variants.length !== 0)
+        .map(({ id, symbol, variants }) => ({
+          id,
+          symbol,
+          variants,
+        }))
+      return { alleles }
+    },
   },
 }
