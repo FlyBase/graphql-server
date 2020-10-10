@@ -6,7 +6,7 @@ module.exports = {
       // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
       args: '',
       node_args: ['--max_old_space_size=2000'],
-      instances: 1,
+      instances: 3,
       autorestart: true,
       watch: ['dist'],
       watch_delay: 1000,
