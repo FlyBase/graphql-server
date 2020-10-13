@@ -23,7 +23,7 @@ const server = new ApolloServer({
   introspection: true,
   // Turn on GraphQL playground
   playground: true,
-  formatError: (err) => {
+  formatError: err => {
     Sentry.captureException(err)
     return err
   },
