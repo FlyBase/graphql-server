@@ -25,6 +25,7 @@ type Allele {
   taggedWith: [Tool]
   tagUses: [CVTerm]
   alsoCarries: [Tool]
+  variants: [Variant]
 }
 
 type CVTerm {
@@ -77,6 +78,57 @@ input ExpressionSearchInput {
   subcellularq: String
 }
 
+type Location {
+  chromosome: String
+  start: Int
+  end: Int
+  assembly: String
+  strand: String
+}
+
+type Variant {
+  id: ID!
+  name: String
+  genomicReferenceSequence: String
+  genomicVariantSequence: String
+  type: CVTerm
+  location: Location
+  transcriptList: String
+  displayName: String
+  nucleotideChange: String
+  consequence: String
+}
+
+input AllianceVariantsByGene {
+  asc: String
+  filter_disease: String
+  filter_phenotype: String
+  filter_source: String
+  filter_symbol: String
+  filter_synonym: String
+  filter_variantConsequence: String
+  filter_variantType: String
+  limit: Int
+  page: Int
+  sortBy: String
+}
+
+input AllianceVariantsByAllele {
+  filter_variantConsequence: String
+  filter_variantType: String
+  limit: Int
+  page: Int
+  sortBy: String
+}
+
+type VariantsByGeneResult {
+  alleles: [Allele]
+}
+
+type VariantsByAlleleResult {
+  variants: [Variant]
+}
+
 union Result = ExpressionToolSearchResult
 
 type FlyBaseAPIResult {
@@ -105,4 +157,12 @@ type Query {
     expression: ExpressionSearchInput
     gene: String
   ): [ExpressionToolSearchResult]
+  getAllianceVariantsByGene(
+    id: String
+    params: AllianceVariantsByGene
+  ): VariantsByGeneResult
+  getAllianceVariantsByAllele(
+    id: String
+    params: AllianceVariantsByAllele
+  ): VariantsByAlleleResult
 }

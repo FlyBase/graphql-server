@@ -9,6 +9,7 @@ the query and return results formatted according to the schema
 import typeDefs from './schema.gql'
 import { resolvers } from './resolvers'
 import FlyBaseAPI from './datasources/FlyBaseAPI'
+import AllianceAPI from './datasources/AllianceAPI'
 
 Sentry.init({
   dsn: 'https://a44fd5f15e834e20a0770d626e0e25c5@sentry.io/1788453',
@@ -22,13 +23,14 @@ const server = new ApolloServer({
   introspection: true,
   // Turn on GraphQL playground
   playground: true,
-  formatError: (err) => {
+  formatError: err => {
     Sentry.captureException(err)
     return err
   },
   dataSources: () => {
     return {
       flyBaseAPI: new FlyBaseAPI(),
+      allianceAPI: new AllianceAPI(),
     }
   },
 })

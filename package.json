@@ -1,6 +1,6 @@
 {
   "name": "flybase-graphql",
-  "version": "FB2020_04.1",
+  "version": "FB2020_05.0",
   "description": "FlyBase GraphQL implementation",
   "main": "server/index.js",
   "author": "Josh Goodman <jogoodma@iu.edu>",
@@ -8,30 +8,30 @@
   "scripts": {
     "prebuild": "yarn run format",
     "build": "parcel build server/index.js --target node -o dist/bundle.js --no-minify --no-source-maps",
-    "prod": "pm2 start --env production",
-    "dev": "pm2 start",
+    "prod": "pm2 start --env production ecosystem.config.js",
+    "dev": "pm2 start ecosystem.config.js",
     "format": "prettier --write 'server/**/*.{js,gql}'",
     "pm2": "pm2"
   },
   "dependencies": {
-    "@sentry/node": "5.22.0",
-    "apollo-cache-inmemory": "^1.6.6",
-    "apollo-client": "^2.6.10",
-    "apollo-datasource-rest": "^0.9.3",
+    "@sentry/node": "5.15.4",
+    "apollo-cache-inmemory": "^1.6.3",
+    "apollo-client": "^2.6.4",
+    "apollo-datasource-rest": "^0.8.1",
     "apollo-link-http": "^1.5.17",
-    "apollo-server": "^2.17.0",
-    "cross-fetch": "^3.0.5",
-    "graphql": "^15.3.0",
+    "apollo-server": "^2.12.0",
+    "cross-fetch": "^3.0.4",
+    "graphql": "^15.0.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.mapkeys": "^4.6.0",
     "lodash.pickby": "^4.6.0",
-    "pm2": "4.4.1",
-    "postgraphile": "^4.8.0"
+    "pm2": "4.2.3",
+    "postgraphile": "^4.6.0"
   },
   "devDependencies": {
-    "graphql-tag": "^2.11.0",
+    "graphql-tag": "^2.10.3",
     "parcel-bundler": "^1.12.4",
-    "prettier": "^2.1.1"
+    "prettier": "^1.18.2"
   },
   "resolutions": {
     "graphql": "14.5.x"
