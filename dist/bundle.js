@@ -5199,9 +5199,10 @@ const resolvers = {
 
       const {
         results = []
-      } = await (dataSources === null || dataSources === void 0 ? void 0 : dataSources.allianceAPI.getAllelesByGene(_objectSpread({
-        id
-      }, params)));
+      } = await (dataSources === null || dataSources === void 0 ? void 0 : dataSources.allianceAPI.getAllelesByGene({
+        id,
+        params
+      }));
       const alleles = results.filter(({
         variants = []
       }) => variants.length !== 0).map(({

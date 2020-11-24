@@ -204,7 +204,7 @@ export const resolvers = {
     ) => {
       const { results = [] } = await dataSources?.allianceAPI.getAllelesByGene({
         id,
-        ...params,
+        params,
       })
       const alleles = results
         .filter(({ variants = [] }) => variants.length !== 0)
