@@ -26,6 +26,8 @@ type Allele {
   tagUses: [CVTerm]
   alsoCarries: [Tool]
   variants: [Variant]
+  synonyms: [String]
+  category: String
 }
 
 type CVTerm {

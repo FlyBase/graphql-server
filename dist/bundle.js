@@ -545,6 +545,39 @@ module.exports = {
         }
       },
       "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "synonyms"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "category"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
     }]
   }, {
     "kind": "ObjectTypeDefinition",
@@ -2110,7 +2143,7 @@ module.exports = {
   }],
   "loc": {
     "start": 0,
-    "end": 2972
+    "end": 3012
   }
 };
 },{}],"XHMw":[function(require,module,exports) {
