@@ -5207,10 +5207,14 @@ const resolvers = {
       }) => variants.length !== 0).map(({
         id,
         symbol,
+        synonyms,
+        category,
         variants
       }) => ({
         id,
         symbol,
+        synonyms,
+        category,
         variants
       }));
       return {
