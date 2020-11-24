@@ -208,9 +208,11 @@ export const resolvers = {
       })
       const alleles = results
         .filter(({ variants = [] }) => variants.length !== 0)
-        .map(({ id, symbol, variants }) => ({
+        .map(({ id, symbol, synonyms, category, variants }) => ({
           id,
           symbol,
+          synonyms,
+          category,
           variants,
         }))
       return { alleles }
