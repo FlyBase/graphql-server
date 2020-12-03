@@ -198,7 +198,7 @@ export const resolvers = {
     },
     getAllianceVariantsByGene: async (
       _obj,
-      { id, ...params },
+      { id, params },
       { dataSources },
       _info
     ) => {
