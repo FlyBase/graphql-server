@@ -208,13 +208,25 @@ export const resolvers = {
       })
       const alleles = results
         .filter(({ variants = [] }) => variants.length !== 0)
-        .map(({ id, symbol, synonyms, category, variants }) => ({
-          id,
-          symbol,
-          synonyms,
-          category,
-          variants,
-        }))
+        .map(
+          ({
+            id,
+            symbol,
+            synonyms,
+            category,
+            hasDisease = false,
+            hasPhenotype = false,
+            variants,
+          }) => ({
+            id,
+            symbol,
+            synonyms,
+            category,
+            hasDisease,
+            hasPhenotype,
+            variants,
+          })
+        )
       return { alleles }
     },
     getAllianceVariantsByAllele: async (

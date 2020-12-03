@@ -578,6 +578,36 @@ module.exports = {
         }
       },
       "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "hasDisease"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Boolean"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "hasPhenotype"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Boolean"
+        }
+      },
+      "directives": []
     }]
   }, {
     "kind": "ObjectTypeDefinition",
@@ -2143,7 +2173,7 @@ module.exports = {
   }],
   "loc": {
     "start": 0,
-    "end": 3012
+    "end": 3058
   }
 };
 },{}],"XHMw":[function(require,module,exports) {
@@ -5208,12 +5238,16 @@ const resolvers = {
         symbol,
         synonyms,
         category,
+        hasDisease = false,
+        hasPhenotype = false,
         variants
       }) => ({
         id,
         symbol,
         synonyms,
         category,
+        hasDisease,
+        hasPhenotype,
         variants
       }));
       return {

@@ -28,6 +28,8 @@ type Allele {
   variants: [Variant]
   synonyms: [String]
   category: String
+  hasDisease: Boolean
+  hasPhenotype: Boolean
 }
 
 type CVTerm {
