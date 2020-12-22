@@ -244,4 +244,15 @@ export const resolvers = {
       return { variants }
     },
   },
+  Allele: {
+    variants: async (allele, params = {}, { dataSources }, _info) => {
+      const {
+        results: variants = [],
+      } = await dataSources?.allianceAPI.getVariantsByAllele({
+        id: allele?.id,
+        ...params,
+      })
+      return variants
+    },
+  },
 }
