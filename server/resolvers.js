@@ -198,21 +198,35 @@ export const resolvers = {
     },
     getAllianceVariantsByGene: async (
       _obj,
-      { id, ...params },
+      { id, params },
       { dataSources },
       _info
     ) => {
       const { results = [] } = await dataSources?.allianceAPI.getAllelesByGene({
         id,
-        ...params,
+        params,
       })
       const alleles = results
         .filter(({ variants = [] }) => variants.length !== 0)
-        .map(({ id, symbol, variants }) => ({
-          id,
-          symbol,
-          variants,
-        }))
+        .map(
+          ({
+            id,
+            symbol,
+            synonyms,
+            category,
+            hasDisease = false,
+            hasPhenotype = false,
+            variants,
+          }) => ({
+            id,
+            symbol,
+            synonyms,
+            category,
+            hasDisease,
+            hasPhenotype,
+            variants,
+          })
+        )
       return { alleles }
     },
     getAllianceVariantsByAllele: async (
@@ -228,6 +242,17 @@ export const resolvers = {
         ...params,
       })
       return { variants }
+    },
+  },
+  Allele: {
+    variants: async (allele, params = {}, { dataSources }, _info) => {
+      const {
+        results: variants = [],
+      } = await dataSources?.allianceAPI.getVariantsByAllele({
+        id: allele?.id,
+        ...params,
+      })
+      return variants
     },
   },
 }

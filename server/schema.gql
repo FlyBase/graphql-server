@@ -26,6 +26,10 @@ type Allele {
   tagUses: [CVTerm]
   alsoCarries: [Tool]
   variants: [Variant]
+  synonyms: [String]
+  category: String
+  hasDisease: Boolean
+  hasPhenotype: Boolean
 }
 
 type CVTerm {
@@ -89,9 +93,10 @@ type Location {
 type Variant {
   id: ID!
   name: String
+  type: String
   genomicReferenceSequence: String
   genomicVariantSequence: String
-  type: CVTerm
+  variantType: CVTerm
   location: Location
   transcriptList: String
   displayName: String
