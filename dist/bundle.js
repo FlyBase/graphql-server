@@ -527,6 +527,87 @@ module.exports = {
         }
       },
       "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "variants"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Variant"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "synonyms"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "category"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "hasDisease"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Boolean"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "hasPhenotype"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Boolean"
+        }
+      },
+      "directives": []
     }]
   }, {
     "kind": "ObjectTypeDefinition",
@@ -1068,6 +1149,561 @@ module.exports = {
       "directives": []
     }]
   }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "Location"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "chromosome"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "start"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Int"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "end"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Int"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "assembly"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "strand"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "Variant"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "id"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NonNullType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "ID"
+          }
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "name"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "type"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "genomicReferenceSequence"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "genomicVariantSequence"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "variantType"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "CVTerm"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "location"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Location"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "transcriptList"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "displayName"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "nucleotideChange"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "consequence"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "InputObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "AllianceVariantsByGene"
+    },
+    "directives": [],
+    "fields": [{
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "asc"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "filter_disease"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "filter_phenotype"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "filter_source"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "filter_symbol"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "filter_synonym"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "filter_variantConsequence"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "filter_variantType"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "limit"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Int"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "page"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Int"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "sortBy"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "InputObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "AllianceVariantsByAllele"
+    },
+    "directives": [],
+    "fields": [{
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "filter_variantConsequence"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "filter_variantType"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "limit"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Int"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "page"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "Int"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "InputValueDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "sortBy"
+      },
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "String"
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "VariantsByGeneResult"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "alleles"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Allele"
+          }
+        }
+      },
+      "directives": []
+    }]
+  }, {
+    "kind": "ObjectTypeDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "VariantsByAlleleResult"
+    },
+    "interfaces": [],
+    "directives": [],
+    "fields": [{
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "variants"
+      },
+      "arguments": [],
+      "type": {
+        "kind": "ListType",
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Variant"
+          }
+        }
+      },
+      "directives": []
+    }]
+  }, {
     "kind": "UnionTypeDefinition",
     "name": {
       "kind": "Name",
@@ -1447,11 +2083,97 @@ module.exports = {
         }
       },
       "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "getAllianceVariantsByGene"
+      },
+      "arguments": [{
+        "kind": "InputValueDefinition",
+        "name": {
+          "kind": "Name",
+          "value": "id"
+        },
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        },
+        "directives": []
+      }, {
+        "kind": "InputValueDefinition",
+        "name": {
+          "kind": "Name",
+          "value": "params"
+        },
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "AllianceVariantsByGene"
+          }
+        },
+        "directives": []
+      }],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "VariantsByGeneResult"
+        }
+      },
+      "directives": []
+    }, {
+      "kind": "FieldDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "getAllianceVariantsByAllele"
+      },
+      "arguments": [{
+        "kind": "InputValueDefinition",
+        "name": {
+          "kind": "Name",
+          "value": "id"
+        },
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "String"
+          }
+        },
+        "directives": []
+      }, {
+        "kind": "InputValueDefinition",
+        "name": {
+          "kind": "Name",
+          "value": "params"
+        },
+        "type": {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "AllianceVariantsByAllele"
+          }
+        },
+        "directives": []
+      }],
+      "type": {
+        "kind": "NamedType",
+        "name": {
+          "kind": "Name",
+          "value": "VariantsByAlleleResult"
+        }
+      },
+      "directives": []
     }]
   }],
   "loc": {
     "start": 0,
-    "end": 1840
+    "end": 3058
   }
 };
 },{}],"XHMw":[function(require,module,exports) {
@@ -1666,113 +2388,6 @@ module.exports = {
     "kind": "FragmentDefinition",
     "name": {
       "kind": "Name",
-      "value": "toolFields"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "Tool"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbid"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "symbol"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "relType"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "toolUsesByToolId"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "FragmentSpread",
-                "name": {
-                  "kind": "Name",
-                  "value": "toolUses"
-                },
-                "directives": []
-              }]
-            }
-          }]
-        }
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
-      "value": "toolUses"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "ToolUse"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbcvId"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "name"
-        },
-        "arguments": [],
-        "directives": []
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
       "value": "alleleFields"
     },
     "typeCondition": {
@@ -2243,6 +2858,113 @@ module.exports = {
             }
           }]
         }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Tool"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbid"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "relType"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByToolId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolUses"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ToolUse"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbcvId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "name"
+        },
+        "arguments": [],
+        "directives": []
       }]
     }
   }],
@@ -2345,113 +3067,6 @@ module.exports = {
     "kind": "FragmentDefinition",
     "name": {
       "kind": "Name",
-      "value": "toolFields"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "Tool"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbid"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "symbol"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "relType"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "toolUsesByToolId"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "FragmentSpread",
-                "name": {
-                  "kind": "Name",
-                  "value": "toolUses"
-                },
-                "directives": []
-              }]
-            }
-          }]
-        }
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
-      "value": "toolUses"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "ToolUse"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbcvId"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "name"
-        },
-        "arguments": [],
-        "directives": []
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
       "value": "alleleFields"
     },
     "typeCondition": {
@@ -2922,6 +3537,113 @@ module.exports = {
             }
           }]
         }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Tool"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbid"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "relType"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByToolId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolUses"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ToolUse"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbcvId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "name"
+        },
+        "arguments": [],
+        "directives": []
       }]
     }
   }],
@@ -3017,113 +3739,6 @@ module.exports = {
     "kind": "FragmentDefinition",
     "name": {
       "kind": "Name",
-      "value": "toolFields"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "Tool"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbid"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "symbol"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "relType"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "toolUsesByToolId"
-        },
-        "arguments": [],
-        "directives": [],
-        "selectionSet": {
-          "kind": "SelectionSet",
-          "selections": [{
-            "kind": "Field",
-            "name": {
-              "kind": "Name",
-              "value": "nodes"
-            },
-            "arguments": [],
-            "directives": [],
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": [{
-                "kind": "FragmentSpread",
-                "name": {
-                  "kind": "Name",
-                  "value": "toolUses"
-                },
-                "directives": []
-              }]
-            }
-          }]
-        }
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
-      "value": "toolUses"
-    },
-    "typeCondition": {
-      "kind": "NamedType",
-      "name": {
-        "kind": "Name",
-        "value": "ToolUse"
-      }
-    },
-    "directives": [],
-    "selectionSet": {
-      "kind": "SelectionSet",
-      "selections": [{
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "fbcvId"
-        },
-        "arguments": [],
-        "directives": []
-      }, {
-        "kind": "Field",
-        "name": {
-          "kind": "Name",
-          "value": "name"
-        },
-        "arguments": [],
-        "directives": []
-      }]
-    }
-  }, {
-    "kind": "FragmentDefinition",
-    "name": {
-      "kind": "Name",
       "value": "alleleFields"
     },
     "typeCondition": {
@@ -3594,6 +4209,113 @@ module.exports = {
             }
           }]
         }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolFields"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "Tool"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbid"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "symbol"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "relType"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "toolUsesByToolId"
+        },
+        "arguments": [],
+        "directives": [],
+        "selectionSet": {
+          "kind": "SelectionSet",
+          "selections": [{
+            "kind": "Field",
+            "name": {
+              "kind": "Name",
+              "value": "nodes"
+            },
+            "arguments": [],
+            "directives": [],
+            "selectionSet": {
+              "kind": "SelectionSet",
+              "selections": [{
+                "kind": "FragmentSpread",
+                "name": {
+                  "kind": "Name",
+                  "value": "toolUses"
+                },
+                "directives": []
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }, {
+    "kind": "FragmentDefinition",
+    "name": {
+      "kind": "Name",
+      "value": "toolUses"
+    },
+    "typeCondition": {
+      "kind": "NamedType",
+      "name": {
+        "kind": "Name",
+        "value": "ToolUse"
+      }
+    },
+    "directives": [],
+    "selectionSet": {
+      "kind": "SelectionSet",
+      "selections": [{
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "fbcvId"
+        },
+        "arguments": [],
+        "directives": []
+      }, {
+        "kind": "Field",
+        "name": {
+          "kind": "Name",
+          "value": "name"
+        },
+        "arguments": [],
+        "directives": []
       }]
     }
   }],
@@ -4324,8 +5046,16 @@ var _constants = require("./constants");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Functions for reformatting Chado GraphQL results
-// Error codes.
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
 // Set Apollo client dependencies and cache policies.
 const cache = new _apolloCacheInmemory.InMemoryCache();
 const link = new _apolloLinkHttp.HttpLink({
@@ -4488,6 +5218,70 @@ const resolvers = {
       }
 
       return null;
+    },
+    getAllianceVariantsByGene: async (_obj, {
+      id,
+      params
+    }, {
+      dataSources
+    }, _info) => {
+      const {
+        results = []
+      } = await (dataSources === null || dataSources === void 0 ? void 0 : dataSources.allianceAPI.getAllelesByGene({
+        id,
+        params
+      }));
+      const alleles = results.filter(({
+        variants = []
+      }) => variants.length !== 0).map(({
+        id,
+        symbol,
+        synonyms,
+        category,
+        hasDisease = false,
+        hasPhenotype = false,
+        variants
+      }) => ({
+        id,
+        symbol,
+        synonyms,
+        category,
+        hasDisease,
+        hasPhenotype,
+        variants
+      }));
+      return {
+        alleles
+      };
+    },
+    getAllianceVariantsByAllele: async (_obj, _ref, {
+      dataSources
+    }, _info) => {
+      let {
+        id
+      } = _ref,
+          params = _objectWithoutProperties(_ref, ["id"]);
+
+      const {
+        results: variants = []
+      } = await (dataSources === null || dataSources === void 0 ? void 0 : dataSources.allianceAPI.getVariantsByAllele(_objectSpread({
+        id
+      }, params)));
+      return {
+        variants
+      };
+    }
+  },
+  Allele: {
+    variants: async (allele, params = {}, {
+      dataSources
+    }, _info) => {
+      const {
+        results: variants = []
+      } = await (dataSources === null || dataSources === void 0 ? void 0 : dataSources.allianceAPI.getVariantsByAllele(_objectSpread({
+        id: allele === null || allele === void 0 ? void 0 : allele.id
+      }, params)));
+      return variants;
     }
   }
 };
@@ -4535,6 +5329,63 @@ class FlyBaseAPI extends _apolloDatasourceRest.RESTDataSource {
 
 var _default = FlyBaseAPI;
 exports.default = _default;
+},{}],"alf4":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _apolloDatasourceRest = require("apollo-datasource-rest");
+
+/**
+ * An Apollo REST data source for using the Alliance API
+ */
+class AllianceAPI extends _apolloDatasourceRest.RESTDataSource {
+  constructor() {
+    super();
+    this.baseURL = 'https://www.alliancegenome.org/api/';
+  }
+  /**
+   * Private static method to reformat Alliance parameters from their GraphQL
+   * name into the expected REST API name. GraphQL field names do not
+   * allow for '.' in them so they use '_' instead.
+   *
+   * @param params - A flat object representing the endpoint parameters
+   * @returns {Object} - Copy of the params object with key names transformed.
+   * @private
+   */
+
+
+  static _reformatParamKeys(params = {}) {
+    const allianceParams = {};
+
+    for (const [key, value] of Object.entries(params)) {
+      allianceParams[key.replace('_', '.')] = value;
+    }
+
+    return allianceParams;
+  }
+
+  async getAllelesByGene({
+    id,
+    params
+  }) {
+    return this.get(`/gene/FB:${id}/alleles`, AllianceAPI._reformatParamKeys(params));
+  }
+
+  async getVariantsByAllele({
+    id,
+    params
+  }) {
+    return this.get(`/allele/FB:${id}/variants`, AllianceAPI._reformatParamKeys(params));
+  }
+
+}
+
+var _default = AllianceAPI;
+exports.default = _default;
 },{}],"Focm":[function(require,module,exports) {
 "use strict";
 
@@ -4547,6 +5398,8 @@ var _schema = _interopRequireDefault(require("./schema.gql"));
 var _resolvers = require("./resolvers");
 
 var _FlyBaseAPI = _interopRequireDefault(require("./datasources/FlyBaseAPI"));
+
+var _AllianceAPI = _interopRequireDefault(require("./datasources/AllianceAPI"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4576,7 +5429,8 @@ const server = new _apolloServer.ApolloServer({
   },
   dataSources: () => {
     return {
-      flyBaseAPI: new _FlyBaseAPI.default()
+      flyBaseAPI: new _FlyBaseAPI.default(),
+      allianceAPI: new _AllianceAPI.default()
     };
   }
 }); // Start it up!
@@ -4586,4 +5440,4 @@ server.listen().then(({
 }) => {
   console.log(`🚀  Server ready at ${url}`);
 });
-},{"./schema.gql":"j9dv","./resolvers":"OJnd","./datasources/FlyBaseAPI":"bEVX"}]},{},["Focm"], null)
+},{"./schema.gql":"j9dv","./resolvers":"OJnd","./datasources/FlyBaseAPI":"bEVX","./datasources/AllianceAPI":"alf4"}]},{},["Focm"], null)
