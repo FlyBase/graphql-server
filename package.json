@@ -7,34 +7,37 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "yarn run format",
-    "build": "parcel build server/index.js --target node -o dist/bundle.js --no-minify --no-source-maps",
-    "prod": "pm2 start --env production ecosystem.config.js",
+    "build:watch": "node build.js --watch",
+    "build": "node build.js",
+    "start": "pm2 start --env production ecosystem.config.js",
     "dev": "pm2 start ecosystem.config.js",
     "format": "prettier --write 'server/**/*.{js,gql}'",
     "pm2": "pm2"
   },
   "dependencies": {
-    "@sentry/node": "5.29.2",
+    "@sentry/node": "6.2.3",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
-    "apollo-datasource-rest": "^0.9.5",
+    "apollo-datasource-rest": "^0.10.0",
     "apollo-link-http": "^1.5.17",
-    "apollo-server": "^2.12.0",
-    "cross-fetch": "^3.0.4",
-    "graphql": "^15.0.0",
+    "apollo-server": "^2.21.2",
+    "cross-fetch": "^3.1.2",
+    "graphql": "^15.5.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.mapkeys": "^4.6.0",
     "lodash.pickby": "^4.6.0",
-    "pm2": "^4.5.4",
+    "pm2": "^4.5.5",
     "postgraphile": "^4.6.0"
   },
   "devDependencies": {
-    "graphql-tag": "^2.10.3",
-    "parcel-bundler": "^1.12.4",
-    "prettier": "^1.18.2"
+    "@luckycatfactory/esbuild-graphql-loader": "^3.6.0",
+    "esbuild": "^0.10.0",
+    "graphql-tag": "^2.11.0",
+    "prettier": "^1.18.2",
+    "yargs": "^16.2.0"
   },
   "resolutions": {
-    "graphql": "14.5.x"
+    "graphql": "15.5.x"
   },
   "prettier": {
     "semi": false,
