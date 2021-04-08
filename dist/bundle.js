@@ -7,7 +7,7 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, {enumerable: true, configurable: true, writable: true, value}) : obj[key] = value;
-var __assign = (a, b) => {
+var __objSpread = (a, b) => {
   for (var prop in b || (b = {}))
     if (__hasOwnProp.call(b, prop))
       __defNormalProp(a, prop, b[prop]);
@@ -19,7 +19,7 @@ var __assign = (a, b) => {
   return a;
 };
 var __markAsModule = (target) => __defProp(target, "__esModule", {value: true});
-var __rest = (source, exclude) => {
+var __objRest = (source, exclude) => {
   var target = {};
   for (var prop in source)
     if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
@@ -32,7 +32,7 @@ var __rest = (source, exclude) => {
   return target;
 };
 var __commonJS = (cb, mod) => () => (mod || cb((mod = {exports: {}}).exports, mod), mod.exports);
-var __exportStar = (target, module2, desc) => {
+var __reExport = (target, module2, desc) => {
   if (module2 && typeof module2 === "object" || typeof module2 === "function") {
     for (let key of __getOwnPropNames(module2))
       if (!__hasOwnProp.call(target, key) && key !== "default")
@@ -41,7 +41,7 @@ var __exportStar = (target, module2, desc) => {
   return target;
 };
 var __toModule = (module2) => {
-  return __exportStar(__markAsModule(__defProp(module2 != null ? __create(__getProtoOf(module2)) : {}, "default", module2 && module2.__esModule && "default" in module2 ? {get: () => module2.default, enumerable: true} : {value: module2, enumerable: true})), module2);
+  return __reExport(__markAsModule(__defProp(module2 != null ? __create(__getProtoOf(module2)) : {}, "default", module2 && module2.__esModule && "default" in module2 ? {get: () => module2.default, enumerable: true} : {value: module2, enumerable: true})), module2);
 };
 
 // node_modules/stoppable/lib/stoppable.js
@@ -2774,7 +2774,7 @@ var require_dist = __commonJS((exports2) => {
       k2 = k;
     o[k2] = m[k];
   });
-  var __exportStar2 = exports2 && exports2.__exportStar || function(m, exports3) {
+  var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
     for (var p in m)
       if (p !== "default" && !exports3.hasOwnProperty(p))
         __createBinding(exports3, m, p);
@@ -2789,8 +2789,8 @@ var require_dist = __commonJS((exports2) => {
   if (!runtimeSupportsPromisify_1.default) {
     require_util().shim();
   }
-  __exportStar2(require_fetch(), exports2);
-  __exportStar2(require_url(), exports2);
+  __exportStar(require_fetch(), exports2);
+  __exportStar(require_url(), exports2);
 });
 
 // node_modules/apollo-server-core/dist/graphqlOptions.js
@@ -20655,8 +20655,8 @@ var require_errors = __commonJS((exports2) => {
       d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
   }();
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -20665,7 +20665,7 @@ var require_errors = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   Object.defineProperty(exports2, "__esModule", {value: true});
   var graphql_1 = require_graphql2();
@@ -20689,15 +20689,15 @@ var require_errors = __commonJS((exports2) => {
         }
         var index = error.path[1];
         var current = byIndex_1[index] || [];
-        current.push(__assign2(__assign2({}, error), {path: error.path.slice(1)}));
+        current.push(__assign(__assign({}, error), {path: error.path.slice(1)}));
         byIndex_1[index] = current;
       });
       return object.map(function(item, index) {
         return annotateWithChildrenErrors(item, byIndex_1[index]);
       });
     }
-    return __assign2(__assign2({}, object), (_a = {}, _a[exports2.ERROR_SYMBOL] = childrenErrors.map(function(error) {
-      return __assign2(__assign2({}, error), error.path ? {path: error.path.slice(1)} : {});
+    return __assign(__assign({}, object), (_a = {}, _a[exports2.ERROR_SYMBOL] = childrenErrors.map(function(error) {
+      return __assign(__assign({}, error), error.path ? {path: error.path.slice(1)} : {});
     }), _a));
   }
   exports2.annotateWithChildrenErrors = annotateWithChildrenErrors;
@@ -21757,8 +21757,8 @@ var require_attachConnectorsToContext = __commonJS((exports2) => {
 
 // node_modules/graphql-tools/dist/generate/filterExtensionDefinitions.js
 var require_filterExtensionDefinitions = __commonJS((exports2) => {
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -21767,7 +21767,7 @@ var require_filterExtensionDefinitions = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   Object.defineProperty(exports2, "__esModule", {value: true});
   var graphql_1 = require_graphql2();
@@ -21775,7 +21775,7 @@ var require_filterExtensionDefinitions = __commonJS((exports2) => {
     var extensionDefs = ast.definitions.filter(function(def) {
       return def.kind !== graphql_1.Kind.OBJECT_TYPE_EXTENSION && def.kind !== graphql_1.Kind.INTERFACE_TYPE_EXTENSION && def.kind !== graphql_1.Kind.INPUT_OBJECT_TYPE_EXTENSION && def.kind !== graphql_1.Kind.UNION_TYPE_EXTENSION && def.kind !== graphql_1.Kind.ENUM_TYPE_EXTENSION && def.kind !== graphql_1.Kind.SCALAR_TYPE_EXTENSION && def.kind !== graphql_1.Kind.SCHEMA_EXTENSION;
     });
-    return __assign2(__assign2({}, ast), {definitions: extensionDefs});
+    return __assign(__assign({}, ast), {definitions: extensionDefs});
   }
   exports2.default = filterExtensionDefinitions;
 });
@@ -21944,8 +21944,8 @@ var require_decorateWithLogger = __commonJS((exports2) => {
 
 // node_modules/graphql-tools/dist/generate/extendResolversFromInterfaces.js
 var require_extendResolversFromInterfaces = __commonJS((exports2) => {
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -21954,7 +21954,7 @@ var require_extendResolversFromInterfaces = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   var __spreadArrays = exports2 && exports2.__spreadArrays || function() {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++)
@@ -21967,7 +21967,7 @@ var require_extendResolversFromInterfaces = __commonJS((exports2) => {
   Object.defineProperty(exports2, "__esModule", {value: true});
   var graphql_1 = require_graphql2();
   function extendResolversFromInterfaces(schema, resolvers2) {
-    var typeNames = Object.keys(__assign2(__assign2({}, schema.getTypeMap()), resolvers2));
+    var typeNames = Object.keys(__assign(__assign({}, schema.getTypeMap()), resolvers2));
     var extendedResolvers = {};
     typeNames.forEach(function(typeName) {
       var typeResolvers = resolvers2[typeName];
@@ -22609,14 +22609,14 @@ var require_tslib = __commonJS((exports2, module2) => {
   PERFORMANCE OF THIS SOFTWARE.
   ***************************************************************************** */
   var __extends;
-  var __assign2;
-  var __rest2;
+  var __assign;
+  var __rest;
   var __decorate;
   var __param;
   var __metadata;
   var __awaiter;
   var __generator;
-  var __exportStar2;
+  var __exportStar;
   var __values;
   var __read;
   var __spread;
@@ -22669,7 +22669,7 @@ var require_tslib = __commonJS((exports2, module2) => {
       }
       d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
-    __assign2 = Object.assign || function(t) {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -22678,7 +22678,7 @@ var require_tslib = __commonJS((exports2, module2) => {
       }
       return t;
     };
-    __rest2 = function(s, e) {
+    __rest = function(s, e) {
       var t = {};
       for (var p in s)
         if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -22817,7 +22817,7 @@ var require_tslib = __commonJS((exports2, module2) => {
         k2 = k;
       o[k2] = m[k];
     };
-    __exportStar2 = function(m, exports3) {
+    __exportStar = function(m, exports3) {
       for (var p in m)
         if (p !== "default" && !exports3.hasOwnProperty(p))
           exports3[p] = m[p];
@@ -22979,14 +22979,14 @@ var require_tslib = __commonJS((exports2, module2) => {
       return value;
     };
     exporter("__extends", __extends);
-    exporter("__assign", __assign2);
-    exporter("__rest", __rest2);
+    exporter("__assign", __assign);
+    exporter("__rest", __rest);
     exporter("__decorate", __decorate);
     exporter("__param", __param);
     exporter("__metadata", __metadata);
     exporter("__awaiter", __awaiter);
     exporter("__generator", __generator);
-    exporter("__exportStar", __exportStar2);
+    exporter("__exportStar", __exportStar);
     exporter("__createBinding", __createBinding);
     exporter("__values", __values);
     exporter("__read", __read);
@@ -25200,8 +25200,8 @@ var require_iterall = __commonJS((exports2) => {
 
 // node_modules/graphql-tools/dist/stitching/observableToAsyncIterable.js
 var require_observableToAsyncIterable = __commonJS((exports2) => {
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -25210,7 +25210,7 @@ var require_observableToAsyncIterable = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   var __awaiter = exports2 && exports2.__awaiter || function(thisArg, _arguments, P, generator) {
     function adopt(value) {
@@ -25341,7 +25341,7 @@ var require_observableToAsyncIterable = __commonJS((exports2) => {
       return new Promise(function(resolve) {
         if (pushQueue.length !== 0) {
           var element = pushQueue.shift();
-          resolve(__assign2(__assign2({}, element), {done: false}));
+          resolve(__assign(__assign({}, element), {done: false}));
         } else {
           pullQueue.push(resolve);
         }
@@ -25781,8 +25781,8 @@ var require_introspectSchema = __commonJS((exports2) => {
 
 // node_modules/graphql-tools/dist/transforms/AddArgumentsAsVariables.js
 var require_AddArgumentsAsVariables = __commonJS((exports2) => {
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -25791,7 +25791,7 @@ var require_AddArgumentsAsVariables = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   var __spreadArrays = exports2 && exports2.__spreadArrays || function() {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++)
@@ -25810,7 +25810,7 @@ var require_AddArgumentsAsVariables = __commonJS((exports2) => {
     }
     AddArgumentsAsVariablesTransform2.prototype.transformRequest = function(originalRequest) {
       var _a = addVariablesToRootField(this.schema, originalRequest.document, this.args), document2 = _a.document, newVariables = _a.newVariables;
-      var variables = __assign2(__assign2({}, originalRequest.variables), newVariables);
+      var variables = __assign(__assign({}, originalRequest.variables), newVariables);
       return {
         document: document2,
         variables
@@ -25890,14 +25890,14 @@ var require_AddArgumentsAsVariables = __commonJS((exports2) => {
               };
             }
           });
-          newSelectionSet.push(__assign2(__assign2({}, selection), {arguments: Object.keys(newArgs_1).map(function(argName) {
+          newSelectionSet.push(__assign(__assign({}, selection), {arguments: Object.keys(newArgs_1).map(function(argName) {
             return newArgs_1[argName];
           })}));
         } else {
           newSelectionSet.push(selection);
         }
       });
-      return __assign2(__assign2({}, operation), {variableDefinitions: operation.variableDefinitions.concat(Object.keys(variables).map(function(varName) {
+      return __assign(__assign({}, operation), {variableDefinitions: operation.variableDefinitions.concat(Object.keys(variables).map(function(varName) {
         return variables[varName];
       })), selectionSet: {
         kind: graphql_1.Kind.SELECTION_SET,
@@ -25909,7 +25909,7 @@ var require_AddArgumentsAsVariables = __commonJS((exports2) => {
       newVariables[variableNames[name]] = args[name];
     });
     return {
-      document: __assign2(__assign2({}, document2), {definitions: __spreadArrays(newOperations, fragments)}),
+      document: __assign(__assign({}, document2), {definitions: __spreadArrays(newOperations, fragments)}),
       newVariables
     };
   }
@@ -25959,8 +25959,8 @@ var require_implementsAbstractType = __commonJS((exports2) => {
 
 // node_modules/graphql-tools/dist/transforms/FilterToSchema.js
 var require_FilterToSchema = __commonJS((exports2) => {
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -25969,7 +25969,7 @@ var require_FilterToSchema = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   var __spreadArrays = exports2 && exports2.__spreadArrays || function() {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++)
@@ -25988,7 +25988,7 @@ var require_FilterToSchema = __commonJS((exports2) => {
     }
     FilterToSchema2.prototype.transformRequest = function(originalRequest) {
       var document2 = filterDocumentToSchema(this.targetSchema, originalRequest.document);
-      return __assign2(__assign2({}, originalRequest), {document: document2});
+      return __assign(__assign({}, originalRequest), {document: document2});
     };
     return FilterToSchema2;
   }();
@@ -26108,7 +26108,7 @@ var require_FilterToSchema = __commonJS((exports2) => {
               return argNames_1.indexOf(arg.name.value) !== -1;
             });
             if (args.length !== node.arguments.length) {
-              return __assign2(__assign2({}, node), {arguments: args});
+              return __assign(__assign({}, node), {arguments: args});
             }
           }
         } else if (parentType instanceof graphql_1.GraphQLUnionType && node.name.value === "__typename") {
@@ -26197,8 +26197,8 @@ var require_FilterToSchema = __commonJS((exports2) => {
 
 // node_modules/graphql-tools/dist/transforms/AddTypenameToAbstract.js
 var require_AddTypenameToAbstract = __commonJS((exports2) => {
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -26207,7 +26207,7 @@ var require_AddTypenameToAbstract = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   Object.defineProperty(exports2, "__esModule", {value: true});
   var graphql_1 = require_graphql2();
@@ -26217,7 +26217,7 @@ var require_AddTypenameToAbstract = __commonJS((exports2) => {
     }
     AddTypenameToAbstract2.prototype.transformRequest = function(originalRequest) {
       var document2 = addTypenameToAbstract(this.targetSchema, originalRequest.document);
-      return __assign2(__assign2({}, originalRequest), {document: document2});
+      return __assign(__assign({}, originalRequest), {document: document2});
     };
     return AddTypenameToAbstract2;
   }();
@@ -26240,7 +26240,7 @@ var require_AddTypenameToAbstract = __commonJS((exports2) => {
         });
       }
       if (selections !== node.selections) {
-        return __assign2(__assign2({}, node), {selections});
+        return __assign(__assign({}, node), {selections});
       }
     }, _a)));
   }
@@ -26320,8 +26320,8 @@ var require_mapAsyncIterator2 = __commonJS((exports2) => {
 
 // node_modules/graphql-tools/dist/transforms/ExpandAbstractTypes.js
 var require_ExpandAbstractTypes = __commonJS((exports2) => {
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -26330,7 +26330,7 @@ var require_ExpandAbstractTypes = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   var __spreadArrays = exports2 && exports2.__spreadArrays || function() {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++)
@@ -26351,7 +26351,7 @@ var require_ExpandAbstractTypes = __commonJS((exports2) => {
     }
     ExpandAbstractTypes2.prototype.transformRequest = function(originalRequest) {
       var document2 = expandAbstractTypes(this.targetSchema, this.mapping, this.reverseMapping, originalRequest.document);
-      return __assign2(__assign2({}, originalRequest), {document: document2});
+      return __assign(__assign({}, originalRequest), {document: document2});
     };
     return ExpandAbstractTypes2;
   }();
@@ -26441,7 +26441,7 @@ var require_ExpandAbstractTypes = __commonJS((exports2) => {
         });
       }
     });
-    var newDocument = __assign2(__assign2({}, document2), {definitions: __spreadArrays(operations, newFragments)});
+    var newDocument = __assign(__assign({}, document2), {definitions: __spreadArrays(operations, newFragments)});
     var typeInfo = new graphql_1.TypeInfo(targetSchema);
     return graphql_1.visit(newDocument, graphql_1.visitWithTypeInfo(typeInfo, (_a = {}, _a[graphql_1.Kind.SELECTION_SET] = function(node) {
       var newSelections = __spreadArrays(node.selections);
@@ -26495,7 +26495,7 @@ var require_ExpandAbstractTypes = __commonJS((exports2) => {
         });
       }
       if (newSelections.length !== node.selections.length) {
-        return __assign2(__assign2({}, node), {selections: newSelections});
+        return __assign(__assign({}, node), {selections: newSelections});
       }
     }, _a)));
   }
@@ -26503,8 +26503,8 @@ var require_ExpandAbstractTypes = __commonJS((exports2) => {
 
 // node_modules/graphql-tools/dist/transforms/ReplaceFieldWithFragment.js
 var require_ReplaceFieldWithFragment = __commonJS((exports2) => {
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -26513,7 +26513,7 @@ var require_ReplaceFieldWithFragment = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   Object.defineProperty(exports2, "__esModule", {value: true});
   var graphql_1 = require_graphql2();
@@ -26535,7 +26535,7 @@ var require_ReplaceFieldWithFragment = __commonJS((exports2) => {
     }
     ReplaceFieldWithFragment2.prototype.transformRequest = function(originalRequest) {
       var document2 = replaceFieldsWithFragments(this.targetSchema, originalRequest.document, this.mapping);
-      return __assign2(__assign2({}, originalRequest), {document: document2});
+      return __assign(__assign({}, originalRequest), {document: document2});
     };
     return ReplaceFieldWithFragment2;
   }();
@@ -26561,7 +26561,7 @@ var require_ReplaceFieldWithFragment = __commonJS((exports2) => {
           });
         }
         if (selections_1 !== node.selections) {
-          return __assign2(__assign2({}, node), {selections: selections_1});
+          return __assign(__assign({}, node), {selections: selections_1});
         }
       }
     }, _a)));
@@ -26618,13 +26618,13 @@ var require_ReplaceFieldWithFragment = __commonJS((exports2) => {
             if (map.hasOwnProperty(node.alias.value)) {
               return map;
             } else {
-              return __assign2(__assign2({}, map), (_a = {}, _a[node.alias.value] = node, _a));
+              return __assign(__assign({}, map), (_a = {}, _a[node.alias.value] = node, _a));
             }
           } else {
             if (map.hasOwnProperty(node.name.value)) {
               return map;
             } else {
-              return __assign2(__assign2({}, map), (_b = {}, _b[node.name.value] = node, _b));
+              return __assign(__assign({}, map), (_b = {}, _b[node.name.value] = node, _b));
             }
           }
         }
@@ -26632,15 +26632,15 @@ var require_ReplaceFieldWithFragment = __commonJS((exports2) => {
           if (map.hasOwnProperty(node.name.value)) {
             return map;
           } else {
-            return __assign2(__assign2({}, map), (_c = {}, _c[node.name.value] = node, _c));
+            return __assign(__assign({}, map), (_c = {}, _c[node.name.value] = node, _c));
           }
         }
         case "InlineFragment": {
           if (map.__fragment) {
             var fragment = map.__fragment;
-            return __assign2(__assign2({}, map), {__fragment: concatInlineFragments(fragment.typeCondition.name.value, [fragment, node])});
+            return __assign(__assign({}, map), {__fragment: concatInlineFragments(fragment.typeCondition.name.value, [fragment, node])});
           } else {
-            return __assign2(__assign2({}, map), {__fragment: node});
+            return __assign(__assign({}, map), {__fragment: node});
           }
         }
         default: {
@@ -27185,8 +27185,8 @@ var require_transformSchema = __commonJS((exports2) => {
 
 // node_modules/graphql-tools/dist/transforms/RenameTypes.js
 var require_RenameTypes = __commonJS((exports2) => {
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -27195,7 +27195,7 @@ var require_RenameTypes = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   Object.defineProperty(exports2, "__esModule", {value: true});
   var graphql_1 = require_graphql2();
@@ -27236,7 +27236,7 @@ var require_RenameTypes = __commonJS((exports2) => {
       var newDocument = graphql_1.visit(originalRequest.document, (_a = {}, _a[graphql_1.Kind.NAMED_TYPE] = function(node) {
         var name = node.name.value;
         if (name in _this.reverseMap) {
-          return __assign2(__assign2({}, node), {name: {
+          return __assign(__assign({}, node), {name: {
             kind: graphql_1.Kind.NAME,
             value: _this.reverseMap[name]
           }});
@@ -27251,7 +27251,7 @@ var require_RenameTypes = __commonJS((exports2) => {
       if (result.data) {
         var data = this.renameTypes(result.data, "data");
         if (data !== result.data) {
-          return __assign2(__assign2({}, result), {data});
+          return __assign(__assign({}, result), {data});
         }
       }
       return result;
@@ -27419,8 +27419,8 @@ var require_FilterRootFields = __commonJS((exports2) => {
 
 // node_modules/graphql-tools/dist/transforms/ExtractField.js
 var require_ExtractField = __commonJS((exports2) => {
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -27429,7 +27429,7 @@ var require_ExtractField = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   Object.defineProperty(exports2, "__esModule", {value: true});
   var graphql_1 = require_graphql2();
@@ -27462,14 +27462,14 @@ var require_ExtractField = __commonJS((exports2) => {
         enter: function(node) {
           fieldPath.push(node.name.value);
           if (ourPathTo === JSON.stringify(fieldPath) && fromSelection) {
-            return __assign2(__assign2({}, node), {selectionSet: fromSelection});
+            return __assign(__assign({}, node), {selectionSet: fromSelection});
           }
         },
         leave: function(node) {
           fieldPath.pop();
         }
       }, _b));
-      return __assign2(__assign2({}, originalRequest), {document: newDocument});
+      return __assign(__assign({}, originalRequest), {document: newDocument});
     };
     return ExtractField2;
   }();
@@ -27478,8 +27478,8 @@ var require_ExtractField = __commonJS((exports2) => {
 
 // node_modules/graphql-tools/dist/transforms/WrapQuery.js
 var require_WrapQuery = __commonJS((exports2) => {
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -27488,7 +27488,7 @@ var require_WrapQuery = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   var __spreadArrays = exports2 && exports2.__spreadArrays || function() {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++)
@@ -27521,14 +27521,14 @@ var require_WrapQuery = __commonJS((exports2) => {
               kind: graphql_1.Kind.SELECTION_SET,
               selections: [wrapResult]
             };
-            return __assign2(__assign2({}, node), {selectionSet});
+            return __assign(__assign({}, node), {selectionSet});
           }
         },
         leave: function(node) {
           fieldPath.pop();
         }
       }, _a));
-      return __assign2(__assign2({}, originalRequest), {document: newDocument});
+      return __assign(__assign({}, originalRequest), {document: newDocument});
     };
     WrapQuery2.prototype.transformResult = function(originalResult) {
       var rootData = originalResult.data;
@@ -27588,8 +27588,8 @@ var require_transforms2 = __commonJS((exports2) => {
 
 // node_modules/graphql-tools/dist/stitching/mergeSchemas.js
 var require_mergeSchemas = __commonJS((exports2) => {
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -27598,7 +27598,7 @@ var require_mergeSchemas = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   var __spreadArrays = exports2 && exports2.__spreadArrays || function() {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++)
@@ -27790,14 +27790,14 @@ var require_mergeSchemas = __commonJS((exports2) => {
       if (field.resolve) {
         var fieldResolver_1 = field.resolve;
         field.resolve = function(parent, args, context, info) {
-          var newInfo = __assign2(__assign2({}, info), {mergeInfo});
+          var newInfo = __assign(__assign({}, info), {mergeInfo});
           return fieldResolver_1(parent, args, context, newInfo);
         };
       }
       if (field.subscribe) {
         var fieldResolver_2 = field.subscribe;
         field.subscribe = function(parent, args, context, info) {
-          var newInfo = __assign2(__assign2({}, info), {mergeInfo});
+          var newInfo = __assign(__assign({}, info), {mergeInfo});
           return fieldResolver_2(parent, args, context, newInfo);
         };
       }
@@ -27828,7 +27828,7 @@ var require_mergeSchemas = __commonJS((exports2) => {
         });
       },
       delegateToSchema: function(options) {
-        return delegateToSchema_1.default(__assign2(__assign2({}, options), {transforms: options.transforms}));
+        return delegateToSchema_1.default(__assign(__assign({}, options), {transforms: options.transforms}));
       },
       fragments
     };
@@ -27914,7 +27914,7 @@ var require_mergeSchemas = __commonJS((exports2) => {
       candidates.forEach(function(_a) {
         var candidateType = _a.type, schema = _a.schema;
         var candidateFields = candidateType.getFields();
-        fields_2 = __assign2(__assign2({}, fields_2), candidateFields);
+        fields_2 = __assign(__assign({}, fields_2), candidateFields);
         Object.keys(candidateFields).forEach(function(fieldName) {
           var _a2;
           resolvers_1[fieldName] = (_a2 = {}, _a2[resolverKey_1] = createDelegatingResolver(schema, operationName_1, fieldName), _a2);
@@ -28168,6 +28168,25 @@ var require_loglevel = __commonJS((exports2, module2) => {
     defaultLogger["default"] = defaultLogger;
     return defaultLogger;
   });
+});
+
+// node_modules/@josephg/resolvable/index.js
+var require_resolvable = __commonJS((exports2, module2) => {
+  "use strict";
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  var resolvablePromise = () => {
+    let resolve;
+    let reject;
+    const promise = new Promise((_resolve, _reject) => {
+      resolve = _resolve;
+      reject = _reject;
+    });
+    promise.resolve = resolve;
+    promise.reject = reject;
+    return promise;
+  };
+  exports2.default = resolvablePromise;
+  module2.exports = resolvablePromise;
 });
 
 // node_modules/apollo-server-core/dist/utils/runtimeSupportsUploads.js
@@ -30047,7 +30066,7 @@ var require_lib5 = __commonJS((exports2) => {
 var require_package = __commonJS((exports2, module2) => {
   module2.exports = {
     name: "apollo-tracing",
-    version: "0.12.2",
+    version: "0.13.0",
     description: "Collect and expose trace data for GraphQL requests",
     main: "./dist/index.js",
     types: "./dist/index.d.ts",
@@ -30059,12 +30078,12 @@ var require_package = __commonJS((exports2, module2) => {
     },
     dependencies: {
       "apollo-server-env": "^3.0.0",
-      "apollo-server-plugin-base": "^0.10.4"
+      "apollo-server-plugin-base": "^0.11.0"
     },
     peerDependencies: {
       graphql: "^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0"
     },
-    gitHead: "c212627be591cd2c2469321b58b15f1b7909778d"
+    gitHead: "93499e703a375ff0fbd128138e46b574074b44e6"
   };
 });
 
@@ -39309,7 +39328,7 @@ var require_dist10 = __commonJS((exports2) => {
 var require_package2 = __commonJS((exports2, module2) => {
   module2.exports = {
     name: "apollo-server-core",
-    version: "2.21.2",
+    version: "2.22.2",
     description: "Core engine for Apollo GraphQL server",
     main: "dist/index.js",
     types: "dist/index.d.ts",
@@ -39337,20 +39356,21 @@ var require_package2 = __commonJS((exports2, module2) => {
       "@apollographql/apollo-tools": "^0.4.3",
       "@apollographql/graphql-playground-html": "1.6.27",
       "@apollographql/graphql-upload-8-fork": "^8.1.3",
+      "@josephg/resolvable": "^1.0.0",
       "@types/ws": "^7.0.0",
-      "apollo-cache-control": "^0.11.6",
-      "apollo-datasource": "^0.7.3",
+      "apollo-cache-control": "^0.12.0",
+      "apollo-datasource": "^0.8.0",
       "apollo-graphql": "^0.6.0",
       "apollo-reporting-protobuf": "^0.6.2",
-      "apollo-server-caching": "^0.5.3",
+      "apollo-server-caching": "^0.6.0",
       "apollo-server-env": "^3.0.0",
       "apollo-server-errors": "^2.4.2",
-      "apollo-server-plugin-base": "^0.10.4",
-      "apollo-server-types": "^0.6.3",
-      "apollo-tracing": "^0.12.2",
+      "apollo-server-plugin-base": "^0.11.0",
+      "apollo-server-types": "^0.7.0",
+      "apollo-tracing": "^0.13.0",
       "async-retry": "^1.2.1",
       "fast-json-stable-stringify": "^2.0.0",
-      "graphql-extensions": "^0.12.8",
+      "graphql-extensions": "^0.13.0",
       "graphql-tag": "^2.11.0",
       "graphql-tools": "^4.0.8",
       loglevel: "^1.6.7",
@@ -39363,7 +39383,7 @@ var require_package2 = __commonJS((exports2, module2) => {
     peerDependencies: {
       graphql: "^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0"
     },
-    gitHead: "7d3593d2c27be2a74cba4adfb57894856d8fac81"
+    gitHead: "9562af498407e86923d96902683bb5285b849800"
   };
 });
 
@@ -39555,6 +39575,30 @@ var require_schemaReporter = __commonJS((exports2) => {
   exports2.SchemaReporter = SchemaReporter;
 });
 
+// node_modules/apollo-server-core/dist/plugin/schemaIsFederated.js
+var require_schemaIsFederated = __commonJS((exports2) => {
+  "use strict";
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.schemaIsFederated = void 0;
+  var graphql_1 = require_graphql2();
+  function schemaIsFederated(schema) {
+    const serviceType = schema.getType("_Service");
+    if (!(serviceType && graphql_1.isObjectType(serviceType))) {
+      return false;
+    }
+    const sdlField = serviceType.getFields().sdl;
+    if (!sdlField) {
+      return false;
+    }
+    const sdlFieldType = sdlField.type;
+    if (!graphql_1.isScalarType(sdlFieldType)) {
+      return false;
+    }
+    return sdlFieldType.name == "String";
+  }
+  exports2.schemaIsFederated = schemaIsFederated;
+});
+
 // node_modules/apollo-server-core/dist/plugin/schemaReporting/index.js
 var require_schemaReporting = __commonJS((exports2) => {
   "use strict";
@@ -39595,6 +39639,7 @@ var require_schemaReporting = __commonJS((exports2) => {
   var graphql_1 = require_graphql2();
   var schemaReporter_1 = require_schemaReporter();
   var createSHA_1 = __importDefault(require_createSHA());
+  var schemaIsFederated_1 = require_schemaIsFederated();
   function ApolloServerPluginSchemaReporting({initialDelayMaxMs, overrideReportedSchema, endpointUrl} = Object.create(null)) {
     const bootId = uuid_1.v4();
     return {
@@ -39619,6 +39664,14 @@ var require_schemaReporting = __commonJS((exports2) => {
             } catch (err) {
               throw new Error(`The schema provided to overrideReportedSchema failed to parse or validate: ${err.message}`);
             }
+          }
+          if (schemaIsFederated_1.schemaIsFederated(schema)) {
+            throw Error([
+              "Schema reporting is not yet compatible with federated services.",
+              "If you're interested in using schema reporting with federated",
+              "services, please contact Apollo support. To set up managed federation, see",
+              "https://go.apollo.dev/s/managed-federation"
+            ].join(" "));
           }
           const executableSchema = overrideReportedSchema !== null && overrideReportedSchema !== void 0 ? overrideReportedSchema : graphql_1.printSchema(schema);
           const executableSchemaId = computeExecutableSchemaId(executableSchema);
@@ -40188,12 +40241,25 @@ var require_inlineTrace = __commonJS((exports2) => {
   exports2.ApolloServerPluginInlineTraceDisabled = exports2.ApolloServerPluginInlineTrace = void 0;
   var apollo_reporting_protobuf_1 = require_dist9();
   var traceTreeBuilder_1 = require_traceTreeBuilder();
+  var schemaIsFederated_1 = require_schemaIsFederated();
   function ApolloServerPluginInlineTrace(options = Object.create(null)) {
+    let enabled = options.__onlyIfSchemaIsFederated ? null : true;
     return {
       __internal_plugin_id__() {
         return "InlineTrace";
       },
+      serverWillStart({schema, logger}) {
+        if (enabled === null) {
+          enabled = schemaIsFederated_1.schemaIsFederated(schema);
+          if (enabled) {
+            logger.info("Enabling inline tracing for this federated service. To disable, use ApolloServerPluginInlineTraceDisabled.");
+          }
+        }
+      },
       requestDidStart({request: {http}}) {
+        if (!enabled) {
+          return;
+        }
         const treeBuilder = new traceTreeBuilder_1.TraceTreeBuilder({
           rewriteError: options.rewriteError
         });
@@ -44767,9 +44833,9 @@ var require_graphqlUploadKoa = __commonJS((exports2) => {
   exports2.graphqlUploadKoa = void 0;
   var _processRequest = require_processRequest();
   var graphqlUploadKoa = (_a = {}) => {
-    var {
+    var _b = _a, {
       processRequest = _processRequest.processRequest
-    } = _a, processRequestOptions = __rest(_a, [
+    } = _b, processRequestOptions = __objRest(_b, [
       "processRequest"
     ]);
     return async (ctx, next) => {
@@ -44794,9 +44860,9 @@ var require_graphqlUploadExpress = __commonJS((exports2) => {
   exports2.graphqlUploadExpress = void 0;
   var _processRequest = require_processRequest();
   var graphqlUploadExpress = (_a = {}) => {
-    var {
+    var _b = _a, {
       processRequest = _processRequest.processRequest
-    } = _a, processRequestOptions = __rest(_a, [
+    } = _b, processRequestOptions = __objRest(_b, [
       "processRequest"
     ]);
     return (request, response, next) => {
@@ -45180,8 +45246,8 @@ var require_message_types = __commonJS((exports2) => {
 // node_modules/subscriptions-transport-ws/dist/client.js
 var require_client = __commonJS((exports2) => {
   "use strict";
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -45190,7 +45256,7 @@ var require_client = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   var __awaiter = exports2 && exports2.__awaiter || function(thisArg, _arguments, P, generator) {
     function adopt(value) {
@@ -45593,7 +45659,7 @@ var require_client = __commonJS((exports2) => {
       }
     };
     SubscriptionClient2.prototype.buildMessage = function(id, type, payload) {
-      var payloadToReturn = payload && payload.query ? __assign2(__assign2({}, payload), {query: typeof payload.query === "string" ? payload.query : printer_1.print(payload.query)}) : payload;
+      var payloadToReturn = payload && payload.query ? __assign(__assign({}, payload), {query: typeof payload.query === "string" ? payload.query : printer_1.print(payload.query)}) : payload;
       return {
         id,
         type,
@@ -45776,7 +45842,7 @@ var require_client = __commonJS((exports2) => {
           delete this.operations[opId];
           break;
         case message_types_1.default.GQL_DATA:
-          var parsedPayload = !parsedMessage.payload.errors ? parsedMessage.payload : __assign2(__assign2({}, parsedMessage.payload), {errors: this.formatErrors(parsedMessage.payload.errors)});
+          var parsedPayload = !parsedMessage.payload.errors ? parsedMessage.payload : __assign(__assign({}, parsedMessage.payload), {errors: this.formatErrors(parsedMessage.payload.errors)});
           this.operations[opId].handler(null, parsedPayload);
           break;
         case message_types_1.default.GQL_CONNECTION_KEEP_ALIVE:
@@ -47856,8 +47922,8 @@ var require_is_subscriptions = __commonJS((exports2) => {
 // node_modules/subscriptions-transport-ws/dist/legacy/parse-legacy-protocol.js
 var require_parse_legacy_protocol = __commonJS((exports2) => {
   "use strict";
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -47866,7 +47932,7 @@ var require_parse_legacy_protocol = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   Object.defineProperty(exports2, "__esModule", {value: true});
   exports2.parseLegacyProtocolMessage = void 0;
@@ -47876,7 +47942,7 @@ var require_parse_legacy_protocol = __commonJS((exports2) => {
     switch (message.type) {
       case message_types_1.default.INIT:
         connectionContext.isLegacy = true;
-        messageToReturn = __assign2(__assign2({}, message), {type: message_types_1.default.GQL_CONNECTION_INIT});
+        messageToReturn = __assign(__assign({}, message), {type: message_types_1.default.GQL_CONNECTION_INIT});
         break;
       case message_types_1.default.SUBSCRIPTION_START:
         messageToReturn = {
@@ -47890,26 +47956,26 @@ var require_parse_legacy_protocol = __commonJS((exports2) => {
         };
         break;
       case message_types_1.default.SUBSCRIPTION_END:
-        messageToReturn = __assign2(__assign2({}, message), {type: message_types_1.default.GQL_STOP});
+        messageToReturn = __assign(__assign({}, message), {type: message_types_1.default.GQL_STOP});
         break;
       case message_types_1.default.GQL_CONNECTION_ACK:
         if (connectionContext.isLegacy) {
-          messageToReturn = __assign2(__assign2({}, message), {type: message_types_1.default.INIT_SUCCESS});
+          messageToReturn = __assign(__assign({}, message), {type: message_types_1.default.INIT_SUCCESS});
         }
         break;
       case message_types_1.default.GQL_CONNECTION_ERROR:
         if (connectionContext.isLegacy) {
-          messageToReturn = __assign2(__assign2({}, message), {type: message_types_1.default.INIT_FAIL, payload: message.payload.message ? {error: message.payload.message} : message.payload});
+          messageToReturn = __assign(__assign({}, message), {type: message_types_1.default.INIT_FAIL, payload: message.payload.message ? {error: message.payload.message} : message.payload});
         }
         break;
       case message_types_1.default.GQL_ERROR:
         if (connectionContext.isLegacy) {
-          messageToReturn = __assign2(__assign2({}, message), {type: message_types_1.default.SUBSCRIPTION_FAIL});
+          messageToReturn = __assign(__assign({}, message), {type: message_types_1.default.SUBSCRIPTION_FAIL});
         }
         break;
       case message_types_1.default.GQL_DATA:
         if (connectionContext.isLegacy) {
-          messageToReturn = __assign2(__assign2({}, message), {type: message_types_1.default.SUBSCRIPTION_DATA});
+          messageToReturn = __assign(__assign({}, message), {type: message_types_1.default.SUBSCRIPTION_DATA});
         }
         break;
       case message_types_1.default.GQL_COMPLETE:
@@ -48234,19 +48300,19 @@ var require_dist11 = __commonJS((exports2) => {
       k2 = k;
     o[k2] = m[k];
   });
-  var __exportStar2 = exports2 && exports2.__exportStar || function(m, exports3) {
+  var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
     for (var p in m)
       if (p !== "default" && !exports3.hasOwnProperty(p))
         __createBinding(exports3, m, p);
   };
   Object.defineProperty(exports2, "__esModule", {value: true});
-  __exportStar2(require_client(), exports2);
-  __exportStar2(require_server(), exports2);
+  __exportStar(require_client(), exports2);
+  __exportStar(require_server(), exports2);
   var message_types_1 = require_message_types();
   Object.defineProperty(exports2, "MessageTypes", {enumerable: true, get: function() {
     return message_types_1.default;
   }});
-  __exportStar2(require_protocol(), exports2);
+  __exportStar(require_protocol(), exports2);
 });
 
 // node_modules/apollo-server-core/dist/ApolloServer.js
@@ -48279,7 +48345,7 @@ var require_ApolloServer = __commonJS((exports2) => {
       step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
   };
-  var __rest2 = exports2 && exports2.__rest || function(s, e) {
+  var __rest = exports2 && exports2.__rest || function(s, e) {
     var t = {};
     for (var p in s)
       if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -48301,6 +48367,7 @@ var require_ApolloServer = __commonJS((exports2) => {
   var tls_1 = require("tls");
   var loglevel_1 = __importDefault(require_loglevel());
   var graphql_1 = require_graphql2();
+  var resolvable_1 = __importDefault(require_resolvable());
   var apollo_server_caching_1 = require_dist5();
   var runtimeSupportsUploads_1 = __importDefault(require_runtimeSupportsUploads());
   var apollo_server_errors_1 = require_dist2();
@@ -48329,6 +48396,11 @@ var require_ApolloServer = __commonJS((exports2) => {
   function approximateObjectSize(obj) {
     return Buffer.byteLength(JSON.stringify(obj), "utf8");
   }
+  var UnreachableCaseError = class extends Error {
+    constructor(val) {
+      super(`Unreachable case: ${val}`);
+    }
+  };
   var ApolloServerBase = class {
     constructor(config) {
       this.graphqlPath = "/graphql";
@@ -48339,7 +48411,7 @@ var require_ApolloServer = __commonJS((exports2) => {
       if (!config)
         throw new Error("ApolloServer requires options.");
       this.config = config;
-      const {context, resolvers: resolvers2, schema, schemaDirectives, modules, typeDefs, parseOptions = {}, introspection, mocks, mockEntireSchema, extensions, subscriptions, uploads, playground, plugins, gateway, cacheControl, experimental_approximateDocumentStoreMiB, stopOnTerminationSignals, apollo, engine} = config, requestOptions = __rest2(config, ["context", "resolvers", "schema", "schemaDirectives", "modules", "typeDefs", "parseOptions", "introspection", "mocks", "mockEntireSchema", "extensions", "subscriptions", "uploads", "playground", "plugins", "gateway", "cacheControl", "experimental_approximateDocumentStoreMiB", "stopOnTerminationSignals", "apollo", "engine"]);
+      const {context, resolvers: resolvers2, schema, schemaDirectives, modules, typeDefs, parseOptions = {}, introspection, mocks, mockEntireSchema, extensions, subscriptions, uploads, playground, plugins, gateway, cacheControl, experimental_approximateDocumentStoreMiB, stopOnTerminationSignals, apollo, engine} = config, requestOptions = __rest(config, ["context", "resolvers", "schema", "schemaDirectives", "modules", "typeDefs", "parseOptions", "introspection", "mocks", "mockEntireSchema", "extensions", "subscriptions", "uploads", "playground", "plugins", "gateway", "cacheControl", "experimental_approximateDocumentStoreMiB", "stopOnTerminationSignals", "apollo", "engine"]);
       if (engine !== void 0 && apollo) {
         throw new Error("You cannot provide both `engine` and `apollo` to `new ApolloServer()`. For details on how to migrate all of your options out of `engine`, see https://go.apollo.dev/s/migration-engine-plugins");
       }
@@ -48369,7 +48441,7 @@ var require_ApolloServer = __commonJS((exports2) => {
         requestOptions.cache = new apollo_server_caching_1.InMemoryLRUCache();
       }
       if (requestOptions.persistedQueries !== false) {
-        const _a = requestOptions.persistedQueries || Object.create(null), {cache: apqCache = requestOptions.cache} = _a, apqOtherOptions = __rest2(_a, ["cache"]);
+        const _a = requestOptions.persistedQueries || Object.create(null), {cache: apqCache = requestOptions.cache} = _a, apqOtherOptions = __rest(_a, ["cache"]);
         requestOptions.persistedQueries = Object.assign({cache: new apollo_server_caching_1.PrefixingKeyValueCache(apqCache, requestPipeline_1.APQ_CACHE_PREFIX)}, apqOtherOptions);
       } else {
         delete requestOptions.persistedQueries;
@@ -48414,16 +48486,6 @@ var require_ApolloServer = __commonJS((exports2) => {
         }
       }
       this.playgroundOptions = playground_1.createPlaygroundOptions(playground);
-      const _schema = this.initSchema();
-      if (graphql_1.isSchema(_schema)) {
-        const derivedData = this.generateSchemaDerivedData(_schema);
-        this.schema = derivedData.schema;
-        this.schemaDerivedData = Promise.resolve(derivedData);
-      } else if (typeof _schema.then === "function") {
-        this.schemaDerivedData = _schema.then((schema2) => this.generateSchemaDerivedData(schema2));
-      } else {
-        throw new Error("Unexpected error: Unable to resolve a valid GraphQLSchema.  Please file an issue with a reproduction of this error, if possible.");
-      }
       this.ensurePluginInstantiation(plugins);
       if (typeof stopOnTerminationSignals === "boolean" ? stopOnTerminationSignals : typeof engine === "object" && typeof engine.handleSignals === "boolean" ? engine.handleSignals : isNodeLike_1.default && process.env.NODE_ENV !== "test") {
         const signals = ["SIGINT", "SIGTERM"];
@@ -48449,14 +48511,129 @@ var require_ApolloServer = __commonJS((exports2) => {
           }));
         });
       }
+      if (gateway) {
+        this.state = {phase: "initialized with gateway", gateway};
+        this.requestOptions.executor = gateway.executor;
+      } else {
+        this.state = {
+          phase: "initialized with schema",
+          schemaDerivedData: this.generateSchemaDerivedData(this.constructSchema())
+        };
+        this.schema = this.state.schemaDerivedData.schema;
+      }
+      if (this.serverlessFramework()) {
+        this.ensureStarting();
+      }
     }
     setGraphQLPath(path) {
       this.graphqlPath = path;
     }
-    initSchema() {
-      const {gateway, schema, modules, typeDefs, resolvers: resolvers2, schemaDirectives, parseOptions} = this.config;
-      if (gateway) {
-        const unsubscriber = gateway.onSchemaChange((schema2) => this.schemaDerivedData = Promise.resolve(this.generateSchemaDerivedData(schema2)));
+    start() {
+      return __awaiter(this, void 0, void 0, function* () {
+        if (this.serverlessFramework()) {
+          throw new Error("When using an ApolloServer subclass from a serverless framework package, you don't need to call start(); just call createHandler().");
+        }
+        return yield this._start();
+      });
+    }
+    _start() {
+      var _a;
+      return __awaiter(this, void 0, void 0, function* () {
+        const initialState = this.state;
+        if (initialState.phase !== "initialized with gateway" && initialState.phase !== "initialized with schema") {
+          throw new Error(`called start() with surprising state ${initialState.phase}`);
+        }
+        const barrier = resolvable_1.default();
+        this.state = {phase: "starting", barrier};
+        let loadedSchema = false;
+        try {
+          const schemaDerivedData = initialState.phase === "initialized with schema" ? initialState.schemaDerivedData : this.generateSchemaDerivedData(yield this.startGatewayAndLoadSchema(initialState.gateway));
+          loadedSchema = true;
+          this.state = {
+            phase: "invoking serverWillStart",
+            barrier,
+            schemaDerivedData
+          };
+          const service = {
+            logger: this.logger,
+            schema: schemaDerivedData.schema,
+            schemaHash: schemaDerivedData.schemaHash,
+            apollo: this.apolloConfig,
+            serverlessFramework: this.serverlessFramework(),
+            engine: {
+              serviceID: this.apolloConfig.graphId,
+              apiKeyHash: this.apolloConfig.keyHash
+            }
+          };
+          if ((_a = this.requestOptions.persistedQueries) === null || _a === void 0 ? void 0 : _a.cache) {
+            service.persistedQueries = {
+              cache: this.requestOptions.persistedQueries.cache
+            };
+          }
+          const serverListeners = (yield Promise.all(this.plugins.map((plugin) => plugin.serverWillStart && plugin.serverWillStart(service)))).filter((maybeServerListener) => typeof maybeServerListener === "object" && !!maybeServerListener.serverWillStop);
+          this.toDispose.add(() => __awaiter(this, void 0, void 0, function* () {
+            yield Promise.all(serverListeners.map(({serverWillStop}) => serverWillStop === null || serverWillStop === void 0 ? void 0 : serverWillStop()));
+          }));
+          this.state = {phase: "started", schemaDerivedData};
+        } catch (error) {
+          this.state = {phase: "failed to start", error, loadedSchema};
+          throw error;
+        } finally {
+          barrier.resolve();
+        }
+      });
+    }
+    willStart() {
+      return __awaiter(this, void 0, void 0, function* () {
+        this.ensureStarting();
+      });
+    }
+    ensureStarted() {
+      return __awaiter(this, void 0, void 0, function* () {
+        while (true) {
+          switch (this.state.phase) {
+            case "initialized with gateway":
+            case "initialized with schema":
+              try {
+                yield this._start();
+              } catch (_a) {
+              }
+              break;
+            case "starting":
+            case "invoking serverWillStart":
+              yield this.state.barrier;
+              break;
+            case "failed to start":
+              this.logStartupError(this.state.error);
+              throw new Error("This data graph is missing a valid configuration. More details may be available in the server logs.");
+            case "started":
+              return this.state.schemaDerivedData;
+            case "stopping":
+              throw new Error("Cannot execute GraphQL operations while the server is stopping.");
+            case "stopped":
+              throw new Error("Cannot execute GraphQL operations after the server has stopped.");
+            default:
+              throw new UnreachableCaseError(this.state);
+          }
+        }
+      });
+    }
+    ensureStarting() {
+      if (this.state.phase === "initialized with gateway" || this.state.phase === "initialized with schema") {
+        this._start().catch((e) => this.logStartupError(e));
+      }
+    }
+    logStartupError(err) {
+      const prelude = this.serverlessFramework() ? "An error occurred during Apollo Server startup." : "Apollo Server was started implicitly and an error occurred during startup. (Consider calling `await server.start()` immediately after `server = new ApolloServer()` so you can handle these errors directly before starting your web server.)";
+      this.logger.error(prelude + " All GraphQL requests will now fail. The startup error was: " + (err && err.message || err));
+    }
+    startGatewayAndLoadSchema(gateway) {
+      return __awaiter(this, void 0, void 0, function* () {
+        const unsubscriber = gateway.onSchemaChange((schema) => {
+          if (this.state.phase === "started") {
+            this.state.schemaDerivedData = this.generateSchemaDerivedData(schema);
+          }
+        });
         this.toDispose.add(() => __awaiter(this, void 0, void 0, function* () {
           return unsubscriber();
         }));
@@ -48465,69 +48642,67 @@ var require_ApolloServer = __commonJS((exports2) => {
           graphId: this.apolloConfig.graphId,
           graphVariant: this.apolloConfig.graphVariant
         } : void 0;
-        this.requestOptions.executor = gateway.executor;
-        return gateway.load({apollo: this.apolloConfig, engine: engineConfig}).then((config) => {
-          this.toDispose.add(() => __awaiter(this, void 0, void 0, function* () {
-            var _a;
-            return yield (_a = gateway.stop) === null || _a === void 0 ? void 0 : _a.call(gateway);
-          }));
-          return config.schema;
-        }).catch((err) => {
-          const message = "This data graph is missing a valid configuration.";
-          this.logger.error(message + " " + (err && err.message || err));
-          throw new Error(message + " More details may be available in the server logs.");
+        const config = yield gateway.load({
+          apollo: this.apolloConfig,
+          engine: engineConfig
         });
-      }
-      let constructedSchema;
+        this.toDispose.add(() => __awaiter(this, void 0, void 0, function* () {
+          var _a;
+          return yield (_a = gateway.stop) === null || _a === void 0 ? void 0 : _a.call(gateway);
+        }));
+        return config.schema;
+      });
+    }
+    constructSchema() {
+      const {schema, modules, typeDefs, resolvers: resolvers2, schemaDirectives, parseOptions} = this.config;
       if (schema) {
-        constructedSchema = schema;
-      } else if (modules) {
+        return schema;
+      }
+      if (modules) {
         const {schema: schema2, errors} = apollo_tools_1.buildServiceDefinition(modules);
         if (errors && errors.length > 0) {
           throw new Error(errors.map((error) => error.message).join("\n\n"));
         }
-        constructedSchema = schema2;
-      } else {
-        if (!typeDefs) {
-          throw Error("Apollo Server requires either an existing schema, modules or typeDefs");
-        }
-        const augmentedTypeDefs = Array.isArray(typeDefs) ? typeDefs : [typeDefs];
-        if (!isDirectiveDefined_1.isDirectiveDefined(augmentedTypeDefs, "cacheControl")) {
-          augmentedTypeDefs.push(index_1.gql`
-            enum CacheControlScope {
-              PUBLIC
-              PRIVATE
-            }
-
-            directive @cacheControl(
-              maxAge: Int
-              scope: CacheControlScope
-            ) on FIELD_DEFINITION | OBJECT | INTERFACE
-          `);
-        }
-        if (this.uploadsConfig) {
-          const {GraphQLUpload} = require_lib9();
-          if (Array.isArray(resolvers2)) {
-            if (resolvers2.every((resolver) => !resolver.Upload)) {
-              resolvers2.push({Upload: GraphQLUpload});
-            }
-          } else {
-            if (resolvers2 && !resolvers2.Upload) {
-              resolvers2.Upload = GraphQLUpload;
-            }
-          }
-          augmentedTypeDefs.push(index_1.gql`
-            scalar Upload
-          `);
-        }
-        constructedSchema = graphql_tools_1.makeExecutableSchema({
-          typeDefs: augmentedTypeDefs,
-          schemaDirectives,
-          resolvers: resolvers2,
-          parseOptions
-        });
+        return schema2;
       }
-      return constructedSchema;
+      if (!typeDefs) {
+        throw Error("Apollo Server requires either an existing schema, modules or typeDefs");
+      }
+      const augmentedTypeDefs = Array.isArray(typeDefs) ? typeDefs : [typeDefs];
+      if (!isDirectiveDefined_1.isDirectiveDefined(augmentedTypeDefs, "cacheControl")) {
+        augmentedTypeDefs.push(index_1.gql`
+          enum CacheControlScope {
+            PUBLIC
+            PRIVATE
+          }
+
+          directive @cacheControl(
+            maxAge: Int
+            scope: CacheControlScope
+          ) on FIELD_DEFINITION | OBJECT | INTERFACE
+        `);
+      }
+      if (this.uploadsConfig) {
+        const {GraphQLUpload} = require_lib9();
+        if (Array.isArray(resolvers2)) {
+          if (resolvers2.every((resolver) => !resolver.Upload)) {
+            resolvers2.push({Upload: GraphQLUpload});
+          }
+        } else {
+          if (resolvers2 && !resolvers2.Upload) {
+            resolvers2.Upload = GraphQLUpload;
+          }
+        }
+        augmentedTypeDefs.push(index_1.gql`
+          scalar Upload
+        `);
+      }
+      return graphql_tools_1.makeExecutableSchema({
+        typeDefs: augmentedTypeDefs,
+        schemaDirectives,
+        resolvers: resolvers2,
+        parseOptions
+      });
     }
     generateSchemaDerivedData(schema) {
       const schemaHash = schemaHash_1.generateSchemaHash(schema);
@@ -48549,42 +48724,36 @@ var require_ApolloServer = __commonJS((exports2) => {
         documentStore
       };
     }
-    willStart() {
-      var _a;
-      return __awaiter(this, void 0, void 0, function* () {
-        try {
-          var {schema, schemaHash} = yield this.schemaDerivedData;
-        } catch (err) {
-          return;
-        }
-        const service = {
-          logger: this.logger,
-          schema,
-          schemaHash,
-          apollo: this.apolloConfig,
-          serverlessFramework: this.serverlessFramework(),
-          engine: {
-            serviceID: this.apolloConfig.graphId,
-            apiKeyHash: this.apolloConfig.keyHash
-          }
-        };
-        if ((_a = this.requestOptions.persistedQueries) === null || _a === void 0 ? void 0 : _a.cache) {
-          service.persistedQueries = {
-            cache: this.requestOptions.persistedQueries.cache
-          };
-        }
-        const serverListeners = (yield Promise.all(this.plugins.map((plugin) => plugin.serverWillStart && plugin.serverWillStart(service)))).filter((maybeServerListener) => typeof maybeServerListener === "object" && !!maybeServerListener.serverWillStop);
-        this.toDispose.add(() => __awaiter(this, void 0, void 0, function* () {
-          yield Promise.all(serverListeners.map(({serverWillStop}) => serverWillStop === null || serverWillStop === void 0 ? void 0 : serverWillStop()));
-        }));
-      });
-    }
     stop() {
       return __awaiter(this, void 0, void 0, function* () {
-        yield Promise.all([...this.toDispose].map((dispose) => dispose()));
-        if (this.subscriptionServer)
-          this.subscriptionServer.close();
-        yield Promise.all([...this.toDisposeLast].map((dispose) => dispose()));
+        if (this.state.phase === "stopped") {
+          if (this.state.stopError) {
+            throw this.state.stopError;
+          }
+          return;
+        }
+        if (this.state.phase === "stopping") {
+          yield this.state.barrier;
+          const state = this.state;
+          if (state.phase !== "stopped") {
+            throw Error(`Surprising post-stopping state ${state.phase}`);
+          }
+          if (state.stopError) {
+            throw state.stopError;
+          }
+          return;
+        }
+        this.state = {phase: "stopping", barrier: resolvable_1.default()};
+        try {
+          yield Promise.all([...this.toDispose].map((dispose) => dispose()));
+          if (this.subscriptionServer)
+            this.subscriptionServer.close();
+          yield Promise.all([...this.toDisposeLast].map((dispose) => dispose()));
+        } catch (stopError) {
+          this.state = {phase: "stopped", stopError};
+          return;
+        }
+        this.state = {phase: "stopped", stopError: null};
       });
     }
     installSubscriptionHandlers(server2) {
@@ -48600,9 +48769,22 @@ var require_ApolloServer = __commonJS((exports2) => {
       }
       const {SubscriptionServer} = require_dist11();
       const {onDisconnect, onConnect, keepAlive, path} = this.subscriptionServerOptions;
-      const schema = this.schema;
-      if (this.schema === void 0)
-        throw new Error("Schema undefined during creation of subscription server.");
+      let schema;
+      switch (this.state.phase) {
+        case "initialized with schema":
+        case "invoking serverWillStart":
+        case "started":
+          schema = this.state.schemaDerivedData.schema;
+          break;
+        case "initialized with gateway":
+        case "starting":
+        case "failed to start":
+        case "stopping":
+        case "stopped":
+          throw new Error(`Can't install subscription handlers when state is ${this.state.phase}`);
+        default:
+          throw new UnreachableCaseError(this.state);
+      }
       this.subscriptionServer = SubscriptionServer.create({
         schema,
         execute: graphql_1.execute,
@@ -48642,21 +48824,6 @@ var require_ApolloServer = __commonJS((exports2) => {
     serverlessFramework() {
       return false;
     }
-    schemaIsFederated(schema) {
-      const serviceType = schema.getType("_Service");
-      if (!(serviceType && graphql_1.isObjectType(serviceType))) {
-        return false;
-      }
-      const sdlField = serviceType.getFields().sdl;
-      if (!sdlField) {
-        return false;
-      }
-      const sdlFieldType = sdlField.type;
-      if (!graphql_1.isScalarType(sdlFieldType)) {
-        return false;
-      }
-      return sdlFieldType.name == "String";
-    }
     ensurePluginInstantiation(plugins = []) {
       var _a, _b;
       const pluginsToInit = [];
@@ -48676,7 +48843,6 @@ var require_ApolloServer = __commonJS((exports2) => {
         }
         pluginsToInit.push(apollo_cache_control_1.plugin(cacheControlOptions));
       }
-      const federatedSchema = this.schema && this.schemaIsFederated(this.schema);
       pluginsToInit.push(...plugins);
       this.plugins = pluginsToInit.map((plugin) => {
         if (typeof plugin === "function") {
@@ -48703,14 +48869,6 @@ var require_ApolloServer = __commonJS((exports2) => {
         const {engine} = this.config;
         const enabledViaLegacyOption = typeof engine === "object" && (engine.reportSchema || engine.experimental_schemaReporting);
         if (alreadyHavePlugin || enabledViaEnvVar || enabledViaLegacyOption) {
-          if (federatedSchema) {
-            throw Error([
-              "Schema reporting is not yet compatible with federated services.",
-              "If you're interested in using schema reporting with federated",
-              "services, please contact Apollo support. To set up managed federation, see",
-              "https://go.apollo.dev/s/managed-federation"
-            ].join(" "));
-          }
           if (this.config.gateway) {
             throw new Error([
               "Schema reporting is not yet compatible with the gateway. If you're",
@@ -48748,9 +48906,10 @@ var require_ApolloServer = __commonJS((exports2) => {
           if (engine !== void 0) {
             throw Error("You can't combine the legacy `new ApolloServer({engine})` option with directly creating an ApolloServerPluginInlineTrace plugin. See https://go.apollo.dev/s/migration-engine-plugins");
           }
-        } else if (federatedSchema && this.config.engine !== false) {
-          this.logger.info("Enabling inline tracing for this federated service. To disable, use ApolloServerPluginInlineTraceDisabled.");
-          const options = {};
+        } else if (this.config.engine !== false) {
+          const options = {
+            __onlyIfSchemaIsFederated: true
+          };
           if (typeof engine === "object") {
             options.rewriteError = engine.rewriteError;
           }
@@ -48766,7 +48925,7 @@ var require_ApolloServer = __commonJS((exports2) => {
     }
     graphQLServerOptions(integrationContextArgument) {
       return __awaiter(this, void 0, void 0, function* () {
-        const {schema, schemaHash, documentStore, extensions} = yield this.schemaDerivedData;
+        const {schema, schemaHash, documentStore, extensions} = yield this.ensureStarted();
         let context = this.context ? this.context : {};
         try {
           context = typeof this.context === "function" ? yield this.context(integrationContextArgument || {}) : context;
@@ -49024,7 +49183,7 @@ var require_dist12 = __commonJS((exports2) => {
       k2 = k;
     o[k2] = m[k];
   });
-  var __exportStar2 = exports2 && exports2.__exportStar || function(m, exports3) {
+  var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
     for (var p in m)
       if (p !== "default" && !exports3.hasOwnProperty(p))
         __createBinding(exports3, m, p);
@@ -49086,8 +49245,8 @@ var require_dist12 = __commonJS((exports2) => {
   Object.defineProperty(exports2, "ApolloServerBase", {enumerable: true, get: function() {
     return ApolloServer_1.ApolloServerBase;
   }});
-  __exportStar2(require_types(), exports2);
-  __exportStar2(require_requestPipelineAPI(), exports2);
+  __exportStar(require_types(), exports2);
+  __exportStar(require_requestPipelineAPI(), exports2);
   var graphql_tag_1 = __importDefault(require_graphql_tag_umd());
   exports2.gql = graphql_tag_1.default;
   var runtimeSupportsUploads_1 = __importDefault(require_runtimeSupportsUploads());
@@ -49096,7 +49255,7 @@ var require_dist12 = __commonJS((exports2) => {
     return processFileUploads_1.default;
   }});
   exports2.GraphQLUpload = runtimeSupportsUploads_1.default ? require_lib9().GraphQLUpload : void 0;
-  __exportStar2(require_plugin2(), exports2);
+  __exportStar(require_plugin2(), exports2);
 });
 
 // node_modules/graphql-subscriptions/dist/pubsub-async-iterator.js
@@ -65400,8 +65559,8 @@ var require_get_loading_markup = __commonJS((exports2) => {
 // node_modules/@apollographql/graphql-playground-html/dist/render-playground-page.js
 var require_render_playground_page = __commonJS((exports2) => {
   "use strict";
-  var __assign2 = exports2 && exports2.__assign || function() {
-    __assign2 = Object.assign || function(t) {
+  var __assign = exports2 && exports2.__assign || function() {
+    __assign = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -65410,7 +65569,7 @@ var require_render_playground_page = __commonJS((exports2) => {
       }
       return t;
     };
-    return __assign2.apply(this, arguments);
+    return __assign.apply(this, arguments);
   };
   Object.defineProperty(exports2, "__esModule", {value: true});
   exports2.renderPlaygroundPage = void 0;
@@ -65438,7 +65597,7 @@ var require_render_playground_page = __commonJS((exports2) => {
     }) + "</div>";
   };
   function renderPlaygroundPage(options) {
-    var extendedOptions = __assign2(__assign2({}, options), {canSaveConfig: false});
+    var extendedOptions = __assign(__assign({}, options), {canSaveConfig: false});
     if (options.subscriptionsEndpoint) {
       extendedOptions.subscriptionEndpoint = filter(options.subscriptionsEndpoint || "");
     }
@@ -66176,7 +66335,7 @@ var require_ApolloServer2 = __commonJS((exports2) => {
       step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
   };
-  var __rest2 = exports2 && exports2.__rest || function(s, e) {
+  var __rest = exports2 && exports2.__rest || function(s, e) {
     var t = {};
     for (var p in s)
       if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -66241,17 +66400,14 @@ var require_ApolloServer2 = __commonJS((exports2) => {
       return true;
     }
     applyMiddleware(_a) {
-      var {app} = _a, rest = __rest2(_a, ["app"]);
+      var {app} = _a, rest = __rest(_a, ["app"]);
       app.use(this.getMiddleware(rest));
     }
     getMiddleware({path, cors, bodyParserConfig, disableHealthCheck, onHealthCheck} = {}) {
       if (!path)
         path = "/graphql";
+      this.ensureStarting();
       const router = express_1.default.Router();
-      const promiseWillStart = this.willStart();
-      router.use(path, (_req, _res, next) => {
-        promiseWillStart.then(() => next()).catch(next);
-      });
       if (!disableHealthCheck) {
         router.use("/.well-known/apollo/server-health", (req, res) => {
           res.type("application/health+json");
@@ -66320,7 +66476,7 @@ var require_dist15 = __commonJS((exports2) => {
       k2 = k;
     o[k2] = m[k];
   });
-  var __exportStar2 = exports2 && exports2.__exportStar || function(m, exports3) {
+  var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
     for (var p in m)
       if (p !== "default" && !exports3.hasOwnProperty(p))
         __createBinding(exports3, m, p);
@@ -66360,8 +66516,8 @@ var require_dist15 = __commonJS((exports2) => {
   Object.defineProperty(exports2, "defaultPlaygroundOptions", {enumerable: true, get: function() {
     return apollo_server_core_1.defaultPlaygroundOptions;
   }});
-  __exportStar2(require_dist6(), exports2);
-  __exportStar2(require_dist13(), exports2);
+  __exportStar(require_dist6(), exports2);
+  __exportStar(require_dist13(), exports2);
   var ApolloServer_1 = require_ApolloServer2();
   Object.defineProperty(exports2, "ApolloServer", {enumerable: true, get: function() {
     return ApolloServer_1.ApolloServer;
@@ -66382,14 +66538,14 @@ var require_exports = __commonJS((exports2) => {
       k2 = k;
     o[k2] = m[k];
   });
-  var __exportStar2 = exports2 && exports2.__exportStar || function(m, exports3) {
+  var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
     for (var p in m)
       if (p !== "default" && !exports3.hasOwnProperty(p))
         __createBinding(exports3, m, p);
   };
   Object.defineProperty(exports2, "__esModule", {value: true});
-  __exportStar2(require_dist6(), exports2);
-  __exportStar2(require_dist13(), exports2);
+  __exportStar(require_dist6(), exports2);
+  __exportStar(require_dist13(), exports2);
   var apollo_server_core_1 = require_dist12();
   Object.defineProperty(exports2, "gql", {enumerable: true, get: function() {
     return apollo_server_core_1.gql;
@@ -66440,7 +66596,7 @@ var require_dist16 = __commonJS((exports2) => {
       k2 = k;
     o[k2] = m[k];
   });
-  var __exportStar2 = exports2 && exports2.__exportStar || function(m, exports3) {
+  var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
     for (var p in m)
       if (p !== "default" && !exports3.hasOwnProperty(p))
         __createBinding(exports3, m, p);
@@ -66481,7 +66637,7 @@ var require_dist16 = __commonJS((exports2) => {
   var http_1 = __importDefault(require("http"));
   var stoppable_1 = __importDefault(require_stoppable());
   var apollo_server_express_1 = require_dist15();
-  __exportStar2(require_exports(), exports2);
+  __exportStar(require_exports(), exports2);
   var ApolloServer2 = class extends apollo_server_express_1.ApolloServer {
     constructor(config) {
       var _a;
@@ -66516,11 +66672,17 @@ var require_dist16 = __commonJS((exports2) => {
     applyMiddleware() {
       throw new Error("To use Apollo Server with an existing express application, please use apollo-server-express");
     }
+    start() {
+      return __awaiter(this, void 0, void 0, function* () {
+        throw new Error("When using the `apollo-server` package, you don't need to call start(); just call listen().");
+      });
+    }
     listen(...opts) {
       const _super = Object.create(null, {
         applyMiddleware: {get: () => super.applyMiddleware}
       });
       return __awaiter(this, void 0, void 0, function* () {
+        yield this._start();
         const app = express_1.default();
         app.disable("x-powered-by");
         _super.applyMiddleware.call(this, {
@@ -67615,6 +67777,7 @@ var require_supports = __commonJS((exports2) => {
   function isNativeFetch(func) {
     return func && /^function fetch\(\)\s+\{\s+\[native code\]\s+\}$/.test(func.toString());
   }
+  exports2.isNativeFetch = isNativeFetch;
   function supportsNativeFetch() {
     if (!supportsFetch()) {
       return false;
@@ -68518,12 +68681,24 @@ var require_time = __commonJS((exports2, module2) => {
   exports2.browserPerformanceTimeOrigin = function() {
     var performance2 = misc_1.getGlobalObject().performance;
     if (!performance2) {
+      exports2._browserPerformanceTimeOriginMode = "none";
       return void 0;
     }
-    if (performance2.timeOrigin) {
+    var threshold = 3600 * 1e3;
+    var timeOriginIsReliable = performance2.timeOrigin && Math.abs(performance2.timeOrigin + performance2.now() - Date.now()) < threshold;
+    if (timeOriginIsReliable) {
+      exports2._browserPerformanceTimeOriginMode = "timeOrigin";
       return performance2.timeOrigin;
     }
-    return performance2.timing && performance2.timing.navigationStart || Date.now();
+    var navigationStart = performance2.timing && performance2.timing.navigationStart;
+    var hasNavigationStart = typeof navigationStart === "number";
+    var navigationStartIsReliable = hasNavigationStart && Math.abs(navigationStart + performance2.now() - Date.now()) < threshold;
+    if (navigationStartIsReliable) {
+      exports2._browserPerformanceTimeOriginMode = "navigationStart";
+      return navigationStart;
+    }
+    exports2._browserPerformanceTimeOriginMode = "dateNow";
+    return Date.now();
   }();
 });
 
@@ -70009,7 +70184,7 @@ var require_sdk = __commonJS((exports2) => {
 // node_modules/@sentry/core/dist/version.js
 var require_version3 = __commonJS((exports2) => {
   Object.defineProperty(exports2, "__esModule", {value: true});
-  exports2.SDK_VERSION = "6.2.3";
+  exports2.SDK_VERSION = "6.2.5";
 });
 
 // node_modules/@sentry/core/dist/integrations/functiontostring.js
@@ -70930,7 +71105,7 @@ var require_ms2 = __commonJS((exports2, module2) => {
   }
 });
 
-// node_modules/@sentry/node/node_modules/debug/src/common.js
+// node_modules/https-proxy-agent/node_modules/debug/src/common.js
 var require_common = __commonJS((exports2, module2) => {
   function setup(env) {
     createDebug.debug = createDebug;
@@ -71081,7 +71256,7 @@ var require_common = __commonJS((exports2, module2) => {
   module2.exports = setup;
 });
 
-// node_modules/@sentry/node/node_modules/debug/src/browser.js
+// node_modules/https-proxy-agent/node_modules/debug/src/browser.js
 var require_browser3 = __commonJS((exports2, module2) => {
   exports2.log = log2;
   exports2.formatArgs = formatArgs;
@@ -71342,7 +71517,7 @@ var require_supports_color = __commonJS((exports2, module2) => {
   };
 });
 
-// node_modules/@sentry/node/node_modules/debug/src/node.js
+// node_modules/https-proxy-agent/node_modules/debug/src/node.js
 var require_node3 = __commonJS((exports2, module2) => {
   var tty = require("tty");
   var util = require("util");
@@ -71509,7 +71684,7 @@ var require_node3 = __commonJS((exports2, module2) => {
   };
 });
 
-// node_modules/@sentry/node/node_modules/debug/src/index.js
+// node_modules/https-proxy-agent/node_modules/debug/src/index.js
 var require_src3 = __commonJS((exports2, module2) => {
   if (typeof process === "undefined" || process.type === "renderer" || process.browser === true || process.__nwjs) {
     module2.exports = require_browser3();
@@ -71518,7 +71693,490 @@ var require_src3 = __commonJS((exports2, module2) => {
   }
 });
 
-// node_modules/@sentry/node/node_modules/agent-base/dist/src/promisify.js
+// node_modules/agent-base/node_modules/debug/src/common.js
+var require_common2 = __commonJS((exports2, module2) => {
+  function setup(env) {
+    createDebug.debug = createDebug;
+    createDebug.default = createDebug;
+    createDebug.coerce = coerce;
+    createDebug.disable = disable;
+    createDebug.enable = enable;
+    createDebug.enabled = enabled;
+    createDebug.humanize = require_ms2();
+    Object.keys(env).forEach((key) => {
+      createDebug[key] = env[key];
+    });
+    createDebug.instances = [];
+    createDebug.names = [];
+    createDebug.skips = [];
+    createDebug.formatters = {};
+    function selectColor(namespace) {
+      let hash = 0;
+      for (let i = 0; i < namespace.length; i++) {
+        hash = (hash << 5) - hash + namespace.charCodeAt(i);
+        hash |= 0;
+      }
+      return createDebug.colors[Math.abs(hash) % createDebug.colors.length];
+    }
+    createDebug.selectColor = selectColor;
+    function createDebug(namespace) {
+      let prevTime;
+      function debug(...args) {
+        if (!debug.enabled) {
+          return;
+        }
+        const self2 = debug;
+        const curr = Number(new Date());
+        const ms = curr - (prevTime || curr);
+        self2.diff = ms;
+        self2.prev = prevTime;
+        self2.curr = curr;
+        prevTime = curr;
+        args[0] = createDebug.coerce(args[0]);
+        if (typeof args[0] !== "string") {
+          args.unshift("%O");
+        }
+        let index = 0;
+        args[0] = args[0].replace(/%([a-zA-Z%])/g, (match, format) => {
+          if (match === "%%") {
+            return match;
+          }
+          index++;
+          const formatter = createDebug.formatters[format];
+          if (typeof formatter === "function") {
+            const val = args[index];
+            match = formatter.call(self2, val);
+            args.splice(index, 1);
+            index--;
+          }
+          return match;
+        });
+        createDebug.formatArgs.call(self2, args);
+        const logFn = self2.log || createDebug.log;
+        logFn.apply(self2, args);
+      }
+      debug.namespace = namespace;
+      debug.enabled = createDebug.enabled(namespace);
+      debug.useColors = createDebug.useColors();
+      debug.color = selectColor(namespace);
+      debug.destroy = destroy;
+      debug.extend = extend;
+      if (typeof createDebug.init === "function") {
+        createDebug.init(debug);
+      }
+      createDebug.instances.push(debug);
+      return debug;
+    }
+    function destroy() {
+      const index = createDebug.instances.indexOf(this);
+      if (index !== -1) {
+        createDebug.instances.splice(index, 1);
+        return true;
+      }
+      return false;
+    }
+    function extend(namespace, delimiter) {
+      const newDebug = createDebug(this.namespace + (typeof delimiter === "undefined" ? ":" : delimiter) + namespace);
+      newDebug.log = this.log;
+      return newDebug;
+    }
+    function enable(namespaces) {
+      createDebug.save(namespaces);
+      createDebug.names = [];
+      createDebug.skips = [];
+      let i;
+      const split = (typeof namespaces === "string" ? namespaces : "").split(/[\s,]+/);
+      const len = split.length;
+      for (i = 0; i < len; i++) {
+        if (!split[i]) {
+          continue;
+        }
+        namespaces = split[i].replace(/\*/g, ".*?");
+        if (namespaces[0] === "-") {
+          createDebug.skips.push(new RegExp("^" + namespaces.substr(1) + "$"));
+        } else {
+          createDebug.names.push(new RegExp("^" + namespaces + "$"));
+        }
+      }
+      for (i = 0; i < createDebug.instances.length; i++) {
+        const instance = createDebug.instances[i];
+        instance.enabled = createDebug.enabled(instance.namespace);
+      }
+    }
+    function disable() {
+      const namespaces = [
+        ...createDebug.names.map(toNamespace),
+        ...createDebug.skips.map(toNamespace).map((namespace) => "-" + namespace)
+      ].join(",");
+      createDebug.enable("");
+      return namespaces;
+    }
+    function enabled(name) {
+      if (name[name.length - 1] === "*") {
+        return true;
+      }
+      let i;
+      let len;
+      for (i = 0, len = createDebug.skips.length; i < len; i++) {
+        if (createDebug.skips[i].test(name)) {
+          return false;
+        }
+      }
+      for (i = 0, len = createDebug.names.length; i < len; i++) {
+        if (createDebug.names[i].test(name)) {
+          return true;
+        }
+      }
+      return false;
+    }
+    function toNamespace(regexp) {
+      return regexp.toString().substring(2, regexp.toString().length - 2).replace(/\.\*\?$/, "*");
+    }
+    function coerce(val) {
+      if (val instanceof Error) {
+        return val.stack || val.message;
+      }
+      return val;
+    }
+    createDebug.enable(createDebug.load());
+    return createDebug;
+  }
+  module2.exports = setup;
+});
+
+// node_modules/agent-base/node_modules/debug/src/browser.js
+var require_browser4 = __commonJS((exports2, module2) => {
+  exports2.log = log2;
+  exports2.formatArgs = formatArgs;
+  exports2.save = save;
+  exports2.load = load;
+  exports2.useColors = useColors;
+  exports2.storage = localstorage();
+  exports2.colors = [
+    "#0000CC",
+    "#0000FF",
+    "#0033CC",
+    "#0033FF",
+    "#0066CC",
+    "#0066FF",
+    "#0099CC",
+    "#0099FF",
+    "#00CC00",
+    "#00CC33",
+    "#00CC66",
+    "#00CC99",
+    "#00CCCC",
+    "#00CCFF",
+    "#3300CC",
+    "#3300FF",
+    "#3333CC",
+    "#3333FF",
+    "#3366CC",
+    "#3366FF",
+    "#3399CC",
+    "#3399FF",
+    "#33CC00",
+    "#33CC33",
+    "#33CC66",
+    "#33CC99",
+    "#33CCCC",
+    "#33CCFF",
+    "#6600CC",
+    "#6600FF",
+    "#6633CC",
+    "#6633FF",
+    "#66CC00",
+    "#66CC33",
+    "#9900CC",
+    "#9900FF",
+    "#9933CC",
+    "#9933FF",
+    "#99CC00",
+    "#99CC33",
+    "#CC0000",
+    "#CC0033",
+    "#CC0066",
+    "#CC0099",
+    "#CC00CC",
+    "#CC00FF",
+    "#CC3300",
+    "#CC3333",
+    "#CC3366",
+    "#CC3399",
+    "#CC33CC",
+    "#CC33FF",
+    "#CC6600",
+    "#CC6633",
+    "#CC9900",
+    "#CC9933",
+    "#CCCC00",
+    "#CCCC33",
+    "#FF0000",
+    "#FF0033",
+    "#FF0066",
+    "#FF0099",
+    "#FF00CC",
+    "#FF00FF",
+    "#FF3300",
+    "#FF3333",
+    "#FF3366",
+    "#FF3399",
+    "#FF33CC",
+    "#FF33FF",
+    "#FF6600",
+    "#FF6633",
+    "#FF9900",
+    "#FF9933",
+    "#FFCC00",
+    "#FFCC33"
+  ];
+  function useColors() {
+    if (typeof window !== "undefined" && window.process && (window.process.type === "renderer" || window.process.__nwjs)) {
+      return true;
+    }
+    if (typeof navigator !== "undefined" && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) {
+      return false;
+    }
+    return typeof document !== "undefined" && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance || typeof window !== "undefined" && window.console && (window.console.firebug || window.console.exception && window.console.table) || typeof navigator !== "undefined" && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31 || typeof navigator !== "undefined" && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/);
+  }
+  function formatArgs(args) {
+    args[0] = (this.useColors ? "%c" : "") + this.namespace + (this.useColors ? " %c" : " ") + args[0] + (this.useColors ? "%c " : " ") + "+" + module2.exports.humanize(this.diff);
+    if (!this.useColors) {
+      return;
+    }
+    const c = "color: " + this.color;
+    args.splice(1, 0, c, "color: inherit");
+    let index = 0;
+    let lastC = 0;
+    args[0].replace(/%[a-zA-Z%]/g, (match) => {
+      if (match === "%%") {
+        return;
+      }
+      index++;
+      if (match === "%c") {
+        lastC = index;
+      }
+    });
+    args.splice(lastC, 0, c);
+  }
+  function log2(...args) {
+    return typeof console === "object" && console.log && console.log(...args);
+  }
+  function save(namespaces) {
+    try {
+      if (namespaces) {
+        exports2.storage.setItem("debug", namespaces);
+      } else {
+        exports2.storage.removeItem("debug");
+      }
+    } catch (error) {
+    }
+  }
+  function load() {
+    let r;
+    try {
+      r = exports2.storage.getItem("debug");
+    } catch (error) {
+    }
+    if (!r && typeof process !== "undefined" && "env" in process) {
+      r = process.env.DEBUG;
+    }
+    return r;
+  }
+  function localstorage() {
+    try {
+      return localStorage;
+    } catch (error) {
+    }
+  }
+  module2.exports = require_common2()(exports2);
+  var {formatters} = module2.exports;
+  formatters.j = function(v) {
+    try {
+      return JSON.stringify(v);
+    } catch (error) {
+      return "[UnexpectedJSONParseError]: " + error.message;
+    }
+  };
+});
+
+// node_modules/agent-base/node_modules/debug/src/node.js
+var require_node4 = __commonJS((exports2, module2) => {
+  var tty = require("tty");
+  var util = require("util");
+  exports2.init = init2;
+  exports2.log = log2;
+  exports2.formatArgs = formatArgs;
+  exports2.save = save;
+  exports2.load = load;
+  exports2.useColors = useColors;
+  exports2.colors = [6, 2, 3, 4, 5, 1];
+  try {
+    const supportsColor = require_supports_color();
+    if (supportsColor && (supportsColor.stderr || supportsColor).level >= 2) {
+      exports2.colors = [
+        20,
+        21,
+        26,
+        27,
+        32,
+        33,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        56,
+        57,
+        62,
+        63,
+        68,
+        69,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        92,
+        93,
+        98,
+        99,
+        112,
+        113,
+        128,
+        129,
+        134,
+        135,
+        148,
+        149,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        178,
+        179,
+        184,
+        185,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        214,
+        215,
+        220,
+        221
+      ];
+    }
+  } catch (error) {
+  }
+  exports2.inspectOpts = Object.keys(process.env).filter((key) => {
+    return /^debug_/i.test(key);
+  }).reduce((obj, key) => {
+    const prop = key.substring(6).toLowerCase().replace(/_([a-z])/g, (_, k) => {
+      return k.toUpperCase();
+    });
+    let val = process.env[key];
+    if (/^(yes|on|true|enabled)$/i.test(val)) {
+      val = true;
+    } else if (/^(no|off|false|disabled)$/i.test(val)) {
+      val = false;
+    } else if (val === "null") {
+      val = null;
+    } else {
+      val = Number(val);
+    }
+    obj[prop] = val;
+    return obj;
+  }, {});
+  function useColors() {
+    return "colors" in exports2.inspectOpts ? Boolean(exports2.inspectOpts.colors) : tty.isatty(process.stderr.fd);
+  }
+  function formatArgs(args) {
+    const {namespace: name, useColors: useColors2} = this;
+    if (useColors2) {
+      const c = this.color;
+      const colorCode = "[3" + (c < 8 ? c : "8;5;" + c);
+      const prefix = `  ${colorCode};1m${name} [0m`;
+      args[0] = prefix + args[0].split("\n").join("\n" + prefix);
+      args.push(colorCode + "m+" + module2.exports.humanize(this.diff) + "[0m");
+    } else {
+      args[0] = getDate() + name + " " + args[0];
+    }
+  }
+  function getDate() {
+    if (exports2.inspectOpts.hideDate) {
+      return "";
+    }
+    return new Date().toISOString() + " ";
+  }
+  function log2(...args) {
+    return process.stderr.write(util.format(...args) + "\n");
+  }
+  function save(namespaces) {
+    if (namespaces) {
+      process.env.DEBUG = namespaces;
+    } else {
+      delete process.env.DEBUG;
+    }
+  }
+  function load() {
+    return process.env.DEBUG;
+  }
+  function init2(debug) {
+    debug.inspectOpts = {};
+    const keys = Object.keys(exports2.inspectOpts);
+    for (let i = 0; i < keys.length; i++) {
+      debug.inspectOpts[keys[i]] = exports2.inspectOpts[keys[i]];
+    }
+  }
+  module2.exports = require_common2()(exports2);
+  var {formatters} = module2.exports;
+  formatters.o = function(v) {
+    this.inspectOpts.colors = this.useColors;
+    return util.inspect(v, this.inspectOpts).replace(/\s*\n\s*/g, " ");
+  };
+  formatters.O = function(v) {
+    this.inspectOpts.colors = this.useColors;
+    return util.inspect(v, this.inspectOpts);
+  };
+});
+
+// node_modules/agent-base/node_modules/debug/src/index.js
+var require_src4 = __commonJS((exports2, module2) => {
+  if (typeof process === "undefined" || process.type === "renderer" || process.browser === true || process.__nwjs) {
+    module2.exports = require_browser4();
+  } else {
+    module2.exports = require_node4();
+  }
+});
+
+// node_modules/agent-base/dist/src/promisify.js
 var require_promisify = __commonJS((exports2) => {
   "use strict";
   Object.defineProperty(exports2, "__esModule", {value: true});
@@ -71538,14 +72196,14 @@ var require_promisify = __commonJS((exports2) => {
   exports2.default = promisify;
 });
 
-// node_modules/@sentry/node/node_modules/agent-base/dist/src/index.js
-var require_src4 = __commonJS((exports2, module2) => {
+// node_modules/agent-base/dist/src/index.js
+var require_src5 = __commonJS((exports2, module2) => {
   "use strict";
   var __importDefault = exports2 && exports2.__importDefault || function(mod) {
     return mod && mod.__esModule ? mod : {default: mod};
   };
   var events_1 = require("events");
-  var debug_1 = __importDefault(require_src3());
+  var debug_1 = __importDefault(require_src4());
   var promisify_1 = __importDefault(require_promisify());
   var debug = debug_1.default("agent-base");
   function isAgent(v) {
@@ -71711,7 +72369,7 @@ var require_src4 = __commonJS((exports2, module2) => {
   module2.exports = createAgent;
 });
 
-// node_modules/@sentry/node/node_modules/https-proxy-agent/dist/parse-proxy-response.js
+// node_modules/https-proxy-agent/dist/parse-proxy-response.js
 var require_parse_proxy_response = __commonJS((exports2) => {
   "use strict";
   var __importDefault = exports2 && exports2.__importDefault || function(mod) {
@@ -71775,7 +72433,7 @@ var require_parse_proxy_response = __commonJS((exports2) => {
   exports2.default = parseProxyResponse;
 });
 
-// node_modules/@sentry/node/node_modules/https-proxy-agent/dist/agent.js
+// node_modules/https-proxy-agent/dist/agent.js
 var require_agent = __commonJS((exports2) => {
   "use strict";
   var __awaiter = exports2 && exports2.__awaiter || function(thisArg, _arguments, P, generator) {
@@ -71814,7 +72472,7 @@ var require_agent = __commonJS((exports2) => {
   var url_1 = __importDefault(require("url"));
   var assert_1 = __importDefault(require("assert"));
   var debug_1 = __importDefault(require_src3());
-  var agent_base_1 = require_src4();
+  var agent_base_1 = require_src5();
   var parse_proxy_response_1 = __importDefault(require_parse_proxy_response());
   var debug = debug_1.default("https-proxy-agent:agent");
   var HttpsProxyAgent = class extends agent_base_1.Agent {
@@ -71930,7 +72588,7 @@ var require_agent = __commonJS((exports2) => {
   }
 });
 
-// node_modules/@sentry/node/node_modules/https-proxy-agent/dist/index.js
+// node_modules/https-proxy-agent/dist/index.js
 var require_dist22 = __commonJS((exports2, module2) => {
   "use strict";
   var __importDefault = exports2 && exports2.__importDefault || function(mod) {
@@ -72397,6 +73055,404 @@ var require_http3 = __commonJS((exports2) => {
       response: res
     });
   }
+});
+
+// node_modules/@sentry/node/dist/integrations/utils/errorhandling.js
+var require_errorhandling = __commonJS((exports2) => {
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  var core_1 = require_dist21();
+  var utils_1 = require_dist18();
+  var DEFAULT_SHUTDOWN_TIMEOUT = 2e3;
+  function logAndExitProcess(error) {
+    console.error(error && error.stack ? error.stack : error);
+    var client = core_1.getCurrentHub().getClient();
+    if (client === void 0) {
+      utils_1.logger.warn("No NodeClient was defined, we are exiting the process now.");
+      global.process.exit(1);
+      return;
+    }
+    var options = client.getOptions();
+    var timeout = options && options.shutdownTimeout && options.shutdownTimeout > 0 && options.shutdownTimeout || DEFAULT_SHUTDOWN_TIMEOUT;
+    utils_1.forget(client.close(timeout).then(function(result) {
+      if (!result) {
+        utils_1.logger.warn("We reached the timeout for emptying the request buffer, still exiting now!");
+      }
+      global.process.exit(1);
+    }));
+  }
+  exports2.logAndExitProcess = logAndExitProcess;
+});
+
+// node_modules/@sentry/node/dist/integrations/onuncaughtexception.js
+var require_onuncaughtexception = __commonJS((exports2) => {
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  var core_1 = require_dist21();
+  var types_1 = require_dist17();
+  var utils_1 = require_dist18();
+  var errorhandling_1 = require_errorhandling();
+  var OnUncaughtException = function() {
+    function OnUncaughtException2(_options) {
+      if (_options === void 0) {
+        _options = {};
+      }
+      this._options = _options;
+      this.name = OnUncaughtException2.id;
+      this.handler = this._makeErrorHandler();
+    }
+    OnUncaughtException2.prototype.setupOnce = function() {
+      global.process.on("uncaughtException", this.handler.bind(this));
+    };
+    OnUncaughtException2.prototype._makeErrorHandler = function() {
+      var _this = this;
+      var timeout = 2e3;
+      var caughtFirstError = false;
+      var caughtSecondError = false;
+      var calledFatalError = false;
+      var firstError;
+      return function(error) {
+        var onFatalError = errorhandling_1.logAndExitProcess;
+        var client = core_1.getCurrentHub().getClient();
+        if (_this._options.onFatalError) {
+          onFatalError = _this._options.onFatalError;
+        } else if (client && client.getOptions().onFatalError) {
+          onFatalError = client.getOptions().onFatalError;
+        }
+        if (!caughtFirstError) {
+          var hub_1 = core_1.getCurrentHub();
+          firstError = error;
+          caughtFirstError = true;
+          if (hub_1.getIntegration(OnUncaughtException2)) {
+            hub_1.withScope(function(scope) {
+              scope.setLevel(types_1.Severity.Fatal);
+              hub_1.captureException(error, {originalException: error});
+              if (!calledFatalError) {
+                calledFatalError = true;
+                onFatalError(error);
+              }
+            });
+          } else {
+            if (!calledFatalError) {
+              calledFatalError = true;
+              onFatalError(error);
+            }
+          }
+        } else if (calledFatalError) {
+          utils_1.logger.warn("uncaught exception after calling fatal error shutdown callback - this is bad! forcing shutdown");
+          errorhandling_1.logAndExitProcess(error);
+        } else if (!caughtSecondError) {
+          caughtSecondError = true;
+          setTimeout(function() {
+            if (!calledFatalError) {
+              calledFatalError = true;
+              onFatalError(firstError, error);
+            } else {
+            }
+          }, timeout);
+        }
+      };
+    };
+    OnUncaughtException2.id = "OnUncaughtException";
+    return OnUncaughtException2;
+  }();
+  exports2.OnUncaughtException = OnUncaughtException;
+});
+
+// node_modules/@sentry/node/dist/integrations/onunhandledrejection.js
+var require_onunhandledrejection = __commonJS((exports2) => {
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  var core_1 = require_dist21();
+  var utils_1 = require_dist18();
+  var errorhandling_1 = require_errorhandling();
+  var OnUnhandledRejection = function() {
+    function OnUnhandledRejection2(_options) {
+      if (_options === void 0) {
+        _options = {mode: "warn"};
+      }
+      this._options = _options;
+      this.name = OnUnhandledRejection2.id;
+    }
+    OnUnhandledRejection2.prototype.setupOnce = function() {
+      global.process.on("unhandledRejection", this.sendUnhandledPromise.bind(this));
+    };
+    OnUnhandledRejection2.prototype.sendUnhandledPromise = function(reason, promise) {
+      var hub = core_1.getCurrentHub();
+      if (!hub.getIntegration(OnUnhandledRejection2)) {
+        this._handleRejection(reason);
+        return;
+      }
+      var context = promise.domain && promise.domain.sentryContext || {};
+      hub.withScope(function(scope) {
+        scope.setExtra("unhandledPromiseRejection", true);
+        if (context.user) {
+          scope.setUser(context.user);
+        }
+        if (context.tags) {
+          scope.setTags(context.tags);
+        }
+        if (context.extra) {
+          scope.setExtras(context.extra);
+        }
+        hub.captureException(reason, {originalException: promise});
+      });
+      this._handleRejection(reason);
+    };
+    OnUnhandledRejection2.prototype._handleRejection = function(reason) {
+      var rejectionWarning = "This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). The promise rejected with the reason:";
+      if (this._options.mode === "warn") {
+        utils_1.consoleSandbox(function() {
+          console.warn(rejectionWarning);
+          console.error(reason && reason.stack ? reason.stack : reason);
+        });
+      } else if (this._options.mode === "strict") {
+        utils_1.consoleSandbox(function() {
+          console.warn(rejectionWarning);
+        });
+        errorhandling_1.logAndExitProcess(reason);
+      }
+    };
+    OnUnhandledRejection2.id = "OnUnhandledRejection";
+    return OnUnhandledRejection2;
+  }();
+  exports2.OnUnhandledRejection = OnUnhandledRejection;
+});
+
+// node_modules/@sentry/node/dist/integrations/linkederrors.js
+var require_linkederrors = __commonJS((exports2) => {
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  var tslib_1 = require_tslib();
+  var core_1 = require_dist21();
+  var utils_1 = require_dist18();
+  var parsers_1 = require_parsers();
+  var DEFAULT_KEY = "cause";
+  var DEFAULT_LIMIT = 5;
+  var LinkedErrors = function() {
+    function LinkedErrors2(options) {
+      if (options === void 0) {
+        options = {};
+      }
+      this.name = LinkedErrors2.id;
+      this._key = options.key || DEFAULT_KEY;
+      this._limit = options.limit || DEFAULT_LIMIT;
+    }
+    LinkedErrors2.prototype.setupOnce = function() {
+      core_1.addGlobalEventProcessor(function(event, hint) {
+        var self2 = core_1.getCurrentHub().getIntegration(LinkedErrors2);
+        if (self2) {
+          var handler = self2._handler && self2._handler.bind(self2);
+          return typeof handler === "function" ? handler(event, hint) : event;
+        }
+        return event;
+      });
+    };
+    LinkedErrors2.prototype._handler = function(event, hint) {
+      var _this = this;
+      if (!event.exception || !event.exception.values || !hint || !utils_1.isInstanceOf(hint.originalException, Error)) {
+        return utils_1.SyncPromise.resolve(event);
+      }
+      return new utils_1.SyncPromise(function(resolve) {
+        _this._walkErrorTree(hint.originalException, _this._key).then(function(linkedErrors) {
+          if (event && event.exception && event.exception.values) {
+            event.exception.values = tslib_1.__spread(linkedErrors, event.exception.values);
+          }
+          resolve(event);
+        }).then(null, function() {
+          resolve(event);
+        });
+      });
+    };
+    LinkedErrors2.prototype._walkErrorTree = function(error, key, stack) {
+      var _this = this;
+      if (stack === void 0) {
+        stack = [];
+      }
+      if (!utils_1.isInstanceOf(error[key], Error) || stack.length + 1 >= this._limit) {
+        return utils_1.SyncPromise.resolve(stack);
+      }
+      return new utils_1.SyncPromise(function(resolve, reject) {
+        parsers_1.getExceptionFromError(error[key]).then(function(exception) {
+          _this._walkErrorTree(error[key], key, tslib_1.__spread([exception], stack)).then(resolve).then(null, function() {
+            reject();
+          });
+        }).then(null, function() {
+          reject();
+        });
+      });
+    };
+    LinkedErrors2.id = "LinkedErrors";
+    return LinkedErrors2;
+  }();
+  exports2.LinkedErrors = LinkedErrors;
+});
+
+// node_modules/@sentry/node/dist/integrations/modules.js
+var require_modules = __commonJS((exports2) => {
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  var tslib_1 = require_tslib();
+  var fs_1 = require("fs");
+  var path_1 = require("path");
+  var moduleCache;
+  function getPaths() {
+    try {
+      return require.cache ? Object.keys(require.cache) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+  function collectModules() {
+    var mainPaths = require.main && require.main.paths || [];
+    var paths = getPaths();
+    var infos = {};
+    var seen = {};
+    paths.forEach(function(path) {
+      var dir = path;
+      var updir = function() {
+        var orig = dir;
+        dir = path_1.dirname(orig);
+        if (!dir || orig === dir || seen[orig]) {
+          return void 0;
+        }
+        if (mainPaths.indexOf(dir) < 0) {
+          return updir();
+        }
+        var pkgfile = path_1.join(orig, "package.json");
+        seen[orig] = true;
+        if (!fs_1.existsSync(pkgfile)) {
+          return updir();
+        }
+        try {
+          var info = JSON.parse(fs_1.readFileSync(pkgfile, "utf8"));
+          infos[info.name] = info.version;
+        } catch (_oO) {
+        }
+      };
+      updir();
+    });
+    return infos;
+  }
+  var Modules = function() {
+    function Modules2() {
+      this.name = Modules2.id;
+    }
+    Modules2.prototype.setupOnce = function(addGlobalEventProcessor, getCurrentHub) {
+      var _this = this;
+      addGlobalEventProcessor(function(event) {
+        if (!getCurrentHub().getIntegration(Modules2)) {
+          return event;
+        }
+        return tslib_1.__assign(tslib_1.__assign({}, event), {modules: _this._getModules()});
+      });
+    };
+    Modules2.prototype._getModules = function() {
+      if (!moduleCache) {
+        moduleCache = collectModules();
+      }
+      return moduleCache;
+    };
+    Modules2.id = "Modules";
+    return Modules2;
+  }();
+  exports2.Modules = Modules;
+});
+
+// node_modules/@sentry/node/dist/integrations/index.js
+var require_integrations2 = __commonJS((exports2) => {
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  var console_1 = require_console();
+  exports2.Console = console_1.Console;
+  var http_1 = require_http3();
+  exports2.Http = http_1.Http;
+  var onuncaughtexception_1 = require_onuncaughtexception();
+  exports2.OnUncaughtException = onuncaughtexception_1.OnUncaughtException;
+  var onunhandledrejection_1 = require_onunhandledrejection();
+  exports2.OnUnhandledRejection = onunhandledrejection_1.OnUnhandledRejection;
+  var linkederrors_1 = require_linkederrors();
+  exports2.LinkedErrors = linkederrors_1.LinkedErrors;
+  var modules_1 = require_modules();
+  exports2.Modules = modules_1.Modules;
+});
+
+// node_modules/@sentry/node/dist/sdk.js
+var require_sdk2 = __commonJS((exports2) => {
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  var tslib_1 = require_tslib();
+  var core_1 = require_dist21();
+  var hub_1 = require_dist19();
+  var utils_1 = require_dist18();
+  var domain = require("domain");
+  var client_1 = require_client2();
+  var integrations_1 = require_integrations2();
+  exports2.defaultIntegrations = [
+    new core_1.Integrations.InboundFilters(),
+    new core_1.Integrations.FunctionToString(),
+    new integrations_1.Console(),
+    new integrations_1.Http(),
+    new integrations_1.OnUncaughtException(),
+    new integrations_1.OnUnhandledRejection(),
+    new integrations_1.LinkedErrors()
+  ];
+  function init2(options) {
+    if (options === void 0) {
+      options = {};
+    }
+    if (options.defaultIntegrations === void 0) {
+      options.defaultIntegrations = exports2.defaultIntegrations;
+    }
+    if (options.dsn === void 0 && process.env.SENTRY_DSN) {
+      options.dsn = process.env.SENTRY_DSN;
+    }
+    if (options.tracesSampleRate === void 0 && process.env.SENTRY_TRACES_SAMPLE_RATE) {
+      var tracesSampleRate = parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE);
+      if (isFinite(tracesSampleRate)) {
+        options.tracesSampleRate = tracesSampleRate;
+      }
+    }
+    if (options.release === void 0) {
+      var global_1 = utils_1.getGlobalObject();
+      if (process.env.SENTRY_RELEASE) {
+        options.release = process.env.SENTRY_RELEASE;
+      } else if (global_1.SENTRY_RELEASE && global_1.SENTRY_RELEASE.id) {
+        options.release = global_1.SENTRY_RELEASE.id;
+      }
+    }
+    if (options.environment === void 0 && process.env.SENTRY_ENVIRONMENT) {
+      options.environment = process.env.SENTRY_ENVIRONMENT;
+    }
+    if (domain.active) {
+      hub_1.setHubOnCarrier(hub_1.getMainCarrier(), core_1.getCurrentHub());
+    }
+    core_1.initAndBind(client_1.NodeClient, options);
+  }
+  exports2.init = init2;
+  function lastEventId() {
+    return core_1.getCurrentHub().lastEventId();
+  }
+  exports2.lastEventId = lastEventId;
+  function flush(timeout) {
+    return tslib_1.__awaiter(this, void 0, void 0, function() {
+      var client;
+      return tslib_1.__generator(this, function(_a) {
+        client = core_1.getCurrentHub().getClient();
+        if (client) {
+          return [2, client.flush(timeout)];
+        }
+        return [2, Promise.reject(false)];
+      });
+    });
+  }
+  exports2.flush = flush;
+  function close(timeout) {
+    return tslib_1.__awaiter(this, void 0, void 0, function() {
+      var client;
+      return tslib_1.__generator(this, function(_a) {
+        client = core_1.getCurrentHub().getClient();
+        if (client) {
+          return [2, client.close(timeout)];
+        }
+        return [2, Promise.reject(false)];
+      });
+    });
+  }
+  exports2.close = close;
 });
 
 // node_modules/@sentry/tracing/dist/spanstatus.js
@@ -73791,7 +74847,7 @@ var require_request2 = __commonJS((exports2) => {
     traceXHR: true,
     tracingOrigins: exports2.DEFAULT_TRACING_ORIGINS
   };
-  function registerRequestInstrumentation(_options) {
+  function instrumentOutgoingRequests(_options) {
     var _a = tslib_1.__assign(tslib_1.__assign({}, exports2.defaultRequestInstrumentationOptions), _options), traceFetch = _a.traceFetch, traceXHR = _a.traceXHR, tracingOrigins = _a.tracingOrigins, shouldCreateSpanForRequest = _a.shouldCreateSpanForRequest;
     var urlMap = {};
     var defaultShouldCreateSpan = function(url) {
@@ -73828,7 +74884,7 @@ var require_request2 = __commonJS((exports2) => {
       });
     }
   }
-  exports2.registerRequestInstrumentation = registerRequestInstrumentation;
+  exports2.instrumentOutgoingRequests = instrumentOutgoingRequests;
   function fetchCallback(handlerData, shouldCreateSpan, spans) {
     var _a;
     var currentClientOptions = (_a = hub_1.getCurrentHub().getClient()) === null || _a === void 0 ? void 0 : _a.getOptions();
@@ -73918,7 +74974,7 @@ var require_router = __commonJS((exports2) => {
   Object.defineProperty(exports2, "__esModule", {value: true});
   var utils_1 = require_dist18();
   var global2 = utils_1.getGlobalObject();
-  function defaultRoutingInstrumentation(startTransaction, startTransactionOnPageLoad, startTransactionOnLocationChange) {
+  function instrumentRoutingWithDefaults(customStartTransaction, startTransactionOnPageLoad, startTransactionOnLocationChange) {
     if (startTransactionOnPageLoad === void 0) {
       startTransactionOnPageLoad = true;
     }
@@ -73932,7 +74988,7 @@ var require_router = __commonJS((exports2) => {
     var startingUrl = global2.location.href;
     var activeTransaction;
     if (startTransactionOnPageLoad) {
-      activeTransaction = startTransaction({name: global2.location.pathname, op: "pageload"});
+      activeTransaction = customStartTransaction({name: global2.location.pathname, op: "pageload"});
     }
     if (startTransactionOnLocationChange) {
       utils_1.addInstrumentationHandler({
@@ -73948,14 +75004,14 @@ var require_router = __commonJS((exports2) => {
               utils_1.logger.log("[Tracing] Finishing current transaction with op: " + activeTransaction.op);
               activeTransaction.finish();
             }
-            activeTransaction = startTransaction({name: global2.location.pathname, op: "navigation"});
+            activeTransaction = customStartTransaction({name: global2.location.pathname, op: "navigation"});
           }
         },
         type: "history"
       });
     }
   }
-  exports2.defaultRoutingInstrumentation = defaultRoutingInstrumentation;
+  exports2.instrumentRoutingWithDefaults = instrumentRoutingWithDefaults;
 });
 
 // node_modules/@sentry/tracing/dist/browser/browsertracing.js
@@ -73972,7 +75028,7 @@ var require_browsertracing = __commonJS((exports2) => {
   var request_1 = require_request2();
   var router_1 = require_router();
   exports2.DEFAULT_MAX_TRANSACTION_DURATION_SECONDS = 600;
-  var DEFAULT_BROWSER_TRACING_OPTIONS = tslib_1.__assign({idleTimeout: idletransaction_1.DEFAULT_IDLE_TIMEOUT, markBackgroundTransactions: true, maxTransactionDuration: exports2.DEFAULT_MAX_TRANSACTION_DURATION_SECONDS, routingInstrumentation: router_1.defaultRoutingInstrumentation, startTransactionOnLocationChange: true, startTransactionOnPageLoad: true}, request_1.defaultRequestInstrumentationOptions);
+  var DEFAULT_BROWSER_TRACING_OPTIONS = tslib_1.__assign({idleTimeout: idletransaction_1.DEFAULT_IDLE_TIMEOUT, markBackgroundTransactions: true, maxTransactionDuration: exports2.DEFAULT_MAX_TRANSACTION_DURATION_SECONDS, routingInstrumentation: router_1.instrumentRoutingWithDefaults, startTransactionOnLocationChange: true, startTransactionOnPageLoad: true}, request_1.defaultRequestInstrumentationOptions);
   var BrowserTracing = function() {
     function BrowserTracing2(_options) {
       this.name = BrowserTracing2.id;
@@ -73993,14 +75049,14 @@ var require_browsertracing = __commonJS((exports2) => {
         utils_1.logger.warn("[Tracing] You need to define `tracingOrigins` in the options. Set an array of urls or patterns to trace.");
         utils_1.logger.warn("[Tracing] We added a reasonable default for you: " + request_1.defaultRequestInstrumentationOptions.tracingOrigins);
       }
-      var _a = this.options, routingInstrumentation = _a.routingInstrumentation, startTransactionOnLocationChange = _a.startTransactionOnLocationChange, startTransactionOnPageLoad = _a.startTransactionOnPageLoad, markBackgroundTransactions = _a.markBackgroundTransactions, traceFetch = _a.traceFetch, traceXHR = _a.traceXHR, tracingOrigins = _a.tracingOrigins, shouldCreateSpanForRequest = _a.shouldCreateSpanForRequest;
-      routingInstrumentation(function(context) {
+      var _a = this.options, instrumentRouting = _a.routingInstrumentation, startTransactionOnLocationChange = _a.startTransactionOnLocationChange, startTransactionOnPageLoad = _a.startTransactionOnPageLoad, markBackgroundTransactions = _a.markBackgroundTransactions, traceFetch = _a.traceFetch, traceXHR = _a.traceXHR, tracingOrigins = _a.tracingOrigins, shouldCreateSpanForRequest = _a.shouldCreateSpanForRequest;
+      instrumentRouting(function(context) {
         return _this._createRouteTransaction(context);
       }, startTransactionOnPageLoad, startTransactionOnLocationChange);
       if (markBackgroundTransactions) {
         backgroundtab_1.registerBackgroundTabDetection();
       }
-      request_1.registerRequestInstrumentation({traceFetch, traceXHR, tracingOrigins, shouldCreateSpanForRequest});
+      request_1.instrumentOutgoingRequests({traceFetch, traceXHR, tracingOrigins, shouldCreateSpanForRequest});
     };
     BrowserTracing2.prototype._createRouteTransaction = function(context) {
       var _this = this;
@@ -74054,12 +75110,12 @@ var require_browsertracing = __commonJS((exports2) => {
 });
 
 // node_modules/@sentry/tracing/dist/browser/index.js
-var require_browser4 = __commonJS((exports2) => {
+var require_browser5 = __commonJS((exports2) => {
   Object.defineProperty(exports2, "__esModule", {value: true});
   var browsertracing_1 = require_browsertracing();
   exports2.BrowserTracing = browsertracing_1.BrowserTracing;
   var request_1 = require_request2();
-  exports2.registerRequestInstrumentation = request_1.registerRequestInstrumentation;
+  exports2.instrumentOutgoingRequests = request_1.instrumentOutgoingRequests;
   exports2.defaultRequestInstrumentationOptions = request_1.defaultRequestInstrumentationOptions;
 });
 
@@ -74256,7 +75312,7 @@ var require_mysql = __commonJS((exports2, module2) => {
         utils_1.logger.error("Mysql Integration was unable to require `mysql` package.");
         return;
       }
-      utils_1.fill(connection.prototype, "query", function(orig) {
+      utils_1.fill(connection, "createQuery", function(orig) {
         return function(options, values, callback) {
           var _a, _b;
           var scope = getCurrentHub().getScope();
@@ -74453,7 +75509,7 @@ var require_mongo = __commonJS((exports2, module2) => {
 });
 
 // node_modules/@sentry/tracing/dist/integrations/index.js
-var require_integrations2 = __commonJS((exports2) => {
+var require_integrations3 = __commonJS((exports2) => {
   Object.defineProperty(exports2, "__esModule", {value: true});
   var express_1 = require_express();
   exports2.Express = express_1.Express;
@@ -74469,18 +75525,18 @@ var require_integrations2 = __commonJS((exports2) => {
 var require_dist23 = __commonJS((exports2) => {
   Object.defineProperty(exports2, "__esModule", {value: true});
   var tslib_1 = require_tslib();
-  var browser_1 = require_browser4();
+  var browser_1 = require_browser5();
   var hubextensions_1 = require_hubextensions();
   exports2.addExtensionMethods = hubextensions_1.addExtensionMethods;
-  var TracingIntegrations = require_integrations2();
+  var TracingIntegrations = require_integrations3();
   var Integrations = tslib_1.__assign(tslib_1.__assign({}, TracingIntegrations), {BrowserTracing: browser_1.BrowserTracing});
   exports2.Integrations = Integrations;
   var span_1 = require_span();
   exports2.Span = span_1.Span;
   var transaction_1 = require_transaction2();
   exports2.Transaction = transaction_1.Transaction;
-  var browser_2 = require_browser4();
-  exports2.registerRequestInstrumentation = browser_2.registerRequestInstrumentation;
+  var browser_2 = require_browser5();
+  exports2.registerRequestInstrumentation = browser_2.instrumentOutgoingRequests;
   exports2.defaultRequestInstrumentationOptions = browser_2.defaultRequestInstrumentationOptions;
   var spanstatus_1 = require_spanstatus();
   exports2.SpanStatus = spanstatus_1.SpanStatus;
@@ -74624,7 +75680,6 @@ var require_handlers = __commonJS((exports2) => {
   var os = require("os");
   var url = require("url");
   var sdk_1 = require_sdk2();
-  var DEFAULT_SHUTDOWN_TIMEOUT = 2e3;
   function tracingHandler() {
     return function sentryTracingMiddleware(req, res, next) {
       var traceparentData;
@@ -74663,7 +75718,7 @@ var require_handlers = __commonJS((exports2) => {
     var method = (_a = req.method) === null || _a === void 0 ? void 0 : _a.toUpperCase();
     var path = "";
     if (req.route) {
-      path = "" + req.baseUrl + req.route.path;
+      path = "" + (req.baseUrl || "") + req.route.path;
     } else if (req.originalUrl || req.url) {
       path = utils_1.stripUrlQueryAndFragment(req.originalUrl || req.url || "");
     }
@@ -74839,396 +75894,6 @@ var require_handlers = __commonJS((exports2) => {
     };
   }
   exports2.errorHandler = errorHandler;
-  function logAndExitProcess(error) {
-    console.error(error && error.stack ? error.stack : error);
-    var client = core_1.getCurrentHub().getClient();
-    if (client === void 0) {
-      utils_1.logger.warn("No NodeClient was defined, we are exiting the process now.");
-      global.process.exit(1);
-      return;
-    }
-    var options = client.getOptions();
-    var timeout = options && options.shutdownTimeout && options.shutdownTimeout > 0 && options.shutdownTimeout || DEFAULT_SHUTDOWN_TIMEOUT;
-    utils_1.forget(client.close(timeout).then(function(result) {
-      if (!result) {
-        utils_1.logger.warn("We reached the timeout for emptying the request buffer, still exiting now!");
-      }
-      global.process.exit(1);
-    }));
-  }
-  exports2.logAndExitProcess = logAndExitProcess;
-});
-
-// node_modules/@sentry/node/dist/integrations/onuncaughtexception.js
-var require_onuncaughtexception = __commonJS((exports2) => {
-  Object.defineProperty(exports2, "__esModule", {value: true});
-  var core_1 = require_dist21();
-  var types_1 = require_dist17();
-  var utils_1 = require_dist18();
-  var handlers_1 = require_handlers();
-  var OnUncaughtException = function() {
-    function OnUncaughtException2(_options) {
-      if (_options === void 0) {
-        _options = {};
-      }
-      this._options = _options;
-      this.name = OnUncaughtException2.id;
-      this.handler = this._makeErrorHandler();
-    }
-    OnUncaughtException2.prototype.setupOnce = function() {
-      global.process.on("uncaughtException", this.handler.bind(this));
-    };
-    OnUncaughtException2.prototype._makeErrorHandler = function() {
-      var _this = this;
-      var timeout = 2e3;
-      var caughtFirstError = false;
-      var caughtSecondError = false;
-      var calledFatalError = false;
-      var firstError;
-      return function(error) {
-        var onFatalError = handlers_1.logAndExitProcess;
-        var client = core_1.getCurrentHub().getClient();
-        if (_this._options.onFatalError) {
-          onFatalError = _this._options.onFatalError;
-        } else if (client && client.getOptions().onFatalError) {
-          onFatalError = client.getOptions().onFatalError;
-        }
-        if (!caughtFirstError) {
-          var hub_1 = core_1.getCurrentHub();
-          firstError = error;
-          caughtFirstError = true;
-          if (hub_1.getIntegration(OnUncaughtException2)) {
-            hub_1.withScope(function(scope) {
-              scope.setLevel(types_1.Severity.Fatal);
-              hub_1.captureException(error, {originalException: error});
-              if (!calledFatalError) {
-                calledFatalError = true;
-                onFatalError(error);
-              }
-            });
-          } else {
-            if (!calledFatalError) {
-              calledFatalError = true;
-              onFatalError(error);
-            }
-          }
-        } else if (calledFatalError) {
-          utils_1.logger.warn("uncaught exception after calling fatal error shutdown callback - this is bad! forcing shutdown");
-          handlers_1.logAndExitProcess(error);
-        } else if (!caughtSecondError) {
-          caughtSecondError = true;
-          setTimeout(function() {
-            if (!calledFatalError) {
-              calledFatalError = true;
-              onFatalError(firstError, error);
-            } else {
-            }
-          }, timeout);
-        }
-      };
-    };
-    OnUncaughtException2.id = "OnUncaughtException";
-    return OnUncaughtException2;
-  }();
-  exports2.OnUncaughtException = OnUncaughtException;
-});
-
-// node_modules/@sentry/node/dist/integrations/onunhandledrejection.js
-var require_onunhandledrejection = __commonJS((exports2) => {
-  Object.defineProperty(exports2, "__esModule", {value: true});
-  var core_1 = require_dist21();
-  var utils_1 = require_dist18();
-  var handlers_1 = require_handlers();
-  var OnUnhandledRejection = function() {
-    function OnUnhandledRejection2(_options) {
-      if (_options === void 0) {
-        _options = {mode: "warn"};
-      }
-      this._options = _options;
-      this.name = OnUnhandledRejection2.id;
-    }
-    OnUnhandledRejection2.prototype.setupOnce = function() {
-      global.process.on("unhandledRejection", this.sendUnhandledPromise.bind(this));
-    };
-    OnUnhandledRejection2.prototype.sendUnhandledPromise = function(reason, promise) {
-      var hub = core_1.getCurrentHub();
-      if (!hub.getIntegration(OnUnhandledRejection2)) {
-        this._handleRejection(reason);
-        return;
-      }
-      var context = promise.domain && promise.domain.sentryContext || {};
-      hub.withScope(function(scope) {
-        scope.setExtra("unhandledPromiseRejection", true);
-        if (context.user) {
-          scope.setUser(context.user);
-        }
-        if (context.tags) {
-          scope.setTags(context.tags);
-        }
-        if (context.extra) {
-          scope.setExtras(context.extra);
-        }
-        hub.captureException(reason, {originalException: promise});
-      });
-      this._handleRejection(reason);
-    };
-    OnUnhandledRejection2.prototype._handleRejection = function(reason) {
-      var rejectionWarning = "This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). The promise rejected with the reason:";
-      if (this._options.mode === "warn") {
-        utils_1.consoleSandbox(function() {
-          console.warn(rejectionWarning);
-          console.error(reason && reason.stack ? reason.stack : reason);
-        });
-      } else if (this._options.mode === "strict") {
-        utils_1.consoleSandbox(function() {
-          console.warn(rejectionWarning);
-        });
-        handlers_1.logAndExitProcess(reason);
-      }
-    };
-    OnUnhandledRejection2.id = "OnUnhandledRejection";
-    return OnUnhandledRejection2;
-  }();
-  exports2.OnUnhandledRejection = OnUnhandledRejection;
-});
-
-// node_modules/@sentry/node/dist/integrations/linkederrors.js
-var require_linkederrors = __commonJS((exports2) => {
-  Object.defineProperty(exports2, "__esModule", {value: true});
-  var tslib_1 = require_tslib();
-  var core_1 = require_dist21();
-  var utils_1 = require_dist18();
-  var parsers_1 = require_parsers();
-  var DEFAULT_KEY = "cause";
-  var DEFAULT_LIMIT = 5;
-  var LinkedErrors = function() {
-    function LinkedErrors2(options) {
-      if (options === void 0) {
-        options = {};
-      }
-      this.name = LinkedErrors2.id;
-      this._key = options.key || DEFAULT_KEY;
-      this._limit = options.limit || DEFAULT_LIMIT;
-    }
-    LinkedErrors2.prototype.setupOnce = function() {
-      core_1.addGlobalEventProcessor(function(event, hint) {
-        var self2 = core_1.getCurrentHub().getIntegration(LinkedErrors2);
-        if (self2) {
-          var handler = self2._handler && self2._handler.bind(self2);
-          return typeof handler === "function" ? handler(event, hint) : event;
-        }
-        return event;
-      });
-    };
-    LinkedErrors2.prototype._handler = function(event, hint) {
-      var _this = this;
-      if (!event.exception || !event.exception.values || !hint || !utils_1.isInstanceOf(hint.originalException, Error)) {
-        return utils_1.SyncPromise.resolve(event);
-      }
-      return new utils_1.SyncPromise(function(resolve) {
-        _this._walkErrorTree(hint.originalException, _this._key).then(function(linkedErrors) {
-          if (event && event.exception && event.exception.values) {
-            event.exception.values = tslib_1.__spread(linkedErrors, event.exception.values);
-          }
-          resolve(event);
-        }).then(null, function() {
-          resolve(event);
-        });
-      });
-    };
-    LinkedErrors2.prototype._walkErrorTree = function(error, key, stack) {
-      var _this = this;
-      if (stack === void 0) {
-        stack = [];
-      }
-      if (!utils_1.isInstanceOf(error[key], Error) || stack.length + 1 >= this._limit) {
-        return utils_1.SyncPromise.resolve(stack);
-      }
-      return new utils_1.SyncPromise(function(resolve, reject) {
-        parsers_1.getExceptionFromError(error[key]).then(function(exception) {
-          _this._walkErrorTree(error[key], key, tslib_1.__spread([exception], stack)).then(resolve).then(null, function() {
-            reject();
-          });
-        }).then(null, function() {
-          reject();
-        });
-      });
-    };
-    LinkedErrors2.id = "LinkedErrors";
-    return LinkedErrors2;
-  }();
-  exports2.LinkedErrors = LinkedErrors;
-});
-
-// node_modules/@sentry/node/dist/integrations/modules.js
-var require_modules = __commonJS((exports2) => {
-  Object.defineProperty(exports2, "__esModule", {value: true});
-  var tslib_1 = require_tslib();
-  var fs_1 = require("fs");
-  var path_1 = require("path");
-  var moduleCache;
-  function getPaths() {
-    try {
-      return require.cache ? Object.keys(require.cache) : [];
-    } catch (e) {
-      return [];
-    }
-  }
-  function collectModules() {
-    var mainPaths = require.main && require.main.paths || [];
-    var paths = getPaths();
-    var infos = {};
-    var seen = {};
-    paths.forEach(function(path) {
-      var dir = path;
-      var updir = function() {
-        var orig = dir;
-        dir = path_1.dirname(orig);
-        if (!dir || orig === dir || seen[orig]) {
-          return void 0;
-        }
-        if (mainPaths.indexOf(dir) < 0) {
-          return updir();
-        }
-        var pkgfile = path_1.join(orig, "package.json");
-        seen[orig] = true;
-        if (!fs_1.existsSync(pkgfile)) {
-          return updir();
-        }
-        try {
-          var info = JSON.parse(fs_1.readFileSync(pkgfile, "utf8"));
-          infos[info.name] = info.version;
-        } catch (_oO) {
-        }
-      };
-      updir();
-    });
-    return infos;
-  }
-  var Modules = function() {
-    function Modules2() {
-      this.name = Modules2.id;
-    }
-    Modules2.prototype.setupOnce = function(addGlobalEventProcessor, getCurrentHub) {
-      var _this = this;
-      addGlobalEventProcessor(function(event) {
-        if (!getCurrentHub().getIntegration(Modules2)) {
-          return event;
-        }
-        return tslib_1.__assign(tslib_1.__assign({}, event), {modules: _this._getModules()});
-      });
-    };
-    Modules2.prototype._getModules = function() {
-      if (!moduleCache) {
-        moduleCache = collectModules();
-      }
-      return moduleCache;
-    };
-    Modules2.id = "Modules";
-    return Modules2;
-  }();
-  exports2.Modules = Modules;
-});
-
-// node_modules/@sentry/node/dist/integrations/index.js
-var require_integrations3 = __commonJS((exports2) => {
-  Object.defineProperty(exports2, "__esModule", {value: true});
-  var console_1 = require_console();
-  exports2.Console = console_1.Console;
-  var http_1 = require_http3();
-  exports2.Http = http_1.Http;
-  var onuncaughtexception_1 = require_onuncaughtexception();
-  exports2.OnUncaughtException = onuncaughtexception_1.OnUncaughtException;
-  var onunhandledrejection_1 = require_onunhandledrejection();
-  exports2.OnUnhandledRejection = onunhandledrejection_1.OnUnhandledRejection;
-  var linkederrors_1 = require_linkederrors();
-  exports2.LinkedErrors = linkederrors_1.LinkedErrors;
-  var modules_1 = require_modules();
-  exports2.Modules = modules_1.Modules;
-});
-
-// node_modules/@sentry/node/dist/sdk.js
-var require_sdk2 = __commonJS((exports2) => {
-  Object.defineProperty(exports2, "__esModule", {value: true});
-  var tslib_1 = require_tslib();
-  var core_1 = require_dist21();
-  var hub_1 = require_dist19();
-  var utils_1 = require_dist18();
-  var domain = require("domain");
-  var client_1 = require_client2();
-  var integrations_1 = require_integrations3();
-  exports2.defaultIntegrations = [
-    new core_1.Integrations.InboundFilters(),
-    new core_1.Integrations.FunctionToString(),
-    new integrations_1.Console(),
-    new integrations_1.Http(),
-    new integrations_1.OnUncaughtException(),
-    new integrations_1.OnUnhandledRejection(),
-    new integrations_1.LinkedErrors()
-  ];
-  function init2(options) {
-    if (options === void 0) {
-      options = {};
-    }
-    if (options.defaultIntegrations === void 0) {
-      options.defaultIntegrations = exports2.defaultIntegrations;
-    }
-    if (options.dsn === void 0 && process.env.SENTRY_DSN) {
-      options.dsn = process.env.SENTRY_DSN;
-    }
-    if (options.tracesSampleRate === void 0 && process.env.SENTRY_TRACES_SAMPLE_RATE) {
-      var tracesSampleRate = parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE);
-      if (isFinite(tracesSampleRate)) {
-        options.tracesSampleRate = tracesSampleRate;
-      }
-    }
-    if (options.release === void 0) {
-      var global_1 = utils_1.getGlobalObject();
-      if (process.env.SENTRY_RELEASE) {
-        options.release = process.env.SENTRY_RELEASE;
-      } else if (global_1.SENTRY_RELEASE && global_1.SENTRY_RELEASE.id) {
-        options.release = global_1.SENTRY_RELEASE.id;
-      }
-    }
-    if (options.environment === void 0 && process.env.SENTRY_ENVIRONMENT) {
-      options.environment = process.env.SENTRY_ENVIRONMENT;
-    }
-    if (domain.active) {
-      hub_1.setHubOnCarrier(hub_1.getMainCarrier(), core_1.getCurrentHub());
-    }
-    core_1.initAndBind(client_1.NodeClient, options);
-  }
-  exports2.init = init2;
-  function lastEventId() {
-    return core_1.getCurrentHub().lastEventId();
-  }
-  exports2.lastEventId = lastEventId;
-  function flush(timeout) {
-    return tslib_1.__awaiter(this, void 0, void 0, function() {
-      var client;
-      return tslib_1.__generator(this, function(_a) {
-        client = core_1.getCurrentHub().getClient();
-        if (client) {
-          return [2, client.flush(timeout)];
-        }
-        return [2, Promise.reject(false)];
-      });
-    });
-  }
-  exports2.flush = flush;
-  function close(timeout) {
-    return tslib_1.__awaiter(this, void 0, void 0, function() {
-      var client;
-      return tslib_1.__generator(this, function(_a) {
-        client = core_1.getCurrentHub().getClient();
-        if (client) {
-          return [2, client.close(timeout)];
-        }
-        return [2, Promise.reject(false)];
-      });
-    });
-  }
-  exports2.close = close;
 });
 
 // node_modules/@sentry/node/dist/index.js
@@ -75276,7 +75941,7 @@ var require_dist24 = __commonJS((exports2) => {
   var domain = require("domain");
   var Handlers = require_handlers();
   exports2.Handlers = Handlers;
-  var NodeIntegrations = require_integrations3();
+  var NodeIntegrations = require_integrations2();
   var Transports = require_transports();
   exports2.Transports = Transports;
   var INTEGRATIONS = tslib_1.__assign(tslib_1.__assign({}, core_2.Integrations), NodeIntegrations);
@@ -82098,7 +82763,7 @@ var reformatAllele = (allele) => {
   return materializeTools(node);
 };
 var materializeTools = (fbObject = {}, parent = {}) => {
-  const {
+  const _a = fbObject, {
     id,
     propagateTransgenicUses = true,
     stocksCount = 0,
@@ -82106,7 +82771,7 @@ var materializeTools = (fbObject = {}, parent = {}) => {
     insertions = [],
     constructs = [],
     toolUses = []
-  } = fbObject, restProps = __rest(fbObject, [
+  } = _a, restProps = __objRest(_a, [
     "id",
     "propagateTransgenicUses",
     "stocksCount",
@@ -82126,7 +82791,7 @@ var materializeTools = (fbObject = {}, parent = {}) => {
       encodedTools.push(parent);
   }
   const taggedWith = getTools(fbObject, "tagged_with", propagateTransgenicUses);
-  const materializedFbObject = __assign(__assign({}, restProps), {
+  const materializedFbObject = __objSpread(__objSpread({}, restProps), {
     id,
     stocksCount,
     knownLesion,
@@ -82355,10 +83020,10 @@ var resolvers = {
       return {alleles};
     },
     getAllianceVariantsByAllele: async (_obj, _a, {dataSources}, _info) => {
-      var {id} = _a, params = __rest(_a, ["id"]);
+      var _b = _a, {id} = _b, params = __objRest(_b, ["id"]);
       const {
         results: variants = []
-      } = await (dataSources == null ? void 0 : dataSources.allianceAPI.getVariantsByAllele(__assign({
+      } = await (dataSources == null ? void 0 : dataSources.allianceAPI.getVariantsByAllele(__objSpread({
         id
       }, params)));
       return {variants};
@@ -82368,7 +83033,7 @@ var resolvers = {
     variants: async (allele, params = {}, {dataSources}, _info) => {
       const {
         results: variants = []
-      } = await (dataSources == null ? void 0 : dataSources.allianceAPI.getVariantsByAllele(__assign({
+      } = await (dataSources == null ? void 0 : dataSources.allianceAPI.getVariantsByAllele(__objSpread({
         id: allele == null ? void 0 : allele.id
       }, params)));
       return variants;
@@ -82387,7 +83052,7 @@ var FlyBaseAPI = class extends import_apollo_datasource_rest.RESTDataSource {
     return this.get("/expression/tools", {gene});
   }
   async searchExpressionToolsByExpression({expression}) {
-    return this.get("/expression/tools", __assign({}, expression));
+    return this.get("/expression/tools", __objSpread({}, expression));
   }
 };
 var FlyBaseAPI_default = FlyBaseAPI;
