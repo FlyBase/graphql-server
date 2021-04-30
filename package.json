@@ -15,12 +15,12 @@
     "pm2": "pm2"
   },
   "dependencies": {
-    "@sentry/node": "6.2.5",
+    "@sentry/node": "6.3.5",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
-    "apollo-datasource-rest": "^0.11.0",
+    "apollo-datasource-rest": "^0.13.0",
     "apollo-link-http": "^1.5.17",
-    "apollo-server": "^2.22.2",
+    "apollo-server": "^2.24.0",
     "cross-fetch": "^3.1.4",
     "graphql": "^15.5.0",
     "lodash.isplainobject": "^4.0.6",
@@ -31,8 +31,8 @@
   },
   "devDependencies": {
     "@luckycatfactory/esbuild-graphql-loader": "^3.6.0",
-    "esbuild": "^0.11.6",
-    "graphql-tag": "^2.11.0",
+    "esbuild": "^0.11.16",
+    "graphql-tag": "^2.12.4",
     "prettier": "^1.18.2",
     "yargs": "^16.2.0"
   },
