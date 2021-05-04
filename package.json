@@ -1,6 +1,6 @@
 {
   "name": "flybase-graphql",
-  "version": "FB2020_06.0",
+  "version": "FB2021_03.0",
   "description": "FlyBase GraphQL implementation",
   "main": "server/index.js",
   "author": "Josh Goodman <jogoodma@iu.edu>",
@@ -31,10 +31,10 @@
   },
   "devDependencies": {
     "@luckycatfactory/esbuild-graphql-loader": "^3.6.0",
-    "esbuild": "^0.11.16",
+    "esbuild": "^0.11.18",
     "graphql-tag": "^2.12.4",
     "prettier": "^1.18.2",
-    "yargs": "^16.2.0"
+    "yargs": "^17.0.1"
   },
   "resolutions": {
     "graphql": "15.5.x"

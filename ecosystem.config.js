@@ -41,7 +41,7 @@ module.exports = {
         '--graphql "/chado-graphql" ' +
         '--graphiql "/chado-graphiql" ' +
         '--enhance-graphiql ' +
-        '-s flybase,gene,gene_group',
+        '-s flybase,gene,gene_group,humanhealth',
       instances: 1,
       autorestart: true,
       watch: false,

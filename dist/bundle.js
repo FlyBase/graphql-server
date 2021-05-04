@@ -18529,7 +18529,6 @@ var require_inherits = __commonJS((exports2, module2) => {
 
 // node_modules/safe-buffer/index.js
 var require_safe_buffer = __commonJS((exports2, module2) => {
-  /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
   var buffer = require("buffer");
   var Buffer2 = buffer.Buffer;
   function copyProps(src, dst) {
@@ -19472,6 +19471,7 @@ var require_requestPipeline = __commonJS((exports2) => {
   }
   var symbolExtensionDeprecationDone = Symbol("apolloServerExtensionDeprecationDone");
   function processGraphQLRequest(config, requestContext) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
       const logger = requestContext.logger || console;
       const metrics = requestContext.metrics = requestContext.metrics || Object.create(null);
@@ -19598,10 +19598,19 @@ var require_requestPipeline = __commonJS((exports2) => {
           schemaInstrumentation_1.enablePluginsForSchemaResolvers(config.schema);
           try {
             const result = yield execute(requestContext);
-            if (result.errors) {
-              yield didEncounterErrors(result.errors);
+            const resultErrors = (_a = result.errors) === null || _a === void 0 ? void 0 : _a.map((e) => {
+              var _a2;
+              if (((_a2 = e.nodes) === null || _a2 === void 0 ? void 0 : _a2.length) === 1 && e.nodes[0].kind === graphql_1.Kind.VARIABLE_DEFINITION && e.message.startsWith(`Variable "$${e.nodes[0].variable.name.value}" got invalid value `)) {
+                return apollo_server_errors_1.fromGraphQLError(e, {
+                  errorClass: apollo_server_errors_1.UserInputError
+                });
+              }
+              return e;
+            });
+            if (resultErrors) {
+              yield didEncounterErrors(resultErrors);
             }
-            response = Object.assign(Object.assign({}, result), {errors: result.errors ? formatErrors(result.errors) : void 0});
+            response = Object.assign(Object.assign({}, result), {errors: resultErrors ? formatErrors(resultErrors) : void 0});
             executionDispatcher.reverseInvokeHookSync("executionDidEnd");
           } catch (executionError) {
             executionDispatcher.reverseInvokeHookSync("executionDidEnd", executionError);
@@ -19725,8 +19734,8 @@ var require_requestPipeline = __commonJS((exports2) => {
         return new dispatcher_1.Dispatcher(requestListeners);
       }
       function initializeExtensionStack() {
-        var _a;
-        if ((_a = config.extensions) === null || _a === void 0 ? void 0 : _a.length) {
+        var _a2;
+        if ((_a2 = config.extensions) === null || _a2 === void 0 ? void 0 : _a2.length) {
           graphql_extensions_1.enableGraphQLExtensions(config.schema);
         }
         const extensions2 = config.extensions ? config.extensions.map((f) => f()) : [];
@@ -22594,20 +22603,6 @@ var require_mock = __commonJS((exports2) => {
 
 // node_modules/tslib/tslib.js
 var require_tslib = __commonJS((exports2, module2) => {
-  /*! *****************************************************************************
-  Copyright (c) Microsoft Corporation.
-  
-  Permission to use, copy, modify, and/or distribute this software for any
-  purpose with or without fee is hereby granted.
-  
-  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-  REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-  AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-  INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-  LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-  OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-  PERFORMANCE OF THIS SOFTWARE.
-  ***************************************************************************** */
   var __extends;
   var __assign;
   var __rest;
@@ -29735,118 +29730,106 @@ var require_polyfills = __commonJS((exports2) => {
   require_object2();
 });
 
+// node_modules/apollo-env/lib/typescript-utility-types.js
+var require_typescript_utility_types = __commonJS((exports2) => {
+  "use strict";
+  Object.defineProperty(exports2, "__esModule", {value: true});
+});
+
 // node_modules/apollo-env/lib/fetch/fetch.js
 var require_fetch2 = __commonJS((exports2) => {
   "use strict";
+  var __importDefault = exports2 && exports2.__importDefault || function(mod) {
+    return mod && mod.__esModule ? mod : {default: mod};
+  };
   Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.Body = exports2.Headers = exports2.Response = exports2.Request = exports2.fetch = void 0;
   var node_fetch_1 = require_lib();
-  exports2.fetch = node_fetch_1.default;
-  exports2.Request = node_fetch_1.Request;
-  exports2.Response = node_fetch_1.Response;
-  exports2.Headers = node_fetch_1.Headers;
-  exports2.Body = node_fetch_1.Body;
+  Object.defineProperty(exports2, "fetch", {enumerable: true, get: function() {
+    return __importDefault(node_fetch_1).default;
+  }});
+  Object.defineProperty(exports2, "Request", {enumerable: true, get: function() {
+    return node_fetch_1.Request;
+  }});
+  Object.defineProperty(exports2, "Response", {enumerable: true, get: function() {
+    return node_fetch_1.Response;
+  }});
+  Object.defineProperty(exports2, "Headers", {enumerable: true, get: function() {
+    return node_fetch_1.Headers;
+  }});
+  Object.defineProperty(exports2, "Body", {enumerable: true, get: function() {
+    return node_fetch_1.Body;
+  }});
 });
 
 // node_modules/apollo-env/lib/fetch/url.js
 var require_url2 = __commonJS((exports2) => {
   "use strict";
   Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.URLSearchParams = exports2.URL = void 0;
   var url_1 = require("url");
-  exports2.URL = url_1.URL;
-  exports2.URLSearchParams = url_1.URLSearchParams;
+  Object.defineProperty(exports2, "URL", {enumerable: true, get: function() {
+    return url_1.URL;
+  }});
+  Object.defineProperty(exports2, "URLSearchParams", {enumerable: true, get: function() {
+    return url_1.URLSearchParams;
+  }});
 });
 
 // node_modules/apollo-env/lib/fetch/index.js
 var require_fetch3 = __commonJS((exports2) => {
   "use strict";
-  function __export(m) {
+  var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    Object.defineProperty(o, k2, {enumerable: true, get: function() {
+      return m[k];
+    }});
+  } : function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    o[k2] = m[k];
+  });
+  var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
     for (var p in m)
-      if (!exports2.hasOwnProperty(p))
-        exports2[p] = m[p];
-  }
+      if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p))
+        __createBinding(exports3, m, p);
+  };
   Object.defineProperty(exports2, "__esModule", {value: true});
-  __export(require_fetch2());
-  __export(require_url2());
-});
-
-// node_modules/apollo-env/lib/utils/isNodeLike.js
-var require_isNodeLike2 = __commonJS((exports2) => {
-  "use strict";
-  Object.defineProperty(exports2, "__esModule", {value: true});
-  exports2.isNodeLike = typeof process === "object" && process && process.release && process.versions && typeof process.versions.node === "string";
-});
-
-// node_modules/apollo-env/lib/utils/createHash.js
-var require_createHash = __commonJS((exports2) => {
-  "use strict";
-  Object.defineProperty(exports2, "__esModule", {value: true});
-  var isNodeLike_1 = require_isNodeLike2();
-  function createHash(kind) {
-    if (isNodeLike_1.isNodeLike) {
-      return require("crypto").createHash(kind);
-    }
-    return require_sha2()(kind);
-  }
-  exports2.createHash = createHash;
-});
-
-// node_modules/apollo-env/lib/utils/mapValues.js
-var require_mapValues = __commonJS((exports2) => {
-  "use strict";
-  Object.defineProperty(exports2, "__esModule", {value: true});
-  function mapValues(object, callback) {
-    const result = Object.create(null);
-    for (const [key, value] of Object.entries(object)) {
-      result[key] = callback(value);
-    }
-    return result;
-  }
-  exports2.mapValues = mapValues;
-});
-
-// node_modules/apollo-env/lib/utils/predicates.js
-var require_predicates2 = __commonJS((exports2) => {
-  "use strict";
-  Object.defineProperty(exports2, "__esModule", {value: true});
-  function isNotNullOrUndefined(value) {
-    return value !== null && typeof value !== "undefined";
-  }
-  exports2.isNotNullOrUndefined = isNotNullOrUndefined;
-});
-
-// node_modules/apollo-env/lib/utils/index.js
-var require_utils = __commonJS((exports2) => {
-  "use strict";
-  function __export(m) {
-    for (var p in m)
-      if (!exports2.hasOwnProperty(p))
-        exports2[p] = m[p];
-  }
-  Object.defineProperty(exports2, "__esModule", {value: true});
-  __export(require_createHash());
-  __export(require_isNodeLike2());
-  __export(require_mapValues());
-  __export(require_predicates2());
+  __exportStar(require_fetch2(), exports2);
+  __exportStar(require_url2(), exports2);
 });
 
 // node_modules/apollo-env/lib/index.js
 var require_lib4 = __commonJS((exports2) => {
   "use strict";
-  function __export(m) {
+  var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    Object.defineProperty(o, k2, {enumerable: true, get: function() {
+      return m[k];
+    }});
+  } : function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    o[k2] = m[k];
+  });
+  var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
     for (var p in m)
-      if (!exports2.hasOwnProperty(p))
-        exports2[p] = m[p];
-  }
+      if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p))
+        __createBinding(exports3, m, p);
+  };
   Object.defineProperty(exports2, "__esModule", {value: true});
   require_polyfills();
-  __export(require_fetch3());
-  __export(require_utils());
+  __exportStar(require_typescript_utility_types(), exports2);
+  __exportStar(require_fetch3(), exports2);
 });
 
 // node_modules/@apollographql/apollo-tools/lib/utilities/invariant.js
 var require_invariant3 = __commonJS((exports2) => {
   "use strict";
   Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.invariant = void 0;
   function invariant(condition, message) {
     if (!condition) {
       throw new Error(message);
@@ -29856,9 +29839,10 @@ var require_invariant3 = __commonJS((exports2) => {
 });
 
 // node_modules/@apollographql/apollo-tools/lib/utilities/predicates.js
-var require_predicates3 = __commonJS((exports2) => {
+var require_predicates2 = __commonJS((exports2) => {
   "use strict";
   Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.isNotNullOrUndefined = void 0;
   function isNotNullOrUndefined(value) {
     return value !== null && typeof value !== "undefined";
   }
@@ -29869,6 +29853,7 @@ var require_predicates3 = __commonJS((exports2) => {
 var require_graphql3 = __commonJS((exports2) => {
   "use strict";
   Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.isDocumentNode = exports2.isNode = void 0;
   var graphql_1 = require_graphql2();
   function isNode(maybeNode) {
     return maybeNode && typeof maybeNode.kind === "string";
@@ -29883,24 +29868,72 @@ var require_graphql3 = __commonJS((exports2) => {
 // node_modules/@apollographql/apollo-tools/lib/utilities/index.js
 var require_utilities2 = __commonJS((exports2) => {
   "use strict";
-  function __export(m) {
+  var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    Object.defineProperty(o, k2, {enumerable: true, get: function() {
+      return m[k];
+    }});
+  } : function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    o[k2] = m[k];
+  });
+  var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
     for (var p in m)
-      if (!exports2.hasOwnProperty(p))
-        exports2[p] = m[p];
-  }
+      if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p))
+        __createBinding(exports3, m, p);
+  };
   Object.defineProperty(exports2, "__esModule", {value: true});
-  __export(require_invariant3());
-  __export(require_predicates3());
-  __export(require_graphql3());
+  __exportStar(require_invariant3(), exports2);
+  __exportStar(require_predicates2(), exports2);
+  __exportStar(require_graphql3(), exports2);
+});
+
+// node_modules/@apollographql/apollo-tools/lib/schema/resolverMap.js
+var require_resolverMap = __commonJS((exports2) => {
+  "use strict";
+  Object.defineProperty(exports2, "__esModule", {value: true});
+});
+
+// node_modules/@apollographql/apollo-tools/lib/schema/resolveObject.js
+var require_resolveObject = __commonJS((exports2) => {
+  "use strict";
+  Object.defineProperty(exports2, "__esModule", {value: true});
+});
+
+// node_modules/@apollographql/apollo-tools/lib/schema/index.js
+var require_schema2 = __commonJS((exports2) => {
+  "use strict";
+  var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    Object.defineProperty(o, k2, {enumerable: true, get: function() {
+      return m[k];
+    }});
+  } : function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    o[k2] = m[k];
+  });
+  var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
+    for (var p in m)
+      if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p))
+        __createBinding(exports3, m, p);
+  };
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  __exportStar(require_resolverMap(), exports2);
+  __exportStar(require_resolveObject(), exports2);
 });
 
 // node_modules/@apollographql/apollo-tools/lib/buildServiceDefinition.js
 var require_buildServiceDefinition = __commonJS((exports2) => {
   "use strict";
   Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.buildServiceDefinition = void 0;
   var graphql_1 = require_graphql2();
   var graphql_2 = require_graphql3();
-  var predicates_1 = require_predicates3();
+  var predicates_1 = require_predicates2();
   function buildServiceDefinition(modules) {
     const errors = [];
     const typeDefinitionsMap = Object.create(null);
@@ -30051,22 +30084,34 @@ var require_buildServiceDefinition = __commonJS((exports2) => {
 // node_modules/@apollographql/apollo-tools/lib/index.js
 var require_lib5 = __commonJS((exports2) => {
   "use strict";
-  function __export(m) {
+  var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    Object.defineProperty(o, k2, {enumerable: true, get: function() {
+      return m[k];
+    }});
+  } : function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    o[k2] = m[k];
+  });
+  var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
     for (var p in m)
-      if (!exports2.hasOwnProperty(p))
-        exports2[p] = m[p];
-  }
+      if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p))
+        __createBinding(exports3, m, p);
+  };
   Object.defineProperty(exports2, "__esModule", {value: true});
   require_lib4();
-  __export(require_utilities2());
-  __export(require_buildServiceDefinition());
+  __exportStar(require_utilities2(), exports2);
+  __exportStar(require_schema2(), exports2);
+  __exportStar(require_buildServiceDefinition(), exports2);
 });
 
 // node_modules/apollo-tracing/package.json
 var require_package = __commonJS((exports2, module2) => {
   module2.exports = {
     name: "apollo-tracing",
-    version: "0.13.0",
+    version: "0.14.0",
     description: "Collect and expose trace data for GraphQL requests",
     main: "./dist/index.js",
     types: "./dist/index.d.ts",
@@ -30077,13 +30122,13 @@ var require_package = __commonJS((exports2, module2) => {
       node: ">=4.0"
     },
     dependencies: {
-      "apollo-server-env": "^3.0.0",
-      "apollo-server-plugin-base": "^0.11.0"
+      "apollo-server-env": "^3.1.0",
+      "apollo-server-plugin-base": "^0.12.0"
     },
     peerDependencies: {
       graphql: "^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0"
     },
-    gitHead: "93499e703a375ff0fbd128138e46b574074b44e6"
+    gitHead: "f2349d0e10633ee79bed152f682e53730175d59b"
   };
 });
 
@@ -31604,6 +31649,7 @@ var require_transforms3 = __commonJS((exports2) => {
     return mod && mod.__esModule ? mod : {default: mod};
   };
   Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.printWithReducedWhitespace = exports2.removeAliases = exports2.sortAST = exports2.dropUnusedDefinitions = exports2.hideStringAndNumericLiterals = exports2.hideLiterals = void 0;
   var visitor_1 = require_visitor();
   var printer_1 = require_printer();
   var utilities_1 = require_utilities();
@@ -31706,12 +31752,36 @@ var require_transforms3 = __commonJS((exports2) => {
   exports2.printWithReducedWhitespace = printWithReducedWhitespace;
 });
 
+// node_modules/apollo-graphql/lib/utilities/isNodeLike.js
+var require_isNodeLike2 = __commonJS((exports2) => {
+  "use strict";
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.isNodeLike = void 0;
+  exports2.isNodeLike = typeof process === "object" && process && process.release && process.versions && typeof process.versions.node === "string";
+});
+
+// node_modules/apollo-graphql/lib/utilities/createHash.js
+var require_createHash = __commonJS((exports2) => {
+  "use strict";
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.createHash = void 0;
+  var isNodeLike_1 = require_isNodeLike2();
+  function createHash(kind) {
+    if (isNodeLike_1.isNodeLike) {
+      return require("crypto").createHash(kind);
+    }
+    return require_sha2()(kind);
+  }
+  exports2.createHash = createHash;
+});
+
 // node_modules/apollo-graphql/lib/operationId.js
 var require_operationId = __commonJS((exports2) => {
   "use strict";
   Object.defineProperty(exports2, "__esModule", {value: true});
-  var apollo_env_1 = require_lib4();
+  exports2.operationHash = exports2.defaultOperationRegistrySignature = exports2.operationRegistrySignature = exports2.defaultUsageReportingSignature = void 0;
   var transforms_1 = require_transforms3();
+  var createHash_1 = require_createHash();
   function defaultUsageReportingSignature(ast, operationName) {
     return transforms_1.printWithReducedWhitespace(transforms_1.sortAST(transforms_1.removeAliases(transforms_1.hideLiterals(transforms_1.dropUnusedDefinitions(ast, operationName)))));
   }
@@ -31731,7 +31801,7 @@ var require_operationId = __commonJS((exports2) => {
   }
   exports2.defaultOperationRegistrySignature = defaultOperationRegistrySignature;
   function operationHash(operation) {
-    return apollo_env_1.createHash("sha256").update(operation).digest("hex");
+    return createHash_1.createHash("sha256").update(operation).digest("hex");
   }
   exports2.operationHash = operationHash;
 });
@@ -31740,6 +31810,7 @@ var require_operationId = __commonJS((exports2) => {
 var require_graphql4 = __commonJS((exports2) => {
   "use strict";
   Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.isDocumentNode = exports2.isNode = void 0;
   var graphql_1 = require_graphql2();
   function isNode(maybeNode) {
     return maybeNode && typeof maybeNode.kind === "string";
@@ -31755,6 +31826,7 @@ var require_graphql4 = __commonJS((exports2) => {
 var require_GraphQLSchemaValidationError = __commonJS((exports2) => {
   "use strict";
   Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.GraphQLSchemaValidationError = void 0;
   var GraphQLSchemaValidationError = class extends Error {
     constructor(errors) {
       super();
@@ -31765,6 +31837,659 @@ var require_GraphQLSchemaValidationError = __commonJS((exports2) => {
     }
   };
   exports2.GraphQLSchemaValidationError = GraphQLSchemaValidationError;
+});
+
+// node_modules/core-js-pure/internals/global.js
+var require_global2 = __commonJS((exports2, module2) => {
+  var check = function(it) {
+    return it && it.Math == Math && it;
+  };
+  module2.exports = check(typeof globalThis == "object" && globalThis) || check(typeof window == "object" && window) || check(typeof self == "object" && self) || check(typeof global == "object" && global) || function() {
+    return this;
+  }() || Function("return this")();
+});
+
+// node_modules/core-js-pure/internals/fails.js
+var require_fails2 = __commonJS((exports2, module2) => {
+  module2.exports = function(exec) {
+    try {
+      return !!exec();
+    } catch (error) {
+      return true;
+    }
+  };
+});
+
+// node_modules/core-js-pure/internals/descriptors.js
+var require_descriptors2 = __commonJS((exports2, module2) => {
+  var fails = require_fails2();
+  module2.exports = !fails(function() {
+    return Object.defineProperty({}, 1, {get: function() {
+      return 7;
+    }})[1] != 7;
+  });
+});
+
+// node_modules/core-js-pure/internals/object-property-is-enumerable.js
+var require_object_property_is_enumerable2 = __commonJS((exports2) => {
+  "use strict";
+  var $propertyIsEnumerable = {}.propertyIsEnumerable;
+  var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+  var NASHORN_BUG = getOwnPropertyDescriptor && !$propertyIsEnumerable.call({1: 2}, 1);
+  exports2.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
+    var descriptor = getOwnPropertyDescriptor(this, V);
+    return !!descriptor && descriptor.enumerable;
+  } : $propertyIsEnumerable;
+});
+
+// node_modules/core-js-pure/internals/create-property-descriptor.js
+var require_create_property_descriptor2 = __commonJS((exports2, module2) => {
+  module2.exports = function(bitmap, value) {
+    return {
+      enumerable: !(bitmap & 1),
+      configurable: !(bitmap & 2),
+      writable: !(bitmap & 4),
+      value
+    };
+  };
+});
+
+// node_modules/core-js-pure/internals/classof-raw.js
+var require_classof_raw2 = __commonJS((exports2, module2) => {
+  var toString = {}.toString;
+  module2.exports = function(it) {
+    return toString.call(it).slice(8, -1);
+  };
+});
+
+// node_modules/core-js-pure/internals/indexed-object.js
+var require_indexed_object2 = __commonJS((exports2, module2) => {
+  var fails = require_fails2();
+  var classof = require_classof_raw2();
+  var split = "".split;
+  module2.exports = fails(function() {
+    return !Object("z").propertyIsEnumerable(0);
+  }) ? function(it) {
+    return classof(it) == "String" ? split.call(it, "") : Object(it);
+  } : Object;
+});
+
+// node_modules/core-js-pure/internals/require-object-coercible.js
+var require_require_object_coercible2 = __commonJS((exports2, module2) => {
+  module2.exports = function(it) {
+    if (it == void 0)
+      throw TypeError("Can't call method on " + it);
+    return it;
+  };
+});
+
+// node_modules/core-js-pure/internals/to-indexed-object.js
+var require_to_indexed_object2 = __commonJS((exports2, module2) => {
+  var IndexedObject = require_indexed_object2();
+  var requireObjectCoercible = require_require_object_coercible2();
+  module2.exports = function(it) {
+    return IndexedObject(requireObjectCoercible(it));
+  };
+});
+
+// node_modules/core-js-pure/internals/is-object.js
+var require_is_object2 = __commonJS((exports2, module2) => {
+  module2.exports = function(it) {
+    return typeof it === "object" ? it !== null : typeof it === "function";
+  };
+});
+
+// node_modules/core-js-pure/internals/to-primitive.js
+var require_to_primitive2 = __commonJS((exports2, module2) => {
+  var isObject = require_is_object2();
+  module2.exports = function(input, PREFERRED_STRING) {
+    if (!isObject(input))
+      return input;
+    var fn, val;
+    if (PREFERRED_STRING && typeof (fn = input.toString) == "function" && !isObject(val = fn.call(input)))
+      return val;
+    if (typeof (fn = input.valueOf) == "function" && !isObject(val = fn.call(input)))
+      return val;
+    if (!PREFERRED_STRING && typeof (fn = input.toString) == "function" && !isObject(val = fn.call(input)))
+      return val;
+    throw TypeError("Can't convert object to primitive value");
+  };
+});
+
+// node_modules/core-js-pure/internals/to-object.js
+var require_to_object2 = __commonJS((exports2, module2) => {
+  var requireObjectCoercible = require_require_object_coercible2();
+  module2.exports = function(argument) {
+    return Object(requireObjectCoercible(argument));
+  };
+});
+
+// node_modules/core-js-pure/internals/has.js
+var require_has2 = __commonJS((exports2, module2) => {
+  var toObject = require_to_object2();
+  var hasOwnProperty = {}.hasOwnProperty;
+  module2.exports = function hasOwn(it, key) {
+    return hasOwnProperty.call(toObject(it), key);
+  };
+});
+
+// node_modules/core-js-pure/internals/document-create-element.js
+var require_document_create_element2 = __commonJS((exports2, module2) => {
+  var global2 = require_global2();
+  var isObject = require_is_object2();
+  var document2 = global2.document;
+  var EXISTS = isObject(document2) && isObject(document2.createElement);
+  module2.exports = function(it) {
+    return EXISTS ? document2.createElement(it) : {};
+  };
+});
+
+// node_modules/core-js-pure/internals/ie8-dom-define.js
+var require_ie8_dom_define2 = __commonJS((exports2, module2) => {
+  var DESCRIPTORS = require_descriptors2();
+  var fails = require_fails2();
+  var createElement = require_document_create_element2();
+  module2.exports = !DESCRIPTORS && !fails(function() {
+    return Object.defineProperty(createElement("div"), "a", {
+      get: function() {
+        return 7;
+      }
+    }).a != 7;
+  });
+});
+
+// node_modules/core-js-pure/internals/object-get-own-property-descriptor.js
+var require_object_get_own_property_descriptor2 = __commonJS((exports2) => {
+  var DESCRIPTORS = require_descriptors2();
+  var propertyIsEnumerableModule = require_object_property_is_enumerable2();
+  var createPropertyDescriptor = require_create_property_descriptor2();
+  var toIndexedObject = require_to_indexed_object2();
+  var toPrimitive = require_to_primitive2();
+  var has = require_has2();
+  var IE8_DOM_DEFINE = require_ie8_dom_define2();
+  var $getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+  exports2.f = DESCRIPTORS ? $getOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
+    O = toIndexedObject(O);
+    P = toPrimitive(P, true);
+    if (IE8_DOM_DEFINE)
+      try {
+        return $getOwnPropertyDescriptor(O, P);
+      } catch (error) {
+      }
+    if (has(O, P))
+      return createPropertyDescriptor(!propertyIsEnumerableModule.f.call(O, P), O[P]);
+  };
+});
+
+// node_modules/core-js-pure/internals/is-forced.js
+var require_is_forced2 = __commonJS((exports2, module2) => {
+  var fails = require_fails2();
+  var replacement = /#|\.prototype\./;
+  var isForced = function(feature, detection) {
+    var value = data[normalize(feature)];
+    return value == POLYFILL ? true : value == NATIVE ? false : typeof detection == "function" ? fails(detection) : !!detection;
+  };
+  var normalize = isForced.normalize = function(string) {
+    return String(string).replace(replacement, ".").toLowerCase();
+  };
+  var data = isForced.data = {};
+  var NATIVE = isForced.NATIVE = "N";
+  var POLYFILL = isForced.POLYFILL = "P";
+  module2.exports = isForced;
+});
+
+// node_modules/core-js-pure/internals/path.js
+var require_path2 = __commonJS((exports2, module2) => {
+  module2.exports = {};
+});
+
+// node_modules/core-js-pure/internals/a-function.js
+var require_a_function2 = __commonJS((exports2, module2) => {
+  module2.exports = function(it) {
+    if (typeof it != "function") {
+      throw TypeError(String(it) + " is not a function");
+    }
+    return it;
+  };
+});
+
+// node_modules/core-js-pure/internals/function-bind-context.js
+var require_function_bind_context2 = __commonJS((exports2, module2) => {
+  var aFunction = require_a_function2();
+  module2.exports = function(fn, that, length) {
+    aFunction(fn);
+    if (that === void 0)
+      return fn;
+    switch (length) {
+      case 0:
+        return function() {
+          return fn.call(that);
+        };
+      case 1:
+        return function(a) {
+          return fn.call(that, a);
+        };
+      case 2:
+        return function(a, b) {
+          return fn.call(that, a, b);
+        };
+      case 3:
+        return function(a, b, c) {
+          return fn.call(that, a, b, c);
+        };
+    }
+    return function() {
+      return fn.apply(that, arguments);
+    };
+  };
+});
+
+// node_modules/core-js-pure/internals/an-object.js
+var require_an_object2 = __commonJS((exports2, module2) => {
+  var isObject = require_is_object2();
+  module2.exports = function(it) {
+    if (!isObject(it)) {
+      throw TypeError(String(it) + " is not an object");
+    }
+    return it;
+  };
+});
+
+// node_modules/core-js-pure/internals/object-define-property.js
+var require_object_define_property2 = __commonJS((exports2) => {
+  var DESCRIPTORS = require_descriptors2();
+  var IE8_DOM_DEFINE = require_ie8_dom_define2();
+  var anObject = require_an_object2();
+  var toPrimitive = require_to_primitive2();
+  var $defineProperty = Object.defineProperty;
+  exports2.f = DESCRIPTORS ? $defineProperty : function defineProperty(O, P, Attributes) {
+    anObject(O);
+    P = toPrimitive(P, true);
+    anObject(Attributes);
+    if (IE8_DOM_DEFINE)
+      try {
+        return $defineProperty(O, P, Attributes);
+      } catch (error) {
+      }
+    if ("get" in Attributes || "set" in Attributes)
+      throw TypeError("Accessors not supported");
+    if ("value" in Attributes)
+      O[P] = Attributes.value;
+    return O;
+  };
+});
+
+// node_modules/core-js-pure/internals/create-non-enumerable-property.js
+var require_create_non_enumerable_property2 = __commonJS((exports2, module2) => {
+  var DESCRIPTORS = require_descriptors2();
+  var definePropertyModule = require_object_define_property2();
+  var createPropertyDescriptor = require_create_property_descriptor2();
+  module2.exports = DESCRIPTORS ? function(object, key, value) {
+    return definePropertyModule.f(object, key, createPropertyDescriptor(1, value));
+  } : function(object, key, value) {
+    object[key] = value;
+    return object;
+  };
+});
+
+// node_modules/core-js-pure/internals/export.js
+var require_export2 = __commonJS((exports2, module2) => {
+  "use strict";
+  var global2 = require_global2();
+  var getOwnPropertyDescriptor = require_object_get_own_property_descriptor2().f;
+  var isForced = require_is_forced2();
+  var path = require_path2();
+  var bind = require_function_bind_context2();
+  var createNonEnumerableProperty = require_create_non_enumerable_property2();
+  var has = require_has2();
+  var wrapConstructor = function(NativeConstructor) {
+    var Wrapper = function(a, b, c) {
+      if (this instanceof NativeConstructor) {
+        switch (arguments.length) {
+          case 0:
+            return new NativeConstructor();
+          case 1:
+            return new NativeConstructor(a);
+          case 2:
+            return new NativeConstructor(a, b);
+        }
+        return new NativeConstructor(a, b, c);
+      }
+      return NativeConstructor.apply(this, arguments);
+    };
+    Wrapper.prototype = NativeConstructor.prototype;
+    return Wrapper;
+  };
+  module2.exports = function(options, source) {
+    var TARGET = options.target;
+    var GLOBAL = options.global;
+    var STATIC = options.stat;
+    var PROTO = options.proto;
+    var nativeSource = GLOBAL ? global2 : STATIC ? global2[TARGET] : (global2[TARGET] || {}).prototype;
+    var target = GLOBAL ? path : path[TARGET] || (path[TARGET] = {});
+    var targetPrototype = target.prototype;
+    var FORCED, USE_NATIVE, VIRTUAL_PROTOTYPE;
+    var key, sourceProperty, targetProperty, nativeProperty, resultProperty, descriptor;
+    for (key in source) {
+      FORCED = isForced(GLOBAL ? key : TARGET + (STATIC ? "." : "#") + key, options.forced);
+      USE_NATIVE = !FORCED && nativeSource && has(nativeSource, key);
+      targetProperty = target[key];
+      if (USE_NATIVE)
+        if (options.noTargetGet) {
+          descriptor = getOwnPropertyDescriptor(nativeSource, key);
+          nativeProperty = descriptor && descriptor.value;
+        } else
+          nativeProperty = nativeSource[key];
+      sourceProperty = USE_NATIVE && nativeProperty ? nativeProperty : source[key];
+      if (USE_NATIVE && typeof targetProperty === typeof sourceProperty)
+        continue;
+      if (options.bind && USE_NATIVE)
+        resultProperty = bind(sourceProperty, global2);
+      else if (options.wrap && USE_NATIVE)
+        resultProperty = wrapConstructor(sourceProperty);
+      else if (PROTO && typeof sourceProperty == "function")
+        resultProperty = bind(Function.call, sourceProperty);
+      else
+        resultProperty = sourceProperty;
+      if (options.sham || sourceProperty && sourceProperty.sham || targetProperty && targetProperty.sham) {
+        createNonEnumerableProperty(resultProperty, "sham", true);
+      }
+      target[key] = resultProperty;
+      if (PROTO) {
+        VIRTUAL_PROTOTYPE = TARGET + "Prototype";
+        if (!has(path, VIRTUAL_PROTOTYPE)) {
+          createNonEnumerableProperty(path, VIRTUAL_PROTOTYPE, {});
+        }
+        path[VIRTUAL_PROTOTYPE][key] = sourceProperty;
+        if (options.real && targetPrototype && !targetPrototype[key]) {
+          createNonEnumerableProperty(targetPrototype, key, sourceProperty);
+        }
+      }
+    }
+  };
+});
+
+// node_modules/core-js-pure/internals/is-array.js
+var require_is_array2 = __commonJS((exports2, module2) => {
+  var classof = require_classof_raw2();
+  module2.exports = Array.isArray || function isArray(arg) {
+    return classof(arg) == "Array";
+  };
+});
+
+// node_modules/core-js-pure/internals/to-integer.js
+var require_to_integer2 = __commonJS((exports2, module2) => {
+  var ceil = Math.ceil;
+  var floor = Math.floor;
+  module2.exports = function(argument) {
+    return isNaN(argument = +argument) ? 0 : (argument > 0 ? floor : ceil)(argument);
+  };
+});
+
+// node_modules/core-js-pure/internals/to-length.js
+var require_to_length2 = __commonJS((exports2, module2) => {
+  var toInteger = require_to_integer2();
+  var min = Math.min;
+  module2.exports = function(argument) {
+    return argument > 0 ? min(toInteger(argument), 9007199254740991) : 0;
+  };
+});
+
+// node_modules/core-js-pure/internals/flatten-into-array.js
+var require_flatten_into_array2 = __commonJS((exports2, module2) => {
+  "use strict";
+  var isArray = require_is_array2();
+  var toLength = require_to_length2();
+  var bind = require_function_bind_context2();
+  var flattenIntoArray = function(target, original, source, sourceLen, start, depth, mapper, thisArg) {
+    var targetIndex = start;
+    var sourceIndex = 0;
+    var mapFn = mapper ? bind(mapper, thisArg, 3) : false;
+    var element;
+    while (sourceIndex < sourceLen) {
+      if (sourceIndex in source) {
+        element = mapFn ? mapFn(source[sourceIndex], sourceIndex, original) : source[sourceIndex];
+        if (depth > 0 && isArray(element)) {
+          targetIndex = flattenIntoArray(target, original, element, toLength(element.length), targetIndex, depth - 1) - 1;
+        } else {
+          if (targetIndex >= 9007199254740991)
+            throw TypeError("Exceed the acceptable array length");
+          target[targetIndex] = element;
+        }
+        targetIndex++;
+      }
+      sourceIndex++;
+    }
+    return targetIndex;
+  };
+  module2.exports = flattenIntoArray;
+});
+
+// node_modules/core-js-pure/internals/is-pure.js
+var require_is_pure2 = __commonJS((exports2, module2) => {
+  module2.exports = true;
+});
+
+// node_modules/core-js-pure/internals/set-global.js
+var require_set_global2 = __commonJS((exports2, module2) => {
+  var global2 = require_global2();
+  var createNonEnumerableProperty = require_create_non_enumerable_property2();
+  module2.exports = function(key, value) {
+    try {
+      createNonEnumerableProperty(global2, key, value);
+    } catch (error) {
+      global2[key] = value;
+    }
+    return value;
+  };
+});
+
+// node_modules/core-js-pure/internals/shared-store.js
+var require_shared_store2 = __commonJS((exports2, module2) => {
+  var global2 = require_global2();
+  var setGlobal = require_set_global2();
+  var SHARED = "__core-js_shared__";
+  var store = global2[SHARED] || setGlobal(SHARED, {});
+  module2.exports = store;
+});
+
+// node_modules/core-js-pure/internals/shared.js
+var require_shared2 = __commonJS((exports2, module2) => {
+  var IS_PURE = require_is_pure2();
+  var store = require_shared_store2();
+  (module2.exports = function(key, value) {
+    return store[key] || (store[key] = value !== void 0 ? value : {});
+  })("versions", []).push({
+    version: "3.11.1",
+    mode: IS_PURE ? "pure" : "global",
+    copyright: "\xA9 2021 Denis Pushkarev (zloirock.ru)"
+  });
+});
+
+// node_modules/core-js-pure/internals/uid.js
+var require_uid2 = __commonJS((exports2, module2) => {
+  var id = 0;
+  var postfix = Math.random();
+  module2.exports = function(key) {
+    return "Symbol(" + String(key === void 0 ? "" : key) + ")_" + (++id + postfix).toString(36);
+  };
+});
+
+// node_modules/core-js-pure/internals/engine-is-node.js
+var require_engine_is_node = __commonJS((exports2, module2) => {
+  var classof = require_classof_raw2();
+  var global2 = require_global2();
+  module2.exports = classof(global2.process) == "process";
+});
+
+// node_modules/core-js-pure/internals/get-built-in.js
+var require_get_built_in2 = __commonJS((exports2, module2) => {
+  var path = require_path2();
+  var global2 = require_global2();
+  var aFunction = function(variable) {
+    return typeof variable == "function" ? variable : void 0;
+  };
+  module2.exports = function(namespace, method) {
+    return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global2[namespace]) : path[namespace] && path[namespace][method] || global2[namespace] && global2[namespace][method];
+  };
+});
+
+// node_modules/core-js-pure/internals/engine-user-agent.js
+var require_engine_user_agent = __commonJS((exports2, module2) => {
+  var getBuiltIn = require_get_built_in2();
+  module2.exports = getBuiltIn("navigator", "userAgent") || "";
+});
+
+// node_modules/core-js-pure/internals/engine-v8-version.js
+var require_engine_v8_version = __commonJS((exports2, module2) => {
+  var global2 = require_global2();
+  var userAgent = require_engine_user_agent();
+  var process2 = global2.process;
+  var versions = process2 && process2.versions;
+  var v8 = versions && versions.v8;
+  var match;
+  var version;
+  if (v8) {
+    match = v8.split(".");
+    version = match[0] + match[1];
+  } else if (userAgent) {
+    match = userAgent.match(/Edge\/(\d+)/);
+    if (!match || match[1] >= 74) {
+      match = userAgent.match(/Chrome\/(\d+)/);
+      if (match)
+        version = match[1];
+    }
+  }
+  module2.exports = version && +version;
+});
+
+// node_modules/core-js-pure/internals/native-symbol.js
+var require_native_symbol2 = __commonJS((exports2, module2) => {
+  var IS_NODE = require_engine_is_node();
+  var V8_VERSION = require_engine_v8_version();
+  var fails = require_fails2();
+  module2.exports = !!Object.getOwnPropertySymbols && !fails(function() {
+    return !Symbol.sham && (IS_NODE ? V8_VERSION === 38 : V8_VERSION > 37 && V8_VERSION < 41);
+  });
+});
+
+// node_modules/core-js-pure/internals/use-symbol-as-uid.js
+var require_use_symbol_as_uid2 = __commonJS((exports2, module2) => {
+  var NATIVE_SYMBOL = require_native_symbol2();
+  module2.exports = NATIVE_SYMBOL && !Symbol.sham && typeof Symbol.iterator == "symbol";
+});
+
+// node_modules/core-js-pure/internals/well-known-symbol.js
+var require_well_known_symbol2 = __commonJS((exports2, module2) => {
+  var global2 = require_global2();
+  var shared = require_shared2();
+  var has = require_has2();
+  var uid = require_uid2();
+  var NATIVE_SYMBOL = require_native_symbol2();
+  var USE_SYMBOL_AS_UID = require_use_symbol_as_uid2();
+  var WellKnownSymbolsStore = shared("wks");
+  var Symbol2 = global2.Symbol;
+  var createWellKnownSymbol = USE_SYMBOL_AS_UID ? Symbol2 : Symbol2 && Symbol2.withoutSetter || uid;
+  module2.exports = function(name) {
+    if (!has(WellKnownSymbolsStore, name) || !(NATIVE_SYMBOL || typeof WellKnownSymbolsStore[name] == "string")) {
+      if (NATIVE_SYMBOL && has(Symbol2, name)) {
+        WellKnownSymbolsStore[name] = Symbol2[name];
+      } else {
+        WellKnownSymbolsStore[name] = createWellKnownSymbol("Symbol." + name);
+      }
+    }
+    return WellKnownSymbolsStore[name];
+  };
+});
+
+// node_modules/core-js-pure/internals/array-species-create.js
+var require_array_species_create2 = __commonJS((exports2, module2) => {
+  var isObject = require_is_object2();
+  var isArray = require_is_array2();
+  var wellKnownSymbol = require_well_known_symbol2();
+  var SPECIES = wellKnownSymbol("species");
+  module2.exports = function(originalArray, length) {
+    var C;
+    if (isArray(originalArray)) {
+      C = originalArray.constructor;
+      if (typeof C == "function" && (C === Array || isArray(C.prototype)))
+        C = void 0;
+      else if (isObject(C)) {
+        C = C[SPECIES];
+        if (C === null)
+          C = void 0;
+      }
+    }
+    return new (C === void 0 ? Array : C)(length === 0 ? 0 : length);
+  };
+});
+
+// node_modules/core-js-pure/modules/es.array.flat.js
+var require_es_array_flat2 = __commonJS(() => {
+  "use strict";
+  var $ = require_export2();
+  var flattenIntoArray = require_flatten_into_array2();
+  var toObject = require_to_object2();
+  var toLength = require_to_length2();
+  var toInteger = require_to_integer2();
+  var arraySpeciesCreate = require_array_species_create2();
+  $({target: "Array", proto: true}, {
+    flat: function flat() {
+      var depthArg = arguments.length ? arguments[0] : void 0;
+      var O = toObject(this);
+      var sourceLen = toLength(O.length);
+      var A = arraySpeciesCreate(O, 0);
+      A.length = flattenIntoArray(A, O, O, sourceLen, 0, depthArg === void 0 ? 1 : toInteger(depthArg));
+      return A;
+    }
+  });
+});
+
+// node_modules/core-js-pure/internals/add-to-unscopables.js
+var require_add_to_unscopables2 = __commonJS((exports2, module2) => {
+  module2.exports = function() {
+  };
+});
+
+// node_modules/core-js-pure/modules/es.array.unscopables.flat.js
+var require_es_array_unscopables_flat2 = __commonJS(() => {
+  var addToUnscopables = require_add_to_unscopables2();
+  addToUnscopables("flat");
+});
+
+// node_modules/core-js-pure/internals/entry-unbind.js
+var require_entry_unbind2 = __commonJS((exports2, module2) => {
+  var getBuiltIn = require_get_built_in2();
+  module2.exports = getBuiltIn;
+});
+
+// node_modules/core-js-pure/es/array/flat.js
+var require_flat3 = __commonJS((exports2, module2) => {
+  require_es_array_flat2();
+  require_es_array_unscopables_flat2();
+  var entryUnbind = require_entry_unbind2();
+  module2.exports = entryUnbind("Array", "flat");
+});
+
+// node_modules/core-js-pure/features/array/flat.js
+var require_flat4 = __commonJS((exports2, module2) => {
+  var parent = require_flat3();
+  module2.exports = parent;
+});
+
+// node_modules/apollo-graphql/lib/utilities/mapValues.js
+var require_mapValues = __commonJS((exports2) => {
+  "use strict";
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.mapValues = void 0;
+  function mapValues(object, callback) {
+    const result = Object.create(null);
+    for (const [key, value] of Object.entries(object)) {
+      result[key] = callback(value);
+    }
+    return result;
+  }
+  exports2.mapValues = mapValues;
 });
 
 // node_modules/graphql/validation/rules/PossibleTypeExtensions.js
@@ -31785,14 +32510,19 @@ var require_PossibleTypeExtensions = __commonJS((exports2) => {
 // node_modules/apollo-graphql/lib/schema/buildSchemaFromSDL.js
 var require_buildSchemaFromSDL = __commonJS((exports2) => {
   "use strict";
+  var __importDefault = exports2 && exports2.__importDefault || function(mod) {
+    return mod && mod.__esModule ? mod : {default: mod};
+  };
   Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.addResolversToSchema = exports2.buildSchemaFromSDL = exports2.modulesFromSDL = void 0;
   var graphql_1 = require_graphql2();
   var validate_1 = require_validate2();
   var graphql_2 = require_graphql4();
   var GraphQLSchemaValidationError_1 = require_GraphQLSchemaValidationError();
   var specifiedRules_1 = require_specifiedRules();
+  var flat_1 = __importDefault(require_flat4());
   var validation_1 = require_validation();
-  var apollo_env_1 = require_lib4();
+  var mapValues_1 = require_mapValues();
   var skippedSDLRules = [
     validation_1.KnownTypeNamesRule,
     validation_1.UniqueDirectivesPerLocationRule
@@ -31872,7 +32602,7 @@ var require_buildSchemaFromSDL = __commonJS((exports2) => {
     schema = graphql_1.extendSchema(schema, {
       kind: graphql_1.Kind.DOCUMENT,
       definitions: [
-        ...Object.values(definitionsMap).flat(),
+        ...flat_1.default(Object.values(definitionsMap)),
         ...missingTypeDefinitions,
         ...directiveDefinitions
       ]
@@ -31881,14 +32611,14 @@ var require_buildSchemaFromSDL = __commonJS((exports2) => {
     });
     schema = graphql_1.extendSchema(schema, {
       kind: graphql_1.Kind.DOCUMENT,
-      definitions: Object.values(extensionsMap).flat()
+      definitions: flat_1.default(Object.values(extensionsMap))
     }, {
       assumeValidSDL: true
     });
     let operationTypeMap;
     if (schemaDefinitions.length > 0 || schemaExtensions.length > 0) {
       operationTypeMap = {};
-      const operationTypes = [...schemaDefinitions, ...schemaExtensions].map((node) => node.operationTypes).filter(apollo_env_1.isNotNullOrUndefined).flat();
+      const operationTypes = flat_1.default([...schemaDefinitions, ...schemaExtensions].map((node) => node.operationTypes).filter(isNotNullOrUndefined));
       for (const {operation, type} of operationTypes) {
         operationTypeMap[operation] = type.name.value;
       }
@@ -31899,7 +32629,7 @@ var require_buildSchemaFromSDL = __commonJS((exports2) => {
         subscription: "Subscription"
       };
     }
-    schema = new graphql_1.GraphQLSchema(Object.assign(Object.assign({}, schema.toConfig()), apollo_env_1.mapValues(operationTypeMap, (typeName) => typeName ? schema.getType(typeName) : void 0)));
+    schema = new graphql_1.GraphQLSchema(Object.assign(Object.assign({}, schema.toConfig()), mapValues_1.mapValues(operationTypeMap, (typeName) => typeName ? schema.getType(typeName) : void 0)));
     for (const module3 of modules) {
       if (!module3.resolvers)
         continue;
@@ -31969,14 +32699,18 @@ var require_buildSchemaFromSDL = __commonJS((exports2) => {
     }
   }
   exports2.addResolversToSchema = addResolversToSchema;
+  function isNotNullOrUndefined(value) {
+    return value !== null && typeof value !== "undefined";
+  }
 });
 
 // node_modules/apollo-graphql/lib/schema/transformSchema.js
 var require_transformSchema2 = __commonJS((exports2) => {
   "use strict";
   Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.transformSchema = void 0;
   var graphql_1 = require_graphql2();
-  var apollo_env_1 = require_lib4();
+  var mapValues_1 = require_mapValues();
   function transformSchema(schema, transformType) {
     const typeMap = Object.create(null);
     for (const oldType of Object.values(schema.getTypeMap())) {
@@ -32022,48 +32756,95 @@ var require_transformSchema2 = __commonJS((exports2) => {
       return type ? replaceNamedType(type) : void 0;
     }
     function replaceFields(fieldsMap) {
-      return apollo_env_1.mapValues(fieldsMap, (field) => Object.assign(Object.assign({}, field), {type: replaceType(field.type), args: field.args ? replaceArgs(field.args) : void 0}));
+      return mapValues_1.mapValues(fieldsMap, (field) => Object.assign(Object.assign({}, field), {type: replaceType(field.type), args: field.args ? replaceArgs(field.args) : void 0}));
     }
     function replaceInputFields(fieldsMap) {
-      return apollo_env_1.mapValues(fieldsMap, (field) => Object.assign(Object.assign({}, field), {type: replaceType(field.type)}));
+      return mapValues_1.mapValues(fieldsMap, (field) => Object.assign(Object.assign({}, field), {type: replaceType(field.type)}));
     }
     function replaceArgs(args) {
-      return apollo_env_1.mapValues(args, (arg) => Object.assign(Object.assign({}, arg), {type: replaceType(arg.type)}));
+      return mapValues_1.mapValues(args, (arg) => Object.assign(Object.assign({}, arg), {type: replaceType(arg.type)}));
     }
   }
   exports2.transformSchema = transformSchema;
 });
 
-// node_modules/apollo-graphql/lib/schema/index.js
-var require_schema2 = __commonJS((exports2) => {
+// node_modules/apollo-graphql/lib/schema/resolverMap.js
+var require_resolverMap2 = __commonJS((exports2) => {
   "use strict";
-  function __export(m) {
-    for (var p in m)
-      if (!exports2.hasOwnProperty(p))
-        exports2[p] = m[p];
-  }
   Object.defineProperty(exports2, "__esModule", {value: true});
-  __export(require_buildSchemaFromSDL());
-  __export(require_GraphQLSchemaValidationError());
-  __export(require_transformSchema2());
+});
+
+// node_modules/apollo-graphql/lib/schema/resolveObject.js
+var require_resolveObject2 = __commonJS((exports2) => {
+  "use strict";
+  Object.defineProperty(exports2, "__esModule", {value: true});
+});
+
+// node_modules/apollo-graphql/lib/schema/index.js
+var require_schema3 = __commonJS((exports2) => {
+  "use strict";
+  var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    Object.defineProperty(o, k2, {enumerable: true, get: function() {
+      return m[k];
+    }});
+  } : function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    o[k2] = m[k];
+  });
+  var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
+    for (var p in m)
+      if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p))
+        __createBinding(exports3, m, p);
+  };
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  __exportStar(require_buildSchemaFromSDL(), exports2);
+  __exportStar(require_GraphQLSchemaValidationError(), exports2);
+  __exportStar(require_transformSchema2(), exports2);
+  __exportStar(require_resolverMap2(), exports2);
+  __exportStar(require_resolveObject2(), exports2);
 });
 
 // node_modules/apollo-graphql/lib/index.js
 var require_lib7 = __commonJS((exports2) => {
   "use strict";
-  function __export(m) {
+  var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    Object.defineProperty(o, k2, {enumerable: true, get: function() {
+      return m[k];
+    }});
+  } : function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    o[k2] = m[k];
+  });
+  var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
     for (var p in m)
-      if (!exports2.hasOwnProperty(p))
-        exports2[p] = m[p];
-  }
+      if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p))
+        __createBinding(exports3, m, p);
+  };
   Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.defaultEngineReportingSignature = exports2.operationHash = exports2.operationRegistrySignature = exports2.defaultUsageReportingSignature = exports2.defaultOperationRegistrySignature = void 0;
   var operationId_1 = require_operationId();
-  exports2.defaultOperationRegistrySignature = operationId_1.defaultOperationRegistrySignature;
-  exports2.defaultUsageReportingSignature = operationId_1.defaultUsageReportingSignature;
-  exports2.operationRegistrySignature = operationId_1.operationRegistrySignature;
-  exports2.operationHash = operationId_1.operationHash;
-  exports2.defaultEngineReportingSignature = operationId_1.defaultUsageReportingSignature;
-  __export(require_schema2());
+  Object.defineProperty(exports2, "defaultOperationRegistrySignature", {enumerable: true, get: function() {
+    return operationId_1.defaultOperationRegistrySignature;
+  }});
+  Object.defineProperty(exports2, "defaultUsageReportingSignature", {enumerable: true, get: function() {
+    return operationId_1.defaultUsageReportingSignature;
+  }});
+  Object.defineProperty(exports2, "operationRegistrySignature", {enumerable: true, get: function() {
+    return operationId_1.operationRegistrySignature;
+  }});
+  Object.defineProperty(exports2, "operationHash", {enumerable: true, get: function() {
+    return operationId_1.operationHash;
+  }});
+  Object.defineProperty(exports2, "defaultEngineReportingSignature", {enumerable: true, get: function() {
+    return operationId_1.defaultUsageReportingSignature;
+  }});
+  __exportStar(require_schema3(), exports2);
 });
 
 // node_modules/@protobufjs/aspromise/index.js
@@ -33359,7 +34140,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
     Trace.prototype.persistedQueryRegister = false;
     Trace.prototype.registeredOperation = false;
     Trace.prototype.forbiddenOperation = false;
-    Trace.prototype.legacySignatureNeedsResigning = "";
     Trace.create = function create(properties) {
       return new Trace(properties);
     };
@@ -33370,8 +34150,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
         $root.google.protobuf.Timestamp.encode(message.endTime, writer.uint32(26).fork()).ldelim();
       if (message.startTime != null && Object.hasOwnProperty.call(message, "startTime"))
         $root.google.protobuf.Timestamp.encode(message.startTime, writer.uint32(34).fork()).ldelim();
-      if (message.legacySignatureNeedsResigning != null && Object.hasOwnProperty.call(message, "legacySignatureNeedsResigning"))
-        writer.uint32(42).string(message.legacySignatureNeedsResigning);
       if (message.details != null && Object.hasOwnProperty.call(message, "details"))
         $root.Trace.Details.encode(message.details, writer.uint32(50).fork()).ldelim();
       if (message.clientName != null && Object.hasOwnProperty.call(message, "clientName"))
@@ -33480,9 +34258,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
           case 25:
             message.forbiddenOperation = reader.bool();
             break;
-          case 5:
-            message.legacySignatureNeedsResigning = reader.string();
-            break;
           default:
             reader.skipType(tag & 7);
             break;
@@ -33585,88 +34360,7 @@ var require_protobuf = __commonJS((exports2, module2) => {
         if (typeof message.forbiddenOperation !== "boolean")
           return "forbiddenOperation: boolean expected";
       }
-      if (message.legacySignatureNeedsResigning != null && message.hasOwnProperty("legacySignatureNeedsResigning")) {
-        if (!$util.isString(message.legacySignatureNeedsResigning))
-          return "legacySignatureNeedsResigning: string expected";
-      }
       return null;
-    };
-    Trace.fromObject = function fromObject(object) {
-      if (object instanceof $root.Trace)
-        return object;
-      var message = new $root.Trace();
-      if (object.startTime != null) {
-        if (typeof object.startTime !== "object")
-          throw TypeError(".Trace.startTime: object expected");
-        message.startTime = $root.google.protobuf.Timestamp.fromObject(object.startTime);
-      }
-      if (object.endTime != null) {
-        if (typeof object.endTime !== "object")
-          throw TypeError(".Trace.endTime: object expected");
-        message.endTime = $root.google.protobuf.Timestamp.fromObject(object.endTime);
-      }
-      if (object.durationNs != null) {
-        if ($util.Long)
-          (message.durationNs = $util.Long.fromValue(object.durationNs)).unsigned = true;
-        else if (typeof object.durationNs === "string")
-          message.durationNs = parseInt(object.durationNs, 10);
-        else if (typeof object.durationNs === "number")
-          message.durationNs = object.durationNs;
-        else if (typeof object.durationNs === "object")
-          message.durationNs = new $util.LongBits(object.durationNs.low >>> 0, object.durationNs.high >>> 0).toNumber(true);
-      }
-      if (object.root != null) {
-        if (typeof object.root !== "object")
-          throw TypeError(".Trace.root: object expected");
-        message.root = $root.Trace.Node.fromObject(object.root);
-      }
-      if (object.signature != null)
-        message.signature = String(object.signature);
-      if (object.unexecutedOperationBody != null)
-        message.unexecutedOperationBody = String(object.unexecutedOperationBody);
-      if (object.unexecutedOperationName != null)
-        message.unexecutedOperationName = String(object.unexecutedOperationName);
-      if (object.details != null) {
-        if (typeof object.details !== "object")
-          throw TypeError(".Trace.details: object expected");
-        message.details = $root.Trace.Details.fromObject(object.details);
-      }
-      if (object.clientName != null)
-        message.clientName = String(object.clientName);
-      if (object.clientVersion != null)
-        message.clientVersion = String(object.clientVersion);
-      if (object.clientAddress != null)
-        message.clientAddress = String(object.clientAddress);
-      if (object.clientReferenceId != null)
-        message.clientReferenceId = String(object.clientReferenceId);
-      if (object.http != null) {
-        if (typeof object.http !== "object")
-          throw TypeError(".Trace.http: object expected");
-        message.http = $root.Trace.HTTP.fromObject(object.http);
-      }
-      if (object.cachePolicy != null) {
-        if (typeof object.cachePolicy !== "object")
-          throw TypeError(".Trace.cachePolicy: object expected");
-        message.cachePolicy = $root.Trace.CachePolicy.fromObject(object.cachePolicy);
-      }
-      if (object.queryPlan != null) {
-        if (typeof object.queryPlan !== "object")
-          throw TypeError(".Trace.queryPlan: object expected");
-        message.queryPlan = $root.Trace.QueryPlanNode.fromObject(object.queryPlan);
-      }
-      if (object.fullQueryCacheHit != null)
-        message.fullQueryCacheHit = Boolean(object.fullQueryCacheHit);
-      if (object.persistedQueryHit != null)
-        message.persistedQueryHit = Boolean(object.persistedQueryHit);
-      if (object.persistedQueryRegister != null)
-        message.persistedQueryRegister = Boolean(object.persistedQueryRegister);
-      if (object.registeredOperation != null)
-        message.registeredOperation = Boolean(object.registeredOperation);
-      if (object.forbiddenOperation != null)
-        message.forbiddenOperation = Boolean(object.forbiddenOperation);
-      if (object.legacySignatureNeedsResigning != null)
-        message.legacySignatureNeedsResigning = String(object.legacySignatureNeedsResigning);
-      return message;
     };
     Trace.toObject = function toObject(message, options) {
       if (!options)
@@ -33675,7 +34369,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
       if (options.defaults) {
         object.endTime = null;
         object.startTime = null;
-        object.legacySignatureNeedsResigning = "";
         object.details = null;
         object.clientName = "";
         object.clientVersion = "";
@@ -33703,8 +34396,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
         object.endTime = $root.google.protobuf.Timestamp.toObject(message.endTime, options);
       if (message.startTime != null && message.hasOwnProperty("startTime"))
         object.startTime = $root.google.protobuf.Timestamp.toObject(message.startTime, options);
-      if (message.legacySignatureNeedsResigning != null && message.hasOwnProperty("legacySignatureNeedsResigning"))
-        object.legacySignatureNeedsResigning = message.legacySignatureNeedsResigning;
       if (message.details != null && message.hasOwnProperty("details"))
         object.details = $root.Trace.Details.toObject(message.details, options);
       if (message.clientName != null && message.hasOwnProperty("clientName"))
@@ -33817,36 +34508,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
         }
         return null;
       };
-      CachePolicy.fromObject = function fromObject(object) {
-        if (object instanceof $root.Trace.CachePolicy)
-          return object;
-        var message = new $root.Trace.CachePolicy();
-        switch (object.scope) {
-          case "UNKNOWN":
-          case 0:
-            message.scope = 0;
-            break;
-          case "PUBLIC":
-          case 1:
-            message.scope = 1;
-            break;
-          case "PRIVATE":
-          case 2:
-            message.scope = 2;
-            break;
-        }
-        if (object.maxAgeNs != null) {
-          if ($util.Long)
-            (message.maxAgeNs = $util.Long.fromValue(object.maxAgeNs)).unsigned = false;
-          else if (typeof object.maxAgeNs === "string")
-            message.maxAgeNs = parseInt(object.maxAgeNs, 10);
-          else if (typeof object.maxAgeNs === "number")
-            message.maxAgeNs = object.maxAgeNs;
-          else if (typeof object.maxAgeNs === "object")
-            message.maxAgeNs = new $util.LongBits(object.maxAgeNs.low >>> 0, object.maxAgeNs.high >>> 0).toNumber();
-        }
-        return message;
-      };
       CachePolicy.toObject = function toObject(message, options) {
         if (!options)
           options = {};
@@ -33883,7 +34544,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
     Trace.Details = function() {
       function Details(properties) {
         this.variablesJson = {};
-        this.deprecatedVariables = {};
         if (properties) {
           for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
             if (properties[keys[i]] != null)
@@ -33891,7 +34551,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
         }
       }
       Details.prototype.variablesJson = $util.emptyObject;
-      Details.prototype.deprecatedVariables = $util.emptyObject;
       Details.prototype.operationName = "";
       Details.create = function create(properties) {
         return new Details(properties);
@@ -33899,9 +34558,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
       Details.encode = function encode(message, writer) {
         if (!writer)
           writer = $Writer.create();
-        if (message.deprecatedVariables != null && Object.hasOwnProperty.call(message, "deprecatedVariables"))
-          for (var keys = Object.keys(message.deprecatedVariables), i = 0; i < keys.length; ++i)
-            writer.uint32(10).fork().uint32(10).string(keys[i]).uint32(18).bytes(message.deprecatedVariables[keys[i]]).ldelim();
         if (message.operationName != null && Object.hasOwnProperty.call(message, "operationName"))
           writer.uint32(26).string(message.operationName);
         if (message.variablesJson != null && Object.hasOwnProperty.call(message, "variablesJson"))
@@ -33926,14 +34582,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
               key = reader.string();
               reader.pos++;
               message.variablesJson[key] = reader.string();
-              break;
-            case 1:
-              reader.skip().pos++;
-              if (message.deprecatedVariables === $util.emptyObject)
-                message.deprecatedVariables = {};
-              key = reader.string();
-              reader.pos++;
-              message.deprecatedVariables[key] = reader.bytes();
               break;
             case 3:
               message.operationName = reader.string();
@@ -33961,63 +34609,23 @@ var require_protobuf = __commonJS((exports2, module2) => {
             if (!$util.isString(message.variablesJson[key[i]]))
               return "variablesJson: string{k:string} expected";
         }
-        if (message.deprecatedVariables != null && message.hasOwnProperty("deprecatedVariables")) {
-          if (!$util.isObject(message.deprecatedVariables))
-            return "deprecatedVariables: object expected";
-          var key = Object.keys(message.deprecatedVariables);
-          for (var i = 0; i < key.length; ++i)
-            if (!(message.deprecatedVariables[key[i]] && typeof message.deprecatedVariables[key[i]].length === "number" || $util.isString(message.deprecatedVariables[key[i]])))
-              return "deprecatedVariables: buffer{k:string} expected";
-        }
         if (message.operationName != null && message.hasOwnProperty("operationName")) {
           if (!$util.isString(message.operationName))
             return "operationName: string expected";
         }
         return null;
       };
-      Details.fromObject = function fromObject(object) {
-        if (object instanceof $root.Trace.Details)
-          return object;
-        var message = new $root.Trace.Details();
-        if (object.variablesJson) {
-          if (typeof object.variablesJson !== "object")
-            throw TypeError(".Trace.Details.variablesJson: object expected");
-          message.variablesJson = {};
-          for (var keys = Object.keys(object.variablesJson), i = 0; i < keys.length; ++i)
-            message.variablesJson[keys[i]] = String(object.variablesJson[keys[i]]);
-        }
-        if (object.deprecatedVariables) {
-          if (typeof object.deprecatedVariables !== "object")
-            throw TypeError(".Trace.Details.deprecatedVariables: object expected");
-          message.deprecatedVariables = {};
-          for (var keys = Object.keys(object.deprecatedVariables), i = 0; i < keys.length; ++i)
-            if (typeof object.deprecatedVariables[keys[i]] === "string")
-              $util.base64.decode(object.deprecatedVariables[keys[i]], message.deprecatedVariables[keys[i]] = $util.newBuffer($util.base64.length(object.deprecatedVariables[keys[i]])), 0);
-            else if (object.deprecatedVariables[keys[i]].length)
-              message.deprecatedVariables[keys[i]] = object.deprecatedVariables[keys[i]];
-        }
-        if (object.operationName != null)
-          message.operationName = String(object.operationName);
-        return message;
-      };
       Details.toObject = function toObject(message, options) {
         if (!options)
           options = {};
         var object = {};
-        if (options.objects || options.defaults) {
-          object.deprecatedVariables = {};
+        if (options.objects || options.defaults)
           object.variablesJson = {};
-        }
         if (options.defaults)
           object.operationName = "";
-        var keys2;
-        if (message.deprecatedVariables && (keys2 = Object.keys(message.deprecatedVariables)).length) {
-          object.deprecatedVariables = {};
-          for (var j = 0; j < keys2.length; ++j)
-            object.deprecatedVariables[keys2[j]] = options.bytes === String ? $util.base64.encode(message.deprecatedVariables[keys2[j]], 0, message.deprecatedVariables[keys2[j]].length) : options.bytes === Array ? Array.prototype.slice.call(message.deprecatedVariables[keys2[j]]) : message.deprecatedVariables[keys2[j]];
-        }
         if (message.operationName != null && message.hasOwnProperty("operationName"))
           object.operationName = message.operationName;
+        var keys2;
         if (message.variablesJson && (keys2 = Object.keys(message.variablesJson)).length) {
           object.variablesJson = {};
           for (var j = 0; j < keys2.length; ++j)
@@ -34121,36 +34729,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
             return "json: string expected";
         }
         return null;
-      };
-      Error2.fromObject = function fromObject(object) {
-        if (object instanceof $root.Trace.Error)
-          return object;
-        var message = new $root.Trace.Error();
-        if (object.message != null)
-          message.message = String(object.message);
-        if (object.location) {
-          if (!Array.isArray(object.location))
-            throw TypeError(".Trace.Error.location: array expected");
-          message.location = [];
-          for (var i = 0; i < object.location.length; ++i) {
-            if (typeof object.location[i] !== "object")
-              throw TypeError(".Trace.Error.location: object expected");
-            message.location[i] = $root.Trace.Location.fromObject(object.location[i]);
-          }
-        }
-        if (object.timeNs != null) {
-          if ($util.Long)
-            (message.timeNs = $util.Long.fromValue(object.timeNs)).unsigned = true;
-          else if (typeof object.timeNs === "string")
-            message.timeNs = parseInt(object.timeNs, 10);
-          else if (typeof object.timeNs === "number")
-            message.timeNs = object.timeNs;
-          else if (typeof object.timeNs === "object")
-            message.timeNs = new $util.LongBits(object.timeNs.low >>> 0, object.timeNs.high >>> 0).toNumber(true);
-        }
-        if (object.json != null)
-          message.json = String(object.json);
-        return message;
       };
       Error2.toObject = function toObject(message, options) {
         if (!options)
@@ -34353,84 +34931,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
         }
         return null;
       };
-      HTTP.fromObject = function fromObject(object) {
-        if (object instanceof $root.Trace.HTTP)
-          return object;
-        var message = new $root.Trace.HTTP();
-        switch (object.method) {
-          case "UNKNOWN":
-          case 0:
-            message.method = 0;
-            break;
-          case "OPTIONS":
-          case 1:
-            message.method = 1;
-            break;
-          case "GET":
-          case 2:
-            message.method = 2;
-            break;
-          case "HEAD":
-          case 3:
-            message.method = 3;
-            break;
-          case "POST":
-          case 4:
-            message.method = 4;
-            break;
-          case "PUT":
-          case 5:
-            message.method = 5;
-            break;
-          case "DELETE":
-          case 6:
-            message.method = 6;
-            break;
-          case "TRACE":
-          case 7:
-            message.method = 7;
-            break;
-          case "CONNECT":
-          case 8:
-            message.method = 8;
-            break;
-          case "PATCH":
-          case 9:
-            message.method = 9;
-            break;
-        }
-        if (object.host != null)
-          message.host = String(object.host);
-        if (object.path != null)
-          message.path = String(object.path);
-        if (object.requestHeaders) {
-          if (typeof object.requestHeaders !== "object")
-            throw TypeError(".Trace.HTTP.requestHeaders: object expected");
-          message.requestHeaders = {};
-          for (var keys = Object.keys(object.requestHeaders), i = 0; i < keys.length; ++i) {
-            if (typeof object.requestHeaders[keys[i]] !== "object")
-              throw TypeError(".Trace.HTTP.requestHeaders: object expected");
-            message.requestHeaders[keys[i]] = $root.Trace.HTTP.Values.fromObject(object.requestHeaders[keys[i]]);
-          }
-        }
-        if (object.responseHeaders) {
-          if (typeof object.responseHeaders !== "object")
-            throw TypeError(".Trace.HTTP.responseHeaders: object expected");
-          message.responseHeaders = {};
-          for (var keys = Object.keys(object.responseHeaders), i = 0; i < keys.length; ++i) {
-            if (typeof object.responseHeaders[keys[i]] !== "object")
-              throw TypeError(".Trace.HTTP.responseHeaders: object expected");
-            message.responseHeaders[keys[i]] = $root.Trace.HTTP.Values.fromObject(object.responseHeaders[keys[i]]);
-          }
-        }
-        if (object.statusCode != null)
-          message.statusCode = object.statusCode >>> 0;
-        if (object.secure != null)
-          message.secure = Boolean(object.secure);
-        if (object.protocol != null)
-          message.protocol = String(object.protocol);
-        return message;
-      };
       HTTP.toObject = function toObject(message, options) {
         if (!options)
           options = {};
@@ -34535,19 +35035,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
           }
           return null;
         };
-        Values.fromObject = function fromObject(object) {
-          if (object instanceof $root.Trace.HTTP.Values)
-            return object;
-          var message = new $root.Trace.HTTP.Values();
-          if (object.value) {
-            if (!Array.isArray(object.value))
-              throw TypeError(".Trace.HTTP.Values.value: array expected");
-            message.value = [];
-            for (var i = 0; i < object.value.length; ++i)
-              message.value[i] = String(object.value[i]);
-          }
-          return message;
-        };
         Values.toObject = function toObject(message, options) {
           if (!options)
             options = {};
@@ -34644,16 +35131,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
             return "column: integer expected";
         }
         return null;
-      };
-      Location.fromObject = function fromObject(object) {
-        if (object instanceof $root.Trace.Location)
-          return object;
-        var message = new $root.Trace.Location();
-        if (object.line != null)
-          message.line = object.line >>> 0;
-        if (object.column != null)
-          message.column = object.column >>> 0;
-        return message;
       };
       Location.toObject = function toObject(message, options) {
         if (!options)
@@ -34846,67 +35323,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
         }
         return null;
       };
-      Node.fromObject = function fromObject(object) {
-        if (object instanceof $root.Trace.Node)
-          return object;
-        var message = new $root.Trace.Node();
-        if (object.responseName != null)
-          message.responseName = String(object.responseName);
-        if (object.index != null)
-          message.index = object.index >>> 0;
-        if (object.originalFieldName != null)
-          message.originalFieldName = String(object.originalFieldName);
-        if (object.type != null)
-          message.type = String(object.type);
-        if (object.parentType != null)
-          message.parentType = String(object.parentType);
-        if (object.cachePolicy != null) {
-          if (typeof object.cachePolicy !== "object")
-            throw TypeError(".Trace.Node.cachePolicy: object expected");
-          message.cachePolicy = $root.Trace.CachePolicy.fromObject(object.cachePolicy);
-        }
-        if (object.startTime != null) {
-          if ($util.Long)
-            (message.startTime = $util.Long.fromValue(object.startTime)).unsigned = true;
-          else if (typeof object.startTime === "string")
-            message.startTime = parseInt(object.startTime, 10);
-          else if (typeof object.startTime === "number")
-            message.startTime = object.startTime;
-          else if (typeof object.startTime === "object")
-            message.startTime = new $util.LongBits(object.startTime.low >>> 0, object.startTime.high >>> 0).toNumber(true);
-        }
-        if (object.endTime != null) {
-          if ($util.Long)
-            (message.endTime = $util.Long.fromValue(object.endTime)).unsigned = true;
-          else if (typeof object.endTime === "string")
-            message.endTime = parseInt(object.endTime, 10);
-          else if (typeof object.endTime === "number")
-            message.endTime = object.endTime;
-          else if (typeof object.endTime === "object")
-            message.endTime = new $util.LongBits(object.endTime.low >>> 0, object.endTime.high >>> 0).toNumber(true);
-        }
-        if (object.error) {
-          if (!Array.isArray(object.error))
-            throw TypeError(".Trace.Node.error: array expected");
-          message.error = [];
-          for (var i = 0; i < object.error.length; ++i) {
-            if (typeof object.error[i] !== "object")
-              throw TypeError(".Trace.Node.error: object expected");
-            message.error[i] = $root.Trace.Error.fromObject(object.error[i]);
-          }
-        }
-        if (object.child) {
-          if (!Array.isArray(object.child))
-            throw TypeError(".Trace.Node.child: array expected");
-          message.child = [];
-          for (var i = 0; i < object.child.length; ++i) {
-            if (typeof object.child[i] !== "object")
-              throw TypeError(".Trace.Node.child: object expected");
-            message.child[i] = $root.Trace.Node.fromObject(object.child[i]);
-          }
-        }
-        return message;
-      };
       Node.toObject = function toObject(message, options) {
         if (!options)
           options = {};
@@ -35087,32 +35503,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
         }
         return null;
       };
-      QueryPlanNode.fromObject = function fromObject(object) {
-        if (object instanceof $root.Trace.QueryPlanNode)
-          return object;
-        var message = new $root.Trace.QueryPlanNode();
-        if (object.sequence != null) {
-          if (typeof object.sequence !== "object")
-            throw TypeError(".Trace.QueryPlanNode.sequence: object expected");
-          message.sequence = $root.Trace.QueryPlanNode.SequenceNode.fromObject(object.sequence);
-        }
-        if (object.parallel != null) {
-          if (typeof object.parallel !== "object")
-            throw TypeError(".Trace.QueryPlanNode.parallel: object expected");
-          message.parallel = $root.Trace.QueryPlanNode.ParallelNode.fromObject(object.parallel);
-        }
-        if (object.fetch != null) {
-          if (typeof object.fetch !== "object")
-            throw TypeError(".Trace.QueryPlanNode.fetch: object expected");
-          message.fetch = $root.Trace.QueryPlanNode.FetchNode.fromObject(object.fetch);
-        }
-        if (object.flatten != null) {
-          if (typeof object.flatten !== "object")
-            throw TypeError(".Trace.QueryPlanNode.flatten: object expected");
-          message.flatten = $root.Trace.QueryPlanNode.FlattenNode.fromObject(object.flatten);
-        }
-        return message;
-      };
       QueryPlanNode.toObject = function toObject(message, options) {
         if (!options)
           options = {};
@@ -35204,22 +35594,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
           }
           return null;
         };
-        SequenceNode.fromObject = function fromObject(object) {
-          if (object instanceof $root.Trace.QueryPlanNode.SequenceNode)
-            return object;
-          var message = new $root.Trace.QueryPlanNode.SequenceNode();
-          if (object.nodes) {
-            if (!Array.isArray(object.nodes))
-              throw TypeError(".Trace.QueryPlanNode.SequenceNode.nodes: array expected");
-            message.nodes = [];
-            for (var i = 0; i < object.nodes.length; ++i) {
-              if (typeof object.nodes[i] !== "object")
-                throw TypeError(".Trace.QueryPlanNode.SequenceNode.nodes: object expected");
-              message.nodes[i] = $root.Trace.QueryPlanNode.fromObject(object.nodes[i]);
-            }
-          }
-          return message;
-        };
         SequenceNode.toObject = function toObject(message, options) {
           if (!options)
             options = {};
@@ -35299,22 +35673,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
             }
           }
           return null;
-        };
-        ParallelNode.fromObject = function fromObject(object) {
-          if (object instanceof $root.Trace.QueryPlanNode.ParallelNode)
-            return object;
-          var message = new $root.Trace.QueryPlanNode.ParallelNode();
-          if (object.nodes) {
-            if (!Array.isArray(object.nodes))
-              throw TypeError(".Trace.QueryPlanNode.ParallelNode.nodes: array expected");
-            message.nodes = [];
-            for (var i = 0; i < object.nodes.length; ++i) {
-              if (typeof object.nodes[i] !== "object")
-                throw TypeError(".Trace.QueryPlanNode.ParallelNode.nodes: object expected");
-              message.nodes[i] = $root.Trace.QueryPlanNode.fromObject(object.nodes[i]);
-            }
-          }
-          return message;
         };
         ParallelNode.toObject = function toObject(message, options) {
           if (!options)
@@ -35440,41 +35798,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
           }
           return null;
         };
-        FetchNode.fromObject = function fromObject(object) {
-          if (object instanceof $root.Trace.QueryPlanNode.FetchNode)
-            return object;
-          var message = new $root.Trace.QueryPlanNode.FetchNode();
-          if (object.serviceName != null)
-            message.serviceName = String(object.serviceName);
-          if (object.traceParsingFailed != null)
-            message.traceParsingFailed = Boolean(object.traceParsingFailed);
-          if (object.trace != null) {
-            if (typeof object.trace !== "object")
-              throw TypeError(".Trace.QueryPlanNode.FetchNode.trace: object expected");
-            message.trace = $root.Trace.fromObject(object.trace);
-          }
-          if (object.sentTimeOffset != null) {
-            if ($util.Long)
-              (message.sentTimeOffset = $util.Long.fromValue(object.sentTimeOffset)).unsigned = true;
-            else if (typeof object.sentTimeOffset === "string")
-              message.sentTimeOffset = parseInt(object.sentTimeOffset, 10);
-            else if (typeof object.sentTimeOffset === "number")
-              message.sentTimeOffset = object.sentTimeOffset;
-            else if (typeof object.sentTimeOffset === "object")
-              message.sentTimeOffset = new $util.LongBits(object.sentTimeOffset.low >>> 0, object.sentTimeOffset.high >>> 0).toNumber(true);
-          }
-          if (object.sentTime != null) {
-            if (typeof object.sentTime !== "object")
-              throw TypeError(".Trace.QueryPlanNode.FetchNode.sentTime: object expected");
-            message.sentTime = $root.google.protobuf.Timestamp.fromObject(object.sentTime);
-          }
-          if (object.receivedTime != null) {
-            if (typeof object.receivedTime !== "object")
-              throw TypeError(".Trace.QueryPlanNode.FetchNode.receivedTime: object expected");
-            message.receivedTime = $root.google.protobuf.Timestamp.fromObject(object.receivedTime);
-          }
-          return message;
-        };
         FetchNode.toObject = function toObject(message, options) {
           if (!options)
             options = {};
@@ -35586,27 +35909,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
           }
           return null;
         };
-        FlattenNode.fromObject = function fromObject(object) {
-          if (object instanceof $root.Trace.QueryPlanNode.FlattenNode)
-            return object;
-          var message = new $root.Trace.QueryPlanNode.FlattenNode();
-          if (object.responsePath) {
-            if (!Array.isArray(object.responsePath))
-              throw TypeError(".Trace.QueryPlanNode.FlattenNode.responsePath: array expected");
-            message.responsePath = [];
-            for (var i = 0; i < object.responsePath.length; ++i) {
-              if (typeof object.responsePath[i] !== "object")
-                throw TypeError(".Trace.QueryPlanNode.FlattenNode.responsePath: object expected");
-              message.responsePath[i] = $root.Trace.QueryPlanNode.ResponsePathElement.fromObject(object.responsePath[i]);
-            }
-          }
-          if (object.node != null) {
-            if (typeof object.node !== "object")
-              throw TypeError(".Trace.QueryPlanNode.FlattenNode.node: object expected");
-            message.node = $root.Trace.QueryPlanNode.fromObject(object.node);
-          }
-          return message;
-        };
         FlattenNode.toObject = function toObject(message, options) {
           if (!options)
             options = {};
@@ -35701,16 +36003,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
               return "index: integer expected";
           }
           return null;
-        };
-        ResponsePathElement.fromObject = function fromObject(object) {
-          if (object instanceof $root.Trace.QueryPlanNode.ResponsePathElement)
-            return object;
-          var message = new $root.Trace.QueryPlanNode.ResponsePathElement();
-          if (object.fieldName != null)
-            message.fieldName = String(object.fieldName);
-          if (object.index != null)
-            message.index = object.index >>> 0;
-          return message;
         };
         ResponsePathElement.toObject = function toObject(message, options) {
           if (!options)
@@ -35850,26 +36142,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
       }
       return null;
     };
-    ReportHeader.fromObject = function fromObject(object) {
-      if (object instanceof $root.ReportHeader)
-        return object;
-      var message = new $root.ReportHeader();
-      if (object.hostname != null)
-        message.hostname = String(object.hostname);
-      if (object.agentVersion != null)
-        message.agentVersion = String(object.agentVersion);
-      if (object.serviceVersion != null)
-        message.serviceVersion = String(object.serviceVersion);
-      if (object.runtimeVersion != null)
-        message.runtimeVersion = String(object.runtimeVersion);
-      if (object.uname != null)
-        message.uname = String(object.uname);
-      if (object.schemaTag != null)
-        message.schemaTag = String(object.schemaTag);
-      if (object.executableSchemaId != null)
-        message.executableSchemaId = String(object.executableSchemaId);
-      return message;
-    };
     ReportHeader.toObject = function toObject(message, options) {
       if (!options)
         options = {};
@@ -35992,42 +36264,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
       }
       return null;
     };
-    PathErrorStats.fromObject = function fromObject(object) {
-      if (object instanceof $root.PathErrorStats)
-        return object;
-      var message = new $root.PathErrorStats();
-      if (object.children) {
-        if (typeof object.children !== "object")
-          throw TypeError(".PathErrorStats.children: object expected");
-        message.children = {};
-        for (var keys = Object.keys(object.children), i = 0; i < keys.length; ++i) {
-          if (typeof object.children[keys[i]] !== "object")
-            throw TypeError(".PathErrorStats.children: object expected");
-          message.children[keys[i]] = $root.PathErrorStats.fromObject(object.children[keys[i]]);
-        }
-      }
-      if (object.errorsCount != null) {
-        if ($util.Long)
-          (message.errorsCount = $util.Long.fromValue(object.errorsCount)).unsigned = true;
-        else if (typeof object.errorsCount === "string")
-          message.errorsCount = parseInt(object.errorsCount, 10);
-        else if (typeof object.errorsCount === "number")
-          message.errorsCount = object.errorsCount;
-        else if (typeof object.errorsCount === "object")
-          message.errorsCount = new $util.LongBits(object.errorsCount.low >>> 0, object.errorsCount.high >>> 0).toNumber(true);
-      }
-      if (object.requestsWithErrorsCount != null) {
-        if ($util.Long)
-          (message.requestsWithErrorsCount = $util.Long.fromValue(object.requestsWithErrorsCount)).unsigned = true;
-        else if (typeof object.requestsWithErrorsCount === "string")
-          message.requestsWithErrorsCount = parseInt(object.requestsWithErrorsCount, 10);
-        else if (typeof object.requestsWithErrorsCount === "number")
-          message.requestsWithErrorsCount = object.requestsWithErrorsCount;
-        else if (typeof object.requestsWithErrorsCount === "object")
-          message.requestsWithErrorsCount = new $util.LongBits(object.requestsWithErrorsCount.low >>> 0, object.requestsWithErrorsCount.high >>> 0).toNumber(true);
-      }
-      return message;
-    };
     PathErrorStats.toObject = function toObject(message, options) {
       if (!options)
         options = {};
@@ -36099,12 +36335,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
     QueryLatencyStats.encode = function encode(message, writer) {
       if (!writer)
         writer = $Writer.create();
-      if (message.latencyCount != null && message.latencyCount.length) {
-        writer.uint32(10).fork();
-        for (var i = 0; i < message.latencyCount.length; ++i)
-          writer.int64(message.latencyCount[i]);
-        writer.ldelim();
-      }
       if (message.requestCount != null && Object.hasOwnProperty.call(message, "requestCount"))
         writer.uint32(16).uint64(message.requestCount);
       if (message.cacheHits != null && Object.hasOwnProperty.call(message, "cacheHits"))
@@ -36113,32 +36343,58 @@ var require_protobuf = __commonJS((exports2, module2) => {
         writer.uint32(32).uint64(message.persistedQueryHits);
       if (message.persistedQueryMisses != null && Object.hasOwnProperty.call(message, "persistedQueryMisses"))
         writer.uint32(40).uint64(message.persistedQueryMisses);
-      if (message.cacheLatencyCount != null && message.cacheLatencyCount.length) {
-        writer.uint32(50).fork();
-        for (var i = 0; i < message.cacheLatencyCount.length; ++i)
-          writer.int64(message.cacheLatencyCount[i]);
-        writer.ldelim();
-      }
       if (message.rootErrorStats != null && Object.hasOwnProperty.call(message, "rootErrorStats"))
         $root.PathErrorStats.encode(message.rootErrorStats, writer.uint32(58).fork()).ldelim();
       if (message.requestsWithErrorsCount != null && Object.hasOwnProperty.call(message, "requestsWithErrorsCount"))
         writer.uint32(64).uint64(message.requestsWithErrorsCount);
-      if (message.publicCacheTtlCount != null && message.publicCacheTtlCount.length) {
-        writer.uint32(74).fork();
-        for (var i = 0; i < message.publicCacheTtlCount.length; ++i)
-          writer.int64(message.publicCacheTtlCount[i]);
-        writer.ldelim();
-      }
-      if (message.privateCacheTtlCount != null && message.privateCacheTtlCount.length) {
-        writer.uint32(82).fork();
-        for (var i = 0; i < message.privateCacheTtlCount.length; ++i)
-          writer.int64(message.privateCacheTtlCount[i]);
-        writer.ldelim();
-      }
       if (message.registeredOperationCount != null && Object.hasOwnProperty.call(message, "registeredOperationCount"))
         writer.uint32(88).uint64(message.registeredOperationCount);
       if (message.forbiddenOperationCount != null && Object.hasOwnProperty.call(message, "forbiddenOperationCount"))
         writer.uint32(96).uint64(message.forbiddenOperationCount);
+      var array13;
+      if (message.latencyCount != null && message.latencyCount.toArray)
+        array13 = message.latencyCount.toArray();
+      else
+        array13 = message.latencyCount;
+      if (array13 != null && array13.length) {
+        writer.uint32(106).fork();
+        for (var i = 0; i < array13.length; ++i)
+          writer.sint64(array13[i]);
+        writer.ldelim();
+      }
+      var array14;
+      if (message.cacheLatencyCount != null && message.cacheLatencyCount.toArray)
+        array14 = message.cacheLatencyCount.toArray();
+      else
+        array14 = message.cacheLatencyCount;
+      if (array14 != null && array14.length) {
+        writer.uint32(114).fork();
+        for (var i = 0; i < array14.length; ++i)
+          writer.sint64(array14[i]);
+        writer.ldelim();
+      }
+      var array15;
+      if (message.publicCacheTtlCount != null && message.publicCacheTtlCount.toArray)
+        array15 = message.publicCacheTtlCount.toArray();
+      else
+        array15 = message.publicCacheTtlCount;
+      if (array15 != null && array15.length) {
+        writer.uint32(122).fork();
+        for (var i = 0; i < array15.length; ++i)
+          writer.sint64(array15[i]);
+        writer.ldelim();
+      }
+      var array16;
+      if (message.privateCacheTtlCount != null && message.privateCacheTtlCount.toArray)
+        array16 = message.privateCacheTtlCount.toArray();
+      else
+        array16 = message.privateCacheTtlCount;
+      if (array16 != null && array16.length) {
+        writer.uint32(130).fork();
+        for (var i = 0; i < array16.length; ++i)
+          writer.sint64(array16[i]);
+        writer.ldelim();
+      }
       return writer;
     };
     QueryLatencyStats.encodeDelimited = function encodeDelimited(message, writer) {
@@ -36151,15 +36407,15 @@ var require_protobuf = __commonJS((exports2, module2) => {
       while (reader.pos < end) {
         var tag = reader.uint32();
         switch (tag >>> 3) {
-          case 1:
+          case 13:
             if (!(message.latencyCount && message.latencyCount.length))
               message.latencyCount = [];
             if ((tag & 7) === 2) {
               var end2 = reader.uint32() + reader.pos;
               while (reader.pos < end2)
-                message.latencyCount.push(reader.int64());
+                message.latencyCount.push(reader.sint64());
             } else
-              message.latencyCount.push(reader.int64());
+              message.latencyCount.push(reader.sint64());
             break;
           case 2:
             message.requestCount = reader.uint64();
@@ -36173,15 +36429,15 @@ var require_protobuf = __commonJS((exports2, module2) => {
           case 5:
             message.persistedQueryMisses = reader.uint64();
             break;
-          case 6:
+          case 14:
             if (!(message.cacheLatencyCount && message.cacheLatencyCount.length))
               message.cacheLatencyCount = [];
             if ((tag & 7) === 2) {
               var end2 = reader.uint32() + reader.pos;
               while (reader.pos < end2)
-                message.cacheLatencyCount.push(reader.int64());
+                message.cacheLatencyCount.push(reader.sint64());
             } else
-              message.cacheLatencyCount.push(reader.int64());
+              message.cacheLatencyCount.push(reader.sint64());
             break;
           case 7:
             message.rootErrorStats = $root.PathErrorStats.decode(reader, reader.uint32());
@@ -36189,25 +36445,25 @@ var require_protobuf = __commonJS((exports2, module2) => {
           case 8:
             message.requestsWithErrorsCount = reader.uint64();
             break;
-          case 9:
+          case 15:
             if (!(message.publicCacheTtlCount && message.publicCacheTtlCount.length))
               message.publicCacheTtlCount = [];
             if ((tag & 7) === 2) {
               var end2 = reader.uint32() + reader.pos;
               while (reader.pos < end2)
-                message.publicCacheTtlCount.push(reader.int64());
+                message.publicCacheTtlCount.push(reader.sint64());
             } else
-              message.publicCacheTtlCount.push(reader.int64());
+              message.publicCacheTtlCount.push(reader.sint64());
             break;
-          case 10:
+          case 16:
             if (!(message.privateCacheTtlCount && message.privateCacheTtlCount.length))
               message.privateCacheTtlCount = [];
             if ((tag & 7) === 2) {
               var end2 = reader.uint32() + reader.pos;
               while (reader.pos < end2)
-                message.privateCacheTtlCount.push(reader.int64());
+                message.privateCacheTtlCount.push(reader.sint64());
             } else
-              message.privateCacheTtlCount.push(reader.int64());
+              message.privateCacheTtlCount.push(reader.sint64());
             break;
           case 11:
             message.registeredOperationCount = reader.uint64();
@@ -36231,10 +36487,15 @@ var require_protobuf = __commonJS((exports2, module2) => {
       if (typeof message !== "object" || message === null)
         return "object expected";
       if (message.latencyCount != null && message.hasOwnProperty("latencyCount")) {
-        if (!Array.isArray(message.latencyCount))
+        var array13;
+        if (message.latencyCount != null && message.latencyCount.toArray)
+          array13 = message.latencyCount.toArray();
+        else
+          array13 = message.latencyCount;
+        if (!Array.isArray(array13))
           return "latencyCount: array expected";
-        for (var i = 0; i < message.latencyCount.length; ++i)
-          if (!$util.isInteger(message.latencyCount[i]) && !(message.latencyCount[i] && $util.isInteger(message.latencyCount[i].low) && $util.isInteger(message.latencyCount[i].high)))
+        for (var i = 0; i < array13.length; ++i)
+          if (!$util.isInteger(array13[i]) && !(array13[i] && $util.isInteger(array13[i].low) && $util.isInteger(array13[i].high)))
             return "latencyCount: integer|Long[] expected";
       }
       if (message.requestCount != null && message.hasOwnProperty("requestCount")) {
@@ -36254,10 +36515,15 @@ var require_protobuf = __commonJS((exports2, module2) => {
           return "persistedQueryMisses: integer|Long expected";
       }
       if (message.cacheLatencyCount != null && message.hasOwnProperty("cacheLatencyCount")) {
-        if (!Array.isArray(message.cacheLatencyCount))
+        var array14;
+        if (message.cacheLatencyCount != null && message.cacheLatencyCount.toArray)
+          array14 = message.cacheLatencyCount.toArray();
+        else
+          array14 = message.cacheLatencyCount;
+        if (!Array.isArray(array14))
           return "cacheLatencyCount: array expected";
-        for (var i = 0; i < message.cacheLatencyCount.length; ++i)
-          if (!$util.isInteger(message.cacheLatencyCount[i]) && !(message.cacheLatencyCount[i] && $util.isInteger(message.cacheLatencyCount[i].low) && $util.isInteger(message.cacheLatencyCount[i].high)))
+        for (var i = 0; i < array14.length; ++i)
+          if (!$util.isInteger(array14[i]) && !(array14[i] && $util.isInteger(array14[i].low) && $util.isInteger(array14[i].high)))
             return "cacheLatencyCount: integer|Long[] expected";
       }
       if (message.rootErrorStats != null && message.hasOwnProperty("rootErrorStats")) {
@@ -36270,17 +36536,27 @@ var require_protobuf = __commonJS((exports2, module2) => {
           return "requestsWithErrorsCount: integer|Long expected";
       }
       if (message.publicCacheTtlCount != null && message.hasOwnProperty("publicCacheTtlCount")) {
-        if (!Array.isArray(message.publicCacheTtlCount))
+        var array15;
+        if (message.publicCacheTtlCount != null && message.publicCacheTtlCount.toArray)
+          array15 = message.publicCacheTtlCount.toArray();
+        else
+          array15 = message.publicCacheTtlCount;
+        if (!Array.isArray(array15))
           return "publicCacheTtlCount: array expected";
-        for (var i = 0; i < message.publicCacheTtlCount.length; ++i)
-          if (!$util.isInteger(message.publicCacheTtlCount[i]) && !(message.publicCacheTtlCount[i] && $util.isInteger(message.publicCacheTtlCount[i].low) && $util.isInteger(message.publicCacheTtlCount[i].high)))
+        for (var i = 0; i < array15.length; ++i)
+          if (!$util.isInteger(array15[i]) && !(array15[i] && $util.isInteger(array15[i].low) && $util.isInteger(array15[i].high)))
             return "publicCacheTtlCount: integer|Long[] expected";
       }
       if (message.privateCacheTtlCount != null && message.hasOwnProperty("privateCacheTtlCount")) {
-        if (!Array.isArray(message.privateCacheTtlCount))
+        var array16;
+        if (message.privateCacheTtlCount != null && message.privateCacheTtlCount.toArray)
+          array16 = message.privateCacheTtlCount.toArray();
+        else
+          array16 = message.privateCacheTtlCount;
+        if (!Array.isArray(array16))
           return "privateCacheTtlCount: array expected";
-        for (var i = 0; i < message.privateCacheTtlCount.length; ++i)
-          if (!$util.isInteger(message.privateCacheTtlCount[i]) && !(message.privateCacheTtlCount[i] && $util.isInteger(message.privateCacheTtlCount[i].low) && $util.isInteger(message.privateCacheTtlCount[i].high)))
+        for (var i = 0; i < array16.length; ++i)
+          if (!$util.isInteger(array16[i]) && !(array16[i] && $util.isInteger(array16[i].low) && $util.isInteger(array16[i].high)))
             return "privateCacheTtlCount: integer|Long[] expected";
       }
       if (message.registeredOperationCount != null && message.hasOwnProperty("registeredOperationCount")) {
@@ -36292,143 +36568,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
           return "forbiddenOperationCount: integer|Long expected";
       }
       return null;
-    };
-    QueryLatencyStats.fromObject = function fromObject(object) {
-      if (object instanceof $root.QueryLatencyStats)
-        return object;
-      var message = new $root.QueryLatencyStats();
-      if (object.latencyCount) {
-        if (!Array.isArray(object.latencyCount))
-          throw TypeError(".QueryLatencyStats.latencyCount: array expected");
-        message.latencyCount = [];
-        for (var i = 0; i < object.latencyCount.length; ++i)
-          if ($util.Long)
-            (message.latencyCount[i] = $util.Long.fromValue(object.latencyCount[i])).unsigned = false;
-          else if (typeof object.latencyCount[i] === "string")
-            message.latencyCount[i] = parseInt(object.latencyCount[i], 10);
-          else if (typeof object.latencyCount[i] === "number")
-            message.latencyCount[i] = object.latencyCount[i];
-          else if (typeof object.latencyCount[i] === "object")
-            message.latencyCount[i] = new $util.LongBits(object.latencyCount[i].low >>> 0, object.latencyCount[i].high >>> 0).toNumber();
-      }
-      if (object.requestCount != null) {
-        if ($util.Long)
-          (message.requestCount = $util.Long.fromValue(object.requestCount)).unsigned = true;
-        else if (typeof object.requestCount === "string")
-          message.requestCount = parseInt(object.requestCount, 10);
-        else if (typeof object.requestCount === "number")
-          message.requestCount = object.requestCount;
-        else if (typeof object.requestCount === "object")
-          message.requestCount = new $util.LongBits(object.requestCount.low >>> 0, object.requestCount.high >>> 0).toNumber(true);
-      }
-      if (object.cacheHits != null) {
-        if ($util.Long)
-          (message.cacheHits = $util.Long.fromValue(object.cacheHits)).unsigned = true;
-        else if (typeof object.cacheHits === "string")
-          message.cacheHits = parseInt(object.cacheHits, 10);
-        else if (typeof object.cacheHits === "number")
-          message.cacheHits = object.cacheHits;
-        else if (typeof object.cacheHits === "object")
-          message.cacheHits = new $util.LongBits(object.cacheHits.low >>> 0, object.cacheHits.high >>> 0).toNumber(true);
-      }
-      if (object.persistedQueryHits != null) {
-        if ($util.Long)
-          (message.persistedQueryHits = $util.Long.fromValue(object.persistedQueryHits)).unsigned = true;
-        else if (typeof object.persistedQueryHits === "string")
-          message.persistedQueryHits = parseInt(object.persistedQueryHits, 10);
-        else if (typeof object.persistedQueryHits === "number")
-          message.persistedQueryHits = object.persistedQueryHits;
-        else if (typeof object.persistedQueryHits === "object")
-          message.persistedQueryHits = new $util.LongBits(object.persistedQueryHits.low >>> 0, object.persistedQueryHits.high >>> 0).toNumber(true);
-      }
-      if (object.persistedQueryMisses != null) {
-        if ($util.Long)
-          (message.persistedQueryMisses = $util.Long.fromValue(object.persistedQueryMisses)).unsigned = true;
-        else if (typeof object.persistedQueryMisses === "string")
-          message.persistedQueryMisses = parseInt(object.persistedQueryMisses, 10);
-        else if (typeof object.persistedQueryMisses === "number")
-          message.persistedQueryMisses = object.persistedQueryMisses;
-        else if (typeof object.persistedQueryMisses === "object")
-          message.persistedQueryMisses = new $util.LongBits(object.persistedQueryMisses.low >>> 0, object.persistedQueryMisses.high >>> 0).toNumber(true);
-      }
-      if (object.cacheLatencyCount) {
-        if (!Array.isArray(object.cacheLatencyCount))
-          throw TypeError(".QueryLatencyStats.cacheLatencyCount: array expected");
-        message.cacheLatencyCount = [];
-        for (var i = 0; i < object.cacheLatencyCount.length; ++i)
-          if ($util.Long)
-            (message.cacheLatencyCount[i] = $util.Long.fromValue(object.cacheLatencyCount[i])).unsigned = false;
-          else if (typeof object.cacheLatencyCount[i] === "string")
-            message.cacheLatencyCount[i] = parseInt(object.cacheLatencyCount[i], 10);
-          else if (typeof object.cacheLatencyCount[i] === "number")
-            message.cacheLatencyCount[i] = object.cacheLatencyCount[i];
-          else if (typeof object.cacheLatencyCount[i] === "object")
-            message.cacheLatencyCount[i] = new $util.LongBits(object.cacheLatencyCount[i].low >>> 0, object.cacheLatencyCount[i].high >>> 0).toNumber();
-      }
-      if (object.rootErrorStats != null) {
-        if (typeof object.rootErrorStats !== "object")
-          throw TypeError(".QueryLatencyStats.rootErrorStats: object expected");
-        message.rootErrorStats = $root.PathErrorStats.fromObject(object.rootErrorStats);
-      }
-      if (object.requestsWithErrorsCount != null) {
-        if ($util.Long)
-          (message.requestsWithErrorsCount = $util.Long.fromValue(object.requestsWithErrorsCount)).unsigned = true;
-        else if (typeof object.requestsWithErrorsCount === "string")
-          message.requestsWithErrorsCount = parseInt(object.requestsWithErrorsCount, 10);
-        else if (typeof object.requestsWithErrorsCount === "number")
-          message.requestsWithErrorsCount = object.requestsWithErrorsCount;
-        else if (typeof object.requestsWithErrorsCount === "object")
-          message.requestsWithErrorsCount = new $util.LongBits(object.requestsWithErrorsCount.low >>> 0, object.requestsWithErrorsCount.high >>> 0).toNumber(true);
-      }
-      if (object.publicCacheTtlCount) {
-        if (!Array.isArray(object.publicCacheTtlCount))
-          throw TypeError(".QueryLatencyStats.publicCacheTtlCount: array expected");
-        message.publicCacheTtlCount = [];
-        for (var i = 0; i < object.publicCacheTtlCount.length; ++i)
-          if ($util.Long)
-            (message.publicCacheTtlCount[i] = $util.Long.fromValue(object.publicCacheTtlCount[i])).unsigned = false;
-          else if (typeof object.publicCacheTtlCount[i] === "string")
-            message.publicCacheTtlCount[i] = parseInt(object.publicCacheTtlCount[i], 10);
-          else if (typeof object.publicCacheTtlCount[i] === "number")
-            message.publicCacheTtlCount[i] = object.publicCacheTtlCount[i];
-          else if (typeof object.publicCacheTtlCount[i] === "object")
-            message.publicCacheTtlCount[i] = new $util.LongBits(object.publicCacheTtlCount[i].low >>> 0, object.publicCacheTtlCount[i].high >>> 0).toNumber();
-      }
-      if (object.privateCacheTtlCount) {
-        if (!Array.isArray(object.privateCacheTtlCount))
-          throw TypeError(".QueryLatencyStats.privateCacheTtlCount: array expected");
-        message.privateCacheTtlCount = [];
-        for (var i = 0; i < object.privateCacheTtlCount.length; ++i)
-          if ($util.Long)
-            (message.privateCacheTtlCount[i] = $util.Long.fromValue(object.privateCacheTtlCount[i])).unsigned = false;
-          else if (typeof object.privateCacheTtlCount[i] === "string")
-            message.privateCacheTtlCount[i] = parseInt(object.privateCacheTtlCount[i], 10);
-          else if (typeof object.privateCacheTtlCount[i] === "number")
-            message.privateCacheTtlCount[i] = object.privateCacheTtlCount[i];
-          else if (typeof object.privateCacheTtlCount[i] === "object")
-            message.privateCacheTtlCount[i] = new $util.LongBits(object.privateCacheTtlCount[i].low >>> 0, object.privateCacheTtlCount[i].high >>> 0).toNumber();
-      }
-      if (object.registeredOperationCount != null) {
-        if ($util.Long)
-          (message.registeredOperationCount = $util.Long.fromValue(object.registeredOperationCount)).unsigned = true;
-        else if (typeof object.registeredOperationCount === "string")
-          message.registeredOperationCount = parseInt(object.registeredOperationCount, 10);
-        else if (typeof object.registeredOperationCount === "number")
-          message.registeredOperationCount = object.registeredOperationCount;
-        else if (typeof object.registeredOperationCount === "object")
-          message.registeredOperationCount = new $util.LongBits(object.registeredOperationCount.low >>> 0, object.registeredOperationCount.high >>> 0).toNumber(true);
-      }
-      if (object.forbiddenOperationCount != null) {
-        if ($util.Long)
-          (message.forbiddenOperationCount = $util.Long.fromValue(object.forbiddenOperationCount)).unsigned = true;
-        else if (typeof object.forbiddenOperationCount === "string")
-          message.forbiddenOperationCount = parseInt(object.forbiddenOperationCount, 10);
-        else if (typeof object.forbiddenOperationCount === "number")
-          message.forbiddenOperationCount = object.forbiddenOperationCount;
-        else if (typeof object.forbiddenOperationCount === "object")
-          message.forbiddenOperationCount = new $util.LongBits(object.forbiddenOperationCount.low >>> 0, object.forbiddenOperationCount.high >>> 0).toNumber(true);
-      }
-      return message;
     };
     QueryLatencyStats.toObject = function toObject(message, options) {
       if (!options)
@@ -36478,14 +36617,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
         } else
           object.forbiddenOperationCount = options.longs === String ? "0" : 0;
       }
-      if (message.latencyCount && message.latencyCount.length) {
-        object.latencyCount = [];
-        for (var j = 0; j < message.latencyCount.length; ++j)
-          if (typeof message.latencyCount[j] === "number")
-            object.latencyCount[j] = options.longs === String ? String(message.latencyCount[j]) : message.latencyCount[j];
-          else
-            object.latencyCount[j] = options.longs === String ? $util.Long.prototype.toString.call(message.latencyCount[j]) : options.longs === Number ? new $util.LongBits(message.latencyCount[j].low >>> 0, message.latencyCount[j].high >>> 0).toNumber() : message.latencyCount[j];
-      }
       if (message.requestCount != null && message.hasOwnProperty("requestCount"))
         if (typeof message.requestCount === "number")
           object.requestCount = options.longs === String ? String(message.requestCount) : message.requestCount;
@@ -36506,6 +36637,31 @@ var require_protobuf = __commonJS((exports2, module2) => {
           object.persistedQueryMisses = options.longs === String ? String(message.persistedQueryMisses) : message.persistedQueryMisses;
         else
           object.persistedQueryMisses = options.longs === String ? $util.Long.prototype.toString.call(message.persistedQueryMisses) : options.longs === Number ? new $util.LongBits(message.persistedQueryMisses.low >>> 0, message.persistedQueryMisses.high >>> 0).toNumber(true) : message.persistedQueryMisses;
+      if (message.rootErrorStats != null && message.hasOwnProperty("rootErrorStats"))
+        object.rootErrorStats = $root.PathErrorStats.toObject(message.rootErrorStats, options);
+      if (message.requestsWithErrorsCount != null && message.hasOwnProperty("requestsWithErrorsCount"))
+        if (typeof message.requestsWithErrorsCount === "number")
+          object.requestsWithErrorsCount = options.longs === String ? String(message.requestsWithErrorsCount) : message.requestsWithErrorsCount;
+        else
+          object.requestsWithErrorsCount = options.longs === String ? $util.Long.prototype.toString.call(message.requestsWithErrorsCount) : options.longs === Number ? new $util.LongBits(message.requestsWithErrorsCount.low >>> 0, message.requestsWithErrorsCount.high >>> 0).toNumber(true) : message.requestsWithErrorsCount;
+      if (message.registeredOperationCount != null && message.hasOwnProperty("registeredOperationCount"))
+        if (typeof message.registeredOperationCount === "number")
+          object.registeredOperationCount = options.longs === String ? String(message.registeredOperationCount) : message.registeredOperationCount;
+        else
+          object.registeredOperationCount = options.longs === String ? $util.Long.prototype.toString.call(message.registeredOperationCount) : options.longs === Number ? new $util.LongBits(message.registeredOperationCount.low >>> 0, message.registeredOperationCount.high >>> 0).toNumber(true) : message.registeredOperationCount;
+      if (message.forbiddenOperationCount != null && message.hasOwnProperty("forbiddenOperationCount"))
+        if (typeof message.forbiddenOperationCount === "number")
+          object.forbiddenOperationCount = options.longs === String ? String(message.forbiddenOperationCount) : message.forbiddenOperationCount;
+        else
+          object.forbiddenOperationCount = options.longs === String ? $util.Long.prototype.toString.call(message.forbiddenOperationCount) : options.longs === Number ? new $util.LongBits(message.forbiddenOperationCount.low >>> 0, message.forbiddenOperationCount.high >>> 0).toNumber(true) : message.forbiddenOperationCount;
+      if (message.latencyCount && message.latencyCount.length) {
+        object.latencyCount = [];
+        for (var j = 0; j < message.latencyCount.length; ++j)
+          if (typeof message.latencyCount[j] === "number")
+            object.latencyCount[j] = options.longs === String ? String(message.latencyCount[j]) : message.latencyCount[j];
+          else
+            object.latencyCount[j] = options.longs === String ? $util.Long.prototype.toString.call(message.latencyCount[j]) : options.longs === Number ? new $util.LongBits(message.latencyCount[j].low >>> 0, message.latencyCount[j].high >>> 0).toNumber() : message.latencyCount[j];
+      }
       if (message.cacheLatencyCount && message.cacheLatencyCount.length) {
         object.cacheLatencyCount = [];
         for (var j = 0; j < message.cacheLatencyCount.length; ++j)
@@ -36514,13 +36670,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
           else
             object.cacheLatencyCount[j] = options.longs === String ? $util.Long.prototype.toString.call(message.cacheLatencyCount[j]) : options.longs === Number ? new $util.LongBits(message.cacheLatencyCount[j].low >>> 0, message.cacheLatencyCount[j].high >>> 0).toNumber() : message.cacheLatencyCount[j];
       }
-      if (message.rootErrorStats != null && message.hasOwnProperty("rootErrorStats"))
-        object.rootErrorStats = $root.PathErrorStats.toObject(message.rootErrorStats, options);
-      if (message.requestsWithErrorsCount != null && message.hasOwnProperty("requestsWithErrorsCount"))
-        if (typeof message.requestsWithErrorsCount === "number")
-          object.requestsWithErrorsCount = options.longs === String ? String(message.requestsWithErrorsCount) : message.requestsWithErrorsCount;
-        else
-          object.requestsWithErrorsCount = options.longs === String ? $util.Long.prototype.toString.call(message.requestsWithErrorsCount) : options.longs === Number ? new $util.LongBits(message.requestsWithErrorsCount.low >>> 0, message.requestsWithErrorsCount.high >>> 0).toNumber(true) : message.requestsWithErrorsCount;
       if (message.publicCacheTtlCount && message.publicCacheTtlCount.length) {
         object.publicCacheTtlCount = [];
         for (var j = 0; j < message.publicCacheTtlCount.length; ++j)
@@ -36537,16 +36686,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
           else
             object.privateCacheTtlCount[j] = options.longs === String ? $util.Long.prototype.toString.call(message.privateCacheTtlCount[j]) : options.longs === Number ? new $util.LongBits(message.privateCacheTtlCount[j].low >>> 0, message.privateCacheTtlCount[j].high >>> 0).toNumber() : message.privateCacheTtlCount[j];
       }
-      if (message.registeredOperationCount != null && message.hasOwnProperty("registeredOperationCount"))
-        if (typeof message.registeredOperationCount === "number")
-          object.registeredOperationCount = options.longs === String ? String(message.registeredOperationCount) : message.registeredOperationCount;
-        else
-          object.registeredOperationCount = options.longs === String ? $util.Long.prototype.toString.call(message.registeredOperationCount) : options.longs === Number ? new $util.LongBits(message.registeredOperationCount.low >>> 0, message.registeredOperationCount.high >>> 0).toNumber(true) : message.registeredOperationCount;
-      if (message.forbiddenOperationCount != null && message.hasOwnProperty("forbiddenOperationCount"))
-        if (typeof message.forbiddenOperationCount === "number")
-          object.forbiddenOperationCount = options.longs === String ? String(message.forbiddenOperationCount) : message.forbiddenOperationCount;
-        else
-          object.forbiddenOperationCount = options.longs === String ? $util.Long.prototype.toString.call(message.forbiddenOperationCount) : options.longs === Number ? new $util.LongBits(message.forbiddenOperationCount.low >>> 0, message.forbiddenOperationCount.high >>> 0).toNumber(true) : message.forbiddenOperationCount;
       return object;
     };
     QueryLatencyStats.prototype.toJSON = function toJSON() {
@@ -36626,18 +36765,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
           return "clientVersion: string expected";
       }
       return null;
-    };
-    StatsContext.fromObject = function fromObject(object) {
-      if (object instanceof $root.StatsContext)
-        return object;
-      var message = new $root.StatsContext();
-      if (object.clientReferenceId != null)
-        message.clientReferenceId = String(object.clientReferenceId);
-      if (object.clientName != null)
-        message.clientName = String(object.clientName);
-      if (object.clientVersion != null)
-        message.clientVersion = String(object.clientVersion);
-      return message;
     };
     StatsContext.toObject = function toObject(message, options) {
       if (!options)
@@ -36725,22 +36852,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
           return "context." + error;
       }
       return null;
-    };
-    ContextualizedQueryLatencyStats.fromObject = function fromObject(object) {
-      if (object instanceof $root.ContextualizedQueryLatencyStats)
-        return object;
-      var message = new $root.ContextualizedQueryLatencyStats();
-      if (object.queryLatencyStats != null) {
-        if (typeof object.queryLatencyStats !== "object")
-          throw TypeError(".ContextualizedQueryLatencyStats.queryLatencyStats: object expected");
-        message.queryLatencyStats = $root.QueryLatencyStats.fromObject(object.queryLatencyStats);
-      }
-      if (object.context != null) {
-        if (typeof object.context !== "object")
-          throw TypeError(".ContextualizedQueryLatencyStats.context: object expected");
-        message.context = $root.StatsContext.fromObject(object.context);
-      }
-      return message;
     };
     ContextualizedQueryLatencyStats.toObject = function toObject(message, options) {
       if (!options)
@@ -36840,27 +36951,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
       }
       return null;
     };
-    ContextualizedTypeStats.fromObject = function fromObject(object) {
-      if (object instanceof $root.ContextualizedTypeStats)
-        return object;
-      var message = new $root.ContextualizedTypeStats();
-      if (object.context != null) {
-        if (typeof object.context !== "object")
-          throw TypeError(".ContextualizedTypeStats.context: object expected");
-        message.context = $root.StatsContext.fromObject(object.context);
-      }
-      if (object.perTypeStat) {
-        if (typeof object.perTypeStat !== "object")
-          throw TypeError(".ContextualizedTypeStats.perTypeStat: object expected");
-        message.perTypeStat = {};
-        for (var keys = Object.keys(object.perTypeStat), i = 0; i < keys.length; ++i) {
-          if (typeof object.perTypeStat[keys[i]] !== "object")
-            throw TypeError(".ContextualizedTypeStats.perTypeStat: object expected");
-          message.perTypeStat[keys[i]] = $root.TypeStat.fromObject(object.perTypeStat[keys[i]]);
-        }
-      }
-      return message;
-    };
     ContextualizedTypeStats.toObject = function toObject(message, options) {
       if (!options)
         options = {};
@@ -36912,10 +37002,15 @@ var require_protobuf = __commonJS((exports2, module2) => {
         writer.uint32(40).uint64(message.count);
       if (message.requestsWithErrorsCount != null && Object.hasOwnProperty.call(message, "requestsWithErrorsCount"))
         writer.uint32(48).uint64(message.requestsWithErrorsCount);
-      if (message.latencyCount != null && message.latencyCount.length) {
-        writer.uint32(66).fork();
-        for (var i = 0; i < message.latencyCount.length; ++i)
-          writer.int64(message.latencyCount[i]);
+      var array9;
+      if (message.latencyCount != null && message.latencyCount.toArray)
+        array9 = message.latencyCount.toArray();
+      else
+        array9 = message.latencyCount;
+      if (array9 != null && array9.length) {
+        writer.uint32(74).fork();
+        for (var i = 0; i < array9.length; ++i)
+          writer.sint64(array9[i]);
         writer.ldelim();
       }
       return writer;
@@ -36942,15 +37037,15 @@ var require_protobuf = __commonJS((exports2, module2) => {
           case 6:
             message.requestsWithErrorsCount = reader.uint64();
             break;
-          case 8:
+          case 9:
             if (!(message.latencyCount && message.latencyCount.length))
               message.latencyCount = [];
             if ((tag & 7) === 2) {
               var end2 = reader.uint32() + reader.pos;
               while (reader.pos < end2)
-                message.latencyCount.push(reader.int64());
+                message.latencyCount.push(reader.sint64());
             } else
-              message.latencyCount.push(reader.int64());
+              message.latencyCount.push(reader.sint64());
             break;
           default:
             reader.skipType(tag & 7);
@@ -36984,65 +37079,18 @@ var require_protobuf = __commonJS((exports2, module2) => {
           return "requestsWithErrorsCount: integer|Long expected";
       }
       if (message.latencyCount != null && message.hasOwnProperty("latencyCount")) {
-        if (!Array.isArray(message.latencyCount))
+        var array9;
+        if (message.latencyCount != null && message.latencyCount.toArray)
+          array9 = message.latencyCount.toArray();
+        else
+          array9 = message.latencyCount;
+        if (!Array.isArray(array9))
           return "latencyCount: array expected";
-        for (var i = 0; i < message.latencyCount.length; ++i)
-          if (!$util.isInteger(message.latencyCount[i]) && !(message.latencyCount[i] && $util.isInteger(message.latencyCount[i].low) && $util.isInteger(message.latencyCount[i].high)))
+        for (var i = 0; i < array9.length; ++i)
+          if (!$util.isInteger(array9[i]) && !(array9[i] && $util.isInteger(array9[i].low) && $util.isInteger(array9[i].high)))
             return "latencyCount: integer|Long[] expected";
       }
       return null;
-    };
-    FieldStat.fromObject = function fromObject(object) {
-      if (object instanceof $root.FieldStat)
-        return object;
-      var message = new $root.FieldStat();
-      if (object.returnType != null)
-        message.returnType = String(object.returnType);
-      if (object.errorsCount != null) {
-        if ($util.Long)
-          (message.errorsCount = $util.Long.fromValue(object.errorsCount)).unsigned = true;
-        else if (typeof object.errorsCount === "string")
-          message.errorsCount = parseInt(object.errorsCount, 10);
-        else if (typeof object.errorsCount === "number")
-          message.errorsCount = object.errorsCount;
-        else if (typeof object.errorsCount === "object")
-          message.errorsCount = new $util.LongBits(object.errorsCount.low >>> 0, object.errorsCount.high >>> 0).toNumber(true);
-      }
-      if (object.count != null) {
-        if ($util.Long)
-          (message.count = $util.Long.fromValue(object.count)).unsigned = true;
-        else if (typeof object.count === "string")
-          message.count = parseInt(object.count, 10);
-        else if (typeof object.count === "number")
-          message.count = object.count;
-        else if (typeof object.count === "object")
-          message.count = new $util.LongBits(object.count.low >>> 0, object.count.high >>> 0).toNumber(true);
-      }
-      if (object.requestsWithErrorsCount != null) {
-        if ($util.Long)
-          (message.requestsWithErrorsCount = $util.Long.fromValue(object.requestsWithErrorsCount)).unsigned = true;
-        else if (typeof object.requestsWithErrorsCount === "string")
-          message.requestsWithErrorsCount = parseInt(object.requestsWithErrorsCount, 10);
-        else if (typeof object.requestsWithErrorsCount === "number")
-          message.requestsWithErrorsCount = object.requestsWithErrorsCount;
-        else if (typeof object.requestsWithErrorsCount === "object")
-          message.requestsWithErrorsCount = new $util.LongBits(object.requestsWithErrorsCount.low >>> 0, object.requestsWithErrorsCount.high >>> 0).toNumber(true);
-      }
-      if (object.latencyCount) {
-        if (!Array.isArray(object.latencyCount))
-          throw TypeError(".FieldStat.latencyCount: array expected");
-        message.latencyCount = [];
-        for (var i = 0; i < object.latencyCount.length; ++i)
-          if ($util.Long)
-            (message.latencyCount[i] = $util.Long.fromValue(object.latencyCount[i])).unsigned = false;
-          else if (typeof object.latencyCount[i] === "string")
-            message.latencyCount[i] = parseInt(object.latencyCount[i], 10);
-          else if (typeof object.latencyCount[i] === "number")
-            message.latencyCount[i] = object.latencyCount[i];
-          else if (typeof object.latencyCount[i] === "object")
-            message.latencyCount[i] = new $util.LongBits(object.latencyCount[i].low >>> 0, object.latencyCount[i].high >>> 0).toNumber();
-      }
-      return message;
     };
     FieldStat.toObject = function toObject(message, options) {
       if (!options)
@@ -37168,22 +37216,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
       }
       return null;
     };
-    TypeStat.fromObject = function fromObject(object) {
-      if (object instanceof $root.TypeStat)
-        return object;
-      var message = new $root.TypeStat();
-      if (object.perFieldStat) {
-        if (typeof object.perFieldStat !== "object")
-          throw TypeError(".TypeStat.perFieldStat: object expected");
-        message.perFieldStat = {};
-        for (var keys = Object.keys(object.perFieldStat), i = 0; i < keys.length; ++i) {
-          if (typeof object.perFieldStat[keys[i]] !== "object")
-            throw TypeError(".TypeStat.perFieldStat: object expected");
-          message.perFieldStat[keys[i]] = $root.FieldStat.fromObject(object.perFieldStat[keys[i]]);
-        }
-      }
-      return message;
-    };
     TypeStat.toObject = function toObject(message, options) {
       if (!options)
         options = {};
@@ -37265,16 +37297,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
           return "returnType: string expected";
       }
       return null;
-    };
-    Field.fromObject = function fromObject(object) {
-      if (object instanceof $root.Field)
-        return object;
-      var message = new $root.Field();
-      if (object.name != null)
-        message.name = String(object.name);
-      if (object.returnType != null)
-        message.returnType = String(object.returnType);
-      return message;
     };
     Field.toObject = function toObject(message, options) {
       if (!options)
@@ -37366,24 +37388,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
         }
       }
       return null;
-    };
-    Type.fromObject = function fromObject(object) {
-      if (object instanceof $root.Type)
-        return object;
-      var message = new $root.Type();
-      if (object.name != null)
-        message.name = String(object.name);
-      if (object.field) {
-        if (!Array.isArray(object.field))
-          throw TypeError(".Type.field: array expected");
-        message.field = [];
-        for (var i = 0; i < object.field.length; ++i) {
-          if (typeof object.field[i] !== "object")
-            throw TypeError(".Type.field: object expected");
-          message.field[i] = $root.Field.fromObject(object.field[i]);
-        }
-      }
-      return message;
     };
     Type.toObject = function toObject(message, options) {
       if (!options)
@@ -37496,32 +37500,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
           return "endTime." + error;
       }
       return null;
-    };
-    Report.fromObject = function fromObject(object) {
-      if (object instanceof $root.Report)
-        return object;
-      var message = new $root.Report();
-      if (object.header != null) {
-        if (typeof object.header !== "object")
-          throw TypeError(".Report.header: object expected");
-        message.header = $root.ReportHeader.fromObject(object.header);
-      }
-      if (object.tracesPerQuery) {
-        if (typeof object.tracesPerQuery !== "object")
-          throw TypeError(".Report.tracesPerQuery: object expected");
-        message.tracesPerQuery = {};
-        for (var keys = Object.keys(object.tracesPerQuery), i = 0; i < keys.length; ++i) {
-          if (typeof object.tracesPerQuery[keys[i]] !== "object")
-            throw TypeError(".Report.tracesPerQuery: object expected");
-          message.tracesPerQuery[keys[i]] = $root.TracesAndStats.fromObject(object.tracesPerQuery[keys[i]]);
-        }
-      }
-      if (object.endTime != null) {
-        if (typeof object.endTime !== "object")
-          throw TypeError(".Report.endTime: object expected");
-        message.endTime = $root.google.protobuf.Timestamp.fromObject(object.endTime);
-      }
-      return message;
     };
     Report.toObject = function toObject(message, options) {
       if (!options)
@@ -37640,32 +37618,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
       }
       return null;
     };
-    ContextualizedStats.fromObject = function fromObject(object) {
-      if (object instanceof $root.ContextualizedStats)
-        return object;
-      var message = new $root.ContextualizedStats();
-      if (object.context != null) {
-        if (typeof object.context !== "object")
-          throw TypeError(".ContextualizedStats.context: object expected");
-        message.context = $root.StatsContext.fromObject(object.context);
-      }
-      if (object.queryLatencyStats != null) {
-        if (typeof object.queryLatencyStats !== "object")
-          throw TypeError(".ContextualizedStats.queryLatencyStats: object expected");
-        message.queryLatencyStats = $root.QueryLatencyStats.fromObject(object.queryLatencyStats);
-      }
-      if (object.perTypeStat) {
-        if (typeof object.perTypeStat !== "object")
-          throw TypeError(".ContextualizedStats.perTypeStat: object expected");
-        message.perTypeStat = {};
-        for (var keys = Object.keys(object.perTypeStat), i = 0; i < keys.length; ++i) {
-          if (typeof object.perTypeStat[keys[i]] !== "object")
-            throw TypeError(".ContextualizedStats.perTypeStat: object expected");
-          message.perTypeStat[keys[i]] = $root.TypeStat.fromObject(object.perTypeStat[keys[i]]);
-        }
-      }
-      return message;
-    };
     ContextualizedStats.toObject = function toObject(message, options) {
       if (!options)
         options = {};
@@ -37697,6 +37649,7 @@ var require_protobuf = __commonJS((exports2, module2) => {
     function TracesAndStats(properties) {
       this.trace = [];
       this.statsWithContext = [];
+      this.internalTracesContributingToStats = [];
       if (properties) {
         for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
           if (properties[keys[i]] != null)
@@ -37705,6 +37658,7 @@ var require_protobuf = __commonJS((exports2, module2) => {
     }
     TracesAndStats.prototype.trace = $util.emptyArray;
     TracesAndStats.prototype.statsWithContext = $util.emptyArray;
+    TracesAndStats.prototype.internalTracesContributingToStats = $util.emptyArray;
     TracesAndStats.create = function create(properties) {
       return new TracesAndStats(properties);
     };
@@ -37713,10 +37667,26 @@ var require_protobuf = __commonJS((exports2, module2) => {
         writer = $Writer.create();
       if (message.trace != null && message.trace.length)
         for (var i = 0; i < message.trace.length; ++i)
-          $root.Trace.encode(message.trace[i], writer.uint32(10).fork()).ldelim();
-      if (message.statsWithContext != null && message.statsWithContext.length)
-        for (var i = 0; i < message.statsWithContext.length; ++i)
-          $root.ContextualizedStats.encode(message.statsWithContext[i], writer.uint32(18).fork()).ldelim();
+          if (message.trace[i] instanceof Uint8Array) {
+            writer.uint32(10);
+            writer.bytes(message.trace[i]);
+          } else
+            $root.Trace.encode(message.trace[i], writer.uint32(10).fork()).ldelim();
+      var array2;
+      if (message.statsWithContext != null && message.statsWithContext.toArray)
+        array2 = message.statsWithContext.toArray();
+      else
+        array2 = message.statsWithContext;
+      if (array2 != null && array2.length)
+        for (var i = 0; i < array2.length; ++i)
+          $root.ContextualizedStats.encode(array2[i], writer.uint32(18).fork()).ldelim();
+      if (message.internalTracesContributingToStats != null && message.internalTracesContributingToStats.length)
+        for (var i = 0; i < message.internalTracesContributingToStats.length; ++i)
+          if (message.internalTracesContributingToStats[i] instanceof Uint8Array) {
+            writer.uint32(26);
+            writer.bytes(message.internalTracesContributingToStats[i]);
+          } else
+            $root.Trace.encode(message.internalTracesContributingToStats[i], writer.uint32(26).fork()).ldelim();
       return writer;
     };
     TracesAndStats.encodeDelimited = function encodeDelimited(message, writer) {
@@ -37739,6 +37709,11 @@ var require_protobuf = __commonJS((exports2, module2) => {
               message.statsWithContext = [];
             message.statsWithContext.push($root.ContextualizedStats.decode(reader, reader.uint32()));
             break;
+          case 3:
+            if (!(message.internalTracesContributingToStats && message.internalTracesContributingToStats.length))
+              message.internalTracesContributingToStats = [];
+            message.internalTracesContributingToStats.push($root.Trace.decode(reader, reader.uint32()));
+            break;
           default:
             reader.skipType(tag & 7);
             break;
@@ -37757,48 +37732,38 @@ var require_protobuf = __commonJS((exports2, module2) => {
       if (message.trace != null && message.hasOwnProperty("trace")) {
         if (!Array.isArray(message.trace))
           return "trace: array expected";
-        for (var i = 0; i < message.trace.length; ++i) {
-          var error = $root.Trace.verify(message.trace[i]);
-          if (error)
-            return "trace." + error;
-        }
+        for (var i = 0; i < message.trace.length; ++i)
+          if (!(message.trace[i] instanceof Uint8Array)) {
+            var error = $root.Trace.verify(message.trace[i]);
+            if (error)
+              return "trace." + error;
+          }
       }
       if (message.statsWithContext != null && message.hasOwnProperty("statsWithContext")) {
-        if (!Array.isArray(message.statsWithContext))
+        var array2;
+        if (message.statsWithContext != null && message.statsWithContext.toArray)
+          array2 = message.statsWithContext.toArray();
+        else
+          array2 = message.statsWithContext;
+        if (!Array.isArray(array2))
           return "statsWithContext: array expected";
-        for (var i = 0; i < message.statsWithContext.length; ++i) {
-          var error = $root.ContextualizedStats.verify(message.statsWithContext[i]);
+        for (var i = 0; i < array2.length; ++i) {
+          var error = $root.ContextualizedStats.verify(array2[i]);
           if (error)
             return "statsWithContext." + error;
         }
       }
+      if (message.internalTracesContributingToStats != null && message.hasOwnProperty("internalTracesContributingToStats")) {
+        if (!Array.isArray(message.internalTracesContributingToStats))
+          return "internalTracesContributingToStats: array expected";
+        for (var i = 0; i < message.internalTracesContributingToStats.length; ++i)
+          if (!(message.internalTracesContributingToStats[i] instanceof Uint8Array)) {
+            var error = $root.Trace.verify(message.internalTracesContributingToStats[i]);
+            if (error)
+              return "internalTracesContributingToStats." + error;
+          }
+      }
       return null;
-    };
-    TracesAndStats.fromObject = function fromObject(object) {
-      if (object instanceof $root.TracesAndStats)
-        return object;
-      var message = new $root.TracesAndStats();
-      if (object.trace) {
-        if (!Array.isArray(object.trace))
-          throw TypeError(".TracesAndStats.trace: array expected");
-        message.trace = [];
-        for (var i = 0; i < object.trace.length; ++i) {
-          if (typeof object.trace[i] !== "object")
-            throw TypeError(".TracesAndStats.trace: object expected");
-          message.trace[i] = $root.Trace.fromObject(object.trace[i]);
-        }
-      }
-      if (object.statsWithContext) {
-        if (!Array.isArray(object.statsWithContext))
-          throw TypeError(".TracesAndStats.statsWithContext: array expected");
-        message.statsWithContext = [];
-        for (var i = 0; i < object.statsWithContext.length; ++i) {
-          if (typeof object.statsWithContext[i] !== "object")
-            throw TypeError(".TracesAndStats.statsWithContext: object expected");
-          message.statsWithContext[i] = $root.ContextualizedStats.fromObject(object.statsWithContext[i]);
-        }
-      }
-      return message;
     };
     TracesAndStats.toObject = function toObject(message, options) {
       if (!options)
@@ -37807,6 +37772,7 @@ var require_protobuf = __commonJS((exports2, module2) => {
       if (options.arrays || options.defaults) {
         object.trace = [];
         object.statsWithContext = [];
+        object.internalTracesContributingToStats = [];
       }
       if (message.trace && message.trace.length) {
         object.trace = [];
@@ -37817,6 +37783,11 @@ var require_protobuf = __commonJS((exports2, module2) => {
         object.statsWithContext = [];
         for (var j = 0; j < message.statsWithContext.length; ++j)
           object.statsWithContext[j] = $root.ContextualizedStats.toObject(message.statsWithContext[j], options);
+      }
+      if (message.internalTracesContributingToStats && message.internalTracesContributingToStats.length) {
+        object.internalTracesContributingToStats = [];
+        for (var j = 0; j < message.internalTracesContributingToStats.length; ++j)
+          object.internalTracesContributingToStats[j] = $root.Trace.toObject(message.internalTracesContributingToStats[j], options);
       }
       return object;
     };
@@ -37892,24 +37863,6 @@ var require_protobuf = __commonJS((exports2, module2) => {
           }
           return null;
         };
-        Timestamp.fromObject = function fromObject(object) {
-          if (object instanceof $root.google.protobuf.Timestamp)
-            return object;
-          var message = new $root.google.protobuf.Timestamp();
-          if (object.seconds != null) {
-            if ($util.Long)
-              (message.seconds = $util.Long.fromValue(object.seconds)).unsigned = false;
-            else if (typeof object.seconds === "string")
-              message.seconds = parseInt(object.seconds, 10);
-            else if (typeof object.seconds === "number")
-              message.seconds = object.seconds;
-            else if (typeof object.seconds === "object")
-              message.seconds = new $util.LongBits(object.seconds.low >>> 0, object.seconds.high >>> 0).toNumber();
-          }
-          if (object.nanos != null)
-            message.nanos = object.nanos | 0;
-          return message;
-        };
         Timestamp.toObject = function toObject(message, options) {
           if (!options)
             options = {};
@@ -37949,18 +37902,6 @@ var require_dist9 = __commonJS((exports2, module2) => {
   var protobufJS = require_minimal2();
   protobufJS.util.Long = void 0;
   protobufJS.configure();
-  var originalTracesAndStatsEncode = protobuf.TracesAndStats.encode;
-  protobuf.TracesAndStats.encode = function(message, originalWriter) {
-    const writer = originalTracesAndStatsEncode(message, originalWriter);
-    const encodedTraces = message.encodedTraces;
-    if (encodedTraces != null && encodedTraces.length) {
-      for (let i = 0; i < encodedTraces.length; ++i) {
-        writer.uint32(10);
-        writer.bytes(encodedTraces[i]);
-      }
-    }
-    return writer;
-  };
   module2.exports = protobuf;
 });
 
@@ -38653,7 +38594,7 @@ var require_signatureCache = __commonJS((exports2) => {
 var require_traceTreeBuilder = __commonJS((exports2) => {
   "use strict";
   Object.defineProperty(exports2, "__esModule", {value: true});
-  exports2.TraceTreeBuilder = void 0;
+  exports2.dateToProtoTimestamp = exports2.TraceTreeBuilder = void 0;
   var graphql_1 = require_graphql2();
   var apollo_reporting_protobuf_1 = require_dist9();
   function internalError(message) {
@@ -38807,6 +38748,7 @@ var require_traceTreeBuilder = __commonJS((exports2) => {
       nanos: millis * 1e6
     });
   }
+  exports2.dateToProtoTimestamp = dateToProtoTimestamp;
 });
 
 // node_modules/apollo-server-core/dist/plugin/usageReporting/traceDetails.js
@@ -39328,7 +39270,7 @@ var require_dist10 = __commonJS((exports2) => {
 var require_package2 = __commonJS((exports2, module2) => {
   module2.exports = {
     name: "apollo-server-core",
-    version: "2.22.2",
+    version: "2.24.0",
     description: "Core engine for Apollo GraphQL server",
     main: "dist/index.js",
     types: "dist/index.d.ts",
@@ -39353,24 +39295,24 @@ var require_package2 = __commonJS((exports2, module2) => {
       node: ">=6"
     },
     dependencies: {
-      "@apollographql/apollo-tools": "^0.4.3",
+      "@apollographql/apollo-tools": "^0.5.0",
       "@apollographql/graphql-playground-html": "1.6.27",
       "@apollographql/graphql-upload-8-fork": "^8.1.3",
       "@josephg/resolvable": "^1.0.0",
       "@types/ws": "^7.0.0",
-      "apollo-cache-control": "^0.12.0",
-      "apollo-datasource": "^0.8.0",
-      "apollo-graphql": "^0.6.0",
-      "apollo-reporting-protobuf": "^0.6.2",
-      "apollo-server-caching": "^0.6.0",
-      "apollo-server-env": "^3.0.0",
-      "apollo-server-errors": "^2.4.2",
-      "apollo-server-plugin-base": "^0.11.0",
-      "apollo-server-types": "^0.7.0",
-      "apollo-tracing": "^0.13.0",
+      "apollo-cache-control": "^0.13.0",
+      "apollo-datasource": "^0.9.0",
+      "apollo-graphql": "^0.9.0",
+      "apollo-reporting-protobuf": "^0.7.0",
+      "apollo-server-caching": "^0.7.0",
+      "apollo-server-env": "^3.1.0",
+      "apollo-server-errors": "^2.5.0",
+      "apollo-server-plugin-base": "^0.12.0",
+      "apollo-server-types": "^0.8.0",
+      "apollo-tracing": "^0.14.0",
       "async-retry": "^1.2.1",
       "fast-json-stable-stringify": "^2.0.0",
-      "graphql-extensions": "^0.13.0",
+      "graphql-extensions": "^0.14.0",
       "graphql-tag": "^2.11.0",
       "graphql-tools": "^4.0.8",
       loglevel: "^1.6.7",
@@ -39383,7 +39325,7 @@ var require_package2 = __commonJS((exports2, module2) => {
     peerDependencies: {
       graphql: "^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0"
     },
-    gitHead: "9562af498407e86923d96902683bb5285b849800"
+    gitHead: "f2349d0e10633ee79bed152f682e53730175d59b"
   };
 });
 
@@ -39720,6 +39662,423 @@ var require_schemaReporting = __commonJS((exports2) => {
   exports2.computeExecutableSchemaId = computeExecutableSchemaId;
 });
 
+// node_modules/apollo-server-core/dist/plugin/usageReporting/durationHistogram.js
+var require_durationHistogram = __commonJS((exports2) => {
+  "use strict";
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.DurationHistogram = void 0;
+  var DurationHistogram = class {
+    constructor(options) {
+      const initSize = (options === null || options === void 0 ? void 0 : options.initSize) || 74;
+      const buckets = options === null || options === void 0 ? void 0 : options.buckets;
+      const arrayInitSize = Math.max((buckets === null || buckets === void 0 ? void 0 : buckets.length) || 0, initSize);
+      this.buckets = Array(arrayInitSize).fill(0);
+      if (buckets) {
+        buckets.forEach((val, index) => this.buckets[index] = val);
+      }
+    }
+    toArray() {
+      let bufferedZeroes = 0;
+      const outputArray = [];
+      for (const value of this.buckets) {
+        if (value === 0) {
+          bufferedZeroes++;
+        } else {
+          if (bufferedZeroes === 1) {
+            outputArray.push(0);
+          } else if (bufferedZeroes !== 0) {
+            outputArray.push(-bufferedZeroes);
+          }
+          outputArray.push(value);
+          bufferedZeroes = 0;
+        }
+      }
+      return outputArray;
+    }
+    static durationToBucket(durationNs) {
+      const log2 = Math.log(durationNs / 1e3);
+      const unboundedBucket = Math.ceil(log2 / DurationHistogram.EXPONENT_LOG);
+      return unboundedBucket <= 0 || Number.isNaN(unboundedBucket) ? 0 : unboundedBucket >= DurationHistogram.BUCKET_COUNT ? DurationHistogram.BUCKET_COUNT - 1 : unboundedBucket;
+    }
+    incrementDuration(durationNs) {
+      this.incrementBucket(DurationHistogram.durationToBucket(durationNs));
+      return this;
+    }
+    incrementBucket(bucket, value = 1) {
+      if (bucket >= DurationHistogram.BUCKET_COUNT) {
+        throw Error("Bucket is out of bounds of the buckets array");
+      }
+      if (bucket >= this.buckets.length) {
+        const oldLength = this.buckets.length;
+        this.buckets.length = bucket + 1;
+        this.buckets.fill(0, oldLength);
+      }
+      this.buckets[bucket] += value;
+    }
+    combine(otherHistogram) {
+      for (let i = 0; i < otherHistogram.buckets.length; i++) {
+        this.incrementBucket(i, otherHistogram.buckets[i]);
+      }
+    }
+  };
+  exports2.DurationHistogram = DurationHistogram;
+  DurationHistogram.BUCKET_COUNT = 384;
+  DurationHistogram.EXPONENT_LOG = Math.log(1.1);
+});
+
+// node_modules/apollo-server-core/dist/plugin/usageReporting/iterateOverTrace.js
+var require_iterateOverTrace = __commonJS((exports2) => {
+  "use strict";
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.iterateOverTrace = void 0;
+  function iterateOverTrace(trace, f, includePath) {
+    const rootPath = includePath ? new RootCollectingPathsResponseNamePath() : notCollectingPathsResponseNamePath;
+    if (trace.root) {
+      if (iterateOverTraceNode(trace.root, rootPath, f))
+        return;
+    }
+    if (trace.queryPlan) {
+      if (iterateOverQueryPlan(trace.queryPlan, rootPath, f))
+        return;
+    }
+  }
+  exports2.iterateOverTrace = iterateOverTrace;
+  function iterateOverQueryPlan(node, rootPath, f) {
+    var _a, _b, _c, _d, _e;
+    if (!node)
+      return false;
+    if (((_b = (_a = node.fetch) === null || _a === void 0 ? void 0 : _a.trace) === null || _b === void 0 ? void 0 : _b.root) && node.fetch.serviceName) {
+      return iterateOverTraceNode(node.fetch.trace.root, rootPath.child(`service:${node.fetch.serviceName}`), f);
+    }
+    if ((_c = node.flatten) === null || _c === void 0 ? void 0 : _c.node) {
+      return iterateOverQueryPlan(node.flatten.node, rootPath, f);
+    }
+    if ((_d = node.parallel) === null || _d === void 0 ? void 0 : _d.nodes) {
+      return node.parallel.nodes.some((node2) => iterateOverQueryPlan(node2, rootPath, f));
+    }
+    if ((_e = node.sequence) === null || _e === void 0 ? void 0 : _e.nodes) {
+      return node.sequence.nodes.some((node2) => iterateOverQueryPlan(node2, rootPath, f));
+    }
+    return false;
+  }
+  function iterateOverTraceNode(node, path, f) {
+    var _a, _b;
+    if (f(node, path)) {
+      return true;
+    }
+    return (_b = (_a = node.child) === null || _a === void 0 ? void 0 : _a.some((child) => {
+      const childPath = child.responseName ? path.child(child.responseName) : path;
+      return iterateOverTraceNode(child, childPath, f);
+    })) !== null && _b !== void 0 ? _b : false;
+  }
+  var notCollectingPathsResponseNamePath = {
+    toArray() {
+      throw Error("not collecting paths!");
+    },
+    child() {
+      return this;
+    }
+  };
+  var RootCollectingPathsResponseNamePath = class {
+    toArray() {
+      return [];
+    }
+    child(responseName) {
+      return new ChildCollectingPathsResponseNamePath(responseName, this);
+    }
+  };
+  var ChildCollectingPathsResponseNamePath = class {
+    constructor(responseName, prev) {
+      this.responseName = responseName;
+      this.prev = prev;
+    }
+    toArray() {
+      const out = [];
+      let curr = this;
+      while (curr instanceof ChildCollectingPathsResponseNamePath) {
+        out.push(curr.responseName);
+        curr = curr.prev;
+      }
+      return out.reverse();
+    }
+    child(responseName) {
+      return new ChildCollectingPathsResponseNamePath(responseName, this);
+    }
+  };
+});
+
+// node_modules/apollo-server-core/dist/plugin/usageReporting/stats.js
+var require_stats = __commonJS((exports2) => {
+  "use strict";
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.OurContextualizedStats = exports2.OurReport = exports2.SizeEstimator = void 0;
+  var durationHistogram_1 = require_durationHistogram();
+  var apollo_reporting_protobuf_1 = require_dist9();
+  var iterateOverTrace_1 = require_iterateOverTrace();
+  var SizeEstimator = class {
+    constructor() {
+      this.bytes = 0;
+    }
+  };
+  exports2.SizeEstimator = SizeEstimator;
+  var OurReport = class {
+    constructor(header) {
+      this.header = header;
+      this.tracesPerQuery = Object.create(null);
+      this.endTime = null;
+      this.sizeEstimator = new SizeEstimator();
+    }
+    addTrace({statsReportKey, trace, asTrace, includeTracesContributingToStats}) {
+      const tracesAndStats = this.getTracesAndStats(statsReportKey);
+      if (asTrace) {
+        const encodedTrace = apollo_reporting_protobuf_1.Trace.encode(trace).finish();
+        tracesAndStats.trace.push(encodedTrace);
+        this.sizeEstimator.bytes += 2 + encodedTrace.length;
+      } else {
+        tracesAndStats.statsWithContext.addTrace(trace, this.sizeEstimator);
+        if (includeTracesContributingToStats) {
+          const encodedTrace = apollo_reporting_protobuf_1.Trace.encode(trace).finish();
+          tracesAndStats.internalTracesContributingToStats.push(encodedTrace);
+          this.sizeEstimator.bytes += 2 + encodedTrace.length;
+        }
+      }
+    }
+    getTracesAndStats(statsReportKey) {
+      const existing = this.tracesPerQuery[statsReportKey];
+      if (existing) {
+        return existing;
+      }
+      this.sizeEstimator.bytes += estimatedBytesForString(statsReportKey);
+      return this.tracesPerQuery[statsReportKey] = new OurTracesAndStats();
+    }
+  };
+  exports2.OurReport = OurReport;
+  var OurTracesAndStats = class {
+    constructor() {
+      this.trace = [];
+      this.statsWithContext = new StatsByContext();
+      this.internalTracesContributingToStats = [];
+    }
+  };
+  var StatsByContext = class {
+    constructor() {
+      this.map = Object.create(null);
+    }
+    toArray() {
+      return Object.values(this.map);
+    }
+    addTrace(trace, sizeEstimator) {
+      this.getContextualizedStats(trace, sizeEstimator).addTrace(trace, sizeEstimator);
+    }
+    getContextualizedStats(trace, sizeEstimator) {
+      const statsContext = {
+        clientName: trace.clientName,
+        clientVersion: trace.clientVersion,
+        clientReferenceId: trace.clientReferenceId
+      };
+      const statsContextKey = JSON.stringify(statsContext);
+      const existing = this.map[statsContextKey];
+      if (existing) {
+        return existing;
+      }
+      sizeEstimator.bytes += 20 + estimatedBytesForString(trace.clientName) + estimatedBytesForString(trace.clientVersion) + estimatedBytesForString(trace.clientReferenceId);
+      const contextualizedStats = new OurContextualizedStats(statsContext);
+      this.map[statsContextKey] = contextualizedStats;
+      return contextualizedStats;
+    }
+  };
+  var OurContextualizedStats = class {
+    constructor(context) {
+      this.context = context;
+      this.queryLatencyStats = new OurQueryLatencyStats();
+      this.perTypeStat = Object.create(null);
+    }
+    addTrace(trace, sizeEstimator) {
+      var _a;
+      this.queryLatencyStats.requestCount++;
+      if (trace.fullQueryCacheHit) {
+        this.queryLatencyStats.cacheLatencyCount.incrementDuration(trace.durationNs);
+        this.queryLatencyStats.cacheHits++;
+      } else {
+        this.queryLatencyStats.latencyCount.incrementDuration(trace.durationNs);
+      }
+      if (!trace.fullQueryCacheHit && ((_a = trace.cachePolicy) === null || _a === void 0 ? void 0 : _a.maxAgeNs) != null) {
+        switch (trace.cachePolicy.scope) {
+          case apollo_reporting_protobuf_1.Trace.CachePolicy.Scope.PRIVATE:
+            this.queryLatencyStats.privateCacheTtlCount.incrementDuration(trace.cachePolicy.maxAgeNs);
+            break;
+          case apollo_reporting_protobuf_1.Trace.CachePolicy.Scope.PUBLIC:
+            this.queryLatencyStats.publicCacheTtlCount.incrementDuration(trace.cachePolicy.maxAgeNs);
+            break;
+        }
+      }
+      if (trace.persistedQueryHit) {
+        this.queryLatencyStats.persistedQueryHits++;
+      }
+      if (trace.persistedQueryRegister) {
+        this.queryLatencyStats.persistedQueryMisses++;
+      }
+      if (trace.forbiddenOperation) {
+        this.queryLatencyStats.forbiddenOperationCount++;
+      }
+      if (trace.registeredOperation) {
+        this.queryLatencyStats.registeredOperationCount++;
+      }
+      let hasError = false;
+      const traceNodeStats = (node, path) => {
+        var _a2, _b, _c, _d, _e;
+        if ((_a2 = node.error) === null || _a2 === void 0 ? void 0 : _a2.length) {
+          hasError = true;
+          let currPathErrorStats = this.queryLatencyStats.rootErrorStats;
+          path.toArray().forEach((subPath) => {
+            currPathErrorStats = currPathErrorStats.getChild(subPath, sizeEstimator);
+          });
+          currPathErrorStats.requestsWithErrorsCount += 1;
+          currPathErrorStats.errorsCount += node.error.length;
+        }
+        const fieldName = node.originalFieldName || node.responseName;
+        if (node.parentType && fieldName && node.type && node.endTime != null && node.startTime != null && node.endTime >= node.startTime) {
+          const typeStat = this.getTypeStat(node.parentType, sizeEstimator);
+          const fieldStat = typeStat.getFieldStat(fieldName, node.type, sizeEstimator);
+          fieldStat.errorsCount += (_c = (_b = node.error) === null || _b === void 0 ? void 0 : _b.length) !== null && _c !== void 0 ? _c : 0;
+          fieldStat.count++;
+          fieldStat.requestsWithErrorsCount += ((_e = (_d = node.error) === null || _d === void 0 ? void 0 : _d.length) !== null && _e !== void 0 ? _e : 0) > 0 ? 1 : 0;
+          fieldStat.latencyCount.incrementDuration(node.endTime - node.startTime);
+        }
+        return false;
+      };
+      iterateOverTrace_1.iterateOverTrace(trace, traceNodeStats, true);
+      if (hasError) {
+        this.queryLatencyStats.requestsWithErrorsCount++;
+      }
+    }
+    getTypeStat(parentType, sizeEstimator) {
+      const existing = this.perTypeStat[parentType];
+      if (existing) {
+        return existing;
+      }
+      sizeEstimator.bytes += estimatedBytesForString(parentType);
+      const typeStat = new OurTypeStat();
+      this.perTypeStat[parentType] = typeStat;
+      return typeStat;
+    }
+  };
+  exports2.OurContextualizedStats = OurContextualizedStats;
+  var OurQueryLatencyStats = class {
+    constructor() {
+      this.latencyCount = new durationHistogram_1.DurationHistogram();
+      this.requestCount = 0;
+      this.cacheHits = 0;
+      this.persistedQueryHits = 0;
+      this.persistedQueryMisses = 0;
+      this.cacheLatencyCount = new durationHistogram_1.DurationHistogram();
+      this.rootErrorStats = new OurPathErrorStats();
+      this.requestsWithErrorsCount = 0;
+      this.publicCacheTtlCount = new durationHistogram_1.DurationHistogram();
+      this.privateCacheTtlCount = new durationHistogram_1.DurationHistogram();
+      this.registeredOperationCount = 0;
+      this.forbiddenOperationCount = 0;
+    }
+  };
+  var OurPathErrorStats = class {
+    constructor() {
+      this.children = Object.create(null);
+      this.errorsCount = 0;
+      this.requestsWithErrorsCount = 0;
+    }
+    getChild(subPath, sizeEstimator) {
+      const existing = this.children[subPath];
+      if (existing) {
+        return existing;
+      }
+      const child = new OurPathErrorStats();
+      this.children[subPath] = child;
+      sizeEstimator.bytes += estimatedBytesForString(subPath) + 4;
+      return child;
+    }
+  };
+  var OurTypeStat = class {
+    constructor() {
+      this.perFieldStat = Object.create(null);
+    }
+    getFieldStat(fieldName, returnType, sizeEstimator) {
+      const existing = this.perFieldStat[fieldName];
+      if (existing) {
+        return existing;
+      }
+      sizeEstimator.bytes += estimatedBytesForString(fieldName) + estimatedBytesForString(returnType) + 10;
+      const fieldStat = new OurFieldStat(returnType);
+      this.perFieldStat[fieldName] = fieldStat;
+      return fieldStat;
+    }
+  };
+  var OurFieldStat = class {
+    constructor(returnType) {
+      this.returnType = returnType;
+      this.errorsCount = 0;
+      this.count = 0;
+      this.requestsWithErrorsCount = 0;
+      this.latencyCount = new durationHistogram_1.DurationHistogram();
+    }
+  };
+  function estimatedBytesForString(s) {
+    return 2 + Buffer.byteLength(s);
+  }
+});
+
+// node_modules/apollo-server-core/dist/plugin/usageReporting/defaultSendOperationsAsTrace.js
+var require_defaultSendOperationsAsTrace = __commonJS((exports2) => {
+  "use strict";
+  var __importDefault = exports2 && exports2.__importDefault || function(mod) {
+    return mod && mod.__esModule ? mod : {default: mod};
+  };
+  Object.defineProperty(exports2, "__esModule", {value: true});
+  exports2.defaultSendOperationsAsTrace = void 0;
+  var lru_cache_1 = __importDefault(require_lru_cache2());
+  var iterateOverTrace_1 = require_iterateOverTrace();
+  var durationHistogram_1 = require_durationHistogram();
+  function defaultSendOperationsAsTrace() {
+    const cache2 = new lru_cache_1.default({
+      max: Math.pow(2, 20),
+      length: (_val, key) => {
+        return key && Buffer.byteLength(key, "uft8") || 0;
+      }
+    });
+    return (trace, statsReportKey) => {
+      var _a;
+      const endTimeSeconds = (_a = trace.endTime) === null || _a === void 0 ? void 0 : _a.seconds;
+      if (endTimeSeconds == null) {
+        throw Error("programming error: endTime not set on trace");
+      }
+      const hasErrors = traceHasErrors(trace);
+      const cacheKey = JSON.stringify([
+        statsReportKey,
+        durationHistogram_1.DurationHistogram.durationToBucket(trace.durationNs),
+        Math.floor(endTimeSeconds / 60),
+        hasErrors ? Math.floor(endTimeSeconds / 5) : ""
+      ]);
+      if (cache2.get(cacheKey)) {
+        return false;
+      }
+      cache2.set(cacheKey, true);
+      return true;
+    };
+  }
+  exports2.defaultSendOperationsAsTrace = defaultSendOperationsAsTrace;
+  function traceHasErrors(trace) {
+    let hasErrors = false;
+    function traceNodeStats(node) {
+      var _a, _b;
+      if (((_b = (_a = node.error) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0) > 0) {
+        hasErrors = true;
+      }
+      return hasErrors;
+    }
+    iterateOverTrace_1.iterateOverTrace(trace, traceNodeStats, false);
+    return hasErrors;
+  }
+});
+
 // node_modules/apollo-server-core/dist/plugin/usageReporting/plugin.js
 var require_plugin = __commonJS((exports2) => {
   "use strict";
@@ -39766,6 +40125,9 @@ var require_plugin = __commonJS((exports2) => {
   var traceDetails_1 = require_traceDetails();
   var graphql_1 = require_graphql2();
   var schemaReporting_1 = require_schemaReporting();
+  var stats_1 = require_stats();
+  var apollo_cache_control_1 = require_dist8();
+  var defaultSendOperationsAsTrace_1 = require_defaultSendOperationsAsTrace();
   var reportHeaderDefaults = {
     hostname: os_1.default.hostname(),
     agentVersion: `apollo-server-core@${require_package2().version}`,
@@ -39778,8 +40140,7 @@ var require_plugin = __commonJS((exports2) => {
       this.reset();
     }
     reset() {
-      this.report = new apollo_reporting_protobuf_1.Report({header: this.header});
-      this.size = 0;
+      this.report = new stats_1.OurReport(this.header);
     }
   };
   function ApolloServerPluginUsageReporting(options = Object.create(null)) {
@@ -39795,7 +40156,7 @@ var require_plugin = __commonJS((exports2) => {
         return requestDidStartHandler(requestContext);
       },
       serverWillStart({logger: serverLogger, apollo, serverlessFramework}) {
-        var _a, _b;
+        var _a, _b, _c, _d;
         const logger = (_a = options.logger) !== null && _a !== void 0 ? _a : serverLogger;
         const {key, graphId} = apollo;
         if (!(key && graphId)) {
@@ -39811,6 +40172,9 @@ var require_plugin = __commonJS((exports2) => {
         if (!sendReportsImmediately) {
           reportTimer = setInterval(() => sendAllReportsAndReportErrors(), options.reportIntervalMs || 10 * 1e3);
         }
+        let graphMightSupportTraces = true;
+        const sendOperationAsTrace = (_c = options.experimental_sendOperationAsTrace) !== null && _c !== void 0 ? _c : defaultSendOperationsAsTrace_1.defaultSendOperationsAsTrace();
+        const includeTracesContributingToStats = (_d = options.internal_includeTracesContributingToStats) !== null && _d !== void 0 ? _d : false;
         let stopped = false;
         function executableSchemaIdForSchema(schema) {
           if ((lastSeenExecutableSchemaToId === null || lastSeenExecutableSchemaToId === void 0 ? void 0 : lastSeenExecutableSchemaToId.executableSchema) === schema) {
@@ -39849,20 +40213,23 @@ var require_plugin = __commonJS((exports2) => {
           });
         }
         const sendReport = (executableSchemaId) => __awaiter(this, void 0, void 0, function* () {
+          var _e;
           const reportData = getReportData(executableSchemaId);
           const {report} = reportData;
           reportData.reset();
           if (Object.keys(report.tracesPerQuery).length === 0) {
             return;
           }
-          if (options.debugPrintReports) {
-            logger.warn(`Apollo usage report: ${JSON.stringify(report.toJSON())}`);
-          }
+          report.endTime = traceTreeBuilder_1.dateToProtoTimestamp(new Date());
           const protobufError = apollo_reporting_protobuf_1.Report.verify(report);
           if (protobufError) {
             throw new Error(`Error encoding report: ${protobufError}`);
           }
           const message = apollo_reporting_protobuf_1.Report.encode(report).finish();
+          if (options.debugPrintReports) {
+            const decodedReport = apollo_reporting_protobuf_1.Report.decode(message);
+            logger.warn(`Apollo usage report: ${JSON.stringify(decodedReport.toJSON())}`);
+          }
           const compressed = yield new Promise((resolve, reject) => {
             const messageBuffer = Buffer.from(message.buffer, message.byteOffset, message.byteLength);
             zlib_1.gzip(messageBuffer, (err, gzipResult) => {
@@ -39879,7 +40246,8 @@ var require_plugin = __commonJS((exports2) => {
               headers: {
                 "user-agent": "ApolloServerPluginUsageReporting",
                 "x-api-key": key,
-                "content-encoding": "gzip"
+                "content-encoding": "gzip",
+                accept: "application/json"
               },
               body: compressed,
               agent: options.requestAgent
@@ -39898,6 +40266,19 @@ var require_plugin = __commonJS((exports2) => {
           });
           if (response.status < 200 || response.status >= 300) {
             throw new Error(`Error sending report to Apollo servers: HTTP status ${response.status}, ${(yield response.text()) || "(no body)"}`);
+          }
+          if (graphMightSupportTraces && response.status === 200 && ((_e = response.headers.get("content-type")) === null || _e === void 0 ? void 0 : _e.match(/^\s*application\/json\s*(?:;|$)/i))) {
+            const body = yield response.text();
+            let parsedBody;
+            try {
+              parsedBody = JSON.parse(body);
+            } catch (e) {
+              throw new Error(`Error parsing response from Apollo servers: ${e}`);
+            }
+            if (parsedBody.tracesIgnored === true) {
+              logger.debug("This graph's organization does not have access to traces; sending all subsequent operations as traces.");
+              graphMightSupportTraces = false;
+            }
           }
           if (options.debugPrintReports) {
             logger.warn(`Apollo usage report: status ${response.status}`);
@@ -39953,6 +40334,12 @@ var require_plugin = __commonJS((exports2) => {
             treeBuilder.trace.fullQueryCacheHit = !!metrics.responseCacheHit;
             treeBuilder.trace.forbiddenOperation = !!metrics.forbiddenOperation;
             treeBuilder.trace.registeredOperation = !!metrics.registeredOperation;
+            if (requestContext.overallCachePolicy) {
+              treeBuilder.trace.cachePolicy = new apollo_reporting_protobuf_1.Trace.CachePolicy({
+                scope: requestContext.overallCachePolicy.scope === apollo_cache_control_1.CacheScope.Private ? apollo_reporting_protobuf_1.Trace.CachePolicy.Scope.PRIVATE : requestContext.overallCachePolicy.scope === apollo_cache_control_1.CacheScope.Public ? apollo_reporting_protobuf_1.Trace.CachePolicy.Scope.PUBLIC : apollo_reporting_protobuf_1.Trace.CachePolicy.Scope.UNKNOWN,
+                maxAgeNs: requestContext.overallCachePolicy.maxAge * 1e9
+              });
+            }
             const operationName = requestContext.operationName || requestContext.request.operationName || "";
             if (metrics.queryPlanTrace) {
               treeBuilder.trace.queryPlan = metrics.queryPlanTrace;
@@ -39967,6 +40354,7 @@ var require_plugin = __commonJS((exports2) => {
                 const executableSchemaId = overriddenExecutableSchemaId !== null && overriddenExecutableSchemaId !== void 0 ? overriddenExecutableSchemaId : executableSchemaIdForSchema(schema);
                 const reportData = getReportData(executableSchemaId);
                 const {report} = reportData;
+                const {trace} = treeBuilder;
                 let statsReportKey = void 0;
                 if (!requestContext.document) {
                   statsReportKey = `## GraphQLParseFailure
@@ -39980,29 +40368,25 @@ var require_plugin = __commonJS((exports2) => {
                 }
                 if (statsReportKey) {
                   if (options.sendUnexecutableOperationDocuments) {
-                    treeBuilder.trace.unexecutedOperationBody = requestContext.source;
-                    treeBuilder.trace.unexecutedOperationName = operationName;
+                    trace.unexecutedOperationBody = requestContext.source;
+                    trace.unexecutedOperationName = operationName;
                   }
                 } else {
                   const signature = getTraceSignature();
                   statsReportKey = `# ${operationName || "-"}
 ${signature}`;
                 }
-                const protobufError = apollo_reporting_protobuf_1.Trace.verify(treeBuilder.trace);
+                const protobufError = apollo_reporting_protobuf_1.Trace.verify(trace);
                 if (protobufError) {
                   throw new Error(`Error encoding trace: ${protobufError}`);
                 }
-                const encodedTrace = apollo_reporting_protobuf_1.Trace.encode(treeBuilder.trace).finish();
-                if (!report.tracesPerQuery.hasOwnProperty(statsReportKey)) {
-                  report.tracesPerQuery[statsReportKey] = new apollo_reporting_protobuf_1.TracesAndStats();
-                  report.tracesPerQuery[statsReportKey].encodedTraces = [];
-                }
-                report.tracesPerQuery[statsReportKey].encodedTraces.push(encodedTrace);
-                reportData.size += encodedTrace.length + Buffer.byteLength(statsReportKey);
-                if (options.debugPrintReports) {
-                  logger2.warn(`Apollo usage report trace: ${JSON.stringify(treeBuilder.trace.toJSON())}`);
-                }
-                if (sendReportsImmediately || reportData.size >= (options.maxUncompressedReportSize || 4 * 1024 * 1024)) {
+                report.addTrace({
+                  statsReportKey,
+                  trace,
+                  asTrace: graphMightSupportTraces && sendOperationAsTrace(trace, statsReportKey),
+                  includeTracesContributingToStats
+                });
+                if (sendReportsImmediately || report.sizeEstimator.bytes >= (options.maxUncompressedReportSize || 4 * 1024 * 1024)) {
                   yield sendReportAndReportErrors(executableSchemaId);
                 }
               });
@@ -42154,7 +42538,7 @@ var require_encoding = __commonJS((exports2) => {
 });
 
 // node_modules/busboy/lib/utils.js
-var require_utils2 = __commonJS((exports2) => {
+var require_utils = __commonJS((exports2) => {
   var jsencoding = require_encoding();
   var RE_ENCODED = /%([a-fA-F0-9]{2})/g;
   function encodedReplacer(match, byte) {
@@ -42881,9 +43265,9 @@ var require_multipart = __commonJS((exports2, module2) => {
   var ReadableStream = require("stream").Readable;
   var inherits = require("util").inherits;
   var Dicer = require_Dicer();
-  var parseParams = require_utils2().parseParams;
-  var decodeText = require_utils2().decodeText;
-  var basename = require_utils2().basename;
+  var parseParams = require_utils().parseParams;
+  var decodeText = require_utils().decodeText;
+  var basename = require_utils().basename;
   var RE_BOUNDARY = /^boundary$/i;
   var RE_FIELD = /^form-data$/i;
   var RE_CHARSET = /^charset$/i;
@@ -43117,8 +43501,8 @@ var require_multipart = __commonJS((exports2, module2) => {
 
 // node_modules/busboy/lib/types/urlencoded.js
 var require_urlencoded = __commonJS((exports2, module2) => {
-  var Decoder = require_utils2().Decoder;
-  var decodeText = require_utils2().decodeText;
+  var Decoder = require_utils().Decoder;
+  var decodeText = require_utils().decodeText;
   var RE_CHARSET = /^charset$/i;
   UrlEncoded.detect = /^application\/x-www-form-urlencoded/i;
   function UrlEncoded(boy, cfg) {
@@ -43288,7 +43672,7 @@ var require_main = __commonJS((exports2, module2) => {
   var fs = require("fs");
   var WritableStream = require("stream").Writable;
   var inherits = require("util").inherits;
-  var parseParams = require_utils2().parseParams;
+  var parseParams = require_utils().parseParams;
   function Busboy(opts) {
     if (!(this instanceof Busboy))
       return new Busboy(opts);
@@ -43554,11 +43938,6 @@ var require_lib8 = __commonJS((exports2) => {
 
 // node_modules/depd/lib/compat/callsite-tostring.js
 var require_callsite_tostring = __commonJS((exports2, module2) => {
-  /*!
-   * depd
-   * Copyright(c) 2014 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   module2.exports = callSiteToString2;
   function callSiteFileLocation(callSite) {
@@ -43629,11 +44008,6 @@ var require_callsite_tostring = __commonJS((exports2, module2) => {
 
 // node_modules/depd/lib/compat/event-listener-count.js
 var require_event_listener_count = __commonJS((exports2, module2) => {
-  /*!
-   * depd
-   * Copyright(c) 2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   module2.exports = eventListenerCount2;
   function eventListenerCount2(emitter, type) {
@@ -43643,11 +44017,6 @@ var require_event_listener_count = __commonJS((exports2, module2) => {
 
 // node_modules/depd/lib/compat/index.js
 var require_compat = __commonJS((exports2, module2) => {
-  /*!
-   * depd
-   * Copyright(c) 2014-2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var EventEmitter = require("events").EventEmitter;
   lazyProperty(module2.exports, "callSiteToString", function callSiteToString2() {
@@ -43691,11 +44060,6 @@ var require_compat = __commonJS((exports2, module2) => {
 
 // node_modules/depd/index.js
 var require_depd = __commonJS((exports, module) => {
-  /*!
-   * depd
-   * Copyright(c) 2014-2017 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   var callSiteToString = require_compat().callSiteToString;
   var eventListenerCount = require_compat().eventListenerCount;
   var relative = require("path").relative;
@@ -44080,12 +44444,6 @@ var require_codes = __commonJS((exports2, module2) => {
 
 // node_modules/statuses/index.js
 var require_statuses = __commonJS((exports2, module2) => {
-  /*!
-   * statuses
-   * Copyright(c) 2014 Jonathan Ong
-   * Copyright(c) 2016 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var codes = require_codes();
   module2.exports = status;
@@ -44146,11 +44504,6 @@ var require_statuses = __commonJS((exports2, module2) => {
 
 // node_modules/toidentifier/index.js
 var require_toidentifier = __commonJS((exports2, module2) => {
-  /*!
-   * toidentifier
-   * Copyright(c) 2016 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   module2.exports = toIdentifier;
   function toIdentifier(str) {
     return str.split(" ").map(function(token) {
@@ -44161,12 +44514,6 @@ var require_toidentifier = __commonJS((exports2, module2) => {
 
 // node_modules/@apollographql/graphql-upload-8-fork/node_modules/http-errors/index.js
 var require_http_errors = __commonJS((exports2, module2) => {
-  /*!
-   * http-errors
-   * Copyright(c) 2014 Jonathan Ong
-   * Copyright(c) 2016 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var deprecate = require_depd()("http-errors");
   var setPrototypeOf = require_setprototypeof();
@@ -45129,7 +45476,7 @@ var require_is_string = __commonJS((exports2) => {
 });
 
 // node_modules/subscriptions-transport-ws/dist/utils/is-object.js
-var require_is_object2 = __commonJS((exports2) => {
+var require_is_object3 = __commonJS((exports2) => {
   "use strict";
   Object.defineProperty(exports2, "__esModule", {value: true});
   function isObject(value) {
@@ -45376,7 +45723,7 @@ var require_client = __commonJS((exports2) => {
   var Backoff = require_backo2();
   var eventemitter3_1 = require_eventemitter3();
   var is_string_1 = require_is_string();
-  var is_object_1 = require_is_object2();
+  var is_object_1 = require_is_object3();
   var printer_1 = require_printer();
   var getOperationAST_1 = require_getOperationAST();
   var symbol_observable_1 = require_lib10();
@@ -48003,7 +48350,7 @@ var require_server = __commonJS((exports2) => {
   var WebSocket = require_ws();
   var message_types_1 = require_message_types();
   var protocol_1 = require_protocol();
-  var is_object_1 = require_is_object2();
+  var is_object_1 = require_is_object3();
   var graphql_1 = require_graphql2();
   var empty_iterable_1 = require_empty_iterable();
   var iterall_1 = require_iterall();
@@ -48948,9 +49295,9 @@ var require_ApolloServer = __commonJS((exports2) => {
         }, this.requestOptions);
       });
     }
-    executeOperation(request) {
+    executeOperation(request, integrationContextArgument) {
       return __awaiter(this, void 0, void 0, function* () {
-        const options = yield this.graphQLServerOptions();
+        const options = yield this.graphQLServerOptions(integrationContextArgument);
         if (typeof options.context === "function") {
           options.context = options.context();
         } else if (typeof options.context === "object") {
@@ -49024,7 +49371,7 @@ var require_requestPipelineAPI = __commonJS((exports2) => {
   }});
 });
 
-// node_modules/graphql-tag/lib/graphql-tag.umd.js
+// node_modules/apollo-server-core/node_modules/graphql-tag/lib/graphql-tag.umd.js
 var require_graphql_tag_umd = __commonJS((exports2, module2) => {
   (function(global2, factory) {
     typeof exports2 === "object" && typeof module2 !== "undefined" ? factory() : typeof define === "function" && define.amd ? define(factory) : factory();
@@ -49631,11 +49978,6 @@ var require_dist13 = __commonJS((exports2) => {
 
 // node_modules/object-assign/index.js
 var require_object_assign = __commonJS((exports2, module2) => {
-  /*
-  object-assign
-  (c) Sindre Sorhus
-  @license MIT
-  */
   "use strict";
   var getOwnPropertySymbols = Object.getOwnPropertySymbols;
   var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -49704,11 +50046,6 @@ var require_object_assign = __commonJS((exports2, module2) => {
 
 // node_modules/vary/index.js
 var require_vary = __commonJS((exports2, module2) => {
-  /*!
-   * vary
-   * Copyright(c) 2014-2017 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   module2.exports = vary;
   module2.exports.append = append;
@@ -49986,12 +50323,6 @@ var require_lib11 = __commonJS((exports2, module2) => {
 
 // node_modules/bytes/index.js
 var require_bytes = __commonJS((exports2, module2) => {
-  /*!
-   * bytes
-   * Copyright(c) 2012-2014 TJ Holowaychuk
-   * Copyright(c) 2015 Jed Watson
-   * MIT Licensed
-   */
   "use strict";
   module2.exports = bytes;
   module2.exports.format = format;
@@ -50074,11 +50405,6 @@ var require_bytes = __commonJS((exports2, module2) => {
 
 // node_modules/content-type/index.js
 var require_content_type = __commonJS((exports2) => {
-  /*!
-   * content-type
-   * Copyright(c) 2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var PARAM_REGEXP = /; *([!#$%&'*+.^_`|~0-9A-Za-z-]+) *= *("(?:[\u000b\u0020\u0021\u0023-\u005b\u005d-\u007e\u0080-\u00ff]|\\[\u000b\u0020-\u00ff])*"|[!#$%&'*+.^_`|~0-9A-Za-z-]+) */g;
   var TEXT_REGEXP = /^[\u000b\u0020-\u007e\u0080-\u00ff]+$/;
@@ -50235,12 +50561,6 @@ var require_inherits2 = __commonJS((exports2, module2) => {
 
 // node_modules/http-errors/index.js
 var require_http_errors2 = __commonJS((exports2, module2) => {
-  /*!
-   * http-errors
-   * Copyright(c) 2014 Jonathan Ong
-   * Copyright(c) 2016 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var deprecate = require_depd()("http-errors");
   var setPrototypeOf = require_setprototypeof2();
@@ -54140,11 +54460,6 @@ var require_lib12 = __commonJS((exports2, module2) => {
 
 // node_modules/unpipe/index.js
 var require_unpipe = __commonJS((exports2, module2) => {
-  /*!
-   * unpipe
-   * Copyright(c) 2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   module2.exports = unpipe;
   function hasPipeDataListeners(stream) {
@@ -54181,12 +54496,6 @@ var require_unpipe = __commonJS((exports2, module2) => {
 
 // node_modules/raw-body/index.js
 var require_raw_body = __commonJS((exports2, module2) => {
-  /*!
-   * raw-body
-   * Copyright(c) 2013-2014 Jonathan Ong
-   * Copyright(c) 2014-2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var bytes = require_bytes();
   var createError = require_http_errors2();
@@ -54353,11 +54662,6 @@ var require_raw_body = __commonJS((exports2, module2) => {
 
 // node_modules/ee-first/index.js
 var require_ee_first = __commonJS((exports2, module2) => {
-  /*!
-   * ee-first
-   * Copyright(c) 2014 Jonathan Ong
-   * MIT Licensed
-   */
   "use strict";
   module2.exports = first;
   function first(stuff, done) {
@@ -54412,12 +54716,6 @@ var require_ee_first = __commonJS((exports2, module2) => {
 
 // node_modules/on-finished/index.js
 var require_on_finished = __commonJS((exports2, module2) => {
-  /*!
-   * on-finished
-   * Copyright(c) 2013 Jonathan Ong
-   * Copyright(c) 2014 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   module2.exports = onFinished;
   module2.exports.isFinished = isFinished;
@@ -54507,11 +54805,6 @@ var require_on_finished = __commonJS((exports2, module2) => {
 
 // node_modules/body-parser/lib/read.js
 var require_read = __commonJS((exports2, module2) => {
-  /*!
-   * body-parser
-   * Copyright(c) 2014-2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var createError = require_http_errors2();
   var getBody = require_raw_body();
@@ -54624,11 +54917,6 @@ var require_read = __commonJS((exports2, module2) => {
 
 // node_modules/media-typer/index.js
 var require_media_typer = __commonJS((exports2) => {
-  /*!
-   * media-typer
-   * Copyright(c) 2014 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   var paramRegExp = /; *([!#$%&'\*\+\-\.0-9A-Z\^_`a-z\|~]+) *= *("(?:[ !\u0023-\u005b\u005d-\u007e\u0080-\u00ff]|\\[\u0020-\u007e])*"|[!#$%&'\*\+\-\.0-9A-Z\^_`a-z\|~]+) */g;
   var textRegExp = /^[\u0020-\u007e\u0080-\u00ff]+$/;
   var tokenRegExp = /^[!#$%&'\*\+\-\.0-9A-Z\^_`a-z\|~]+$/;
@@ -63068,22 +63356,11 @@ var require_db = __commonJS((exports2, module2) => {
 
 // node_modules/mime-db/index.js
 var require_mime_db = __commonJS((exports2, module2) => {
-  /*!
-   * mime-db
-   * Copyright(c) 2014 Jonathan Ong
-   * MIT Licensed
-   */
   module2.exports = require_db();
 });
 
 // node_modules/mime-types/index.js
 var require_mime_types = __commonJS((exports2) => {
-  /*!
-   * mime-types
-   * Copyright(c) 2014 Jonathan Ong
-   * Copyright(c) 2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var db = require_mime_db();
   var extname = require("path").extname;
@@ -63173,12 +63450,6 @@ var require_mime_types = __commonJS((exports2) => {
 
 // node_modules/type-is/index.js
 var require_type_is = __commonJS((exports2, module2) => {
-  /*!
-   * type-is
-   * Copyright(c) 2014 Jonathan Ong
-   * Copyright(c) 2014-2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var typer = require_media_typer();
   var mime = require_mime_types();
@@ -63282,12 +63553,6 @@ var require_type_is = __commonJS((exports2, module2) => {
 
 // node_modules/body-parser/lib/types/json.js
 var require_json = __commonJS((exports2, module2) => {
-  /*!
-   * body-parser
-   * Copyright(c) 2014 Jonathan Ong
-   * Copyright(c) 2014-2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var bytes = require_bytes();
   var contentType = require_content_type();
@@ -63409,11 +63674,6 @@ var require_json = __commonJS((exports2, module2) => {
 
 // node_modules/body-parser/lib/types/raw.js
 var require_raw = __commonJS((exports2, module2) => {
-  /*!
-   * body-parser
-   * Copyright(c) 2014-2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var bytes = require_bytes();
   var debug = require_src2()("body-parser:raw");
@@ -63468,11 +63728,6 @@ var require_raw = __commonJS((exports2, module2) => {
 
 // node_modules/body-parser/lib/types/text.js
 var require_text = __commonJS((exports2, module2) => {
-  /*!
-   * body-parser
-   * Copyright(c) 2014-2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var bytes = require_bytes();
   var contentType = require_content_type();
@@ -63536,7 +63791,7 @@ var require_text = __commonJS((exports2, module2) => {
 });
 
 // node_modules/qs/lib/utils.js
-var require_utils3 = __commonJS((exports2, module2) => {
+var require_utils2 = __commonJS((exports2, module2) => {
   "use strict";
   var has = Object.prototype.hasOwnProperty;
   var isArray = Array.isArray;
@@ -63738,7 +63993,7 @@ var require_formats = __commonJS((exports2, module2) => {
 // node_modules/qs/lib/stringify.js
 var require_stringify2 = __commonJS((exports2, module2) => {
   "use strict";
-  var utils = require_utils3();
+  var utils = require_utils2();
   var formats = require_formats();
   var has = Object.prototype.hasOwnProperty;
   var arrayPrefixGenerators = {
@@ -63916,7 +64171,7 @@ var require_stringify2 = __commonJS((exports2, module2) => {
 // node_modules/qs/lib/parse.js
 var require_parse2 = __commonJS((exports2, module2) => {
   "use strict";
-  var utils = require_utils3();
+  var utils = require_utils2();
   var has = Object.prototype.hasOwnProperty;
   var defaults = {
     allowDots: false,
@@ -64110,12 +64365,6 @@ var require_lib13 = __commonJS((exports2, module2) => {
 
 // node_modules/body-parser/lib/types/urlencoded.js
 var require_urlencoded2 = __commonJS((exports2, module2) => {
-  /*!
-   * body-parser
-   * Copyright(c) 2014 Jonathan Ong
-   * Copyright(c) 2014-2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var bytes = require_bytes();
   var contentType = require_content_type();
@@ -64272,11 +64521,6 @@ var require_urlencoded2 = __commonJS((exports2, module2) => {
 
 // node_modules/body-parser/index.js
 var require_body_parser = __commonJS((exports2, module2) => {
-  /*!
-   * body-parser
-   * Copyright(c) 2014-2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var deprecate = require_depd()("body-parser");
   var parsers = Object.create(null);
@@ -66086,13 +66330,6 @@ var require_mediaType = __commonJS((exports2, module2) => {
 
 // node_modules/negotiator/index.js
 var require_negotiator = __commonJS((exports2, module2) => {
-  /*!
-   * negotiator
-   * Copyright(c) 2012 Federico Romero
-   * Copyright(c) 2012-2014 Isaac Z. Schlueter
-   * Copyright(c) 2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var modules = Object.create(null);
   module2.exports = Negotiator;
@@ -66171,12 +66408,6 @@ var require_negotiator = __commonJS((exports2, module2) => {
 
 // node_modules/accepts/index.js
 var require_accepts = __commonJS((exports2, module2) => {
-  /*!
-   * accepts
-   * Copyright(c) 2014 Jonathan Ong
-   * Copyright(c) 2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   var Negotiator = require_negotiator();
   var mime = require_mime_types();
@@ -68088,7 +68319,10 @@ var require_instrument = __commonJS((exports2) => {
         to
       });
       if (oldOnPopState) {
-        return oldOnPopState.apply(this, args);
+        try {
+          return oldOnPopState.apply(this, args);
+        } catch (_oO) {
+        }
       }
     };
     function historyReplacementFunction(originalHistoryFunction) {
@@ -68269,7 +68503,7 @@ var require_instrument = __commonJS((exports2) => {
 });
 
 // node_modules/@sentry/utils/dist/path.js
-var require_path2 = __commonJS((exports2) => {
+var require_path3 = __commonJS((exports2) => {
   Object.defineProperty(exports2, "__esModule", {value: true});
   function normalizeArray(parts, allowAboveRoot) {
     var up = 0;
@@ -68685,20 +68919,25 @@ var require_time = __commonJS((exports2, module2) => {
       return void 0;
     }
     var threshold = 3600 * 1e3;
-    var timeOriginIsReliable = performance2.timeOrigin && Math.abs(performance2.timeOrigin + performance2.now() - Date.now()) < threshold;
-    if (timeOriginIsReliable) {
-      exports2._browserPerformanceTimeOriginMode = "timeOrigin";
-      return performance2.timeOrigin;
-    }
+    var performanceNow = performance2.now();
+    var dateNow = Date.now();
+    var timeOriginDelta = performance2.timeOrigin ? Math.abs(performance2.timeOrigin + performanceNow - dateNow) : threshold;
+    var timeOriginIsReliable = timeOriginDelta < threshold;
     var navigationStart = performance2.timing && performance2.timing.navigationStart;
     var hasNavigationStart = typeof navigationStart === "number";
-    var navigationStartIsReliable = hasNavigationStart && Math.abs(navigationStart + performance2.now() - Date.now()) < threshold;
-    if (navigationStartIsReliable) {
-      exports2._browserPerformanceTimeOriginMode = "navigationStart";
-      return navigationStart;
+    var navigationStartDelta = hasNavigationStart ? Math.abs(navigationStart + performanceNow - dateNow) : threshold;
+    var navigationStartIsReliable = navigationStartDelta < threshold;
+    if (timeOriginIsReliable || navigationStartIsReliable) {
+      if (timeOriginDelta <= navigationStartDelta) {
+        exports2._browserPerformanceTimeOriginMode = "timeOrigin";
+        return performance2.timeOrigin;
+      } else {
+        exports2._browserPerformanceTimeOriginMode = "navigationStart";
+        return navigationStart;
+      }
     }
     exports2._browserPerformanceTimeOriginMode = "dateNow";
-    return Date.now();
+    return dateNow;
   }();
 });
 
@@ -68717,7 +68956,7 @@ var require_dist18 = __commonJS((exports2) => {
   tslib_1.__exportStar(require_misc(), exports2);
   tslib_1.__exportStar(require_node2(), exports2);
   tslib_1.__exportStar(require_object3(), exports2);
-  tslib_1.__exportStar(require_path2(), exports2);
+  tslib_1.__exportStar(require_path3(), exports2);
   tslib_1.__exportStar(require_promisebuffer(), exports2);
   tslib_1.__exportStar(require_stacktrace(), exports2);
   tslib_1.__exportStar(require_string(), exports2);
@@ -69763,8 +70002,8 @@ var require_baseclient = __commonJS((exports2) => {
       return eventId;
     };
     BaseClient2.prototype.captureSession = function(session) {
-      if (!session.release) {
-        utils_1.logger.warn("Discarded session because of missing release");
+      if (!(typeof session.release === "string")) {
+        utils_1.logger.warn("Discarded session because of missing or non-string release");
       } else {
         this._sendSession(session);
         session.update({init: false});
@@ -69946,10 +70185,10 @@ var require_baseclient = __commonJS((exports2) => {
       }
     };
     BaseClient2.prototype._applyIntegrationsMetadata = function(event) {
-      var sdkInfo = event.sdk;
       var integrationsArray = Object.keys(this._integrations);
-      if (sdkInfo && integrationsArray.length > 0) {
-        sdkInfo.integrations = integrationsArray;
+      if (integrationsArray.length > 0) {
+        event.sdk = event.sdk || {};
+        event.sdk.integrations = tslib_1.__spread(event.sdk.integrations || [], integrationsArray);
       }
     };
     BaseClient2.prototype._sendEvent = function(event) {
@@ -70112,10 +70351,7 @@ var require_request = __commonJS((exports2) => {
     if (!sdkInfo) {
       return event;
     }
-    event.sdk = event.sdk || {
-      name: sdkInfo.name,
-      version: sdkInfo.version
-    };
+    event.sdk = event.sdk || {};
     event.sdk.name = event.sdk.name || sdkInfo.name;
     event.sdk.version = event.sdk.version || sdkInfo.version;
     event.sdk.integrations = tslib_1.__spread(event.sdk.integrations || [], sdkInfo.integrations || []);
@@ -70184,7 +70420,7 @@ var require_sdk = __commonJS((exports2) => {
 // node_modules/@sentry/core/dist/version.js
 var require_version3 = __commonJS((exports2) => {
   Object.defineProperty(exports2, "__esModule", {value: true});
-  exports2.SDK_VERSION = "6.2.5";
+  exports2.SDK_VERSION = "6.3.5";
 });
 
 // node_modules/@sentry/core/dist/integrations/functiontostring.js
@@ -70237,10 +70473,11 @@ var require_inboundfilters = __commonJS((exports2) => {
         if (self2) {
           var client = hub.getClient();
           var clientOptions = client ? client.getOptions() : {};
-          var options = self2._mergeOptions(clientOptions);
-          if (self2._shouldDropEvent(event, options)) {
-            return null;
+          var options = typeof self2._mergeOptions === "function" ? self2._mergeOptions(clientOptions) : {};
+          if (typeof self2._shouldDropEvent !== "function") {
+            return event;
           }
+          return self2._shouldDropEvent(event, options) ? null : event;
         }
         return event;
       });
@@ -70644,17 +70881,6 @@ var require_lru = __commonJS((exports2) => {
 
 // node_modules/@sentry/node/dist/stacktrace.js
 var require_stacktrace2 = __commonJS((exports2) => {
-  /**
-   * stack-trace - Parses node.js stack traces
-   *
-   * This was originally forked to fix this issue:
-   * https://github.com/felixge/node-stack-trace/issues/31
-   *
-   * Mar 19,2019 - #4fd379e
-   *
-   * https://github.com/felixge/node-stack-trace/
-   * @license MIT
-   */
   Object.defineProperty(exports2, "__esModule", {value: true});
   function parse(err) {
     if (!err.stack) {
@@ -70929,6 +71155,35 @@ var require_base = __commonJS((exports2) => {
     };
     BaseTransport2.prototype.close = function(timeout) {
       return this._buffer.drain(timeout);
+    };
+    BaseTransport2.prototype._getProxy = function(protocol) {
+      var e_1, _a;
+      var _b = process.env, no_proxy = _b.no_proxy, http_proxy = _b.http_proxy, https_proxy = _b.https_proxy;
+      var _c = this.options, httpProxy = _c.httpProxy, httpsProxy = _c.httpsProxy;
+      var proxy = protocol === "http" ? httpProxy || http_proxy : httpsProxy || httpProxy || https_proxy || http_proxy;
+      if (!no_proxy) {
+        return proxy;
+      }
+      var _d = this._api.getDsn(), host = _d.host, port = _d.port;
+      try {
+        for (var _e = tslib_1.__values(no_proxy.split(",")), _f = _e.next(); !_f.done; _f = _e.next()) {
+          var np = _f.value;
+          if (host.endsWith(np) || (host + ":" + port).endsWith(np)) {
+            return;
+          }
+        }
+      } catch (e_1_1) {
+        e_1 = {error: e_1_1};
+      } finally {
+        try {
+          if (_f && !_f.done && (_a = _e.return))
+            _a.call(_e);
+        } finally {
+          if (e_1)
+            throw e_1.error;
+        }
+      }
+      return proxy;
     };
     BaseTransport2.prototype._getRequestOptions = function(uri) {
       var headers = tslib_1.__assign(tslib_1.__assign({}, this._api.getRequestHeaders(version_1.SDK_NAME, core_1.SDK_VERSION)), this.options.headers);
@@ -72617,7 +72872,7 @@ var require_http = __commonJS((exports2) => {
     function HTTPTransport2(options) {
       var _this = _super.call(this, options) || this;
       _this.options = options;
-      var proxy = options.httpProxy || process.env.http_proxy;
+      var proxy = _this._getProxy("http");
       _this.module = http;
       _this.client = proxy ? new (require_dist22())(proxy) : new http.Agent({keepAlive: false, maxSockets: 30, timeout: 2e3});
       return _this;
@@ -72645,7 +72900,7 @@ var require_https = __commonJS((exports2) => {
     function HTTPSTransport2(options) {
       var _this = _super.call(this, options) || this;
       _this.options = options;
-      var proxy = options.httpsProxy || options.httpProxy || process.env.https_proxy || process.env.http_proxy;
+      var proxy = _this._getProxy("https");
       _this.module = https;
       _this.client = proxy ? new (require_dist22())(proxy) : new https.Agent({keepAlive: false, maxSockets: 30, timeout: 2e3});
       return _this;
@@ -73407,11 +73662,9 @@ var require_sdk2 = __commonJS((exports2) => {
       }
     }
     if (options.release === void 0) {
-      var global_1 = utils_1.getGlobalObject();
-      if (process.env.SENTRY_RELEASE) {
-        options.release = process.env.SENTRY_RELEASE;
-      } else if (global_1.SENTRY_RELEASE && global_1.SENTRY_RELEASE.id) {
-        options.release = global_1.SENTRY_RELEASE.id;
+      var detectedRelease = getSentryRelease();
+      if (detectedRelease !== void 0) {
+        options.release = detectedRelease;
       }
     }
     if (options.environment === void 0 && process.env.SENTRY_ENVIRONMENT) {
@@ -73453,6 +73706,17 @@ var require_sdk2 = __commonJS((exports2) => {
     });
   }
   exports2.close = close;
+  function getSentryRelease(fallback) {
+    if (process.env.SENTRY_RELEASE) {
+      return process.env.SENTRY_RELEASE;
+    }
+    var global2 = utils_1.getGlobalObject();
+    if (global2.SENTRY_RELEASE && global2.SENTRY_RELEASE.id) {
+      return global2.SENTRY_RELEASE.id;
+    }
+    return process.env.GITHUB_SHA || process.env.COMMIT_REF || process.env.VERCEL_GIT_COMMIT_SHA || process.env.VERCEL_GITHUB_COMMIT_SHA || process.env.VERCEL_GITLAB_COMMIT_SHA || process.env.VERCEL_BITBUCKET_COMMIT_SHA || process.env.ZEIT_GITHUB_COMMIT_SHA || process.env.ZEIT_GITLAB_COMMIT_SHA || process.env.ZEIT_BITBUCKET_COMMIT_SHA || fallback;
+  }
+  exports2.getSentryRelease = getSentryRelease;
 });
 
 // node_modules/@sentry/tracing/dist/spanstatus.js
@@ -73520,7 +73784,7 @@ var require_spanstatus = __commonJS((exports2) => {
 });
 
 // node_modules/@sentry/tracing/dist/utils.js
-var require_utils4 = __commonJS((exports2) => {
+var require_utils3 = __commonJS((exports2) => {
   Object.defineProperty(exports2, "__esModule", {value: true});
   var hub_1 = require_dist19();
   exports2.TRACEPARENT_REGEXP = new RegExp("^[ \\t]*([0-9a-f]{32})?-?([0-9a-f]{16})?-?([01])?[ \\t]*$");
@@ -73571,7 +73835,7 @@ var require_errors2 = __commonJS((exports2) => {
   Object.defineProperty(exports2, "__esModule", {value: true});
   var utils_1 = require_dist18();
   var spanstatus_1 = require_spanstatus();
-  var utils_2 = require_utils4();
+  var utils_2 = require_utils3();
   function registerErrorInstrumentation() {
     utils_1.addInstrumentationHandler({
       callback: errorCallback,
@@ -73850,6 +74114,7 @@ var require_transaction2 = __commonJS((exports2) => {
         utils_1.logger.log("[Measurements] Adding measurements to transaction", JSON.stringify(this._measurements, void 0, 2));
         transaction.measurements = this._measurements;
       }
+      utils_1.logger.log("[Tracing] Finishing " + this.op + " transaction: " + this.name + ".");
       return this._hub.captureEvent(transaction);
     };
     Transaction2.prototype.toContext = function() {
@@ -74094,7 +74359,7 @@ var require_hubextensions = __commonJS((exports2) => {
   var errors_1 = require_errors2();
   var idletransaction_1 = require_idletransaction();
   var transaction_1 = require_transaction2();
-  var utils_2 = require_utils4();
+  var utils_2 = require_utils3();
   function traceHeaders() {
     var scope = this.getScope();
     if (scope) {
@@ -74216,7 +74481,7 @@ var require_backgroundtab = __commonJS((exports2) => {
   Object.defineProperty(exports2, "__esModule", {value: true});
   var utils_1 = require_dist18();
   var spanstatus_1 = require_spanstatus();
-  var utils_2 = require_utils4();
+  var utils_2 = require_utils3();
   var global2 = utils_1.getGlobalObject();
   function registerBackgroundTabDetection() {
     if (global2 && global2.document) {
@@ -74548,7 +74813,7 @@ var require_metrics = __commonJS((exports2) => {
   Object.defineProperty(exports2, "__esModule", {value: true});
   var tslib_1 = require_tslib();
   var utils_1 = require_dist18();
-  var utils_2 = require_utils4();
+  var utils_2 = require_utils3();
   var getCLS_1 = require_getCLS();
   var getFID_1 = require_getFID();
   var getLCP_1 = require_getLCP();
@@ -74661,6 +74926,19 @@ var require_metrics = __commonJS((exports2) => {
           });
         }
         transaction.setMeasurements(this._measurements);
+        if (this._lcpEntry) {
+          utils_1.logger.log("[Measurements] Adding LCP Data");
+          if (this._lcpEntry.element) {
+            transaction.setTag("lcp.element", utils_1.htmlTreeAsString(this._lcpEntry.element));
+          }
+          if (this._lcpEntry.id) {
+            transaction.setTag("lcp.id", this._lcpEntry.id);
+          }
+          if (this._lcpEntry.url) {
+            transaction.setTag("lcp.url", this._lcpEntry.url.trim().slice(0, 200));
+          }
+          transaction.setTag("lcp.size", this._lcpEntry.size);
+        }
       }
     };
     MetricsInstrumentation2.prototype._trackCLS = function() {
@@ -74708,11 +74986,12 @@ var require_metrics = __commonJS((exports2) => {
         if (!entry) {
           return;
         }
-        var timeOrigin = utils_2.msToSec(performance.timeOrigin);
+        var timeOrigin = utils_2.msToSec(utils_1.browserPerformanceTimeOrigin);
         var startTime = utils_2.msToSec(entry.startTime);
         utils_1.logger.log("[Measurements] Adding LCP");
         _this._measurements["lcp"] = {value: metric.value};
         _this._measurements["mark.lcp"] = {value: timeOrigin + startTime};
+        _this._lcpEntry = entry;
       });
     };
     MetricsInstrumentation2.prototype._trackFID = function() {
@@ -74722,7 +75001,7 @@ var require_metrics = __commonJS((exports2) => {
         if (!entry) {
           return;
         }
-        var timeOrigin = utils_2.msToSec(performance.timeOrigin);
+        var timeOrigin = utils_2.msToSec(utils_1.browserPerformanceTimeOrigin);
         var startTime = utils_2.msToSec(entry.startTime);
         utils_1.logger.log("[Measurements] Adding FID");
         _this._measurements["fid"] = {value: metric.value};
@@ -74747,14 +75026,28 @@ var require_metrics = __commonJS((exports2) => {
   }();
   exports2.MetricsInstrumentation = MetricsInstrumentation;
   function addNavigationSpans(transaction, entry, timeOrigin) {
-    addPerformanceNavigationTiming(transaction, entry, "unloadEvent", timeOrigin);
-    addPerformanceNavigationTiming(transaction, entry, "redirect", timeOrigin);
-    addPerformanceNavigationTiming(transaction, entry, "domContentLoadedEvent", timeOrigin);
-    addPerformanceNavigationTiming(transaction, entry, "loadEvent", timeOrigin);
-    addPerformanceNavigationTiming(transaction, entry, "connect", timeOrigin);
-    addPerformanceNavigationTiming(transaction, entry, "secureConnection", timeOrigin, "connectEnd");
-    addPerformanceNavigationTiming(transaction, entry, "fetch", timeOrigin, "domainLookupStart");
-    addPerformanceNavigationTiming(transaction, entry, "domainLookup", timeOrigin);
+    addPerformanceNavigationTiming({transaction, entry, event: "unloadEvent", timeOrigin});
+    addPerformanceNavigationTiming({transaction, entry, event: "redirect", timeOrigin});
+    addPerformanceNavigationTiming({transaction, entry, event: "domContentLoadedEvent", timeOrigin});
+    addPerformanceNavigationTiming({transaction, entry, event: "loadEvent", timeOrigin});
+    addPerformanceNavigationTiming({transaction, entry, event: "connect", timeOrigin});
+    addPerformanceNavigationTiming({
+      transaction,
+      entry,
+      event: "secureConnection",
+      timeOrigin,
+      eventEnd: "connectEnd",
+      description: "TLS/SSL"
+    });
+    addPerformanceNavigationTiming({
+      transaction,
+      entry,
+      event: "fetch",
+      timeOrigin,
+      eventEnd: "domainLookupStart",
+      description: "cache"
+    });
+    addPerformanceNavigationTiming({transaction, entry, event: "domainLookup", timeOrigin, description: "DNS"});
     addRequest(transaction, entry, timeOrigin);
   }
   function addMeasureSpans(transaction, entry, startTime, duration, timeOrigin) {
@@ -74794,7 +75087,8 @@ var require_metrics = __commonJS((exports2) => {
     return endTimestamp;
   }
   exports2.addResourceSpans = addResourceSpans;
-  function addPerformanceNavigationTiming(transaction, entry, event, timeOrigin, eventEnd) {
+  function addPerformanceNavigationTiming(props) {
+    var transaction = props.transaction, entry = props.entry, event = props.event, timeOrigin = props.timeOrigin, eventEnd = props.eventEnd, description = props.description;
     var end = eventEnd ? entry[eventEnd] : entry[event + "End"];
     var start = entry[event + "Start"];
     if (!start || !end) {
@@ -74802,7 +75096,7 @@ var require_metrics = __commonJS((exports2) => {
     }
     _startChild(transaction, {
       op: "browser",
-      description: event,
+      description: description !== null && description !== void 0 ? description : event,
       startTimestamp: timeOrigin + utils_2.msToSec(start),
       endTimestamp: timeOrigin + utils_2.msToSec(end)
     });
@@ -74840,7 +75134,8 @@ var require_request2 = __commonJS((exports2) => {
   var tslib_1 = require_tslib();
   var hub_1 = require_dist19();
   var utils_1 = require_dist18();
-  var utils_2 = require_utils4();
+  var spanstatus_1 = require_spanstatus();
+  var utils_2 = require_utils3();
   exports2.DEFAULT_TRACING_ORIGINS = ["localhost", /^\//];
   exports2.defaultRequestInstrumentationOptions = {
     traceFetch: true,
@@ -74894,9 +75189,10 @@ var require_request2 = __commonJS((exports2) => {
     if (handlerData.endTimestamp && handlerData.fetchData.__span) {
       var span = spans[handlerData.fetchData.__span];
       if (span) {
-        var response = handlerData.response;
-        if (response) {
-          span.setHttpStatus(response.status);
+        if (handlerData.response) {
+          span.setHttpStatus(handlerData.response.status);
+        } else if (handlerData.error) {
+          span.setStatus(spanstatus_1.SpanStatus.InternalError);
         }
         span.finish();
         delete spans[handlerData.fetchData.__span];
@@ -75022,7 +75318,7 @@ var require_browsertracing = __commonJS((exports2) => {
   var hubextensions_1 = require_hubextensions();
   var idletransaction_1 = require_idletransaction();
   var spanstatus_1 = require_spanstatus();
-  var utils_2 = require_utils4();
+  var utils_2 = require_utils3();
   var backgroundtab_1 = require_backgroundtab();
   var metrics_1 = require_metrics();
   var request_1 = require_request2();
@@ -75545,7 +75841,7 @@ var require_dist23 = __commonJS((exports2) => {
   var hubextensions_2 = require_hubextensions();
   exports2.startIdleTransaction = hubextensions_2.startIdleTransaction;
   hubextensions_1.addExtensionMethods();
-  var utils_1 = require_utils4();
+  var utils_1 = require_utils3();
   exports2.extractTraceparentData = utils_1.extractTraceparentData;
   exports2.getActiveTransaction = utils_1.getActiveTransaction;
   exports2.hasTracingEnabled = utils_1.hasTracingEnabled;
@@ -75555,12 +75851,6 @@ var require_dist23 = __commonJS((exports2) => {
 
 // node_modules/cookie/index.js
 var require_cookie = __commonJS((exports2) => {
-  /*!
-   * cookie
-   * Copyright(c) 2012-2014 Roman Shtylman
-   * Copyright(c) 2015 Douglas Christopher Wilson
-   * MIT Licensed
-   */
   "use strict";
   exports2.parse = parse;
   exports2.serialize = serialize;
@@ -75934,6 +76224,7 @@ var require_dist24 = __commonJS((exports2) => {
   exports2.lastEventId = sdk_1.lastEventId;
   exports2.flush = sdk_1.flush;
   exports2.close = sdk_1.close;
+  exports2.getSentryRelease = sdk_1.getSentryRelease;
   var version_1 = require_version4();
   exports2.SDK_NAME = version_1.SDK_NAME;
   var core_2 = require_dist21();
@@ -83103,3 +83394,161 @@ var server = new import_apollo_server2.ApolloServer({
 server.listen().then(({url}) => {
   console.log(`\u{1F680}  Server ready at ${url}`);
 });
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+/*!
+ * accepts
+ * Copyright(c) 2014 Jonathan Ong
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * body-parser
+ * Copyright(c) 2014 Jonathan Ong
+ * Copyright(c) 2014-2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * body-parser
+ * Copyright(c) 2014-2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * bytes
+ * Copyright(c) 2012-2014 TJ Holowaychuk
+ * Copyright(c) 2015 Jed Watson
+ * MIT Licensed
+ */
+/*!
+ * content-type
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * cookie
+ * Copyright(c) 2012-2014 Roman Shtylman
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * depd
+ * Copyright(c) 2014 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * depd
+ * Copyright(c) 2014-2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * depd
+ * Copyright(c) 2014-2017 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * depd
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * ee-first
+ * Copyright(c) 2014 Jonathan Ong
+ * MIT Licensed
+ */
+/*!
+ * http-errors
+ * Copyright(c) 2014 Jonathan Ong
+ * Copyright(c) 2016 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * media-typer
+ * Copyright(c) 2014 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * mime-db
+ * Copyright(c) 2014 Jonathan Ong
+ * MIT Licensed
+ */
+/*!
+ * mime-types
+ * Copyright(c) 2014 Jonathan Ong
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * negotiator
+ * Copyright(c) 2012 Federico Romero
+ * Copyright(c) 2012-2014 Isaac Z. Schlueter
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * on-finished
+ * Copyright(c) 2013 Jonathan Ong
+ * Copyright(c) 2014 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * raw-body
+ * Copyright(c) 2013-2014 Jonathan Ong
+ * Copyright(c) 2014-2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * statuses
+ * Copyright(c) 2014 Jonathan Ong
+ * Copyright(c) 2016 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * toidentifier
+ * Copyright(c) 2016 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * type-is
+ * Copyright(c) 2014 Jonathan Ong
+ * Copyright(c) 2014-2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * unpipe
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*!
+ * vary
+ * Copyright(c) 2014-2017 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+/**
+ * stack-trace - Parses node.js stack traces
+ *
+ * This was originally forked to fix this issue:
+ * https://github.com/felixge/node-stack-trace/issues/31
+ *
+ * Mar 19,2019 - #4fd379e
+ *
+ * https://github.com/felixge/node-stack-trace/
+ * @license MIT
+ */
