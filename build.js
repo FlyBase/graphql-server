@@ -10,7 +10,7 @@ esbuild
     platform: 'node',
     watch: argv.watch,
     bundle: true,
-    target: 'node10',
+    target: 'node10.24.0',
     outfile: 'dist/bundle.js',
     external: ['express'],
     plugins: [
@@ -19,7 +19,7 @@ esbuild
       }),
     ],
   })
-  .catch(e => {
+  .catch((e) => {
     console.error(e.message)
     process.exit(1)
   })
