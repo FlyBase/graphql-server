@@ -50,14 +50,12 @@ const main = async () => {
     schema: mergeSchemas({
       schemas: [schema],
       resolvers: {
-        Query: {
-          alleleById: (parent, args, context, info) => {
-            console.log("===PARENT===\n", parent);
-            console.log("===ARGS===\n", args);
-            console.log("===CONTEXT===\n", context);
-            console.log("===INFO===\n", info);
-            return parent;
-          }
+        Allele:  (parent, args, context, info) => {
+          console.log("===PARENT===\n", parent);
+          console.log("===ARGS===\n", args);
+          console.log("===CONTEXT===\n", context);
+          console.log("===INFO===\n", info);
+          return parent;
         }
       }
       // ...makeExecutableSchema({ typeDefs, resolvers }),
