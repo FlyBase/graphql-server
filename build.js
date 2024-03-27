@@ -12,7 +12,7 @@ esbuild
     bundle: true,
     target: 'node10.24.0',
     outfile: 'dist/bundle.js',
-    external: ['express', 'pg-native'],
+    external: ['express', 'pg-native', 'graphile-build-pg'],
     plugins: [
       loader({
         filterRegex: /\.gql$/,
