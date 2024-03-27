@@ -1,4 +1,4 @@
-import { ApolloServer, makeExecutableSchema } from 'apollo-server'
+import { ApolloServer, makeExecutableSchema, mergeSchemas } from 'apollo-server'
 import * as Sentry from '@sentry/node'
 import pg from 'pg'
 import { makeSchemaAndPlugin } from 'postgraphile-apollo-server'
@@ -47,10 +47,10 @@ const main = async () => {
         allianceAPI: new AllianceAPI(),
       }
     },
-    schema: {
-      ...schema,
+    schema: mergeSchemas({
+      schemas: [schema],
       // ...makeExecutableSchema({ typeDefs, resolvers }),
-    },
+    }),
     plugins: [plugin],
   })
 
