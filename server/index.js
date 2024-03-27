@@ -49,6 +49,14 @@ const main = async () => {
     },
     schema: mergeSchemas({
       schemas: [schema],
+      resolvers: {
+        Query: {
+          allelesByGene: (parent, args, context, info) => {
+            console.log(parent, args, context, info);
+            return parent;
+          }
+        }
+      }
       // ...makeExecutableSchema({ typeDefs, resolvers }),
     }),
     plugins: [plugin],
