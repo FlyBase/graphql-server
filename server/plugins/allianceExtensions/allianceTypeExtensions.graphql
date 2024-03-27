@@ -1,0 +1,108 @@
+type Query {
+    searchExpressionTools(
+        expression: ExpressionSearchInput
+        gene: String
+    ): [ExpressionToolSearchResult]
+    getAllianceVariantsByGene(
+        id: String
+        params: AllianceVariantsByGene
+    ): VariantsByGeneResult
+    getAllianceVariantsByAllele(
+        id: String
+        params: AllianceVariantsByAllele
+    ): VariantsByAlleleResult
+}
+
+input AllianceVariantsByAllele {
+    filter_variantConsequence: String
+    filter_variantType: String
+    limit: Int
+    page: Int
+    sortBy: String
+}
+
+type VariantsByAlleleResult {
+    variants: [AllianceVariant]
+}
+
+type VariantsByGeneResult {
+    alleles: [AllianceAllele]
+}
+
+input AllianceVariantsByGene {
+    asc: String
+    filter_disease: String
+    filter_phenotype: String
+    filter_source: String
+    filter_symbol: String
+    filter_synonym: String
+    filter_variantConsequence: String
+    filter_variantType: String
+    limit: Int
+    page: Int
+    sortBy: String
+}
+
+type ExpressionToolSearchResult {
+    id: ID!
+    expression_terms: [AllianceCVTerm]!
+}
+
+input ExpressionSearchInput {
+    stage: String
+    stageq: String
+    anatomy: String
+    anatomyq: String
+    subcellular: String
+    subcellularq: String
+}
+
+type AllianceAllele {
+    id: ID!
+    symbol: String
+    synonyms: [String]
+    category: String
+    hasDisease: Boolean
+    hasPhenotype: Boolean
+    variants: [AllianceVariant]
+}
+
+type AllianceVariant {
+    id: ID!
+    name: String
+    type: String
+    genomicReferenceSequence: String
+    genomicVariantSequence: String
+    variantType: AllianceCVTerm
+    location: AllianceLocation
+    transcriptList: String
+    displayName: String
+    nucleotideChange: String
+    consequence: String
+}
+
+type AllianceLocation {
+    chromosome: String
+    start: Int
+    end: Int
+    assembly: String
+    strand: String
+}
+
+type AllianceCVTerm {
+    id: ID!
+    name: String
+}
+
+input AllianceVariantParameters {
+    filter_variantConsequence: String
+    filter_variantType: String
+    limit: Int
+    page: Int
+    sortBy: String
+}
+
+input AllianceVariantFilters {
+    id: String
+    params: [AllianceVariantParameters]
+}

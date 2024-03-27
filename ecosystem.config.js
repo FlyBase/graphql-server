@@ -18,43 +18,9 @@ module.exports = {
       },
       env_production: {
         NODE_ENV: 'production',
+        DEBUG: 'graphile-build-pg:warn'
       },
-    },
-    {
-      name: 'postgraphile',
-      script: './node_modules/.bin/postgraphile',
-      // Options reference: http://pm2.keymetrics.io/docs/usage/application-declaration/
-      args:
-        '--subscriptions ' +
-        '--retry-on-init-fail ' +
-        '--dynamic-json ' +
-        '--no-setof-functions-contain-nulls ' +
-        '--no-ignore-rbac ' +
-        '--no-ignore-indexes ' +
-        '--extended-errors errcode ' +
-        '--disable-default-mutations ' +
-        '--body-size-limit 5MB ' +
-        '--timeout 60000 ' +
-        '--disable-query-log ' +
-        '--legacy-relations omit ' +
-        '--max-pool-size 100 ' +
-        '--graphql "/chado-graphql" ' +
-        '--graphiql "/chado-graphiql" ' +
-        '--enhance-graphiql ' +
-        '-s flybase,gene,gene_group,humanhealth',
-      instances: 1,
-      autorestart: true,
-      watch: false,
-      max_memory_restart: '500M',
-      output: './logs/postgraphile.log',
-      error: './logs/postgraphile.err',
-      env: {
-        NODE_ENV: 'development',
-      },
-      env_production: {
-        NODE_ENV: 'production',
-      },
-    },
+    }
   ],
   deploy: {
     production: {},

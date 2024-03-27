@@ -1,0 +1,21 @@
+# Add tool summary fields to both Allele and Insertion
+
+extend type Allele {
+    insertedElementTypes: [ToolUse]
+    regRegions: [Tool]
+    encodedTools: [Tool]
+    encodedToolUses: [ToolUse]
+    taggedWith: [Tool]
+    tagUses: [ToolUse]
+    alsoCarries: [Tool]
+}
+
+extend type Insertion {
+    insertedElementTypes: [ToolUse]
+    regRegions: [Tool]
+    encodedTools: [Tool]
+    encodedToolUses: [ToolUse]
+    taggedWith: [Tool]
+    tagUses: [ToolUse]
+    alsoCarries: [Tool]
+}

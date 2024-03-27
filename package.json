@@ -3,18 +3,25 @@
   "version": "2024.1.1",
   "description": "FlyBase GraphQL implementation",
   "main": "server/index.js",
-  "author": "Josh Goodman <jogoodma@iu.edu>",
+  "contributors": [
+    "Josh Goodman <jogoodma@iu.edu>",
+    "Seth Campbell <sercampb@iu.edu>"
+  ],
   "license": "MIT",
   "scripts": {
     "prebuild": "yarn run format",
     "build:watch": "node build.js --watch",
     "build": "node build.js",
-    "start": "pm2 start --env production ecosystem.config.js",
+    "start": "rm -f logs/* && pm2 start --env production ecosystem.config.js",
     "dev": "pm2 start ecosystem.config.js",
     "format": "prettier --write 'server/**/*.{js,gql}'",
-    "pm2": "pm2"
+    "pm2": "pm2",
+    "stop": "pm2 stop all && pm2 delete all",
+    "clear-cache": "apachectl restart && ../bin/purge_cache.pl",
+    "clean-pull": "git checkout -- . && git pull"
   },
   "dependencies": {
+    "@graphile-contrib/pg-simplify-inflector": "^6.1.0",
     "@sentry/node": "6.6.0",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
@@ -22,12 +29,19 @@
     "apollo-link-http": "^1.5.17",
     "apollo-server": "^2.25.1",
     "cross-fetch": "^3.1.4",
+    "graphile-build-pg": "^4.13.0",
+    "graphile-utils": "^4.13.0",
     "graphql": "^15.5.0",
+    "graphql-parse-resolve-info": "^4.13.0",
+    "import-graphql-string": "^1.0.1",
     "lodash.isplainobject": "^4.0.6",
     "lodash.mapkeys": "^4.6.0",
     "lodash.pickby": "^4.6.0",
+    "pg": "7.11.0",
     "pm2": "^5.1.0",
-    "postgraphile": "^4.12.3"
+    "postgraphile": "^4.13.0",
+    "postgraphile-apollo-server": "0.1.1",
+    "postgraphile-plugin-connection-filter": "^2.3.0"
   },
   "devDependencies": {
     "@luckycatfactory/esbuild-graphql-loader": "^3.6.0",

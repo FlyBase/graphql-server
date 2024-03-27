@@ -12,7 +12,7 @@ class AllianceAPI extends RESTDataSource {
   /**
    * Private static method to reformat Alliance parameters from their GraphQL
    * name into the expected REST API name. GraphQL field names do not
-   * allow for '.' in them so they use '_' instead.
+   * allow for '.' in them, so they use '_' instead.
    *
    * @param params - A flat object representing the endpoint parameters
    * @returns {Object} - Copy of the params object with key names transformed.
