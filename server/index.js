@@ -1,12 +1,14 @@
-import { ApolloServer } from 'apollo-server'
+import { ApolloServer, makeExecutableSchema } from 'apollo-server'
 import * as Sentry from '@sentry/node'
+import pg from 'pg'
+import { makeSchemaAndPlugin } from 'postgraphile-apollo-server'
 
 /*
 Import the schema and resolvers for this GraphQL server.
 In GraphSQL speak, resolvers are the functions that perform
 the query and return results formatted according to the schema
 */
-import typeDefs from './schema.gql'
+import typeDefs from './schema-test.gql'
 import { resolvers } from './resolvers'
 import FlyBaseAPI from './datasources/FlyBaseAPI'
 import AllianceAPI from './datasources/AllianceAPI'
@@ -15,27 +17,50 @@ Sentry.init({
   dsn: 'https://a44fd5f15e834e20a0770d626e0e25c5@sentry.io/1788453',
 })
 
-// Create a new GraphQL server
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  // Allow query introspection.
-  introspection: true,
-  // Turn on GraphQL playground
-  playground: true,
-  formatError: (err) => {
-    Sentry.captureException(err)
-    return err
-  },
-  dataSources: () => {
-    return {
-      flyBaseAPI: new FlyBaseAPI(),
-      allianceAPI: new AllianceAPI(),
-    }
-  },
-})
+const pgPool = new pg.Pool()
 
-// Start it up!
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`)
+const main = async () => {
+  const { schema, plugin } = await makeSchemaAndPlugin(
+    pgPool,
+    ['flybase', 'gene', 'gene_group', 'humanhealth'],
+    {}
+  )
+
+  console.log('TEMP: schema = ', schema)
+  console.log('TEMP: plugin = ', plugin)
+
+  // Create a new GraphQL server
+  const server = new ApolloServer({
+    //    typeDefs,
+    //    resolvers,
+    // Allow query introspection.
+    introspection: true,
+    // Turn on GraphQL playground
+    playground: true,
+    formatError: (err) => {
+      Sentry.captureException(err)
+      return err
+    },
+    dataSources: () => {
+      return {
+        flyBaseAPI: new FlyBaseAPI(),
+        allianceAPI: new AllianceAPI(),
+      }
+    },
+    schema: {
+      ...schema,
+      ...makeExecutableSchema({ typeDefs, resolvers }),
+    },
+    plugins: [plugin],
+  })
+
+  // Start it up!
+  server.listen().then(({ url }) => {
+    console.log(`   Server ready at ${url}`)
+  })
+}
+
+main().catch((e) => {
+  console.error(e)
+  process.exit(1)
 })

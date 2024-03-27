@@ -27,7 +27,9 @@
     "lodash.mapkeys": "^4.6.0",
     "lodash.pickby": "^4.6.0",
     "pm2": "^5.1.0",
-    "postgraphile": "^4.12.3"
+    "postgraphile": "^4.12.3",
+    "pg": "7.11.0",
+    "postgraphile-apollo-server": "0.1.1"
   },
   "devDependencies": {
     "@luckycatfactory/esbuild-graphql-loader": "^3.6.0",

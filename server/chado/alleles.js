@@ -124,6 +124,7 @@ const materializeTools = (fbObject = {}, parent = {}) => {
     delete materializedFbObject.knownLesion
     delete materializedFbObject.classes
     delete materializedFbObject.mutagens
+    delete materializedFbObject.transgenicProductClasses
     delete materializedFbObject.geneIsRegulatoryRegion
   } else {
     if (materializedFbObject.isConstruct) {
@@ -220,6 +221,8 @@ const getSubFieldName = (name) => {
     case 'toolUsesByAlleleId':
     case 'toolUsesByConstructId':
       return 'toolUses'
+    case 'alleleTransgenicProductClassesByAlleleId':
+      return 'transgenicProductClasses'
     default:
       return name
   }

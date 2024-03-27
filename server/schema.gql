@@ -30,7 +30,7 @@ type Allele {
   category: String
   hasDisease: Boolean
   hasPhenotype: Boolean
-  transgenicProductClassList: String
+  transgenicProductClasses: [TransgenicProductClass]
 }
 
 type CVTerm {
@@ -103,6 +103,11 @@ type Variant {
   displayName: String
   nucleotideChange: String
   consequence: String
+}
+
+type TransgenicProductClass {
+  soId: String
+  transgenicProductClass: String
 }
 
 input AllianceVariantsByGene {
