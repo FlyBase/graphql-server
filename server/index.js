@@ -8,8 +8,8 @@ Import the schema and resolvers for this GraphQL server.
 In GraphSQL speak, resolvers are the functions that perform
 the query and return results formatted according to the schema
 */
-import typeDefs from './schema-test.gql'
-import { resolvers } from './resolvers'
+// import typeDefs from './schema-test.gql'
+// import { resolvers } from './resolvers'
 import FlyBaseAPI from './datasources/FlyBaseAPI'
 import AllianceAPI from './datasources/AllianceAPI'
 
@@ -49,7 +49,7 @@ const main = async () => {
     },
     schema: {
       ...schema,
-      ...makeExecutableSchema({ typeDefs, resolvers }),
+      // ...makeExecutableSchema({ typeDefs, resolvers }),
     },
     plugins: [plugin],
   })
