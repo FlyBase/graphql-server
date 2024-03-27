@@ -2082,13 +2082,16 @@ __metadata:
     apollo-server: ^2.25.1
     cross-fetch: ^3.1.4
     esbuild: 0.12.8
+    graphile-utils: ^4.13.0
     graphql: ^15.5.0
     graphql-tag: ^2.12.4
     lodash.isplainobject: ^4.0.6
     lodash.mapkeys: ^4.6.0
     lodash.pickby: ^4.6.0
+    pg: 7.11.0
     pm2: ^5.1.0
     postgraphile: ^4.12.3
+    postgraphile-apollo-server: 0.1.1
     prettier: ^2.3.1
     yargs: ^17.0.1
   languageName: unknown
@@ -2361,6 +2364,20 @@ fsevents@~2.3.1:
     graphile-build: ^4.5.0
     graphile-build-pg: ^4.5.0
   checksum: 8f9ab78f1e12a74df63e17414312b12ecd52833dffd4a2e89fe4ae588b3d3e0e7c503ae594fd6dd5f1921d7faec30dc550766b868595d2b4130372ea6060f732
+  languageName: node
+  linkType: hard
+
+"graphile-utils@npm:^4.13.0":
+  version: 4.14.0
+  resolution: "graphile-utils@npm:4.14.0"
+  dependencies:
+    debug: ^4.1.1
+    graphql: ">=0.9 <0.14 || ^14.0.2 || ^15.4.0"
+    tslib: ^2.0.1
+  peerDependencies:
+    graphile-build: ^4.5.0
+    graphile-build-pg: ^4.5.0
+  checksum: 7143cb558252e039f3708869d7fc5ee6280868f7673e6f55eaf04005672c4f6d83ac0947b3c0ce9c8483294c1e98a8573b71b62ae469afce2e07f13db0c3ecc0
   languageName: node
   linkType: hard
 
@@ -3503,6 +3520,13 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"pg-connection-string@npm:0.1.3":
+  version: 0.1.3
+  resolution: "pg-connection-string@npm:0.1.3"
+  checksum: 9476ceeeb6b72cde5dfb0b1d7a3c709884ee7211af25ebcecec2b1b25958d356de285ad67eda2c4c23411eb636814530daeb34425934831dd15243d9204dbeb4
+  languageName: node
+  linkType: hard
+
 "pg-connection-string@npm:^2.0.0, pg-connection-string@npm:^2.4.0":
   version: 2.4.0
   resolution: "pg-connection-string@npm:2.4.0"
@@ -3514,6 +3538,15 @@ fsevents@~2.3.1:
   version: 1.0.1
   resolution: "pg-int8@npm:1.0.1"
   checksum: b18c3a18e56a4f6de7c3c9df384a7ae47e7a3333ce1f36d324649116dfef4767ba01413993b12aa573ac44da1912d58cc6959eeb1c0f53a4ddb58861d1342a89
+  languageName: node
+  linkType: hard
+
+"pg-pool@npm:^2.0.4":
+  version: 2.0.10
+  resolution: "pg-pool@npm:2.0.10"
+  peerDependencies:
+    pg: ">5.0"
+  checksum: b828a6cdabfa5b338db05e53b47a4663a2e6048caf0e3211b2d8adafe0ba40d16f5b5bdb6083f04965f2d744c381348275c9cf89a330c3b38cd84d0dafa2aa39
   languageName: node
   linkType: hard
 
@@ -3564,6 +3597,34 @@ fsevents@~2.3.1:
     postgres-date: ~1.0.4
     postgres-interval: ^1.1.0
   checksum: 3c36335465f058de7b075aab93b3db73ae651d6b0f618948aeb47fab74e064d4d9bd183cdaaf172ebcf9496999b2c6e83ae29048a84757eb30eab486aeb6723b
+  languageName: node
+  linkType: hard
+
+"pg-types@npm:~2.0.0":
+  version: 2.0.1
+  resolution: "pg-types@npm:2.0.1"
+  dependencies:
+    pg-int8: 1.0.1
+    postgres-array: ~2.0.0
+    postgres-bytea: ~1.0.0
+    postgres-date: ~1.0.4
+    postgres-interval: ^1.1.0
+  checksum: 1e31a648f00f7dd46b53318807b82fecd2eb5708692f954f15e9109521832861bb4b190a92aad478b758ed9b0f240928af6cac2dd4a4ec406cd8325a2783bcbc
+  languageName: node
+  linkType: hard
+
+"pg@npm:7.11.0":
+  version: 7.11.0
+  resolution: "pg@npm:7.11.0"
+  dependencies:
+    buffer-writer: 2.0.0
+    packet-reader: 1.0.0
+    pg-connection-string: 0.1.3
+    pg-pool: ^2.0.4
+    pg-types: ~2.0.0
+    pgpass: 1.x
+    semver: 4.3.2
+  checksum: 3f57c597e564f2663f0bbaafbe0639d3aa35b766fb5b077b79c209bc8212fd994613d99d1a57b5c6c77f71bcd7ee34dd9363248c280b010093a74376d1d66e6a
   languageName: node
   linkType: hard
 
@@ -3715,6 +3776,15 @@ fsevents@~2.3.1:
     pm2-docker: bin/pm2-docker
     pm2-runtime: bin/pm2-runtime
   checksum: a4a05c38be69d6433f4d648e896f6708dd6867c781e0433ef41aec24fbfc647df1eddba1e431a9d4f1dcd64ea0adf7c1bd9ca67fa45dd0a7671e00943c403408
+  languageName: node
+  linkType: hard
+
+"postgraphile-apollo-server@npm:0.1.1":
+  version: 0.1.1
+  resolution: "postgraphile-apollo-server@npm:0.1.1"
+  peerDependencies:
+    postgraphile: 4.x
+  checksum: d8e51f554e05a91f9ffcb1a9660e8bee86b737b6854e44fae38661738bf05e060b7fc8509dce5d38d41ce43ec0b1afcf38bfd9cd35a5d1fbdc7c213da2322652
   languageName: node
   linkType: hard
 
@@ -4068,6 +4138,15 @@ resolve@^1.12.0:
   version: 1.2.4
   resolution: "sax@npm:1.2.4"
   checksum: 9d7668d69105e89e2c1a4b2fdc12c72e1a2f78b825f7b4a8a2ea5cdfebf70920bd17715bed55264c3b3959616a0695f8ad2d098bf6944fbd0953ee9c695dceef
+  languageName: node
+  linkType: hard
+
+"semver@npm:4.3.2":
+  version: 4.3.2
+  resolution: "semver@npm:4.3.2"
+  bin:
+    semver: ./bin/semver
+  checksum: 325999b7241266b130324d54edba4432413de2afe358c7c482ccf104d3b870eabb655db2178ee966473f4dfcbdcf5f5808d1fb26a670908ba3cca2568ea5f95b
   languageName: node
   linkType: hard
 

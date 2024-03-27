@@ -2,6 +2,7 @@ import { ApolloServer, makeExecutableSchema, mergeSchemas } from 'apollo-server'
 import * as Sentry from '@sentry/node'
 import pg from 'pg'
 import { makeSchemaAndPlugin } from 'postgraphile-apollo-server'
+import { makeWrapResolversPlugin } from 'graphile-utils'
 
 /*
 Import the schema and resolvers for this GraphQL server.
@@ -26,8 +27,15 @@ const main = async () => {
     {}
   )
 
-  console.log('TEMP: schema = ', JSON.stringify(schema))
-  console.log('TEMP: plugin = ', JSON.stringify(plugin))
+  const postgraphileWrapResolversPlugin = makeWrapResolversPlugin({
+    Query: {
+      alleleById: async (resolve, source, args, context, resolveInfo) => {
+        const result = await resolve();
+        console.log("===RESOLVE===\n", result);
+        return result;
+      }
+    }
+  });
 
   // Create a new GraphQL server
   const server = new ApolloServer({
@@ -49,18 +57,18 @@ const main = async () => {
     },
     schema: mergeSchemas({
       schemas: [schema],
-      resolvers: {
-        Allele:  (parent, args, context, info) => {
-          console.log("===PARENT===\n", parent);
-          console.log("===ARGS===\n", args);
-          console.log("===CONTEXT===\n", context);
-          console.log("===INFO===\n", info);
-          return parent;
-        }
-      }
+      // resolvers: {
+      //   Allele:  (parent, args, context, info) => {
+      //     console.log("===PARENT===\n", parent);
+      //     console.log("===ARGS===\n", args);
+      //     console.log("===CONTEXT===\n", context);
+      //     console.log("===INFO===\n", info);
+      //     return parent;
+      //   }
+      // }
       // ...makeExecutableSchema({ typeDefs, resolvers }),
     }),
-    plugins: [plugin],
+    plugins: [plugin, postgraphileWrapResolversPlugin],
   })
 
   // Start it up!
