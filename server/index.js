@@ -21,11 +21,6 @@ Sentry.init({
 const pgPool = new pg.Pool()
 
 const main = async () => {
-  const { schema, plugin } = await makeSchemaAndPlugin(
-    pgPool,
-    ['flybase', 'gene', 'gene_group', 'humanhealth'],
-    {}
-  )
 
   const postgraphileWrapResolversPlugin = makeWrapResolversPlugin({
     Query: {
@@ -36,6 +31,16 @@ const main = async () => {
       }
     }
   });
+
+  const { schema, plugin } = await makeSchemaAndPlugin(
+    pgPool,
+    ['flybase', 'gene', 'gene_group', 'humanhealth'],
+    {
+      appendPlugins: [postgraphileWrapResolversPlugin]
+    }
+  )
+
+
 
   // Create a new GraphQL server
   const server = new ApolloServer({
@@ -68,7 +73,7 @@ const main = async () => {
       // }
       // ...makeExecutableSchema({ typeDefs, resolvers }),
     }),
-    plugins: [plugin, postgraphileWrapResolversPlugin],
+    plugins: [plugin],
   })
 
   // Start it up!
