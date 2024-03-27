@@ -161,7 +161,7 @@
 #  result: [Result!]!
 #}
 #
-#type Query {
+type Query {
 #  allelesByGene(
 #    fbgn: String!
 #    isConstruct: Boolean
@@ -182,4 +182,4 @@
 #    id: String
 #    params: AllianceVariantsByAllele
 #  ): VariantsByAlleleResult
-#}
+}
