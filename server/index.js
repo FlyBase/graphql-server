@@ -52,7 +52,10 @@ const main = async () => {
       resolvers: {
         Query: {
           alleleById: (parent, args, context, info) => {
-            console.log(parent, args, context, info);
+            console.log("===PARENT===\n", parent);
+            console.log("===ARGS===\n", args);
+            console.log("===CONTEXT===\n", context);
+            console.log("===INFO===\n", info);
             return parent;
           }
         }
