@@ -51,7 +51,7 @@ const main = async () => {
       schemas: [schema],
       resolvers: {
         Query: {
-          allelesByGene: (parent, args, context, info) => {
+          alleleById: (parent, args, context, info) => {
             console.log(parent, args, context, info);
             return parent;
           }
