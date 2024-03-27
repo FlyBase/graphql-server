@@ -4,8 +4,8 @@
 #  alleles: [Allele]
 #  insertions: [Insertion]
 #}
-
-
+#
+#
 #type Allele {
 #  id: ID!
 #  symbol: String
@@ -33,13 +33,13 @@
 #  hasPhenotype: Boolean
 #  transgenicProductClasses: [TransgenicProductClass]
 #}
-
-type CVTerm {
-  id: ID!
-  name: String!
-}
-
-
+#
+#type CVTerm {
+#  id: ID!
+#  name: String!
+#}
+#
+#
 #type Insertion {
 #  id: ID!
 #  symbol: String
@@ -53,32 +53,32 @@ type CVTerm {
 #  stocksCount: Int
 #  pubCount: Int
 #}
-
-
+#
+#
 #type Construct {
 #  id: ID!
 #  symbol: String
 #}
-
-
+#
+#
 #type Tool {
 #  id: ID!
 #  symbol: String
 #}
-
+#
 #type Stock {
 #  id: ID!
 #  genotype: String
 #  stockNumber: String
 #  center: String
 #}
-
+#
 #type ExpressionToolSearchResult {
 #  id: ID!
 #  expression_terms: [CVTerm]!
 #}
-
-
+#
+#
 #input ExpressionSearchInput {
 #  stage: String
 #  stageq: String
@@ -87,35 +87,35 @@ type CVTerm {
 #  subcellular: String
 #  subcellularq: String
 #}
-
-type Location {
-  chromosome: String
-  start: Int
-  end: Int
-  assembly: String
-  strand: String
-}
-
-
-type Variant {
-  id: ID!
-  name: String
-  type: String
-  genomicReferenceSequence: String
-  genomicVariantSequence: String
-  variantType: CVTerm
-  location: Location
-  transcriptList: String
-  displayName: String
-  nucleotideChange: String
-  consequence: String
-}
-
+#
+#type Location {
+#  chromosome: String
+#  start: Int
+#  end: Int
+#  assembly: String
+#  strand: String
+#}
+#
+#
+#type Variant {
+#  id: ID!
+#  name: String
+#  type: String
+#  genomicReferenceSequence: String
+#  genomicVariantSequence: String
+#  variantType: CVTerm
+#  location: Location
+#  transcriptList: String
+#  displayName: String
+#  nucleotideChange: String
+#  consequence: String
+#}
+#
 #type TransgenicProductClass {
 #  soId: String
 #  transgenicProductClass: String
 #}
-
+#
 #input AllianceVariantsByGene {
 #  asc: String
 #  filter_disease: String
@@ -129,29 +129,29 @@ type Variant {
 #  page: Int
 #  sortBy: String
 #}
-
-input AllianceVariantsByAllele {
-  filter_variantConsequence: String
-  filter_variantType: String
-  limit: Int
-  page: Int
-  sortBy: String
-}
-
+#
+#input AllianceVariantsByAllele {
+#  filter_variantConsequence: String
+#  filter_variantType: String
+#  limit: Int
+#  page: Int
+#  sortBy: String
+#}
+#
 #type VariantsByGeneResult {
 #  alleles: [Allele]
 #}
-
-type VariantsByAlleleResult {
-  variants: [Variant]
-}
-
+#
+#type VariantsByAlleleResult {
+#  variants: [Variant]
+#}
+#
 #union Result = ExpressionToolSearchResult
-
+#
 #type FlyBaseAPIResult {
 #  resultset: ResultSet!
 #}
-
+#
 #type ResultSet {
 #  api_version: String!
 #  data_version: String!
@@ -160,8 +160,8 @@ type VariantsByAlleleResult {
 #  data_provider: String!
 #  result: [Result!]!
 #}
-
-type Query {
+#
+#type Query {
 #  allelesByGene(
 #    fbgn: String!
 #    isConstruct: Boolean
@@ -178,8 +178,8 @@ type Query {
 #    id: String
 #    params: AllianceVariantsByGene
 #  ): VariantsByGeneResult
-  getAllianceVariantsByAllele(
-    id: String
-    params: AllianceVariantsByAllele
-  ): VariantsByAlleleResult
-}
+#  getAllianceVariantsByAllele(
+#    id: String
+#    params: AllianceVariantsByAllele
+#  ): VariantsByAlleleResult
+#}

@@ -26,8 +26,8 @@ const main = async () => {
     {}
   )
 
-  console.log('TEMP: schema = ', schema)
-  console.log('TEMP: plugin = ', plugin)
+  console.log('TEMP: schema = ', JSON.stringify(schema))
+  console.log('TEMP: plugin = ', JSON.stringify(plugin))
 
   // Create a new GraphQL server
   const server = new ApolloServer({
