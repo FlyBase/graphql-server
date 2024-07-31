@@ -19,10 +19,59 @@ const swapFlybaseIdsAndPostgresIds = key => {
 module.exports = makeAddInflectorsPlugin((inflectors) => {
   const {
     column: oldColumn,
-    manyRelationByKeysSimple: oldManyRelationByKeysSimple
+    manyRelationByKeysSimple: oldManyRelationByKeysSimple,
+    manyToManyRelationByKeys: oldManyToManyRelationByKeys,
+    manyToManyRelationByKeysSimple: oldManyToManyRelationByKeysSimple,
   } = inflectors;
 
   return {
+    manyToManyRelationByKeys(
+      _leftKeyAttributes,
+      _junctionLeftKeyAttributes,
+      _junctionRightKeyAttributes,
+      _rightKeyAttributes,
+      _junctionTable,
+      rightTable,
+      _junctionLeftConstraint,
+      junctionRightConstraint
+    ) {
+
+      if(_junctionTable.name === "split_system_combination_component_allele" && rightTable.name === "allele") {
+        return "componentAllelesConnection";
+      }
+
+      return oldManyToManyRelationByKeys.call(this, _leftKeyAttributes,
+        _junctionLeftKeyAttributes,
+        _junctionRightKeyAttributes,
+        _rightKeyAttributes,
+        _junctionTable,
+        rightTable,
+        _junctionLeftConstraint,
+        junctionRightConstraint);
+    },
+    manyToManyRelationByKeysSimple(
+      _leftKeyAttributes,
+      _junctionLeftKeyAttributes,
+      _junctionRightKeyAttributes,
+      _rightKeyAttributes,
+      _junctionTable,
+      rightTable,
+      _junctionLeftConstraint,
+      junctionRightConstraint
+    ) {
+      if(_junctionTable.name === "split_system_combination_component_allele" && rightTable.name === "allele") {
+        return "componentAlleles";
+      }
+
+      return oldManyToManyRelationByKeysSimple.call(this, _leftKeyAttributes,
+        _junctionLeftKeyAttributes,
+        _junctionRightKeyAttributes,
+        _rightKeyAttributes,
+        _junctionTable,
+        rightTable,
+        _junctionLeftConstraint,
+        junctionRightConstraint);
+    },
     manyRelationByKeysSimple(detailedKeys, table, foreignTable, constraint) {
       const key = oldManyRelationByKeysSimple.call(this, detailedKeys, table, foreignTable, constraint);
       return this.camelCase(key.replace(foreignTable.name, ""));

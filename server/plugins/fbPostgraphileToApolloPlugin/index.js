@@ -4,6 +4,7 @@ import PgSimplifyInflectorPlugin from '@graphile-contrib/pg-simplify-inflector';
 import FBInflectorsPlugin from "./fbInflectorPlugin";
 import exportPostGraphileSchema from 'postgraphile/build/postgraphile/schema/exportPostGraphileSchema';
 import FBToolSummariesPlugin from "./toolSummariesPlugin";
+import PgManyToManyPlugin from '@graphile-contrib/pg-many-to-many'
 
 /*
 * This code generates an Apollo Server plugin, giving Apollo access to everything
@@ -44,6 +45,7 @@ module.exports = async () => {
       legacyRelations: 'omit',
       // This is where Postgraphile plugins go.
       appendPlugins: [
+        PgManyToManyPlugin,
         PgSimplifyInflectorPlugin, //Simplifies the naming of queries and fields
         FBInflectorsPlugin, //Additional FB-specific naming changes
         FBToolSummariesPlugin //Adds various derived fields to Alleles and Insertions based on Tools and ToolUses

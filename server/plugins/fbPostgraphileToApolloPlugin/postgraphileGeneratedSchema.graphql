@@ -387,6 +387,106 @@ type Query implements Node {
     condition: InsertionCondition
   ): [Insertion!]
 
+  """
+  Reads and enables pagination through a set of `SplitSystemCombination`.
+  """
+  splitSystemCombinationsConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `SplitSystemCombination`."""
+    orderBy: [SplitSystemCombinationsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: SplitSystemCombinationCondition
+  ): SplitSystemCombinationsConnection
+
+  """Reads a set of `SplitSystemCombination`."""
+  splitSystemCombinations(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `SplitSystemCombination`."""
+    orderBy: [SplitSystemCombinationsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: SplitSystemCombinationCondition
+  ): [SplitSystemCombination!]
+
+  """
+  Reads and enables pagination through a set of `SplitSystemCombinationComponentAllele`.
+  """
+  splitSystemCombinationComponentAllelesConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """
+    The method to use when ordering `SplitSystemCombinationComponentAllele`.
+    """
+    orderBy: [SplitSystemCombinationComponentAllelesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: SplitSystemCombinationComponentAlleleCondition
+  ): SplitSystemCombinationComponentAllelesConnection
+
+  """Reads a set of `SplitSystemCombinationComponentAllele`."""
+  splitSystemCombinationComponentAlleles(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """
+    The method to use when ordering `SplitSystemCombinationComponentAllele`.
+    """
+    orderBy: [SplitSystemCombinationComponentAllelesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: SplitSystemCombinationComponentAlleleCondition
+  ): [SplitSystemCombinationComponentAllele!]
+
   """Reads and enables pagination through a set of `Tool`."""
   toolsConnection(
     """Only read the first `n` values of the set."""
@@ -716,6 +816,8 @@ type Query implements Node {
   construct(postgresId: Int!): Construct
   gene(featureId: Int!): Gene
   insertion(postgresId: Int!): Insertion
+  splitSystemCombination(postgresId: Int!): SplitSystemCombination
+  splitSystemCombinationComponentAllele(alleleId: Int!, splitSystemCombinationId: Int!): SplitSystemCombinationComponentAllele
   tool(postgresId: Int!): Tool
   toolUse(postgresId: Int!): ToolUse
   pathway(grpId: Int!): Pathway
@@ -895,6 +997,11 @@ type Query implements Node {
   Given a FlyBase ID, returns a count of FlyBase pub records directly associated with it.
   """
   pubCount(id: String): BigInt
+
+  """
+  Given a FlyBase ID, returns a count of FlyBase pub records of the specified type directly associated with it.
+  """
+  pubCountByType(id: String, pubType: String): BigInt
 
   """Reads and enables pagination through a set of `Allele`."""
   allelesByFbalConnection(
@@ -1093,6 +1200,26 @@ type Query implements Node {
     nodeId: ID!
   ): Insertion
 
+  """
+  Reads a single `SplitSystemCombination` using its globally unique `ID`.
+  """
+  splitSystemCombinationByNodeId(
+    """
+    The globally unique `ID` to be used in selecting a single `SplitSystemCombination`.
+    """
+    nodeId: ID!
+  ): SplitSystemCombination
+
+  """
+  Reads a single `SplitSystemCombinationComponentAllele` using its globally unique `ID`.
+  """
+  splitSystemCombinationComponentAlleleByNodeId(
+    """
+    The globally unique `ID` to be used in selecting a single `SplitSystemCombinationComponentAllele`.
+    """
+    nodeId: ID!
+  ): SplitSystemCombinationComponentAllele
+
   """Reads a single `Tool` using its globally unique `ID`."""
   toolByNodeId(
     """The globally unique `ID` to be used in selecting a single `Tool`."""
@@ -1168,8 +1295,8 @@ type Allele implements Node {
   postgresId: Int!
   stocksCount: BigInt
   pubCount: BigInt
+  paperCount: BigInt
   knownLesion: Boolean
-  transgenicProductClassList: String
   hasImage: Boolean
 
   """Reads a single `Gene` that is related to this `Allele`."""
@@ -1455,6 +1582,60 @@ type Allele implements Node {
     condition: InsertionCondition
   ): [Insertion!]!
 
+  """
+  Reads and enables pagination through a set of `SplitSystemCombinationComponentAllele`.
+  """
+  splitSystemCombinationComponentAllelesConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """
+    The method to use when ordering `SplitSystemCombinationComponentAllele`.
+    """
+    orderBy: [SplitSystemCombinationComponentAllelesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: SplitSystemCombinationComponentAlleleCondition
+  ): SplitSystemCombinationComponentAllelesConnection!
+
+  """
+  Reads and enables pagination through a set of `SplitSystemCombinationComponentAllele`.
+  """
+  splitSystemCombinationComponentAlleles(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """
+    The method to use when ordering `SplitSystemCombinationComponentAllele`.
+    """
+    orderBy: [SplitSystemCombinationComponentAllelesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: SplitSystemCombinationComponentAlleleCondition
+  ): [SplitSystemCombinationComponentAllele!]!
+
   """Reads and enables pagination through a set of `Tool`."""
   toolsConnection(
     """Only read the first `n` values of the set."""
@@ -1546,6 +1727,286 @@ type Allele implements Node {
     """
     condition: ToolUseCondition
   ): [ToolUse!]!
+
+  """Reads and enables pagination through a set of `Insertion`."""
+  insertionsByConstructAlleleIdAndInsertionId(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Insertion`."""
+    orderBy: [InsertionsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: InsertionCondition
+  ): AlleleInsertionsByConstructAlleleIdAndInsertionIdManyToManyConnection!
+
+  """Reads and enables pagination through a set of `Insertion`."""
+  insertionsByConstructAlleleIdAndInsertionIdList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Insertion`."""
+    orderBy: [InsertionsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: InsertionCondition
+  ): [Insertion!]!
+
+  """Reads and enables pagination through a set of `Gene`."""
+  genesByInsertionAlleleIdAndGeneId(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Gene`."""
+    orderBy: [GenesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: GeneCondition
+  ): AlleleGenesByInsertionAlleleIdAndGeneIdManyToManyConnection!
+
+  """Reads and enables pagination through a set of `Gene`."""
+  genesByInsertionAlleleIdAndGeneIdList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Gene`."""
+    orderBy: [GenesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: GeneCondition
+  ): [Gene!]!
+
+  """
+  Reads and enables pagination through a set of `SplitSystemCombination`.
+  """
+  splitSystemCombinationsBySplitSystemCombinationComponentAlleleAlleleIdAndSplitSystemCombinationId(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `SplitSystemCombination`."""
+    orderBy: [SplitSystemCombinationsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: SplitSystemCombinationCondition
+  ): AlleleSplitSystemCombinationsBySplitSystemCombinationComponentAlleleAlleleIdAndSplitSystemCombinationIdManyToManyConnection!
+
+  """
+  Reads and enables pagination through a set of `SplitSystemCombination`.
+  """
+  splitSystemCombinationsBySplitSystemCombinationComponentAlleleAlleleIdAndSplitSystemCombinationIdList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `SplitSystemCombination`."""
+    orderBy: [SplitSystemCombinationsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: SplitSystemCombinationCondition
+  ): [SplitSystemCombination!]!
+
+  """Reads and enables pagination through a set of `Construct`."""
+  constructsByToolAlleleIdAndConstructId(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Construct`."""
+    orderBy: [ConstructsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ConstructCondition
+  ): AlleleConstructsByToolAlleleIdAndConstructIdManyToManyConnection!
+
+  """Reads and enables pagination through a set of `Construct`."""
+  constructsByToolAlleleIdAndConstructIdList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Construct`."""
+    orderBy: [ConstructsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ConstructCondition
+  ): [Construct!]!
+
+  """Reads and enables pagination through a set of `Construct`."""
+  constructsByToolUseAlleleIdAndConstructId(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Construct`."""
+    orderBy: [ConstructsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ConstructCondition
+  ): AlleleConstructsByToolUseAlleleIdAndConstructIdManyToManyConnection!
+
+  """Reads and enables pagination through a set of `Construct`."""
+  constructsByToolUseAlleleIdAndConstructIdList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Construct`."""
+    orderBy: [ConstructsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ConstructCondition
+  ): [Construct!]!
+
+  """Reads and enables pagination through a set of `Tool`."""
+  toolsByToolUseAlleleIdAndToolId(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Tool`."""
+    orderBy: [ToolsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolCondition
+  ): AlleleToolsByToolUseAlleleIdAndToolIdManyToManyConnection!
+
+  """Reads and enables pagination through a set of `Tool`."""
+  toolsByToolUseAlleleIdAndToolIdList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Tool`."""
+    orderBy: [ToolsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolCondition
+  ): [Tool!]!
   insertedElementTypes: [ToolUse]
   regRegions: [Tool]
   encodedTools: [Tool]
@@ -1672,6 +2133,52 @@ type Gene implements Node {
     """
     condition: InsertionCondition
   ): [Insertion!]!
+
+  """Reads and enables pagination through a set of `Allele`."""
+  allelesByInsertionGeneIdAndAlleleId(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Allele`."""
+    orderBy: [AllelesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: AlleleCondition
+  ): GeneAllelesByInsertionGeneIdAndAlleleIdManyToManyConnection!
+
+  """Reads and enables pagination through a set of `Allele`."""
+  allelesByInsertionGeneIdAndAlleleIdList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Allele`."""
+    orderBy: [AllelesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: AlleleCondition
+  ): [Allele!]!
 }
 
 """
@@ -1706,6 +2213,8 @@ enum AllelesOrderBy {
   STOCKS_COUNT_DESC
   PUB_COUNT_ASC
   PUB_COUNT_DESC
+  PAPER_COUNT_ASC
+  PAPER_COUNT_DESC
   KNOWN_LESION_ASC
   KNOWN_LESION_DESC
   HAS_IMAGE_ASC
@@ -1747,6 +2256,9 @@ input AlleleCondition {
 
   """Checks for equality with the object’s `pubCount` field."""
   pubCount: BigInt
+
+  """Checks for equality with the object’s `paperCount` field."""
+  paperCount: BigInt
 
   """Checks for equality with the object’s `knownLesion` field."""
   knownLesion: Boolean
@@ -1836,6 +2348,52 @@ type Insertion implements Node {
     """
     condition: ConstructCondition
   ): [Construct!]!
+
+  """Reads and enables pagination through a set of `Allele`."""
+  allelesByConstructInsertionIdAndAlleleId(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Allele`."""
+    orderBy: [AllelesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: AlleleCondition
+  ): InsertionAllelesByConstructInsertionIdAndAlleleIdManyToManyConnection!
+
+  """Reads and enables pagination through a set of `Allele`."""
+  allelesByConstructInsertionIdAndAlleleIdList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Allele`."""
+    orderBy: [AllelesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: AlleleCondition
+  ): [Allele!]!
   insertedElementTypes: [ToolUse]
   regRegions: [Tool]
   encodedTools: [Tool]
@@ -1970,6 +2528,144 @@ type Construct implements Node {
     """
     condition: ToolUseCondition
   ): [ToolUse!]!
+
+  """Reads and enables pagination through a set of `Allele`."""
+  allelesByToolConstructIdAndAlleleId(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Allele`."""
+    orderBy: [AllelesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: AlleleCondition
+  ): ConstructAllelesByToolConstructIdAndAlleleIdManyToManyConnection!
+
+  """Reads and enables pagination through a set of `Allele`."""
+  allelesByToolConstructIdAndAlleleIdList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Allele`."""
+    orderBy: [AllelesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: AlleleCondition
+  ): [Allele!]!
+
+  """Reads and enables pagination through a set of `Allele`."""
+  allelesByToolUseConstructIdAndAlleleId(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Allele`."""
+    orderBy: [AllelesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: AlleleCondition
+  ): ConstructAllelesByToolUseConstructIdAndAlleleIdManyToManyConnection!
+
+  """Reads and enables pagination through a set of `Allele`."""
+  allelesByToolUseConstructIdAndAlleleIdList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Allele`."""
+    orderBy: [AllelesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: AlleleCondition
+  ): [Allele!]!
+
+  """Reads and enables pagination through a set of `Tool`."""
+  toolsByToolUseConstructIdAndToolId(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Tool`."""
+    orderBy: [ToolsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolCondition
+  ): ConstructToolsByToolUseConstructIdAndToolIdManyToManyConnection!
+
+  """Reads and enables pagination through a set of `Tool`."""
+  toolsByToolUseConstructIdAndToolIdList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Tool`."""
+    orderBy: [ToolsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolCondition
+  ): [Tool!]!
 }
 
 """A connection to a list of `Tool` values."""
@@ -2052,6 +2748,98 @@ type Tool implements Node {
     """
     condition: ToolUseCondition
   ): [ToolUse!]!
+
+  """Reads and enables pagination through a set of `Allele`."""
+  allelesByToolUseToolIdAndAlleleId(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Allele`."""
+    orderBy: [AllelesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: AlleleCondition
+  ): ToolAllelesByToolUseToolIdAndAlleleIdManyToManyConnection!
+
+  """Reads and enables pagination through a set of `Allele`."""
+  allelesByToolUseToolIdAndAlleleIdList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Allele`."""
+    orderBy: [AllelesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: AlleleCondition
+  ): [Allele!]!
+
+  """Reads and enables pagination through a set of `Construct`."""
+  constructsByToolUseToolIdAndConstructId(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Construct`."""
+    orderBy: [ConstructsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ConstructCondition
+  ): ToolConstructsByToolUseToolIdAndConstructIdManyToManyConnection!
+
+  """Reads and enables pagination through a set of `Construct`."""
+  constructsByToolUseToolIdAndConstructIdList(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Construct`."""
+    orderBy: [ConstructsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ConstructCondition
+  ): [Construct!]!
 }
 
 """A connection to a list of `ToolUse` values."""
@@ -2159,6 +2947,190 @@ input ToolUseCondition {
   postgresId: Int
 }
 
+"""A connection to a list of `Allele` values, with data from `ToolUse`."""
+type ToolAllelesByToolUseToolIdAndAlleleIdManyToManyConnection {
+  """A list of `Allele` objects."""
+  nodes: [Allele!]!
+
+  """
+  A list of edges which contains the `Allele`, info from the `ToolUse`, and the cursor to aid in pagination.
+  """
+  edges: [ToolAllelesByToolUseToolIdAndAlleleIdManyToManyEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Allele` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Allele` edge in the connection, with data from `ToolUse`."""
+type ToolAllelesByToolUseToolIdAndAlleleIdManyToManyEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Allele` at the end of the edge."""
+  node: Allele!
+
+  """Reads and enables pagination through a set of `ToolUse`."""
+  toolUsesConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `ToolUse`."""
+    orderBy: [ToolUsesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolUseCondition
+  ): ToolUsesConnection!
+
+  """Reads and enables pagination through a set of `ToolUse`."""
+  toolUses(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `ToolUse`."""
+    orderBy: [ToolUsesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolUseCondition
+  ): [ToolUse!]!
+}
+
+"""
+A connection to a list of `Construct` values, with data from `ToolUse`.
+"""
+type ToolConstructsByToolUseToolIdAndConstructIdManyToManyConnection {
+  """A list of `Construct` objects."""
+  nodes: [Construct!]!
+
+  """
+  A list of edges which contains the `Construct`, info from the `ToolUse`, and the cursor to aid in pagination.
+  """
+  edges: [ToolConstructsByToolUseToolIdAndConstructIdManyToManyEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Construct` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Construct` edge in the connection, with data from `ToolUse`."""
+type ToolConstructsByToolUseToolIdAndConstructIdManyToManyEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Construct` at the end of the edge."""
+  node: Construct!
+
+  """Reads and enables pagination through a set of `ToolUse`."""
+  toolUsesConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `ToolUse`."""
+    orderBy: [ToolUsesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolUseCondition
+  ): ToolUsesConnection!
+
+  """Reads and enables pagination through a set of `ToolUse`."""
+  toolUses(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `ToolUse`."""
+    orderBy: [ToolUsesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolUseCondition
+  ): [ToolUse!]!
+}
+
+"""Methods to use when ordering `Construct`."""
+enum ConstructsOrderBy {
+  NATURAL
+  FBTP_ID_ASC
+  FBTP_ID_DESC
+  SYMBOL_ASC
+  SYMBOL_DESC
+  INSERTION_ID_ASC
+  INSERTION_ID_DESC
+  ALLELE_ID_ASC
+  ALLELE_ID_DESC
+  ID_ASC
+  ID_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `Construct` object types. All fields are tested
+for equality and combined with a logical ‘and.’
+"""
+input ConstructCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: String
+
+  """Checks for equality with the object’s `symbol` field."""
+  symbol: String
+
+  """Checks for equality with the object’s `insertionId` field."""
+  insertionId: BigInt
+
+  """Checks for equality with the object’s `alleleId` field."""
+  alleleId: BigInt
+
+  """Checks for equality with the object’s `postgresId` field."""
+  postgresId: Int
+}
+
 """A `Tool` edge in the connection."""
 type ToolsEdge {
   """A cursor for use in pagination."""
@@ -2210,6 +3182,222 @@ input ToolCondition {
   postgresId: Int
 }
 
+"""A connection to a list of `Allele` values, with data from `Tool`."""
+type ConstructAllelesByToolConstructIdAndAlleleIdManyToManyConnection {
+  """A list of `Allele` objects."""
+  nodes: [Allele!]!
+
+  """
+  A list of edges which contains the `Allele`, info from the `Tool`, and the cursor to aid in pagination.
+  """
+  edges: [ConstructAllelesByToolConstructIdAndAlleleIdManyToManyEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Allele` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Allele` edge in the connection, with data from `Tool`."""
+type ConstructAllelesByToolConstructIdAndAlleleIdManyToManyEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Allele` at the end of the edge."""
+  node: Allele!
+
+  """Reads and enables pagination through a set of `Tool`."""
+  toolsConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Tool`."""
+    orderBy: [ToolsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolCondition
+  ): ToolsConnection!
+
+  """Reads and enables pagination through a set of `Tool`."""
+  tools(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Tool`."""
+    orderBy: [ToolsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolCondition
+  ): [Tool!]!
+}
+
+"""A connection to a list of `Allele` values, with data from `ToolUse`."""
+type ConstructAllelesByToolUseConstructIdAndAlleleIdManyToManyConnection {
+  """A list of `Allele` objects."""
+  nodes: [Allele!]!
+
+  """
+  A list of edges which contains the `Allele`, info from the `ToolUse`, and the cursor to aid in pagination.
+  """
+  edges: [ConstructAllelesByToolUseConstructIdAndAlleleIdManyToManyEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Allele` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Allele` edge in the connection, with data from `ToolUse`."""
+type ConstructAllelesByToolUseConstructIdAndAlleleIdManyToManyEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Allele` at the end of the edge."""
+  node: Allele!
+
+  """Reads and enables pagination through a set of `ToolUse`."""
+  toolUsesConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `ToolUse`."""
+    orderBy: [ToolUsesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolUseCondition
+  ): ToolUsesConnection!
+
+  """Reads and enables pagination through a set of `ToolUse`."""
+  toolUses(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `ToolUse`."""
+    orderBy: [ToolUsesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolUseCondition
+  ): [ToolUse!]!
+}
+
+"""A connection to a list of `Tool` values, with data from `ToolUse`."""
+type ConstructToolsByToolUseConstructIdAndToolIdManyToManyConnection {
+  """A list of `Tool` objects."""
+  nodes: [Tool!]!
+
+  """
+  A list of edges which contains the `Tool`, info from the `ToolUse`, and the cursor to aid in pagination.
+  """
+  edges: [ConstructToolsByToolUseConstructIdAndToolIdManyToManyEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Tool` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Tool` edge in the connection, with data from `ToolUse`."""
+type ConstructToolsByToolUseConstructIdAndToolIdManyToManyEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Tool` at the end of the edge."""
+  node: Tool!
+
+  """Reads and enables pagination through a set of `ToolUse`."""
+  toolUsesConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `ToolUse`."""
+    orderBy: [ToolUsesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolUseCondition
+  ): ToolUsesConnection!
+
+  """Reads and enables pagination through a set of `ToolUse`."""
+  uses(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `ToolUse`."""
+    orderBy: [ToolUsesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolUseCondition
+  ): [ToolUse!]!
+}
+
 """A `Construct` edge in the connection."""
 type ConstructsEdge {
   """A cursor for use in pagination."""
@@ -2219,42 +3407,76 @@ type ConstructsEdge {
   node: Construct!
 }
 
-"""Methods to use when ordering `Construct`."""
-enum ConstructsOrderBy {
-  NATURAL
-  FBTP_ID_ASC
-  FBTP_ID_DESC
-  SYMBOL_ASC
-  SYMBOL_DESC
-  INSERTION_ID_ASC
-  INSERTION_ID_DESC
-  ALLELE_ID_ASC
-  ALLELE_ID_DESC
-  ID_ASC
-  ID_DESC
-  PRIMARY_KEY_ASC
-  PRIMARY_KEY_DESC
+"""A connection to a list of `Allele` values, with data from `Construct`."""
+type InsertionAllelesByConstructInsertionIdAndAlleleIdManyToManyConnection {
+  """A list of `Allele` objects."""
+  nodes: [Allele!]!
+
+  """
+  A list of edges which contains the `Allele`, info from the `Construct`, and the cursor to aid in pagination.
+  """
+  edges: [InsertionAllelesByConstructInsertionIdAndAlleleIdManyToManyEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Allele` you could get from the connection."""
+  totalCount: Int!
 }
 
-"""
-A condition to be used against `Construct` object types. All fields are tested
-for equality and combined with a logical ‘and.’
-"""
-input ConstructCondition {
-  """Checks for equality with the object’s `id` field."""
-  id: String
+"""A `Allele` edge in the connection, with data from `Construct`."""
+type InsertionAllelesByConstructInsertionIdAndAlleleIdManyToManyEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
 
-  """Checks for equality with the object’s `symbol` field."""
-  symbol: String
+  """The `Allele` at the end of the edge."""
+  node: Allele!
 
-  """Checks for equality with the object’s `insertionId` field."""
-  insertionId: BigInt
+  """Reads and enables pagination through a set of `Construct`."""
+  constructsConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
 
-  """Checks for equality with the object’s `alleleId` field."""
-  alleleId: BigInt
+    """Only read the last `n` values of the set."""
+    last: Int
 
-  """Checks for equality with the object’s `postgresId` field."""
-  postgresId: Int
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Construct`."""
+    orderBy: [ConstructsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ConstructCondition
+  ): ConstructsConnection!
+
+  """Reads and enables pagination through a set of `Construct`."""
+  constructs(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Construct`."""
+    orderBy: [ConstructsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ConstructCondition
+  ): [Construct!]!
 }
 
 """A `Insertion` edge in the connection."""
@@ -2312,6 +3534,78 @@ input InsertionCondition {
 
   """Checks for equality with the object’s `pubCount` field."""
   pubCount: BigInt
+}
+
+"""A connection to a list of `Allele` values, with data from `Insertion`."""
+type GeneAllelesByInsertionGeneIdAndAlleleIdManyToManyConnection {
+  """A list of `Allele` objects."""
+  nodes: [Allele!]!
+
+  """
+  A list of edges which contains the `Allele`, info from the `Insertion`, and the cursor to aid in pagination.
+  """
+  edges: [GeneAllelesByInsertionGeneIdAndAlleleIdManyToManyEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Allele` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Allele` edge in the connection, with data from `Insertion`."""
+type GeneAllelesByInsertionGeneIdAndAlleleIdManyToManyEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Allele` at the end of the edge."""
+  node: Allele!
+
+  """Reads and enables pagination through a set of `Insertion`."""
+  insertionsConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Insertion`."""
+    orderBy: [InsertionsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: InsertionCondition
+  ): InsertionsConnection!
+
+  """Reads and enables pagination through a set of `Insertion`."""
+  insertions(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Insertion`."""
+    orderBy: [InsertionsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: InsertionCondition
+  ): [Insertion!]!
 }
 
 """A connection to a list of `AlleleClass` values."""
@@ -2617,6 +3911,683 @@ input AlleleTransgenicProductClassCondition {
   transgenicProductClass: String
 }
 
+"""
+A connection to a list of `SplitSystemCombinationComponentAllele` values.
+"""
+type SplitSystemCombinationComponentAllelesConnection {
+  """A list of `SplitSystemCombinationComponentAllele` objects."""
+  nodes: [SplitSystemCombinationComponentAllele!]!
+
+  """
+  A list of edges which contains the `SplitSystemCombinationComponentAllele` and cursor to aid in pagination.
+  """
+  edges: [SplitSystemCombinationComponentAllelesEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """
+  The count of *all* `SplitSystemCombinationComponentAllele` you could get from the connection.
+  """
+  totalCount: Int!
+}
+
+type SplitSystemCombinationComponentAllele implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+  splitSystemCombinationId: Int!
+  alleleId: Int!
+
+  """
+  Reads a single `SplitSystemCombination` that is related to this `SplitSystemCombinationComponentAllele`.
+  """
+  splitSystemCombination: SplitSystemCombination
+
+  """
+  Reads a single `Allele` that is related to this `SplitSystemCombinationComponentAllele`.
+  """
+  allele: Allele
+}
+
+type SplitSystemCombination implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+  id: String
+  symbol: String
+  postgresId: Int!
+  stocksCount: BigInt
+  pubCount: BigInt
+
+  """
+  Reads and enables pagination through a set of `SplitSystemCombinationComponentAllele`.
+  """
+  splitSystemCombinationComponentAllelesConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """
+    The method to use when ordering `SplitSystemCombinationComponentAllele`.
+    """
+    orderBy: [SplitSystemCombinationComponentAllelesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: SplitSystemCombinationComponentAlleleCondition
+  ): SplitSystemCombinationComponentAllelesConnection!
+
+  """
+  Reads and enables pagination through a set of `SplitSystemCombinationComponentAllele`.
+  """
+  splitSystemCombinationComponentAlleles(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """
+    The method to use when ordering `SplitSystemCombinationComponentAllele`.
+    """
+    orderBy: [SplitSystemCombinationComponentAllelesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: SplitSystemCombinationComponentAlleleCondition
+  ): [SplitSystemCombinationComponentAllele!]!
+
+  """Reads and enables pagination through a set of `Allele`."""
+  componentAllelesConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Allele`."""
+    orderBy: [AllelesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: AlleleCondition
+  ): SplitSystemCombinationAllelesBySplitSystemCombinationComponentAlleleSplitSystemCombinationIdAndAlleleIdManyToManyConnection!
+
+  """Reads and enables pagination through a set of `Allele`."""
+  componentAlleles(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Allele`."""
+    orderBy: [AllelesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: AlleleCondition
+  ): [Allele!]!
+}
+
+"""Methods to use when ordering `SplitSystemCombinationComponentAllele`."""
+enum SplitSystemCombinationComponentAllelesOrderBy {
+  NATURAL
+  SPLIT_SYSTEM_COMBINATION_ID_ASC
+  SPLIT_SYSTEM_COMBINATION_ID_DESC
+  ALLELE_ID_ASC
+  ALLELE_ID_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `SplitSystemCombinationComponentAllele` object
+types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input SplitSystemCombinationComponentAlleleCondition {
+  """
+  Checks for equality with the object’s `splitSystemCombinationId` field.
+  """
+  splitSystemCombinationId: Int
+
+  """Checks for equality with the object’s `alleleId` field."""
+  alleleId: Int
+}
+
+"""
+A connection to a list of `Allele` values, with data from `SplitSystemCombinationComponentAllele`.
+"""
+type SplitSystemCombinationAllelesBySplitSystemCombinationComponentAlleleSplitSystemCombinationIdAndAlleleIdManyToManyConnection {
+  """A list of `Allele` objects."""
+  nodes: [Allele!]!
+
+  """
+  A list of edges which contains the `Allele`, info from the `SplitSystemCombinationComponentAllele`, and the cursor to aid in pagination.
+  """
+  edges: [SplitSystemCombinationAllelesBySplitSystemCombinationComponentAlleleSplitSystemCombinationIdAndAlleleIdManyToManyEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Allele` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""
+A `Allele` edge in the connection, with data from `SplitSystemCombinationComponentAllele`.
+"""
+type SplitSystemCombinationAllelesBySplitSystemCombinationComponentAlleleSplitSystemCombinationIdAndAlleleIdManyToManyEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Allele` at the end of the edge."""
+  node: Allele!
+}
+
+"""A `SplitSystemCombinationComponentAllele` edge in the connection."""
+type SplitSystemCombinationComponentAllelesEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `SplitSystemCombinationComponentAllele` at the end of the edge."""
+  node: SplitSystemCombinationComponentAllele!
+}
+
+"""
+A connection to a list of `Insertion` values, with data from `Construct`.
+"""
+type AlleleInsertionsByConstructAlleleIdAndInsertionIdManyToManyConnection {
+  """A list of `Insertion` objects."""
+  nodes: [Insertion!]!
+
+  """
+  A list of edges which contains the `Insertion`, info from the `Construct`, and the cursor to aid in pagination.
+  """
+  edges: [AlleleInsertionsByConstructAlleleIdAndInsertionIdManyToManyEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Insertion` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Insertion` edge in the connection, with data from `Construct`."""
+type AlleleInsertionsByConstructAlleleIdAndInsertionIdManyToManyEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Insertion` at the end of the edge."""
+  node: Insertion!
+
+  """Reads and enables pagination through a set of `Construct`."""
+  constructsConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Construct`."""
+    orderBy: [ConstructsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ConstructCondition
+  ): ConstructsConnection!
+
+  """Reads and enables pagination through a set of `Construct`."""
+  constructs(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Construct`."""
+    orderBy: [ConstructsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ConstructCondition
+  ): [Construct!]!
+}
+
+"""A connection to a list of `Gene` values, with data from `Insertion`."""
+type AlleleGenesByInsertionAlleleIdAndGeneIdManyToManyConnection {
+  """A list of `Gene` objects."""
+  nodes: [Gene!]!
+
+  """
+  A list of edges which contains the `Gene`, info from the `Insertion`, and the cursor to aid in pagination.
+  """
+  edges: [AlleleGenesByInsertionAlleleIdAndGeneIdManyToManyEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Gene` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Gene` edge in the connection, with data from `Insertion`."""
+type AlleleGenesByInsertionAlleleIdAndGeneIdManyToManyEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Gene` at the end of the edge."""
+  node: Gene!
+
+  """Reads and enables pagination through a set of `Insertion`."""
+  insertionsConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Insertion`."""
+    orderBy: [InsertionsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: InsertionCondition
+  ): InsertionsConnection!
+
+  """Reads and enables pagination through a set of `Insertion`."""
+  insertions(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Insertion`."""
+    orderBy: [InsertionsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: InsertionCondition
+  ): [Insertion!]!
+}
+
+"""Methods to use when ordering `Gene`."""
+enum GenesOrderBy {
+  NATURAL
+  FEATURE_ID_ASC
+  FEATURE_ID_DESC
+  NAME_ASC
+  NAME_DESC
+  UNIQUENAME_ASC
+  UNIQUENAME_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `Gene` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input GeneCondition {
+  """Checks for equality with the object’s `featureId` field."""
+  featureId: Int
+
+  """Checks for equality with the object’s `symbol` field."""
+  symbol: String
+
+  """Checks for equality with the object’s `id` field."""
+  id: String
+}
+
+"""
+A connection to a list of `SplitSystemCombination` values, with data from `SplitSystemCombinationComponentAllele`.
+"""
+type AlleleSplitSystemCombinationsBySplitSystemCombinationComponentAlleleAlleleIdAndSplitSystemCombinationIdManyToManyConnection {
+  """A list of `SplitSystemCombination` objects."""
+  nodes: [SplitSystemCombination!]!
+
+  """
+  A list of edges which contains the `SplitSystemCombination`, info from the `SplitSystemCombinationComponentAllele`, and the cursor to aid in pagination.
+  """
+  edges: [AlleleSplitSystemCombinationsBySplitSystemCombinationComponentAlleleAlleleIdAndSplitSystemCombinationIdManyToManyEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """
+  The count of *all* `SplitSystemCombination` you could get from the connection.
+  """
+  totalCount: Int!
+}
+
+"""
+A `SplitSystemCombination` edge in the connection, with data from `SplitSystemCombinationComponentAllele`.
+"""
+type AlleleSplitSystemCombinationsBySplitSystemCombinationComponentAlleleAlleleIdAndSplitSystemCombinationIdManyToManyEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `SplitSystemCombination` at the end of the edge."""
+  node: SplitSystemCombination!
+}
+
+"""Methods to use when ordering `SplitSystemCombination`."""
+enum SplitSystemCombinationsOrderBy {
+  NATURAL
+  FBCO_ID_ASC
+  FBCO_ID_DESC
+  SYMBOL_ASC
+  SYMBOL_DESC
+  ID_ASC
+  ID_DESC
+  STOCKS_COUNT_ASC
+  STOCKS_COUNT_DESC
+  PUB_COUNT_ASC
+  PUB_COUNT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `SplitSystemCombination` object types. All fields
+are tested for equality and combined with a logical ‘and.’
+"""
+input SplitSystemCombinationCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: String
+
+  """Checks for equality with the object’s `symbol` field."""
+  symbol: String
+
+  """Checks for equality with the object’s `postgresId` field."""
+  postgresId: Int
+
+  """Checks for equality with the object’s `stocksCount` field."""
+  stocksCount: BigInt
+
+  """Checks for equality with the object’s `pubCount` field."""
+  pubCount: BigInt
+}
+
+"""A connection to a list of `Construct` values, with data from `Tool`."""
+type AlleleConstructsByToolAlleleIdAndConstructIdManyToManyConnection {
+  """A list of `Construct` objects."""
+  nodes: [Construct!]!
+
+  """
+  A list of edges which contains the `Construct`, info from the `Tool`, and the cursor to aid in pagination.
+  """
+  edges: [AlleleConstructsByToolAlleleIdAndConstructIdManyToManyEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Construct` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Construct` edge in the connection, with data from `Tool`."""
+type AlleleConstructsByToolAlleleIdAndConstructIdManyToManyEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Construct` at the end of the edge."""
+  node: Construct!
+
+  """Reads and enables pagination through a set of `Tool`."""
+  toolsConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Tool`."""
+    orderBy: [ToolsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolCondition
+  ): ToolsConnection!
+
+  """Reads and enables pagination through a set of `Tool`."""
+  tools(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Tool`."""
+    orderBy: [ToolsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolCondition
+  ): [Tool!]!
+}
+
+"""
+A connection to a list of `Construct` values, with data from `ToolUse`.
+"""
+type AlleleConstructsByToolUseAlleleIdAndConstructIdManyToManyConnection {
+  """A list of `Construct` objects."""
+  nodes: [Construct!]!
+
+  """
+  A list of edges which contains the `Construct`, info from the `ToolUse`, and the cursor to aid in pagination.
+  """
+  edges: [AlleleConstructsByToolUseAlleleIdAndConstructIdManyToManyEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Construct` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Construct` edge in the connection, with data from `ToolUse`."""
+type AlleleConstructsByToolUseAlleleIdAndConstructIdManyToManyEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Construct` at the end of the edge."""
+  node: Construct!
+
+  """Reads and enables pagination through a set of `ToolUse`."""
+  toolUsesConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `ToolUse`."""
+    orderBy: [ToolUsesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolUseCondition
+  ): ToolUsesConnection!
+
+  """Reads and enables pagination through a set of `ToolUse`."""
+  toolUses(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `ToolUse`."""
+    orderBy: [ToolUsesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolUseCondition
+  ): [ToolUse!]!
+}
+
+"""A connection to a list of `Tool` values, with data from `ToolUse`."""
+type AlleleToolsByToolUseAlleleIdAndToolIdManyToManyConnection {
+  """A list of `Tool` objects."""
+  nodes: [Tool!]!
+
+  """
+  A list of edges which contains the `Tool`, info from the `ToolUse`, and the cursor to aid in pagination.
+  """
+  edges: [AlleleToolsByToolUseAlleleIdAndToolIdManyToManyEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Tool` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Tool` edge in the connection, with data from `ToolUse`."""
+type AlleleToolsByToolUseAlleleIdAndToolIdManyToManyEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Tool` at the end of the edge."""
+  node: Tool!
+
+  """Reads and enables pagination through a set of `ToolUse`."""
+  toolUsesConnection(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `ToolUse`."""
+    orderBy: [ToolUsesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolUseCondition
+  ): ToolUsesConnection!
+
+  """Reads and enables pagination through a set of `ToolUse`."""
+  uses(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `ToolUse`."""
+    orderBy: [ToolUsesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: ToolUseCondition
+  ): [ToolUse!]!
+}
+
 """A `Allele` edge in the connection."""
 type AllelesEdge {
   """A cursor for use in pagination."""
@@ -2652,31 +4623,32 @@ type GenesEdge {
   node: Gene!
 }
 
-"""Methods to use when ordering `Gene`."""
-enum GenesOrderBy {
-  NATURAL
-  FEATURE_ID_ASC
-  FEATURE_ID_DESC
-  NAME_ASC
-  NAME_DESC
-  UNIQUENAME_ASC
-  UNIQUENAME_DESC
-  PRIMARY_KEY_ASC
-  PRIMARY_KEY_DESC
+"""A connection to a list of `SplitSystemCombination` values."""
+type SplitSystemCombinationsConnection {
+  """A list of `SplitSystemCombination` objects."""
+  nodes: [SplitSystemCombination!]!
+
+  """
+  A list of edges which contains the `SplitSystemCombination` and cursor to aid in pagination.
+  """
+  edges: [SplitSystemCombinationsEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """
+  The count of *all* `SplitSystemCombination` you could get from the connection.
+  """
+  totalCount: Int!
 }
 
-"""
-A condition to be used against `Gene` object types. All fields are tested for equality and combined with a logical ‘and.’
-"""
-input GeneCondition {
-  """Checks for equality with the object’s `featureId` field."""
-  featureId: Int
+"""A `SplitSystemCombination` edge in the connection."""
+type SplitSystemCombinationsEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
 
-  """Checks for equality with the object’s `symbol` field."""
-  symbol: String
-
-  """Checks for equality with the object’s `id` field."""
-  id: String
+  """The `SplitSystemCombination` at the end of the edge."""
+  node: SplitSystemCombination!
 }
 
 """A connection to a list of `GeneGroupMembership` values."""

@@ -32,6 +32,7 @@ module.exports = makeWrapResolversPlugin(
   * */
   (context, _build, _field, _options) => {
     const fieldName = context.scope.fieldName;
+
     if(!Object.keys(TOOL_SUMMARY_FIELD_INFO).includes(fieldName)) return null;
 
     const typename = context.scope.pgIntrospection.name;
@@ -61,17 +62,33 @@ module.exports = makeWrapResolversPlugin(
         // Since any type can have these fields added, we need to dynamically require fields based on the parent type
         ...( typename === "allele" ? [{ column: "propagate_transgenic_uses", alias: "$propagateTransgenicUses" }] : ""),
         ...( typename === "allele" ? [{ column: "is_construct", alias: "$isConstruct" }] : ""),
+        ...( (typename === "allele" || typename === "insertion") ? [{ column: "id", alias: "$parentId" }] : ""),
       ]
     },
     resolve: async (resolver, parent, args, context, resolveInfo) => {
+
       let {
         $propagateTransgenicUses = true,
         $isConstruct,
-        /*
-        * This field is provided automatically by postgraphile and corresponds
-        * to whichever field is the primary key
+      } = parent;
+
+      /*
+        * The __identifiers field represents the value(s) of the primary key(s) for the parent field.
+        * For some reason, when querying an object derived from a many-to-many relationship
+        * (for example getting "splitSystemCombination => componentAlleles"), __identifiers
+        * is not passed into the resolver.
+        *
+        * In this case, we need to manually require these fields (see above).
+        *
+        * There may be opportunity for improvement here. It seems like there should be a library-
+        * specific method to get the value of an objects primary key, or at least get which key(s)
+        * are primary keys. I looked into it for a bit, but didn't want to waste time on it.
+        *
+        * If we need this sort of behavior on a broader scale in the future, we should look into
+        * a slightly more robust solution.
         * */
-        __identifiers: [$parentId] } = parent;
+
+      const $parentId = parent.__identifiers ? parent.__identifiers[0] : parent["$parentId"];
 
       // Gain access to the graphql function so that we can execute queries
       const graphql = resolveInfo.graphile.build.graphql.graphql;
