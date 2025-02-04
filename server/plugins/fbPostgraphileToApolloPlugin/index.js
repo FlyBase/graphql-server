@@ -29,7 +29,7 @@ module.exports = async () => {
   * */
   const { schema, plugin } = await makeSchemaAndPlugin(
     pgPool,
-    ['flybase', 'gene', 'gene_group', 'humanhealth'], // All postgresQL schemas available to postgraphile
+    ['flybase', 'gene', 'gene_group', 'humanhealth', 'dataclass', 'dataclass_relationship'], // All postgresQL schemas available to postgraphile
     {
       subscriptions: true,
       retryOnInitFail: true, //TODO: (error, numAttempts) => bool [limit number of retries]
