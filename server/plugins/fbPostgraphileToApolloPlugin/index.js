@@ -28,7 +28,7 @@ module.exports = async () => {
   *
   * PGDATABASE=FB20XX_XX PGUSER=argosadm PGPASSWORD=passwordHere123 command --here ...
   * */
-  console.log(PgNodeAliasPostGraphile)
+
   const { schema, plugin } = await makeSchemaAndPlugin(
     pgPool,
     ['flybase', 'gene', 'gene_group', 'humanhealth', 'dataclass', 'dataclass_relationship'], // All postgresQL schemas available to postgraphile
