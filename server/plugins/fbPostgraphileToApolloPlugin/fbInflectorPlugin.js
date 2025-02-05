@@ -74,8 +74,9 @@ module.exports = makeAddInflectorsPlugin((inflectors) => {
     },
     manyRelationByKeysSimple(detailedKeys, table, foreignTable, constraint) {
       const key = oldManyRelationByKeysSimple.call(this, detailedKeys, table, foreignTable, constraint);
-      console.log("MANY: ", detailedKeys, table, foreignTable, constraint)
-      return this.camelCase(key.replace(foreignTable.name, ""));
+      console.log("MANY: ", detailedKeys, table, foreignTable, constraint);
+      return key;
+      // return this.camelCase(key.replace(foreignTable.name, ""));
     },
     column(attr) {
       const key = oldColumn.call(this, attr);
