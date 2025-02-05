@@ -5,6 +5,7 @@ import FBInflectorsPlugin from "./fbInflectorPlugin";
 import exportPostGraphileSchema from 'postgraphile/build/postgraphile/schema/exportPostGraphileSchema';
 import FBToolSummariesPlugin from "./toolSummariesPlugin";
 import PgManyToManyPlugin from '@graphile-contrib/pg-many-to-many'
+import { PgNodeAliasPostGraphile } from 'graphile-build-pg'
 
 /*
 * This code generates an Apollo Server plugin, giving Apollo access to everything
@@ -54,6 +55,7 @@ module.exports = async () => {
       graphileBuildOptions: {
         pgOmitListSuffix: true
       },
+      skipPlugins: [PgNodeAliasPostGraphile]
     }
   );
 
