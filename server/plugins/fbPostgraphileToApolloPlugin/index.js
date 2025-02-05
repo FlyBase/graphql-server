@@ -7,6 +7,9 @@ import FBToolSummariesPlugin from "./toolSummariesPlugin";
 import PgManyToManyPlugin from '@graphile-contrib/pg-many-to-many';
 import { PgNodeAliasPostGraphile } from 'graphile-build-pg';
 
+let PgNodeAliasPostGraphileFoo = PgNodeAliasPostGraphile;
+Object.defineProperty(PgNodeAliasPostGraphileFoo, 'name', { value: "PgNodeAliasPostGraphile"});
+
 /*
 * This code generates an Apollo Server plugin, giving Apollo access to everything
 * within postgraphile. The "postgraphile-apollo-server" library creates the schema
@@ -56,7 +59,7 @@ module.exports = async () => {
       graphileBuildOptions: {
         pgOmitListSuffix: true
       },
-      skipPlugins: [PgNodeAliasPostGraphile]
+      skipPlugins: [PgNodeAliasPostGraphileFoo]
     }
   );
 
