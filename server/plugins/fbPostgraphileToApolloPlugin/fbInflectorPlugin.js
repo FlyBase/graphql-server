@@ -79,6 +79,8 @@ module.exports = makeAddInflectorsPlugin((inflectors) => {
     column(attr) {
       const key = oldColumn.call(this, attr);
 
+      console.log("COLUMN(attr): ", attr);
+
       switch (attr.class.name) {
         case "gene": return getGeneClassKey(key);
         case "pathway_member":
