@@ -79,7 +79,9 @@ module.exports = makeAddInflectorsPlugin((inflectors) => {
     column(attr) {
       const key = oldColumn.call(this, attr);
 
-      console.log("COLUMN(attr): ", attr);
+      if(attr.class.namespaceName === "dataclass" || attr.class.namespaceName === "dataclass_relationship") {
+        return key;
+      }
 
       switch (attr.class.name) {
         case "gene": return getGeneClassKey(key);
