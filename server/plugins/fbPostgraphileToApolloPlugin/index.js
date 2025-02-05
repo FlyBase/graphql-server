@@ -5,7 +5,6 @@ import FBInflectorsPlugin from "./fbInflectorPlugin";
 import exportPostGraphileSchema from 'postgraphile/build/postgraphile/schema/exportPostGraphileSchema';
 import FBToolSummariesPlugin from "./toolSummariesPlugin";
 import PgManyToManyPlugin from '@graphile-contrib/pg-many-to-many';
-import { PgNodeAliasPostGraphile } from 'graphile-build-pg';
 
 
 /*
@@ -52,13 +51,11 @@ module.exports = async () => {
         PgSimplifyInflectorPlugin, //Simplifies the naming of queries and fields
         FBInflectorsPlugin, //Additional FB-specific naming changes
         FBToolSummariesPlugin, //Adds various derived fields to Alleles and Insertions based on Tools and ToolUses
-        PgNodeAliasPostGraphile
       ],
       simpleCollections: "both",
       graphileBuildOptions: {
         pgOmitListSuffix: true
       },
-      skipPlugins: [PgNodeAliasPostGraphile]
     }
   );
 
