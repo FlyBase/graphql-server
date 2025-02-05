@@ -7,8 +7,6 @@ import FBToolSummariesPlugin from "./toolSummariesPlugin";
 import PgManyToManyPlugin from '@graphile-contrib/pg-many-to-many';
 import { PgNodeAliasPostGraphile } from 'graphile-build-pg';
 
-let PgNodeAliasPostGraphileFoo = PgNodeAliasPostGraphile;
-Object.defineProperty(PgNodeAliasPostGraphileFoo, 'name', { value: "PgNodeAliasPostGraphile"});
 
 /*
 * This code generates an Apollo Server plugin, giving Apollo access to everything
@@ -53,13 +51,14 @@ module.exports = async () => {
         PgManyToManyPlugin,
         PgSimplifyInflectorPlugin, //Simplifies the naming of queries and fields
         FBInflectorsPlugin, //Additional FB-specific naming changes
-        FBToolSummariesPlugin //Adds various derived fields to Alleles and Insertions based on Tools and ToolUses
+        FBToolSummariesPlugin, //Adds various derived fields to Alleles and Insertions based on Tools and ToolUses
+        PgNodeAliasPostGraphile
       ],
       simpleCollections: "both",
       graphileBuildOptions: {
         pgOmitListSuffix: true
       },
-      skipPlugins: [PgNodeAliasPostGraphileFoo]
+      skipPlugins: [PgNodeAliasPostGraphile]
     }
   );
 
