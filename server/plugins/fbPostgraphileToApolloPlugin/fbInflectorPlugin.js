@@ -74,10 +74,15 @@ module.exports = makeAddInflectorsPlugin((inflectors) => {
     },
     manyRelationByKeysSimple(detailedKeys, table, foreignTable, constraint) {
       const key = oldManyRelationByKeysSimple.call(this, detailedKeys, table, foreignTable, constraint);
+
       return this.camelCase(key.replace(foreignTable.name, ""));
     },
     column(attr) {
       const key = oldColumn.call(this, attr);
+
+      if(attr.class.namespaceName === "dataclass" || attr.class.namespaceName === "dataclass_relationship") {
+        return key;
+      }
 
       switch (attr.class.name) {
         case "gene": return getGeneClassKey(key);

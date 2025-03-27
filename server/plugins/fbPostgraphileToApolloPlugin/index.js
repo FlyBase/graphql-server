@@ -4,7 +4,8 @@ import PgSimplifyInflectorPlugin from '@graphile-contrib/pg-simplify-inflector';
 import FBInflectorsPlugin from "./fbInflectorPlugin";
 import exportPostGraphileSchema from 'postgraphile/build/postgraphile/schema/exportPostGraphileSchema';
 import FBToolSummariesPlugin from "./toolSummariesPlugin";
-import PgManyToManyPlugin from '@graphile-contrib/pg-many-to-many'
+import PgManyToManyPlugin from '@graphile-contrib/pg-many-to-many';
+
 
 /*
 * This code generates an Apollo Server plugin, giving Apollo access to everything
@@ -27,9 +28,10 @@ module.exports = async () => {
   *
   * PGDATABASE=FB20XX_XX PGUSER=argosadm PGPASSWORD=passwordHere123 command --here ...
   * */
+
   const { schema, plugin } = await makeSchemaAndPlugin(
     pgPool,
-    ['flybase', 'gene', 'gene_group', 'humanhealth'], // All postgresQL schemas available to postgraphile
+    ['flybase', 'gene', 'gene_group', 'humanhealth', 'dataclass', 'dataclass_relationship'], // All postgresQL schemas available to postgraphile
     {
       subscriptions: true,
       retryOnInitFail: true, //TODO: (error, numAttempts) => bool [limit number of retries]
@@ -48,7 +50,7 @@ module.exports = async () => {
         PgManyToManyPlugin,
         PgSimplifyInflectorPlugin, //Simplifies the naming of queries and fields
         FBInflectorsPlugin, //Additional FB-specific naming changes
-        FBToolSummariesPlugin //Adds various derived fields to Alleles and Insertions based on Tools and ToolUses
+        FBToolSummariesPlugin, //Adds various derived fields to Alleles and Insertions based on Tools and ToolUses
       ],
       simpleCollections: "both",
       graphileBuildOptions: {
