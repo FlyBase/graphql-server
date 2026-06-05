@@ -1,18 +1,13 @@
-import {
-  ApolloServer,
-  makeExecutableSchema,
-  mergeSchemas,
-} from 'apollo-server'
-import * as Sentry from '@sentry/node'
+import { makeExecutableSchema, mergeSchemas } from 'apollo-server'
+import { ApolloServer } from 'apollo-server-express'
+import express from 'express'
 import AllianceTypeExtensions from "./plugins/allianceExtensions/allianceTypeExtensions.graphql";
 import FlyBaseAPI from './datasources/FlyBaseAPI';
 import AllianceAPI from './datasources/AllianceAPI';
 import FBPostgraphileToApolloPlugin from './plugins/fbPostgraphileToApolloPlugin';
 import AllianceExtensionResolvers from './plugins/allianceExtensions/allianceExtensionResolvers'
-
-Sentry.init({
-  dsn: 'https://a44fd5f15e834e20a0770d626e0e25c5@sentry.io/1788453',
-});
+import ErrorLoggingPlugin from './plugins/errorLogging';
+import { fiveXXLogger, emptyBodyGuard } from './plugins/errorLogging/httpErrorMiddleware';
 
 const main = async () => {
 
@@ -30,10 +25,9 @@ const main = async () => {
   const server = new ApolloServer({
     introspection: true,
     playground: true,
-    formatError: (err) => {
-      Sentry.captureException(err);
-      return err;
-    },
+    // (Removed the dead Sentry init + formatError->Sentry.captureException — the DSN
+    //  sentry.io/1788453 was an abandoned ~2020 project. Error capture is now on-box
+    //  via the ErrorLoggingPlugin (didEncounterErrors) + the fiveXXLogger middleware.)
     //Supplies Apollo resolvers ONLY with access to make API calls
     dataSources: () => ({
       flyBaseAPI: new FlyBaseAPI(),
@@ -45,11 +39,24 @@ const main = async () => {
     }),
     // This is where plugins for Apollo Server go
     // Postgraphile plugins go in fbPostgraphileToApolloPlugin.js
-    plugins: [postgraphileToApolloPlugin],
+    plugins: [postgraphileToApolloPlugin, ErrorLoggingPlugin],
   });
 
-  server.listen().then(({ url }) => {
-    console.log(`   Server ready at ${url}`)
+  // Express mode (apollo-server-express): lets us add HTTP-layer middleware in front
+  // of Apollo — a 5xx logger and a guard that cleanly 400s the empty/bad-content-type
+  // POSTs that the old standalone server returned 500 for ("POST body missing...").
+  await server.start();
+
+  const app = express();
+  app.use(fiveXXLogger);    // log any 5xx (incl. residual the guard doesn't cover)
+  app.use(emptyBodyGuard);  // empty/bad-body POST -> clean 400 (was 500)
+
+  // Apache proxies public /graphql -> http://localhost:4000/ (root), so serve at '/',
+  // NOT applyMiddleware's '/graphql' default — otherwise all GraphQL would 404.
+  server.applyMiddleware({ app, path: '/' });
+
+  app.listen(4000, () => {
+    console.log(`   Server ready at http://localhost:4000${server.graphqlPath}`)
   })
 }
 
