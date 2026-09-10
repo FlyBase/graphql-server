@@ -69,7 +69,7 @@ module.exports = async () => {
   * looking at type extensions and other IDE "do-it-for-you" sort of things.
   * */
   await exportPostGraphileSchema(schema, {
-    exportGqlSchemaPath: `${__dirname}/../server/plugins/fbPostgraphileToApolloPlugin/postgraphileGeneratedSchema.graphql`
+    exportGqlSchemaPath: '/tmp/postgraphileGeneratedSchema.graphql'
   });
 
   // Renaming here to avoid confusion since there are like 3 different meanings to "plugin"

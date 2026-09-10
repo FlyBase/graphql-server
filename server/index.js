@@ -1,6 +1,8 @@
 import { makeExecutableSchema, mergeSchemas } from 'apollo-server'
 import { ApolloServer } from 'apollo-server-express'
 import express from 'express'
+import { createGal4OperationBoundary, gal4HttpBoundary, gal4BodyBoundary, gal4JsonErrorBoundary } from './plugins/gal4OperationBoundary'
+import gal4Documents from './plugins/gal4OperationBoundary/approved-documents.json'
 import AllianceTypeExtensions from "./plugins/allianceExtensions/allianceTypeExtensions.graphql";
 import FlyBaseAPI from './datasources/FlyBaseAPI';
 import AllianceAPI from './datasources/AllianceAPI';
@@ -23,8 +25,9 @@ const main = async () => {
   const { postgraphileSchema, postgraphileToApolloPlugin } = await FBPostgraphileToApolloPlugin();
 
   const server = new ApolloServer({
-    introspection: true,
-    playground: true,
+    introspection: false,
+    playground: false,
+    debug: false,
     // (Removed the dead Sentry init + formatError->Sentry.captureException — the DSN
     //  sentry.io/1788453 was an abandoned ~2020 project. Error capture is now on-box
     //  via the ErrorLoggingPlugin (didEncounterErrors) + the fiveXXLogger middleware.)
@@ -39,7 +42,7 @@ const main = async () => {
     }),
     // This is where plugins for Apollo Server go
     // Postgraphile plugins go in fbPostgraphileToApolloPlugin.js
-    plugins: [postgraphileToApolloPlugin, ErrorLoggingPlugin],
+    plugins: [createGal4OperationBoundary(gal4Documents), postgraphileToApolloPlugin, ErrorLoggingPlugin],
   });
 
   // Express mode (apollo-server-express): lets us add HTTP-layer middleware in front
@@ -49,6 +52,10 @@ const main = async () => {
 
   const app = express();
   app.use(fiveXXLogger);    // log any 5xx (incl. residual the guard doesn't cover)
+  app.use(gal4HttpBoundary);
+  app.use(express.json()); // Retain the existing body-parser default (100kb).
+  app.use(gal4JsonErrorBoundary);
+  app.use(gal4BodyBoundary);
   app.use(emptyBodyGuard);  // empty/bad-body POST -> clean 400 (was 500)
 
   // Apache proxies public /graphql -> http://localhost:4000/ (root), so serve at '/',
