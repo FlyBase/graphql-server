@@ -6,7 +6,7 @@ import { RESTDataSource } from 'apollo-datasource-rest'
 class FlyBaseAPI extends RESTDataSource {
   constructor() {
     super()
-    this.baseURL = 'http://localhost:7082/api/'
+    this.baseURL = 'http://flybase-prod:7082/api/'
   }
 
   async searchExpressionToolsByGene({ gene }) {
