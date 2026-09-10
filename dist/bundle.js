@@ -143110,6 +143110,7 @@ var main = async () => {
   });
   await server.start();
   const app = (0, import_express.default)();
+  app.set("query parser", false);
   app.use(import_httpErrorMiddleware.fiveXXLogger);
   app.use(import_gal4OperationBoundary.gal4HttpBoundary);
   app.use(import_express.default.json());

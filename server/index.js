@@ -51,6 +51,7 @@ const main = async () => {
   await server.start();
 
   const app = express();
+  app.set('query parser', false); // JSON POST only; do not invoke vulnerable legacy qs.
   app.use(fiveXXLogger);    // log any 5xx (incl. residual the guard doesn't cover)
   app.use(gal4HttpBoundary);
   app.use(express.json()); // Retain the existing body-parser default (100kb).
