@@ -12,6 +12,14 @@ PGPASSWORD=mypassword PGDATABASE=mydb yarn run start
 This will start an Apollo GraphQL server on port 4000. Any PostgreSQL environment variables that are required
 should be passed to the script (see https://www.postgresql.org/docs/current/libpq-envars.html).
 
+GAL4 expression searches call the local FlyBase web API. The default base URL
+is `http://localhost:7082/api/`, suitable when Apache and GraphQL run on the
+same host (including staging). When GraphQL runs in a separate Docker container,
+set `FLYBASE_API_BASE_URL=http://flybase-prod:7082/api/` in that container's
+environment. This setting is read at runtime; the same bundle supports both
+deployments. Keep the `/api/` prefix and trailing slash, and restart GraphQL
+after changing its environment.
+
 ## Terms/Technologies
 
 - `PostgresQL Database`: Named FBYEAR_##, created from the chado-graphql.sql dump file (which is generated from the chado repository)
