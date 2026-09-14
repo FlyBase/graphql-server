@@ -142963,7 +142963,7 @@ var import_apollo_datasource_rest = __toModule(require_dist18());
 var FlyBaseAPI = class extends import_apollo_datasource_rest.RESTDataSource {
   constructor() {
     super();
-    this.baseURL = "http://flybase-prod:7082/api/";
+    this.baseURL = process.env.FLYBASE_API_BASE_URL || "http://localhost:7082/api/";
   }
   async searchExpressionToolsByGene({ gene }) {
     return this.get("/expression/tools", { gene });
