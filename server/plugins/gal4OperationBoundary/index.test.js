@@ -22,6 +22,13 @@ check('same operation name does not authorize selections', () => {
   assert.throws(() => validate('query ' + name + ' { __typename }'));
 });
 check('extra operation rejected', () => assert.throws(() => validate(documents[0] + '\nquery Additional { __typename }')));
+check('gene group member tables use the approved report document', () => {
+  const source = documents.find(source => getOperationAST(parse(source)).name.value === 'GeneGroupTables');
+  assert(source, 'Missing gene group report operation');
+  validate(source);
+  assert.throws(() => validate('query GeneGroupTables($FBgg: String!) { geneGroupv2(id: $FBgg) { id } }'));
+  assert.throws(() => validate(source.replace('geneGroupv2(id: $FBgg)', 'other: geneGroupv2(id: $FBgg)')));
+});
 check('mutation rejected', () => assert.throws(() => validate('mutation Change { __typename }')));
 function run(middleware, req, error) {
   const response = { headers: {}, status(n) { this.code=n; return this; }, set(k,v) { this.headers[k]=v; return this; }, type(t) { this.contentType=t; return this; }, send(body) { this.body=body; return this; } };
