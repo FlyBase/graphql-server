@@ -2,6 +2,16 @@ const { parse, print, GraphQLError } = require('graphql');
 
 const unavailable = () => new GraphQLError('This GraphQL operation is temporarily unavailable during maintenance.');
 
+// These report documents must remain scoped to one gene. In particular, the
+// toolkit wire document declares geneId optional; omitting it removes its filter.
+const geneReportVariables = new Map([
+  ['GeneToolKitMostCommonlyUsed', 'geneId'],
+  ['classicalAndInsertionAllelesByGene', 'fbgn'],
+  ['transgenicConstructAllelesByGene', 'fbgn'],
+  ['insertionsWithoutAllelesByGene', 'fbgn'],
+  ['alleleDiseaseVariantsByFBgn', 'fbgn'],
+]);
+
 // Full normalized documents include selections, arguments, directives and fragments.
 // Operation names alone are not a security boundary.
 function createGal4OperationBoundary(approvedDocuments) {
@@ -17,10 +27,17 @@ function createGal4OperationBoundary(approvedDocuments) {
   return {
     requestDidStart() {
       return {
-        didResolveOperation({ document, operation }) {
+        didResolveOperation({ document, operation, request }) {
           const operations = document.definitions.filter((node) => node.kind === 'OperationDefinition');
           if (operations.length !== 1 || operation.operation !== 'query' || !approved.has(print(document))) {
             throw unavailable();
+          }
+          const geneVariable = geneReportVariables.get(operation.name && operation.name.value);
+          if (geneVariable) {
+            const id = request && request.variables && request.variables[geneVariable];
+            if (typeof id !== 'string' || !/^FBgn[0-9]{7}$/.test(id)) {
+              throw new GraphQLError('A single FlyBase gene ID is required.', null, null, null, null, null, { code: 'BAD_USER_INPUT' });
+            }
           }
         }
       };

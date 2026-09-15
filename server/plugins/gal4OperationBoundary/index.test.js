@@ -8,9 +8,9 @@ function check(name, action) { action(); checks++; process.stdout.write('PASS ' 
 check('empty allowlist fails closed', () => assert.throws(() => createGal4OperationBoundary([])));
 check('mutation cannot be approved', () => assert.throws(() => createGal4OperationBoundary(['mutation M { __typename }'])));
 const plugin = createGal4OperationBoundary(documents);
-function validate(source) {
+function validate(source, variables = {geneId: 'FBgn0024250', fbgn: 'FBgn0024250'}) {
   const document = parse(source);
-  return plugin.requestDidStart().didResolveOperation({ document, operation: getOperationAST(document) });
+  return plugin.requestDidStart().didResolveOperation({ document, operation: getOperationAST(document), request: {variables} });
 }
 documents.forEach((source, i) => {
   check('actual bundled wire document ' + i, () => validate(source));
@@ -30,6 +30,20 @@ check('gene group member tables use the approved report document', () => {
   assert.throws(() => validate(source.replace('geneGroupv2(id: $FBgg)', 'other: geneGroupv2(id: $FBgg)')));
 });
 check('mutation rejected', () => assert.throws(() => validate('mutation Change { __typename }')));
+['GeneToolKitMostCommonlyUsed', 'classicalAndInsertionAllelesByGene',
+ 'transgenicConstructAllelesByGene', 'insertionsWithoutAllelesByGene',
+ 'alleleDiseaseVariantsByFBgn'].forEach(name => {
+  check('gene report requires a single ID: ' + name, () => {
+    const source = documents.find(source => getOperationAST(parse(source)).name.value === name);
+    assert(source, 'Missing gene report operation');
+    validate(source);
+    validate(source, {geneId: 'FBgn9999999', fbgn: 'FBgn9999999'});
+    for (const id of [undefined, null, '', '*', 'FBal0024250', ['FBgn0024250']]) {
+      assert.throws(() => validate(source, {geneId: id, fbgn: id}), /single FlyBase gene ID/);
+    }
+    assert.throws(() => validate('query ' + name + ' { __typename }'));
+  });
+});
 function run(middleware, req, error) {
   const response = { headers: {}, status(n) { this.code=n; return this; }, set(k,v) { this.headers[k]=v; return this; }, type(t) { this.contentType=t; return this; }, send(body) { this.body=body; return this; } };
   let next=false;

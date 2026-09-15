@@ -32,6 +32,21 @@ after changing its environment.
 - `resolvers`: A graphql concept that is responsible for generating information for a given field. Every field (including nested fields) of a gql type can have a resolver associated with it. Each resolver can be passed information about the request, and returns the value for that field. Resolvers can be as general as "return all items", or as specific as "for foo.bar.thing.stuff.child" return a string based on some input criteria. Technologies like Apollo and postgraphile generate resolvers automatically, based on the schema. You can usually modify the result of those default resolvers, or write wrapper functions around them.
 - `plugins`: A piece of code that modifies some aspect of the gql server technology. Both Apollo and postgraphile have the ability to create plugins, but these plugins are NOT interchangeable. GraphQL does NOT define any specifications for plugins.
 
+## Recovery operation boundary
+
+The server admits exact normalized documents listed in
+`server/plugins/gal4OperationBoundary/approved-documents.json`. Changing an
+operation name alone does not authorize different selections or arguments.
+Gene report toolkit, allele/construct, insertion and disease-variant documents
+are included. Each must supply one `FBgn` ID; the toolkit's optional wire variable
+must not be omitted because doing so removes the gene filter.
+
+When changing this list, capture the actual browser document (including fragments
+and `__typename` fields), review its resolver scope, run the boundary tests and
+validate the built bundle against representative release data. Deploy the matching
+`dist/bundle.js` as well as source. Existing GAL4 and gene-group documents remain
+covered by the same boundary.
+
 ## Server Automated Setup
 1. Load the database with `make load-graphql`
 2. Rebuild graphql-server with `make rebuild-graphql`
