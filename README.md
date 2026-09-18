@@ -67,6 +67,24 @@ covered by the same boundary.
 5. `yarn start`: starts the pm2 services
 6. `yarn clear-cache`: clears the server cache
 
+### Required dependency patch
+
+The committed `dist/bundle.js` includes a local fix to graphql-tools 4.0.8.
+Delegated arguments are serialized by their input type (enums included), and
+unknown input-object fields are rejected. The patch lives in `patches/`, and
+the `postinstall` script (`patches/apply.sh`) applies it on every `yarn install`,
+so both the manual steps above and `make rebuild-graphql` include it. The script
+is safe to re-run. It fails the install if the patch no longer fits, for example
+after a graphql-tools upgrade. A build without the patch would silently drop the fix.
+
+To apply it by hand: `sh patches/apply.sh`. To confirm a build environment is
+faithful, build the unchanged tree first. The result must be identical to the
+committed `dist/bundle.js` (`git diff --quiet dist/bundle.js`). Build with the
+Node 10.24.0 toolchain and the existing `node_modules` on the server. A newer
+toolchain or re-resolved dependencies give a different bundle. Note that
+`yarn.lock` is out of step with `package.json`, so `yarn install` rewrites it.
+`yarn build` also runs `patches/apply.sh`, as a check before each build.
+
 ## Misc. Information and Tips
 
 ### GraphQL Help

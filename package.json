@@ -9,9 +9,10 @@
   ],
   "license": "MIT",
   "scripts": {
+    "postinstall": "sh patches/apply.sh",
     "prebuild": "yarn run format",
     "build:watch": "node build.js --watch",
-    "build": "node build.js",
+    "build": "sh patches/apply.sh && node build.js",
     "start": "rm -f logs/* && pm2 start --env production ecosystem.config.js",
     "dev": "pm2 start ecosystem.config.js",
     "test": "node server/plugins/errorLogging/logLine.test.js && node server/plugins/gal4OperationBoundary/index.test.js && node server/datasources/FlyBaseAPI.test.js",

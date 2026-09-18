@@ -1,7 +1,7 @@
 import { makeExecutableSchema, mergeSchemas } from 'apollo-server'
 import { ApolloServer } from 'apollo-server-express'
 import express from 'express'
-import { createGal4OperationBoundary, gal4HttpBoundary, gal4BodyBoundary, gal4JsonErrorBoundary } from './plugins/gal4OperationBoundary'
+import { createGal4OperationBoundary, createGal4DocumentBoundary, gal4HttpBoundary, gal4BodyBoundary, gal4JsonErrorBoundary } from './plugins/gal4OperationBoundary'
 import gal4Documents from './plugins/gal4OperationBoundary/approved-documents.json'
 import AllianceTypeExtensions from "./plugins/allianceExtensions/allianceTypeExtensions.graphql";
 import FlyBaseAPI from './datasources/FlyBaseAPI';
@@ -57,6 +57,8 @@ const main = async () => {
   app.use(express.json()); // Retain the existing body-parser default (100kb).
   app.use(gal4JsonErrorBoundary);
   app.use(gal4BodyBoundary);
+  // Reject non-approved documents before Apollo parses and validates them.
+  app.use(createGal4DocumentBoundary(gal4Documents));
   app.use(emptyBodyGuard);  // empty/bad-body POST -> clean 400 (was 500)
 
   // Apache proxies public /graphql -> http://localhost:4000/ (root), so serve at '/',
