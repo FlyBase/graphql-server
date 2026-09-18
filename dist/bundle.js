@@ -67902,7 +67902,7 @@ var require_dist16 = __commonJS({
 // server/plugins/gal4OperationBoundary/index.js
 var require_gal4OperationBoundary = __commonJS({
   "server/plugins/gal4OperationBoundary/index.js"(exports2, module2) {
-    var { parse, print, GraphQLError } = require_graphql2();
+    var { parse, print, stripIgnoredCharacters, GraphQLError } = require_graphql2();
     var unavailable = () => new GraphQLError("This GraphQL operation is temporarily unavailable during maintenance.");
     var geneReportVariables = new Map([
       ["GeneToolKitMostCommonlyUsed", "geneId"],
@@ -67942,6 +67942,35 @@ var require_gal4OperationBoundary = __commonJS({
         }
       };
     }
+    var MAX_QUERY_LENGTH = 4096;
+    function unavailableResponse(res) {
+      return res.status(400).set("Cache-Control", "no-store").json({
+        errors: [{ message: "This GraphQL operation is temporarily unavailable during maintenance." }]
+      });
+    }
+    function createGal4DocumentBoundary2(approvedDocuments, { maxQueryLength = MAX_QUERY_LENGTH } = {}) {
+      if (!approvedDocuments.length)
+        throw new Error("Missing approved GAL4 documents");
+      if (approvedDocuments.some((source) => source.length > maxQueryLength)) {
+        throw new Error("An approved GAL4 document exceeds the query length limit");
+      }
+      const raw = new Set(approvedDocuments);
+      const normalized = new Set(approvedDocuments.map((source) => stripIgnoredCharacters(source)));
+      return function gal4DocumentBoundary(req, res, next) {
+        const query = req.body && req.body.query;
+        if (typeof query === "string" && raw.has(query))
+          return next();
+        if (typeof query !== "string" || query.length > maxQueryLength)
+          return unavailableResponse(res);
+        let key;
+        try {
+          key = stripIgnoredCharacters(query);
+        } catch (error) {
+          return unavailableResponse(res);
+        }
+        return normalized.has(key) ? next() : unavailableResponse(res);
+      };
+    }
     function gal4HttpBoundary2(req, res, next) {
       if (req.url !== "/") {
         return res.status(404).set("Cache-Control", "no-store").type("text/plain").send("Not found");
@@ -67962,7 +67991,14 @@ var require_gal4OperationBoundary = __commonJS({
       const status = error && error.status === 413 ? 413 : 400;
       return res.status(status).set("Cache-Control", "no-store").type("text/plain").send("Invalid GraphQL request body");
     }
-    module2.exports = { createGal4OperationBoundary: createGal4OperationBoundary2, gal4HttpBoundary: gal4HttpBoundary2, gal4BodyBoundary: gal4BodyBoundary2, gal4JsonErrorBoundary: gal4JsonErrorBoundary2 };
+    module2.exports = {
+      createGal4OperationBoundary: createGal4OperationBoundary2,
+      createGal4DocumentBoundary: createGal4DocumentBoundary2,
+      gal4HttpBoundary: gal4HttpBoundary2,
+      gal4BodyBoundary: gal4BodyBoundary2,
+      gal4JsonErrorBoundary: gal4JsonErrorBoundary2,
+      MAX_QUERY_LENGTH
+    };
   }
 });
 
@@ -143136,6 +143172,7 @@ var main = async () => {
   app.use(import_express.default.json());
   app.use(import_gal4OperationBoundary.gal4JsonErrorBoundary);
   app.use(import_gal4OperationBoundary.gal4BodyBoundary);
+  app.use((0, import_gal4OperationBoundary.createGal4DocumentBoundary)(approved_documents_default));
   app.use(import_httpErrorMiddleware.emptyBodyGuard);
   server.applyMiddleware({ app, path: "/" });
   app.listen(4e3, () => {

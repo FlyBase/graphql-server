@@ -1,0 +1,58 @@
+--- a/node_modules/graphql-tools/dist/transforms/AddArgumentsAsVariables.js
++++ b/node_modules/graphql-tools/dist/transforms/AddArgumentsAsVariables.js
+@@ -38,6 +38,7 @@
+     var operations = document.definitions.filter(function (def) { return def.kind === graphql_1.Kind.OPERATION_DEFINITION; });
+     var fragments = document.definitions.filter(function (def) { return def.kind === graphql_1.Kind.FRAGMENT_DEFINITION; });
+     var variableNames = {};
++    var variableTypes = {};
+     var newOperations = operations.map(function (operation) {
+         var existingVariables = operation.variableDefinitions.map(function (variableDefinition) {
+             return variableDefinition.variable.name.value;
+@@ -75,6 +76,7 @@
+                     if (argument.name in args) {
+                         var variableName = generateVariableName(argument.name);
+                         variableNames[argument.name] = variableName;
++                        variableTypes[argument.name] = argument.type;
+                         newArgs_1[argument.name] = {
+                             kind: graphql_1.Kind.ARGUMENT,
+                             name: {
+@@ -116,7 +118,7 @@
+     });
+     var newVariables = {};
+     Object.keys(variableNames).forEach(function (name) {
+-        newVariables[variableNames[name]] = args[name];
++        newVariables[variableNames[name]] = serializeDelegatedInput(variableTypes[name], args[name]);
+     });
+     return {
+         document: __assign(__assign({}, document), { definitions: __spreadArrays(newOperations, fragments) }),
+@@ -153,4 +155,29 @@
+         };
+     }
+ }
++function serializeDelegatedInput(type, value) {
++  if (value == null)
++    return value;
++  if (graphql_1.isNonNullType(type))
++    return serializeDelegatedInput(type.ofType, value);
++  if (graphql_1.isListType(type)) {
++    return Array.isArray(value) ? value.map(function(item) {
++      return serializeDelegatedInput(type.ofType, item);
++    }) : [serializeDelegatedInput(type.ofType, value)];
++  }
++  if (graphql_1.isInputObjectType(type)) {
++    var fields = type.getFields();
++    var result = Object.create(null);
++    Object.keys(value).forEach(function(name) {
++      if (!Object.prototype.hasOwnProperty.call(fields, name)) {
++        throw new Error("Unknown delegated input field");
++      }
++      result[name] = serializeDelegatedInput(fields[name].type, value[name]);
++    });
++    return result;
++  }
++  if (graphql_1.isEnumType(type))
++    return type.serialize(value);
++  return value;
++}
+ //# sourceMappingURL=AddArgumentsAsVariables.js.map
+\ No newline at end of file
