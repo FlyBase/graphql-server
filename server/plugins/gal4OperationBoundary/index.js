@@ -32,6 +32,14 @@ function createGal4OperationBoundary(approvedDocuments) {
           if (operations.length !== 1 || operation.operation !== 'query' || !approved.has(print(document))) {
             throw unavailable();
           }
+          // The report wire document declares this optional; without a value the
+          // database function may lose its disease filter. Require one exact ID.
+          if (operation.name && operation.name.value === 'alleleDiseaseVariantsByFBhh') {
+            const id = request && request.variables && request.variables.fbhh;
+            if (typeof id !== 'string' || id.length !== 11 || !/^FBhh[0-9]{7}$/.test(id)) {
+              throw new GraphQLError('A single FlyBase human disease ID is required.', null, null, null, null, null, { code: 'BAD_USER_INPUT' });
+            }
+          }
           const geneVariable = geneReportVariables.get(operation.name && operation.name.value);
           if (geneVariable) {
             const id = request && request.variables && request.variables[geneVariable];
