@@ -8,7 +8,7 @@ function check(name, action) { action(); checks++; process.stdout.write('PASS ' 
 check('empty allowlist fails closed', () => assert.throws(() => createGal4OperationBoundary([])));
 check('mutation cannot be approved', () => assert.throws(() => createGal4OperationBoundary(['mutation M { __typename }'])));
 const plugin = createGal4OperationBoundary(documents);
-function validate(source, variables = {geneId: 'FBgn0024250', fbgn: 'FBgn0024250'}) {
+function validate(source, variables = {geneId: 'FBgn0024250', fbgn: 'FBgn0024250', fbhh: 'FBhh0001440'}) {
   const document = parse(source);
   return plugin.requestDidStart().didResolveOperation({ document, operation: getOperationAST(document), request: {variables} });
 }
@@ -129,4 +129,17 @@ check('pre-Apollo: an approved document over the cap fails at startup', () =>
 check('pre-Apollo: empty allowlist fails closed', () => assert.throws(() => createGal4DocumentBoundary([])));
 check('pre-Apollo: every approved document is within the cap', () =>
   documents.forEach((d) => assert(d.length <= MAX_QUERY_LENGTH, 'approved document is ' + d.length + ' chars')));
+check('human disease report preserves its exact bundled query and variables', () => {
+  const source = documents.find(source => getOperationAST(parse(source)).name.value === 'alleleDiseaseVariantsByFBhh');
+  assert(source); assert(gate(source).next);
+  validate(source, {fbhh: 'FBhh0001440', fbgn: 'FBhh0001440'});
+  validate(source, {fbhh: 'FBhh9999999'});
+  for (const id of [undefined, null, '', '*', 'FBgn0001440', 'FBhh1440', ['FBhh0001440'], 'FBhh0001440\n', ' FBhh0001440', 'FBhh0001440 OR 1=1']) {
+    assert.throws(() => validate(source, {fbhh: id}), /single FlyBase human disease ID/);
+  }
+  assert.throws(() => validate(source, {fbgn: 'FBhh0001440'}), /single FlyBase human disease ID/);
+  assert(!gate(source.replace('diseaseVariantsByFbhh(fbhh: $fbhh)', 'diseaseVariantsByFbhh')).next);
+  assert(!gate(source.replace('divSynonym', 'other: divSynonym')).next);
+  assert(!gate(source + '\nquery Extra { __typename }').next);
+});
 process.stdout.write(JSON.stringify({checks,documents:documents.length,pass:true}) + '\n');
