@@ -67899,9 +67899,153 @@ var require_dist16 = __commonJS({
   }
 });
 
+// server/plugins/gal4OperationBoundary/requestDiagnostics.js
+var require_requestDiagnostics = __commonJS({
+  "server/plugins/gal4OperationBoundary/requestDiagnostics.js"(exports2, module2) {
+    "use strict";
+    var crypto = require("crypto");
+    function boundedWriter(stream) {
+      let blocked = false;
+      return function(line) {
+        if (blocked)
+          return false;
+        if (!stream.write(line)) {
+          blocked = true;
+          stream.once("drain", () => {
+            blocked = false;
+          });
+        }
+        return true;
+      };
+    }
+    function createRequestDiagnostics(documents, options = {}) {
+      const enabled = options.enabled === void 0 ? process.env.GRAPHQL_REQUEST_DIAGNOSTICS === "1" : options.enabled;
+      if (!enabled)
+        return function() {
+        };
+      const write = options.write || boundedWriter(process.stderr);
+      const now = options.now || (() => Date.now());
+      const cpu = options.cpu || (() => process.cpuUsage());
+      const memory = options.memory || (() => process.memoryUsage());
+      const later = options.later || setTimeout;
+      const cancel = options.cancel || clearTimeout;
+      const pid = options.pid || process.pid;
+      const metadata = new Map(documents.map((query) => [query, {
+        operation: (query.match(/\bquery\s+(\w+)/) || [])[1] || "anonymous",
+        document_sha256: crypto.createHash("sha256").update(query).digest("hex")
+      }]));
+      let sequence = 0, active = 0, windowStart = now(), emitted = 0, dropped = 0;
+      function log2(fields) {
+        try {
+          const time = now();
+          if (time - windowStart >= 1e3) {
+            windowStart = time;
+            emitted = 0;
+          }
+          if (emitted >= 100) {
+            dropped++;
+            return;
+          }
+          emitted++;
+          const record = Object.assign({
+            event: "graphql_request",
+            timestamp: new Date(time).toISOString(),
+            pid,
+            dropped_events_before: dropped
+          }, fields);
+          if (write(JSON.stringify(record) + "\n") === false)
+            dropped++;
+          else
+            dropped = 0;
+        } catch (_) {
+          dropped++;
+        }
+      }
+      return function observe(req, res, approvedQuery) {
+        try {
+          let fields = function(phase) {
+            const currentCpu = cpu(), currentMemory = memory();
+            return Object.assign({}, base, {
+              phase,
+              elapsed_ms: Math.max(0, now() - started),
+              worker_cpu_interval_ms: (currentCpu.user + currentCpu.system - initialCpu.user - initialCpu.system) / 1e3,
+              worker_rss_bytes: currentMemory.rss,
+              worker_heap_used_bytes: currentMemory.heapUsed,
+              worker_rss_delta_bytes: currentMemory.rss - initialMemory.rss,
+              worker_active_requests: active,
+              client_closed: clientClosed
+            });
+          }, finish = function(phase) {
+            if (done)
+              return;
+            done = true;
+            cancel(timer);
+            cancel(expiry);
+            try {
+              log2(Object.assign(fields(phase), { http_status: res.statusCode }));
+            } catch (_) {
+            } finally {
+              active--;
+            }
+          };
+          const meta = metadata.get(approvedQuery);
+          if (!meta)
+            return;
+          const id = pid + "-" + ++sequence;
+          const started = now(), initialCpu = cpu(), initialMemory = memory();
+          const ids = {};
+          for (const key of ["geneId", "fbgn", "fbhh"]) {
+            const value = req.body && req.body.variables && req.body.variables[key];
+            if (typeof value === "string" && value.length === 11 && /^FB(?:gn|hh)[0-9]{7}$/.test(value))
+              ids[key] = value;
+          }
+          active++;
+          const base = Object.assign({ request_id: id, ids }, meta);
+          let done = false, clientClosed = false;
+          log2(Object.assign({}, base, { phase: "start", worker_active_requests: active }));
+          const timer = later(() => {
+            try {
+              if (!done)
+                log2(fields("slow_inflight"));
+            } catch (_) {
+            }
+          }, 2e3);
+          if (timer && timer.unref)
+            timer.unref();
+          const expiry = later(() => finish("watch_expired"), 12e4);
+          if (expiry && expiry.unref)
+            expiry.unref();
+          const originalEnd = res.end;
+          res.end = function() {
+            try {
+              return originalEnd.apply(this, arguments);
+            } finally {
+              finish("server_end");
+            }
+          };
+          res.once("finish", () => finish("finish"));
+          res.once("close", () => {
+            if (done)
+              return;
+            clientClosed = true;
+            try {
+              log2(fields("client_closed"));
+            } catch (_) {
+            }
+          });
+        } catch (_) {
+        }
+      };
+    }
+    module2.exports = { createRequestDiagnostics, boundedWriter };
+  }
+});
+
+
 // server/plugins/gal4OperationBoundary/index.js
 var require_gal4OperationBoundary = __commonJS({
   "server/plugins/gal4OperationBoundary/index.js"(exports2, module2) {
+    var { createRequestDiagnostics } = require_requestDiagnostics();
     var { parse, print, stripIgnoredCharacters, GraphQLError } = require_graphql2();
     var unavailable = () => new GraphQLError("This GraphQL operation is temporarily unavailable during maintenance.");
     var geneReportVariables = new Map([
@@ -67960,12 +68104,15 @@ var require_gal4OperationBoundary = __commonJS({
       if (approvedDocuments.some((source) => source.length > maxQueryLength)) {
         throw new Error("An approved GAL4 document exceeds the query length limit");
       }
+      const observe = createRequestDiagnostics(approvedDocuments);
       const raw = new Set(approvedDocuments);
-      const normalized = new Set(approvedDocuments.map((source) => stripIgnoredCharacters(source)));
+      const normalized = new Map(approvedDocuments.map((source) => [stripIgnoredCharacters(source), source]));
       return function gal4DocumentBoundary(req, res, next) {
         const query = req.body && req.body.query;
-        if (typeof query === "string" && raw.has(query))
+        if (typeof query === "string" && raw.has(query)) {
+          observe(req, res, query);
           return next();
+        }
         if (typeof query !== "string" || query.length > maxQueryLength)
           return unavailableResponse(res);
         let key;
@@ -67974,7 +68121,10 @@ var require_gal4OperationBoundary = __commonJS({
         } catch (error) {
           return unavailableResponse(res);
         }
-        return normalized.has(key) ? next() : unavailableResponse(res);
+        if (!normalized.has(key))
+          return unavailableResponse(res);
+        observe(req, res, normalized.get(key));
+        return next();
       };
     }
     function gal4HttpBoundary2(req, res, next) {

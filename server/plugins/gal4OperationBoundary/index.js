@@ -1,3 +1,4 @@
+const { createRequestDiagnostics } = require('./requestDiagnostics');
 const { parse, print, stripIgnoredCharacters, GraphQLError } = require('graphql');
 
 const unavailable = () => new GraphQLError('This GraphQL operation is temporarily unavailable during maintenance.');
@@ -80,12 +81,13 @@ function createGal4DocumentBoundary(approvedDocuments, { maxQueryLength = MAX_QU
   if (approvedDocuments.some((source) => source.length > maxQueryLength)) {
     throw new Error('An approved GAL4 document exceeds the query length limit');
   }
+  const observe = createRequestDiagnostics(approvedDocuments);
   const raw = new Set(approvedDocuments);
-  const normalized = new Set(approvedDocuments.map((source) => stripIgnoredCharacters(source)));
+  const normalized = new Map(approvedDocuments.map((source) => [stripIgnoredCharacters(source), source]));
   return function gal4DocumentBoundary(req, res, next) {
     const query = req.body && req.body.query;
     // Fast path: the bundled client sends the approved text byte-for-byte.
-    if (typeof query === 'string' && raw.has(query)) return next();
+    if (typeof query === 'string' && raw.has(query)) { observe(req, res, query); return next(); }
     if (typeof query !== 'string' || query.length > maxQueryLength) return unavailableResponse(res);
     let key;
     try {
@@ -94,7 +96,9 @@ function createGal4DocumentBoundary(approvedDocuments, { maxQueryLength = MAX_QU
       // Lexer errors (unterminated strings, bad characters): not an approved document.
       return unavailableResponse(res);
     }
-    return normalized.has(key) ? next() : unavailableResponse(res);
+    if (!normalized.has(key)) return unavailableResponse(res);
+    observe(req, res, normalized.get(key));
+    return next();
   };
 }
 
