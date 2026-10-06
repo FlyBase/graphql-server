@@ -23,6 +23,7 @@ const broken=createRequestDiagnostics([doc],{enabled:true,write:()=>{throw Error
 // Bound event emission during bursts and make dropped-event count visible.
 rows=[];time=6000;for(let i=0;i<150;i++){const x=response();observe({body:{}},x,doc);x.end();}
 assert.equal(rows.length,100);time=8000;const last=response();observe({body:{}},last,doc);last.end();assert(rows[100].dropped_events_before>=200);
+const follower=response();observe({body:{}},follower,doc);follower.emit('close');follower.emit('graphql_delivery_finished');assert.equal(rows[rows.length-1].phase,'coalesced_finished');
 console.log('PASS diagnostics lifecycle, post-disconnect completion, privacy, failures, expiry and rate bound');
 
 const { boundedWriter } = require('./requestDiagnostics');

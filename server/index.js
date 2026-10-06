@@ -11,6 +11,8 @@ import AllianceExtensionResolvers from './plugins/allianceExtensions/allianceExt
 import ErrorLoggingPlugin from './plugins/errorLogging';
 import { fiveXXLogger, emptyBodyGuard } from './plugins/errorLogging/httpErrorMiddleware';
 
+const { createGeneGroupDelivery } = require('./plugins/geneGroupDelivery');
+
 const main = async () => {
 
   const allianceSchema = makeExecutableSchema({
@@ -25,6 +27,7 @@ const main = async () => {
   const { postgraphileSchema, postgraphileToApolloPlugin } = await FBPostgraphileToApolloPlugin();
 
   const server = new ApolloServer({
+    context: ({req}) => ({geneGroupWork: req.geneGroupWork}),
     introspection: false,
     playground: false,
     debug: false,
@@ -59,6 +62,7 @@ const main = async () => {
   app.use(gal4BodyBoundary);
   // Reject non-approved documents before Apollo parses and validates them.
   app.use(createGal4DocumentBoundary(gal4Documents));
+  app.use(createGeneGroupDelivery(gal4Documents));
   app.use(emptyBodyGuard);  // empty/bad-body POST -> clean 400 (was 500)
 
   // Apache proxies public /graphql -> http://localhost:4000/ (root), so serve at '/',

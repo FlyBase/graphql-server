@@ -47,6 +47,7 @@ module.exports = async () => {
       legacyRelations: 'omit',
       // This is where Postgraphile plugins go.
       appendPlugins: [
+        require('./geneGroupCondition'),
         PgManyToManyPlugin,
         PgSimplifyInflectorPlugin, //Simplifies the naming of queries and fields
         FBInflectorsPlugin, //Additional FB-specific naming changes
@@ -73,5 +74,5 @@ module.exports = async () => {
   });
 
   // Renaming here to avoid confusion since there are like 3 different meanings to "plugin"
-  return { postgraphileSchema: schema, postgraphileToApolloPlugin: plugin };
+  return { postgraphileSchema: schema, postgraphileToApolloPlugin: require('../geneGroupDelivery').withGeneGroupCancellation(plugin, new pg.Pool({ max: 2, connectionTimeoutMillis: 2000, idleTimeoutMillis: 1000 })) };
 }

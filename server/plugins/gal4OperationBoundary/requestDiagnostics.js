@@ -49,9 +49,9 @@ function createRequestDiagnostics(documents, options = {}) {
       const id = pid + '-' + (++sequence);
       const started = now(), initialCpu = cpu(), initialMemory = memory();
       const ids = {};
-      for (const key of ['geneId', 'fbgn', 'fbhh']) {
+      for (const key of ['geneId', 'fbgn', 'fbhh', 'FBgg']) {
         const value = req.body && req.body.variables && req.body.variables[key];
-        if (typeof value === 'string' && value.length === 11 && /^FB(?:gn|hh)[0-9]{7}$/.test(value)) ids[key] = value;
+        if (typeof value === 'string' && value.length === 11 && /^FB(?:gn|hh|gg)[0-9]{7}$/.test(value)) ids[key] = value;
       }
       active++;
       const base = Object.assign({request_id: id, ids}, meta);
@@ -84,6 +84,8 @@ function createRequestDiagnostics(documents, options = {}) {
         finally { finish('server_end'); }
       };
       res.once('finish', () => finish('finish'));
+      // A coalesced follower owns no backend work after it disconnects.
+      res.once('graphql_delivery_finished', () => finish('coalesced_finished'));
       res.once('close', () => {
         if (done) return;
         clientClosed = true;

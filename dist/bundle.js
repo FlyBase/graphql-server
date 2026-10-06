@@ -18095,9 +18095,9 @@ var require_dispatcher = __commonJS({
   }
 });
 
-// node_modules/lru-cache/node_modules/yallist/iterator.js
+// node_modules/yallist/iterator.js
 var require_iterator = __commonJS({
-  "node_modules/lru-cache/node_modules/yallist/iterator.js"(exports2, module2) {
+  "node_modules/yallist/iterator.js"(exports2, module2) {
     "use strict";
     module2.exports = function(Yallist) {
       Yallist.prototype[Symbol.iterator] = function* () {
@@ -18109,9 +18109,9 @@ var require_iterator = __commonJS({
   }
 });
 
-// node_modules/lru-cache/node_modules/yallist/yallist.js
+// node_modules/yallist/yallist.js
 var require_yallist = __commonJS({
-  "node_modules/lru-cache/node_modules/yallist/yallist.js"(exports2, module2) {
+  "node_modules/yallist/yallist.js"(exports2, module2) {
     "use strict";
     module2.exports = Yallist;
     Yallist.Node = Node;
@@ -51317,9 +51317,9 @@ var require_setprototypeof2 = __commonJS({
   }
 });
 
-// node_modules/body-parser/node_modules/inherits/inherits_browser.js
+// node_modules/http-errors/node_modules/inherits/inherits_browser.js
 var require_inherits_browser2 = __commonJS({
-  "node_modules/body-parser/node_modules/inherits/inherits_browser.js"(exports2, module2) {
+  "node_modules/http-errors/node_modules/inherits/inherits_browser.js"(exports2, module2) {
     if (typeof Object.create === "function") {
       module2.exports = function inherits(ctor, superCtor) {
         ctor.super_ = superCtor;
@@ -51345,9 +51345,9 @@ var require_inherits_browser2 = __commonJS({
   }
 });
 
-// node_modules/body-parser/node_modules/inherits/inherits.js
+// node_modules/http-errors/node_modules/inherits/inherits.js
 var require_inherits2 = __commonJS({
-  "node_modules/body-parser/node_modules/inherits/inherits.js"(exports2, module2) {
+  "node_modules/http-errors/node_modules/inherits/inherits.js"(exports2, module2) {
     try {
       util = require("util");
       if (typeof util.inherits !== "function")
@@ -51360,9 +51360,9 @@ var require_inherits2 = __commonJS({
   }
 });
 
-// node_modules/body-parser/node_modules/http-errors/index.js
+// node_modules/http-errors/index.js
 var require_http_errors2 = __commonJS({
-  "node_modules/body-parser/node_modules/http-errors/index.js"(exports2, module2) {
+  "node_modules/http-errors/index.js"(exports2, module2) {
     "use strict";
     var deprecate = require_depd()("http-errors");
     var setPrototypeOf = require_setprototypeof2();
@@ -55353,9 +55353,9 @@ var require_unpipe = __commonJS({
   }
 });
 
-// node_modules/body-parser/node_modules/raw-body/index.js
+// node_modules/raw-body/index.js
 var require_raw_body = __commonJS({
-  "node_modules/body-parser/node_modules/raw-body/index.js"(exports2, module2) {
+  "node_modules/raw-body/index.js"(exports2, module2) {
     "use strict";
     var bytes = require_bytes();
     var createError = require_http_errors2();
@@ -67994,9 +67994,9 @@ var require_requestDiagnostics = __commonJS({
           const id = pid + "-" + ++sequence;
           const started = now(), initialCpu = cpu(), initialMemory = memory();
           const ids = {};
-          for (const key of ["geneId", "fbgn", "fbhh"]) {
+          for (const key of ["geneId", "fbgn", "fbhh", "FBgg"]) {
             const value = req.body && req.body.variables && req.body.variables[key];
-            if (typeof value === "string" && value.length === 11 && /^FB(?:gn|hh)[0-9]{7}$/.test(value))
+            if (typeof value === "string" && value.length === 11 && /^FB(?:gn|hh|gg)[0-9]{7}$/.test(value))
               ids[key] = value;
           }
           active++;
@@ -68024,6 +68024,7 @@ var require_requestDiagnostics = __commonJS({
             }
           };
           res.once("finish", () => finish("finish"));
+          res.once("graphql_delivery_finished", () => finish("coalesced_finished"));
           res.once("close", () => {
             if (done)
               return;
@@ -68040,7 +68041,6 @@ var require_requestDiagnostics = __commonJS({
     module2.exports = { createRequestDiagnostics, boundedWriter };
   }
 });
-
 
 // server/plugins/gal4OperationBoundary/index.js
 var require_gal4OperationBoundary = __commonJS({
@@ -70125,16 +70125,16 @@ var require_sasl = __commonJS({
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/lib/internal/streams/stream.js
+// node_modules/readable-stream/lib/internal/streams/stream.js
 var require_stream2 = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/lib/internal/streams/stream.js"(exports2, module2) {
+  "node_modules/readable-stream/lib/internal/streams/stream.js"(exports2, module2) {
     module2.exports = require("stream");
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/lib/internal/streams/buffer_list.js
+// node_modules/readable-stream/lib/internal/streams/buffer_list.js
 var require_buffer_list = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports2, module2) {
+  "node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports2, module2) {
     "use strict";
     function ownKeys(object, enumerableOnly) {
       var keys = Object.keys(object);
@@ -70379,9 +70379,9 @@ var require_buffer_list = __commonJS({
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/lib/internal/streams/destroy.js
+// node_modules/readable-stream/lib/internal/streams/destroy.js
 var require_destroy = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports2, module2) {
+  "node_modules/readable-stream/lib/internal/streams/destroy.js"(exports2, module2) {
     "use strict";
     function destroy(err, cb) {
       var _this = this;
@@ -70472,9 +70472,9 @@ var require_destroy = __commonJS({
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/errors.js
+// node_modules/readable-stream/errors.js
 var require_errors2 = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/errors.js"(exports2, module2) {
+  "node_modules/readable-stream/errors.js"(exports2, module2) {
     "use strict";
     var codes = {};
     function createErrorType(code, message, Base) {
@@ -70572,9 +70572,9 @@ var require_errors2 = __commonJS({
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/lib/internal/streams/state.js
+// node_modules/readable-stream/lib/internal/streams/state.js
 var require_state = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/lib/internal/streams/state.js"(exports2, module2) {
+  "node_modules/readable-stream/lib/internal/streams/state.js"(exports2, module2) {
     "use strict";
     var ERR_INVALID_OPT_VALUE = require_errors2().codes.ERR_INVALID_OPT_VALUE;
     function highWaterMarkFrom(options, isDuplex, duplexKey) {
@@ -70604,9 +70604,9 @@ var require_node2 = __commonJS({
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/lib/_stream_writable.js
+// node_modules/readable-stream/lib/_stream_writable.js
 var require_stream_writable = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/lib/_stream_writable.js"(exports2, module2) {
+  "node_modules/readable-stream/lib/_stream_writable.js"(exports2, module2) {
     "use strict";
     module2.exports = Writable;
     function CorkedRequest(state) {
@@ -71092,9 +71092,9 @@ var require_stream_writable = __commonJS({
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/lib/_stream_duplex.js
+// node_modules/readable-stream/lib/_stream_duplex.js
 var require_stream_duplex = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/lib/_stream_duplex.js"(exports2, module2) {
+  "node_modules/readable-stream/lib/_stream_duplex.js"(exports2, module2) {
     "use strict";
     var objectKeys = Object.keys || function(obj) {
       var keys2 = [];
@@ -71180,9 +71180,9 @@ var require_stream_duplex = __commonJS({
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/lib/internal/streams/end-of-stream.js
+// node_modules/readable-stream/lib/internal/streams/end-of-stream.js
 var require_end_of_stream = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports2, module2) {
+  "node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports2, module2) {
     "use strict";
     var ERR_STREAM_PREMATURE_CLOSE = require_errors2().codes.ERR_STREAM_PREMATURE_CLOSE;
     function once(callback) {
@@ -71281,9 +71281,9 @@ var require_end_of_stream = __commonJS({
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/lib/internal/streams/async_iterator.js
+// node_modules/readable-stream/lib/internal/streams/async_iterator.js
 var require_async_iterator = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports2, module2) {
+  "node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports2, module2) {
     "use strict";
     var _Object$setPrototypeO;
     function _defineProperty(obj, key, value) {
@@ -71449,9 +71449,9 @@ var require_async_iterator = __commonJS({
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/lib/internal/streams/from.js
+// node_modules/readable-stream/lib/internal/streams/from.js
 var require_from = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/lib/internal/streams/from.js"(exports2, module2) {
+  "node_modules/readable-stream/lib/internal/streams/from.js"(exports2, module2) {
     "use strict";
     function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
       try {
@@ -71566,9 +71566,9 @@ var require_from = __commonJS({
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/lib/_stream_readable.js
+// node_modules/readable-stream/lib/_stream_readable.js
 var require_stream_readable = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/lib/_stream_readable.js"(exports2, module2) {
+  "node_modules/readable-stream/lib/_stream_readable.js"(exports2, module2) {
     "use strict";
     module2.exports = Readable;
     var Duplex;
@@ -72349,9 +72349,9 @@ var require_stream_readable = __commonJS({
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/lib/_stream_transform.js
+// node_modules/readable-stream/lib/_stream_transform.js
 var require_stream_transform = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/lib/_stream_transform.js"(exports2, module2) {
+  "node_modules/readable-stream/lib/_stream_transform.js"(exports2, module2) {
     "use strict";
     module2.exports = Transform;
     var _require$codes = require_errors2().codes;
@@ -72457,9 +72457,9 @@ var require_stream_transform = __commonJS({
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/lib/_stream_passthrough.js
+// node_modules/readable-stream/lib/_stream_passthrough.js
 var require_stream_passthrough = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/lib/_stream_passthrough.js"(exports2, module2) {
+  "node_modules/readable-stream/lib/_stream_passthrough.js"(exports2, module2) {
     "use strict";
     module2.exports = PassThrough;
     var Transform = require_stream_transform();
@@ -72475,9 +72475,9 @@ var require_stream_passthrough = __commonJS({
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/lib/internal/streams/pipeline.js
+// node_modules/readable-stream/lib/internal/streams/pipeline.js
 var require_pipeline = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports2, module2) {
+  "node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports2, module2) {
     "use strict";
     var eos;
     function once(callback) {
@@ -72574,9 +72574,9 @@ var require_pipeline = __commonJS({
   }
 });
 
-// node_modules/split2/node_modules/readable-stream/readable.js
+// node_modules/readable-stream/readable.js
 var require_readable = __commonJS({
-  "node_modules/split2/node_modules/readable-stream/readable.js"(exports2, module2) {
+  "node_modules/readable-stream/readable.js"(exports2, module2) {
     var Stream = require("stream");
     if (process.env.READABLE_STREAM === "disable" && Stream) {
       module2.exports = Stream.Readable;
@@ -77044,12 +77044,11 @@ var require_browser2 = __commonJS({
 var require_has_flag = __commonJS({
   "node_modules/has-flag/index.js"(exports2, module2) {
     "use strict";
-    module2.exports = (flag, argv) => {
-      argv = argv || process.argv;
+    module2.exports = (flag, argv = process.argv) => {
       const prefix = flag.startsWith("-") ? "" : flag.length === 1 ? "-" : "--";
-      const pos = argv.indexOf(prefix + flag);
-      const terminatorPos = argv.indexOf("--");
-      return pos !== -1 && (terminatorPos === -1 ? true : pos < terminatorPos);
+      const position = argv.indexOf(prefix + flag);
+      const terminatorPosition = argv.indexOf("--");
+      return position !== -1 && (terminatorPosition === -1 || position < terminatorPosition);
     };
   }
 });
@@ -77059,16 +77058,23 @@ var require_supports_color = __commonJS({
   "node_modules/supports-color/index.js"(exports2, module2) {
     "use strict";
     var os = require("os");
+    var tty = require("tty");
     var hasFlag = require_has_flag();
-    var env = process.env;
+    var { env } = process;
     var forceColor;
-    if (hasFlag("no-color") || hasFlag("no-colors") || hasFlag("color=false")) {
-      forceColor = false;
+    if (hasFlag("no-color") || hasFlag("no-colors") || hasFlag("color=false") || hasFlag("color=never")) {
+      forceColor = 0;
     } else if (hasFlag("color") || hasFlag("colors") || hasFlag("color=true") || hasFlag("color=always")) {
-      forceColor = true;
+      forceColor = 1;
     }
     if ("FORCE_COLOR" in env) {
-      forceColor = env.FORCE_COLOR.length === 0 || parseInt(env.FORCE_COLOR, 10) !== 0;
+      if (env.FORCE_COLOR === "true") {
+        forceColor = 1;
+      } else if (env.FORCE_COLOR === "false") {
+        forceColor = 0;
+      } else {
+        forceColor = env.FORCE_COLOR.length === 0 ? 1 : Math.min(parseInt(env.FORCE_COLOR, 10), 3);
+      }
     }
     function translateLevel(level) {
       if (level === 0) {
@@ -77081,8 +77087,8 @@ var require_supports_color = __commonJS({
         has16m: level >= 3
       };
     }
-    function supportsColor(stream) {
-      if (forceColor === false) {
+    function supportsColor(haveStream, streamIsTTY) {
+      if (forceColor === 0) {
         return 0;
       }
       if (hasFlag("color=16m") || hasFlag("color=full") || hasFlag("color=truecolor")) {
@@ -77091,13 +77097,16 @@ var require_supports_color = __commonJS({
       if (hasFlag("color=256")) {
         return 2;
       }
-      if (stream && !stream.isTTY && forceColor !== true) {
+      if (haveStream && !streamIsTTY && forceColor === void 0) {
         return 0;
       }
-      const min = forceColor ? 1 : 0;
+      const min = forceColor || 0;
+      if (env.TERM === "dumb") {
+        return min;
+      }
       if (process.platform === "win32") {
         const osRelease = os.release().split(".");
-        if (Number(process.versions.node.split(".")[0]) >= 8 && Number(osRelease[0]) >= 10 && Number(osRelease[2]) >= 10586) {
+        if (Number(osRelease[0]) >= 10 && Number(osRelease[2]) >= 10586) {
           return Number(osRelease[2]) >= 14931 ? 3 : 2;
         }
         return 1;
@@ -77110,6 +77119,9 @@ var require_supports_color = __commonJS({
       }
       if ("TEAMCITY_VERSION" in env) {
         return /^(9\.(0*[1-9]\d*)\.|\d{2,}\.)/.test(env.TEAMCITY_VERSION) ? 1 : 0;
+      }
+      if ("GITHUB_ACTIONS" in env) {
+        return 1;
       }
       if (env.COLORTERM === "truecolor") {
         return 3;
@@ -77132,19 +77144,16 @@ var require_supports_color = __commonJS({
       if ("COLORTERM" in env) {
         return 1;
       }
-      if (env.TERM === "dumb") {
-        return min;
-      }
       return min;
     }
     function getSupportLevel(stream) {
-      const level = supportsColor(stream);
+      const level = supportsColor(stream, stream && stream.isTTY);
       return translateLevel(level);
     }
     module2.exports = {
       supportsColor: getSupportLevel,
-      stdout: getSupportLevel(process.stdout),
-      stderr: getSupportLevel(process.stderr)
+      stdout: translateLevel(supportsColor(true, tty.isatty(1))),
+      stderr: translateLevel(supportsColor(true, tty.isatty(2)))
     };
   }
 });
@@ -79274,9 +79283,9 @@ var require_omit = __commonJS({
   }
 });
 
-// node_modules/escape-string-regexp/index.js
+// node_modules/chalk/node_modules/escape-string-regexp/index.js
 var require_escape_string_regexp = __commonJS({
-  "node_modules/escape-string-regexp/index.js"(exports2, module2) {
+  "node_modules/chalk/node_modules/escape-string-regexp/index.js"(exports2, module2) {
     "use strict";
     var matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
     module2.exports = function(str) {
@@ -79288,9 +79297,9 @@ var require_escape_string_regexp = __commonJS({
   }
 });
 
-// node_modules/color-name/index.js
+// node_modules/chalk/node_modules/color-name/index.js
 var require_color_name = __commonJS({
-  "node_modules/color-name/index.js"(exports2, module2) {
+  "node_modules/chalk/node_modules/color-name/index.js"(exports2, module2) {
     "use strict";
     module2.exports = {
       "aliceblue": [240, 248, 255],
@@ -79445,9 +79454,9 @@ var require_color_name = __commonJS({
   }
 });
 
-// node_modules/ansi-styles/node_modules/color-convert/conversions.js
+// node_modules/chalk/node_modules/color-convert/conversions.js
 var require_conversions = __commonJS({
-  "node_modules/ansi-styles/node_modules/color-convert/conversions.js"(exports2, module2) {
+  "node_modules/chalk/node_modules/color-convert/conversions.js"(exports2, module2) {
     var cssKeywords = require_color_name();
     var reverseKeywords = {};
     for (var key in cssKeywords) {
@@ -80156,9 +80165,9 @@ var require_conversions = __commonJS({
   }
 });
 
-// node_modules/ansi-styles/node_modules/color-convert/route.js
+// node_modules/chalk/node_modules/color-convert/route.js
 var require_route = __commonJS({
-  "node_modules/ansi-styles/node_modules/color-convert/route.js"(exports2, module2) {
+  "node_modules/chalk/node_modules/color-convert/route.js"(exports2, module2) {
     var conversions = require_conversions();
     function buildGraph() {
       var graph = {};
@@ -80224,9 +80233,9 @@ var require_route = __commonJS({
   }
 });
 
-// node_modules/ansi-styles/node_modules/color-convert/index.js
+// node_modules/chalk/node_modules/color-convert/index.js
 var require_color_convert = __commonJS({
-  "node_modules/ansi-styles/node_modules/color-convert/index.js"(exports2, module2) {
+  "node_modules/chalk/node_modules/color-convert/index.js"(exports2, module2) {
     var conversions = require_conversions();
     var route = require_route();
     var convert = {};
@@ -80283,9 +80292,9 @@ var require_color_convert = __commonJS({
   }
 });
 
-// node_modules/ansi-styles/index.js
+// node_modules/chalk/node_modules/ansi-styles/index.js
 var require_ansi_styles = __commonJS({
-  "node_modules/ansi-styles/index.js"(exports2, module2) {
+  "node_modules/chalk/node_modules/ansi-styles/index.js"(exports2, module2) {
     "use strict";
     var colorConvert = require_color_convert();
     var wrapAnsi16 = (fn, offset) => function() {
@@ -80423,6 +80432,115 @@ var require_ansi_styles = __commonJS({
   }
 });
 
+// node_modules/chalk/node_modules/has-flag/index.js
+var require_has_flag2 = __commonJS({
+  "node_modules/chalk/node_modules/has-flag/index.js"(exports2, module2) {
+    "use strict";
+    module2.exports = (flag, argv) => {
+      argv = argv || process.argv;
+      const prefix = flag.startsWith("-") ? "" : flag.length === 1 ? "-" : "--";
+      const pos = argv.indexOf(prefix + flag);
+      const terminatorPos = argv.indexOf("--");
+      return pos !== -1 && (terminatorPos === -1 ? true : pos < terminatorPos);
+    };
+  }
+});
+
+// node_modules/chalk/node_modules/supports-color/index.js
+var require_supports_color2 = __commonJS({
+  "node_modules/chalk/node_modules/supports-color/index.js"(exports2, module2) {
+    "use strict";
+    var os = require("os");
+    var hasFlag = require_has_flag2();
+    var env = process.env;
+    var forceColor;
+    if (hasFlag("no-color") || hasFlag("no-colors") || hasFlag("color=false")) {
+      forceColor = false;
+    } else if (hasFlag("color") || hasFlag("colors") || hasFlag("color=true") || hasFlag("color=always")) {
+      forceColor = true;
+    }
+    if ("FORCE_COLOR" in env) {
+      forceColor = env.FORCE_COLOR.length === 0 || parseInt(env.FORCE_COLOR, 10) !== 0;
+    }
+    function translateLevel(level) {
+      if (level === 0) {
+        return false;
+      }
+      return {
+        level,
+        hasBasic: true,
+        has256: level >= 2,
+        has16m: level >= 3
+      };
+    }
+    function supportsColor(stream) {
+      if (forceColor === false) {
+        return 0;
+      }
+      if (hasFlag("color=16m") || hasFlag("color=full") || hasFlag("color=truecolor")) {
+        return 3;
+      }
+      if (hasFlag("color=256")) {
+        return 2;
+      }
+      if (stream && !stream.isTTY && forceColor !== true) {
+        return 0;
+      }
+      const min = forceColor ? 1 : 0;
+      if (process.platform === "win32") {
+        const osRelease = os.release().split(".");
+        if (Number(process.versions.node.split(".")[0]) >= 8 && Number(osRelease[0]) >= 10 && Number(osRelease[2]) >= 10586) {
+          return Number(osRelease[2]) >= 14931 ? 3 : 2;
+        }
+        return 1;
+      }
+      if ("CI" in env) {
+        if (["TRAVIS", "CIRCLECI", "APPVEYOR", "GITLAB_CI"].some((sign) => sign in env) || env.CI_NAME === "codeship") {
+          return 1;
+        }
+        return min;
+      }
+      if ("TEAMCITY_VERSION" in env) {
+        return /^(9\.(0*[1-9]\d*)\.|\d{2,}\.)/.test(env.TEAMCITY_VERSION) ? 1 : 0;
+      }
+      if (env.COLORTERM === "truecolor") {
+        return 3;
+      }
+      if ("TERM_PROGRAM" in env) {
+        const version = parseInt((env.TERM_PROGRAM_VERSION || "").split(".")[0], 10);
+        switch (env.TERM_PROGRAM) {
+          case "iTerm.app":
+            return version >= 3 ? 3 : 2;
+          case "Apple_Terminal":
+            return 2;
+        }
+      }
+      if (/-256(color)?$/i.test(env.TERM)) {
+        return 2;
+      }
+      if (/^screen|^xterm|^vt100|^vt220|^rxvt|color|ansi|cygwin|linux/i.test(env.TERM)) {
+        return 1;
+      }
+      if ("COLORTERM" in env) {
+        return 1;
+      }
+      if (env.TERM === "dumb") {
+        return min;
+      }
+      return min;
+    }
+    function getSupportLevel(stream) {
+      const level = supportsColor(stream);
+      return translateLevel(level);
+    }
+    module2.exports = {
+      supportsColor: getSupportLevel,
+      stdout: getSupportLevel(process.stdout),
+      stderr: getSupportLevel(process.stderr)
+    };
+  }
+});
+
 // node_modules/chalk/templates.js
 var require_templates = __commonJS({
   "node_modules/chalk/templates.js"(exports2, module2) {
@@ -80540,7 +80658,7 @@ var require_chalk = __commonJS({
     "use strict";
     var escapeStringRegexp = require_escape_string_regexp();
     var ansiStyles = require_ansi_styles();
-    var stdoutColor = require_supports_color().stdout;
+    var stdoutColor = require_supports_color2().stdout;
     var template = require_templates();
     var isSimpleWindowsTerm = process.platform === "win32" && !(process.env.TERM || "").toLowerCase().startsWith("xterm");
     var levelMapping = ["ansi", "ansi", "ansi256", "ansi16m"];
@@ -85098,394 +85216,11 @@ var require_coerce = __commonJS({
   }
 });
 
-// node_modules/graphile-build/node_modules/semver/node_modules/yallist/iterator.js
-var require_iterator2 = __commonJS({
-  "node_modules/graphile-build/node_modules/semver/node_modules/yallist/iterator.js"(exports2, module2) {
-    "use strict";
-    module2.exports = function(Yallist) {
-      Yallist.prototype[Symbol.iterator] = function* () {
-        for (let walker = this.head; walker; walker = walker.next) {
-          yield walker.value;
-        }
-      };
-    };
-  }
-});
-
-// node_modules/graphile-build/node_modules/semver/node_modules/yallist/yallist.js
-var require_yallist2 = __commonJS({
-  "node_modules/graphile-build/node_modules/semver/node_modules/yallist/yallist.js"(exports2, module2) {
-    "use strict";
-    module2.exports = Yallist;
-    Yallist.Node = Node;
-    Yallist.create = Yallist;
-    function Yallist(list) {
-      var self2 = this;
-      if (!(self2 instanceof Yallist)) {
-        self2 = new Yallist();
-      }
-      self2.tail = null;
-      self2.head = null;
-      self2.length = 0;
-      if (list && typeof list.forEach === "function") {
-        list.forEach(function(item) {
-          self2.push(item);
-        });
-      } else if (arguments.length > 0) {
-        for (var i = 0, l = arguments.length; i < l; i++) {
-          self2.push(arguments[i]);
-        }
-      }
-      return self2;
-    }
-    Yallist.prototype.removeNode = function(node) {
-      if (node.list !== this) {
-        throw new Error("removing node which does not belong to this list");
-      }
-      var next = node.next;
-      var prev = node.prev;
-      if (next) {
-        next.prev = prev;
-      }
-      if (prev) {
-        prev.next = next;
-      }
-      if (node === this.head) {
-        this.head = next;
-      }
-      if (node === this.tail) {
-        this.tail = prev;
-      }
-      node.list.length--;
-      node.next = null;
-      node.prev = null;
-      node.list = null;
-      return next;
-    };
-    Yallist.prototype.unshiftNode = function(node) {
-      if (node === this.head) {
-        return;
-      }
-      if (node.list) {
-        node.list.removeNode(node);
-      }
-      var head = this.head;
-      node.list = this;
-      node.next = head;
-      if (head) {
-        head.prev = node;
-      }
-      this.head = node;
-      if (!this.tail) {
-        this.tail = node;
-      }
-      this.length++;
-    };
-    Yallist.prototype.pushNode = function(node) {
-      if (node === this.tail) {
-        return;
-      }
-      if (node.list) {
-        node.list.removeNode(node);
-      }
-      var tail = this.tail;
-      node.list = this;
-      node.prev = tail;
-      if (tail) {
-        tail.next = node;
-      }
-      this.tail = node;
-      if (!this.head) {
-        this.head = node;
-      }
-      this.length++;
-    };
-    Yallist.prototype.push = function() {
-      for (var i = 0, l = arguments.length; i < l; i++) {
-        push(this, arguments[i]);
-      }
-      return this.length;
-    };
-    Yallist.prototype.unshift = function() {
-      for (var i = 0, l = arguments.length; i < l; i++) {
-        unshift(this, arguments[i]);
-      }
-      return this.length;
-    };
-    Yallist.prototype.pop = function() {
-      if (!this.tail) {
-        return void 0;
-      }
-      var res = this.tail.value;
-      this.tail = this.tail.prev;
-      if (this.tail) {
-        this.tail.next = null;
-      } else {
-        this.head = null;
-      }
-      this.length--;
-      return res;
-    };
-    Yallist.prototype.shift = function() {
-      if (!this.head) {
-        return void 0;
-      }
-      var res = this.head.value;
-      this.head = this.head.next;
-      if (this.head) {
-        this.head.prev = null;
-      } else {
-        this.tail = null;
-      }
-      this.length--;
-      return res;
-    };
-    Yallist.prototype.forEach = function(fn, thisp) {
-      thisp = thisp || this;
-      for (var walker = this.head, i = 0; walker !== null; i++) {
-        fn.call(thisp, walker.value, i, this);
-        walker = walker.next;
-      }
-    };
-    Yallist.prototype.forEachReverse = function(fn, thisp) {
-      thisp = thisp || this;
-      for (var walker = this.tail, i = this.length - 1; walker !== null; i--) {
-        fn.call(thisp, walker.value, i, this);
-        walker = walker.prev;
-      }
-    };
-    Yallist.prototype.get = function(n) {
-      for (var i = 0, walker = this.head; walker !== null && i < n; i++) {
-        walker = walker.next;
-      }
-      if (i === n && walker !== null) {
-        return walker.value;
-      }
-    };
-    Yallist.prototype.getReverse = function(n) {
-      for (var i = 0, walker = this.tail; walker !== null && i < n; i++) {
-        walker = walker.prev;
-      }
-      if (i === n && walker !== null) {
-        return walker.value;
-      }
-    };
-    Yallist.prototype.map = function(fn, thisp) {
-      thisp = thisp || this;
-      var res = new Yallist();
-      for (var walker = this.head; walker !== null; ) {
-        res.push(fn.call(thisp, walker.value, this));
-        walker = walker.next;
-      }
-      return res;
-    };
-    Yallist.prototype.mapReverse = function(fn, thisp) {
-      thisp = thisp || this;
-      var res = new Yallist();
-      for (var walker = this.tail; walker !== null; ) {
-        res.push(fn.call(thisp, walker.value, this));
-        walker = walker.prev;
-      }
-      return res;
-    };
-    Yallist.prototype.reduce = function(fn, initial) {
-      var acc;
-      var walker = this.head;
-      if (arguments.length > 1) {
-        acc = initial;
-      } else if (this.head) {
-        walker = this.head.next;
-        acc = this.head.value;
-      } else {
-        throw new TypeError("Reduce of empty list with no initial value");
-      }
-      for (var i = 0; walker !== null; i++) {
-        acc = fn(acc, walker.value, i);
-        walker = walker.next;
-      }
-      return acc;
-    };
-    Yallist.prototype.reduceReverse = function(fn, initial) {
-      var acc;
-      var walker = this.tail;
-      if (arguments.length > 1) {
-        acc = initial;
-      } else if (this.tail) {
-        walker = this.tail.prev;
-        acc = this.tail.value;
-      } else {
-        throw new TypeError("Reduce of empty list with no initial value");
-      }
-      for (var i = this.length - 1; walker !== null; i--) {
-        acc = fn(acc, walker.value, i);
-        walker = walker.prev;
-      }
-      return acc;
-    };
-    Yallist.prototype.toArray = function() {
-      var arr = new Array(this.length);
-      for (var i = 0, walker = this.head; walker !== null; i++) {
-        arr[i] = walker.value;
-        walker = walker.next;
-      }
-      return arr;
-    };
-    Yallist.prototype.toArrayReverse = function() {
-      var arr = new Array(this.length);
-      for (var i = 0, walker = this.tail; walker !== null; i++) {
-        arr[i] = walker.value;
-        walker = walker.prev;
-      }
-      return arr;
-    };
-    Yallist.prototype.slice = function(from, to) {
-      to = to || this.length;
-      if (to < 0) {
-        to += this.length;
-      }
-      from = from || 0;
-      if (from < 0) {
-        from += this.length;
-      }
-      var ret = new Yallist();
-      if (to < from || to < 0) {
-        return ret;
-      }
-      if (from < 0) {
-        from = 0;
-      }
-      if (to > this.length) {
-        to = this.length;
-      }
-      for (var i = 0, walker = this.head; walker !== null && i < from; i++) {
-        walker = walker.next;
-      }
-      for (; walker !== null && i < to; i++, walker = walker.next) {
-        ret.push(walker.value);
-      }
-      return ret;
-    };
-    Yallist.prototype.sliceReverse = function(from, to) {
-      to = to || this.length;
-      if (to < 0) {
-        to += this.length;
-      }
-      from = from || 0;
-      if (from < 0) {
-        from += this.length;
-      }
-      var ret = new Yallist();
-      if (to < from || to < 0) {
-        return ret;
-      }
-      if (from < 0) {
-        from = 0;
-      }
-      if (to > this.length) {
-        to = this.length;
-      }
-      for (var i = this.length, walker = this.tail; walker !== null && i > to; i--) {
-        walker = walker.prev;
-      }
-      for (; walker !== null && i > from; i--, walker = walker.prev) {
-        ret.push(walker.value);
-      }
-      return ret;
-    };
-    Yallist.prototype.splice = function(start, deleteCount, ...nodes) {
-      if (start > this.length) {
-        start = this.length - 1;
-      }
-      if (start < 0) {
-        start = this.length + start;
-      }
-      for (var i = 0, walker = this.head; walker !== null && i < start; i++) {
-        walker = walker.next;
-      }
-      var ret = [];
-      for (var i = 0; walker && i < deleteCount; i++) {
-        ret.push(walker.value);
-        walker = this.removeNode(walker);
-      }
-      if (walker === null) {
-        walker = this.tail;
-      }
-      if (walker !== this.head && walker !== this.tail) {
-        walker = walker.prev;
-      }
-      for (var i = 0; i < nodes.length; i++) {
-        walker = insert(this, walker, nodes[i]);
-      }
-      return ret;
-    };
-    Yallist.prototype.reverse = function() {
-      var head = this.head;
-      var tail = this.tail;
-      for (var walker = head; walker !== null; walker = walker.prev) {
-        var p = walker.prev;
-        walker.prev = walker.next;
-        walker.next = p;
-      }
-      this.head = tail;
-      this.tail = head;
-      return this;
-    };
-    function insert(self2, node, value) {
-      var inserted = node === self2.head ? new Node(value, null, node, self2) : new Node(value, node, node.next, self2);
-      if (inserted.next === null) {
-        self2.tail = inserted;
-      }
-      if (inserted.prev === null) {
-        self2.head = inserted;
-      }
-      self2.length++;
-      return inserted;
-    }
-    function push(self2, item) {
-      self2.tail = new Node(item, self2.tail, null, self2);
-      if (!self2.head) {
-        self2.head = self2.tail;
-      }
-      self2.length++;
-    }
-    function unshift(self2, item) {
-      self2.head = new Node(item, null, self2.head, self2);
-      if (!self2.tail) {
-        self2.tail = self2.head;
-      }
-      self2.length++;
-    }
-    function Node(value, prev, next, list) {
-      if (!(this instanceof Node)) {
-        return new Node(value, prev, next, list);
-      }
-      this.list = list;
-      this.value = value;
-      if (prev) {
-        prev.next = this;
-        this.prev = prev;
-      } else {
-        this.prev = null;
-      }
-      if (next) {
-        next.prev = this;
-        this.next = next;
-      } else {
-        this.next = null;
-      }
-    }
-    try {
-      require_iterator2()(Yallist);
-    } catch (er) {
-    }
-  }
-});
-
 // node_modules/graphile-build/node_modules/semver/node_modules/lru-cache/index.js
 var require_lru_cache2 = __commonJS({
   "node_modules/graphile-build/node_modules/semver/node_modules/lru-cache/index.js"(exports2, module2) {
     "use strict";
-    var Yallist = require_yallist2();
+    var Yallist = require_yallist();
     var MAX = Symbol("max");
     var LENGTH = Symbol("length");
     var LENGTH_CALCULATOR = Symbol("lengthCalculator");
@@ -128688,394 +128423,11 @@ var require_coerce3 = __commonJS({
   }
 });
 
-// node_modules/graphile-build-pg/node_modules/semver/node_modules/yallist/iterator.js
-var require_iterator3 = __commonJS({
-  "node_modules/graphile-build-pg/node_modules/semver/node_modules/yallist/iterator.js"(exports2, module2) {
-    "use strict";
-    module2.exports = function(Yallist) {
-      Yallist.prototype[Symbol.iterator] = function* () {
-        for (let walker = this.head; walker; walker = walker.next) {
-          yield walker.value;
-        }
-      };
-    };
-  }
-});
-
-// node_modules/graphile-build-pg/node_modules/semver/node_modules/yallist/yallist.js
-var require_yallist3 = __commonJS({
-  "node_modules/graphile-build-pg/node_modules/semver/node_modules/yallist/yallist.js"(exports2, module2) {
-    "use strict";
-    module2.exports = Yallist;
-    Yallist.Node = Node;
-    Yallist.create = Yallist;
-    function Yallist(list) {
-      var self2 = this;
-      if (!(self2 instanceof Yallist)) {
-        self2 = new Yallist();
-      }
-      self2.tail = null;
-      self2.head = null;
-      self2.length = 0;
-      if (list && typeof list.forEach === "function") {
-        list.forEach(function(item) {
-          self2.push(item);
-        });
-      } else if (arguments.length > 0) {
-        for (var i = 0, l = arguments.length; i < l; i++) {
-          self2.push(arguments[i]);
-        }
-      }
-      return self2;
-    }
-    Yallist.prototype.removeNode = function(node) {
-      if (node.list !== this) {
-        throw new Error("removing node which does not belong to this list");
-      }
-      var next = node.next;
-      var prev = node.prev;
-      if (next) {
-        next.prev = prev;
-      }
-      if (prev) {
-        prev.next = next;
-      }
-      if (node === this.head) {
-        this.head = next;
-      }
-      if (node === this.tail) {
-        this.tail = prev;
-      }
-      node.list.length--;
-      node.next = null;
-      node.prev = null;
-      node.list = null;
-      return next;
-    };
-    Yallist.prototype.unshiftNode = function(node) {
-      if (node === this.head) {
-        return;
-      }
-      if (node.list) {
-        node.list.removeNode(node);
-      }
-      var head = this.head;
-      node.list = this;
-      node.next = head;
-      if (head) {
-        head.prev = node;
-      }
-      this.head = node;
-      if (!this.tail) {
-        this.tail = node;
-      }
-      this.length++;
-    };
-    Yallist.prototype.pushNode = function(node) {
-      if (node === this.tail) {
-        return;
-      }
-      if (node.list) {
-        node.list.removeNode(node);
-      }
-      var tail = this.tail;
-      node.list = this;
-      node.prev = tail;
-      if (tail) {
-        tail.next = node;
-      }
-      this.tail = node;
-      if (!this.head) {
-        this.head = node;
-      }
-      this.length++;
-    };
-    Yallist.prototype.push = function() {
-      for (var i = 0, l = arguments.length; i < l; i++) {
-        push(this, arguments[i]);
-      }
-      return this.length;
-    };
-    Yallist.prototype.unshift = function() {
-      for (var i = 0, l = arguments.length; i < l; i++) {
-        unshift(this, arguments[i]);
-      }
-      return this.length;
-    };
-    Yallist.prototype.pop = function() {
-      if (!this.tail) {
-        return void 0;
-      }
-      var res = this.tail.value;
-      this.tail = this.tail.prev;
-      if (this.tail) {
-        this.tail.next = null;
-      } else {
-        this.head = null;
-      }
-      this.length--;
-      return res;
-    };
-    Yallist.prototype.shift = function() {
-      if (!this.head) {
-        return void 0;
-      }
-      var res = this.head.value;
-      this.head = this.head.next;
-      if (this.head) {
-        this.head.prev = null;
-      } else {
-        this.tail = null;
-      }
-      this.length--;
-      return res;
-    };
-    Yallist.prototype.forEach = function(fn, thisp) {
-      thisp = thisp || this;
-      for (var walker = this.head, i = 0; walker !== null; i++) {
-        fn.call(thisp, walker.value, i, this);
-        walker = walker.next;
-      }
-    };
-    Yallist.prototype.forEachReverse = function(fn, thisp) {
-      thisp = thisp || this;
-      for (var walker = this.tail, i = this.length - 1; walker !== null; i--) {
-        fn.call(thisp, walker.value, i, this);
-        walker = walker.prev;
-      }
-    };
-    Yallist.prototype.get = function(n) {
-      for (var i = 0, walker = this.head; walker !== null && i < n; i++) {
-        walker = walker.next;
-      }
-      if (i === n && walker !== null) {
-        return walker.value;
-      }
-    };
-    Yallist.prototype.getReverse = function(n) {
-      for (var i = 0, walker = this.tail; walker !== null && i < n; i++) {
-        walker = walker.prev;
-      }
-      if (i === n && walker !== null) {
-        return walker.value;
-      }
-    };
-    Yallist.prototype.map = function(fn, thisp) {
-      thisp = thisp || this;
-      var res = new Yallist();
-      for (var walker = this.head; walker !== null; ) {
-        res.push(fn.call(thisp, walker.value, this));
-        walker = walker.next;
-      }
-      return res;
-    };
-    Yallist.prototype.mapReverse = function(fn, thisp) {
-      thisp = thisp || this;
-      var res = new Yallist();
-      for (var walker = this.tail; walker !== null; ) {
-        res.push(fn.call(thisp, walker.value, this));
-        walker = walker.prev;
-      }
-      return res;
-    };
-    Yallist.prototype.reduce = function(fn, initial) {
-      var acc;
-      var walker = this.head;
-      if (arguments.length > 1) {
-        acc = initial;
-      } else if (this.head) {
-        walker = this.head.next;
-        acc = this.head.value;
-      } else {
-        throw new TypeError("Reduce of empty list with no initial value");
-      }
-      for (var i = 0; walker !== null; i++) {
-        acc = fn(acc, walker.value, i);
-        walker = walker.next;
-      }
-      return acc;
-    };
-    Yallist.prototype.reduceReverse = function(fn, initial) {
-      var acc;
-      var walker = this.tail;
-      if (arguments.length > 1) {
-        acc = initial;
-      } else if (this.tail) {
-        walker = this.tail.prev;
-        acc = this.tail.value;
-      } else {
-        throw new TypeError("Reduce of empty list with no initial value");
-      }
-      for (var i = this.length - 1; walker !== null; i--) {
-        acc = fn(acc, walker.value, i);
-        walker = walker.prev;
-      }
-      return acc;
-    };
-    Yallist.prototype.toArray = function() {
-      var arr = new Array(this.length);
-      for (var i = 0, walker = this.head; walker !== null; i++) {
-        arr[i] = walker.value;
-        walker = walker.next;
-      }
-      return arr;
-    };
-    Yallist.prototype.toArrayReverse = function() {
-      var arr = new Array(this.length);
-      for (var i = 0, walker = this.tail; walker !== null; i++) {
-        arr[i] = walker.value;
-        walker = walker.prev;
-      }
-      return arr;
-    };
-    Yallist.prototype.slice = function(from, to) {
-      to = to || this.length;
-      if (to < 0) {
-        to += this.length;
-      }
-      from = from || 0;
-      if (from < 0) {
-        from += this.length;
-      }
-      var ret = new Yallist();
-      if (to < from || to < 0) {
-        return ret;
-      }
-      if (from < 0) {
-        from = 0;
-      }
-      if (to > this.length) {
-        to = this.length;
-      }
-      for (var i = 0, walker = this.head; walker !== null && i < from; i++) {
-        walker = walker.next;
-      }
-      for (; walker !== null && i < to; i++, walker = walker.next) {
-        ret.push(walker.value);
-      }
-      return ret;
-    };
-    Yallist.prototype.sliceReverse = function(from, to) {
-      to = to || this.length;
-      if (to < 0) {
-        to += this.length;
-      }
-      from = from || 0;
-      if (from < 0) {
-        from += this.length;
-      }
-      var ret = new Yallist();
-      if (to < from || to < 0) {
-        return ret;
-      }
-      if (from < 0) {
-        from = 0;
-      }
-      if (to > this.length) {
-        to = this.length;
-      }
-      for (var i = this.length, walker = this.tail; walker !== null && i > to; i--) {
-        walker = walker.prev;
-      }
-      for (; walker !== null && i > from; i--, walker = walker.prev) {
-        ret.push(walker.value);
-      }
-      return ret;
-    };
-    Yallist.prototype.splice = function(start, deleteCount, ...nodes) {
-      if (start > this.length) {
-        start = this.length - 1;
-      }
-      if (start < 0) {
-        start = this.length + start;
-      }
-      for (var i = 0, walker = this.head; walker !== null && i < start; i++) {
-        walker = walker.next;
-      }
-      var ret = [];
-      for (var i = 0; walker && i < deleteCount; i++) {
-        ret.push(walker.value);
-        walker = this.removeNode(walker);
-      }
-      if (walker === null) {
-        walker = this.tail;
-      }
-      if (walker !== this.head && walker !== this.tail) {
-        walker = walker.prev;
-      }
-      for (var i = 0; i < nodes.length; i++) {
-        walker = insert(this, walker, nodes[i]);
-      }
-      return ret;
-    };
-    Yallist.prototype.reverse = function() {
-      var head = this.head;
-      var tail = this.tail;
-      for (var walker = head; walker !== null; walker = walker.prev) {
-        var p = walker.prev;
-        walker.prev = walker.next;
-        walker.next = p;
-      }
-      this.head = tail;
-      this.tail = head;
-      return this;
-    };
-    function insert(self2, node, value) {
-      var inserted = node === self2.head ? new Node(value, null, node, self2) : new Node(value, node, node.next, self2);
-      if (inserted.next === null) {
-        self2.tail = inserted;
-      }
-      if (inserted.prev === null) {
-        self2.head = inserted;
-      }
-      self2.length++;
-      return inserted;
-    }
-    function push(self2, item) {
-      self2.tail = new Node(item, self2.tail, null, self2);
-      if (!self2.head) {
-        self2.head = self2.tail;
-      }
-      self2.length++;
-    }
-    function unshift(self2, item) {
-      self2.head = new Node(item, null, self2.head, self2);
-      if (!self2.tail) {
-        self2.tail = self2.head;
-      }
-      self2.length++;
-    }
-    function Node(value, prev, next, list) {
-      if (!(this instanceof Node)) {
-        return new Node(value, prev, next, list);
-      }
-      this.list = list;
-      this.value = value;
-      if (prev) {
-        prev.next = this;
-        this.prev = prev;
-      } else {
-        this.prev = null;
-      }
-      if (next) {
-        next.prev = this;
-        this.next = next;
-      } else {
-        this.next = null;
-      }
-    }
-    try {
-      require_iterator3()(Yallist);
-    } catch (er) {
-    }
-  }
-});
-
 // node_modules/graphile-build-pg/node_modules/semver/node_modules/lru-cache/index.js
 var require_lru_cache3 = __commonJS({
   "node_modules/graphile-build-pg/node_modules/semver/node_modules/lru-cache/index.js"(exports2, module2) {
     "use strict";
-    var Yallist = require_yallist3();
+    var Yallist = require_yallist();
     var MAX = Symbol("max");
     var LENGTH = Symbol("length");
     var LENGTH_CALCULATOR = Symbol("lengthCalculator");
@@ -142078,112 +141430,6 @@ var require_fbToolSummariesSchemeExtensionPlugin = __commonJS({
   }
 });
 
-// server/plugins/fbPostgraphileToApolloPlugin/toolSummariesPlugin/helpers.js
-var removeAtSignFromKeys, getToolUsesRecursive, getToolsRecursive, getObjectsByKeyRecursive;
-var init_helpers = __esm({
-  "server/plugins/fbPostgraphileToApolloPlugin/toolSummariesPlugin/helpers.js"() {
-    removeAtSignFromKeys = (obj) => {
-      if (Array.isArray(obj))
-        return obj.map(removeAtSignFromKeys);
-      if (obj !== null && typeof obj === "object")
-        return Object.fromEntries(Object.entries(obj).map(([k, v]) => [k.replace("@", ""), removeAtSignFromKeys(v)]));
-      return obj;
-    };
-    getToolUsesRecursive = (obj) => {
-      const toolUses = getObjectsByKeyRecursive(obj, "toolUses");
-      return toolUses.length === 1 && toolUses[0] === void 0 ? null : toolUses;
-    };
-    getToolsRecursive = (obj) => {
-      const tools = getObjectsByKeyRecursive(obj, "tools");
-      return tools.length === 1 && tools[0] === void 0 ? null : tools;
-    };
-    getObjectsByKeyRecursive = (obj, searchKey) => {
-      if (Array.isArray(obj))
-        return obj.map((item) => getObjectsByKeyRecursive(item, searchKey)).reduce((a, n) => [...a, ...n], []);
-      if (!obj || typeof obj !== "object")
-        return [];
-      obj = removeAtSignFromKeys(obj);
-      const childObjects = Object.keys(obj).filter((key) => key !== searchKey).map((key) => getObjectsByKeyRecursive(obj[key], searchKey)).reduce((a, n) => [...a, ...n], []);
-      const foundObjects = [
-        ...obj[searchKey] || (childObjects.length === 0 ? [] : [void 0]),
-        ...childObjects
-      ];
-      const withoutUndefined = foundObjects.filter((item) => item !== void 0);
-      if (foundObjects.length === 0)
-        return [];
-      if (withoutUndefined.length === 0)
-        return [void 0];
-      return withoutUndefined;
-    };
-  }
-});
-
-// server/plugins/fbPostgraphileToApolloPlugin/toolSummariesPlugin/utils.js
-var getParentIdCondition, getToolUseQuery, getConstructToolUseQuery, getInsertionToolUseQuery, getToolUseQueryForParentType, getToolQuery, getConstructToolQuery, getInsertionToolQuery, getToolSummaryQuery;
-var init_utils = __esm({
-  "server/plugins/fbPostgraphileToApolloPlugin/toolSummariesPlugin/utils.js"() {
-    getParentIdCondition = (parentName) => parentName ? `(condition: { ${parentName}Id: $parentId })` : "";
-    getToolUseQuery = (parentName) => `
-  toolUses${getParentIdCondition(parentName)} {
-    id
-    name
-  }
-`;
-    getConstructToolUseQuery = (parentName) => `
-  constructs${getParentIdCondition(parentName)} {
-    ${getToolUseQuery()}
-  }
-`;
-    getInsertionToolUseQuery = (parentName) => `
-  insertions${getParentIdCondition(parentName)} {
-    ${getConstructToolUseQuery()}
-  }
-`;
-    getToolUseQueryForParentType = (typename) => `
-  query ToolUseParentQuery($parentId: BigInt!) {
-    ${typename === "allele" ? getToolUseQuery(typename) : ""}
-    ${typename === "allele" ? getInsertionToolUseQuery(typename) : ""}
-    ${getConstructToolUseQuery(typename)}
-  }
-`;
-    getToolQuery = (parentName, relType, returnToolUses = false) => {
-      const conditions = [
-        ...parentName ? [`${parentName}Id: $parentId`] : "",
-        ...relType ? [`relType: "${relType}"`] : ""
-      ].join(", ");
-      return `
-    tools${conditions ? `(condition: { ${conditions} })` : ""} {
-      id
-      symbol
-      ${returnToolUses ? `
-        toolUses: uses {
-          id
-          name
-        }
-      ` : ""}
-    }
-  `;
-    };
-    getConstructToolQuery = (parentName, relType, returnToolUses = false) => `
-  constructs${getParentIdCondition(parentName)} {
-    ${getToolQuery(void 0, relType, returnToolUses)}
-  }
-`;
-    getInsertionToolQuery = (parentName, relType, returnToolUses = false) => `
-  insertions${getParentIdCondition(parentName)} {
-    ${getConstructToolQuery(void 0, relType, returnToolUses)}
-  }
-`;
-    getToolSummaryQuery = (typename, relType, returnToolUses = false) => `
-  query ToolSummaryQuery($parentId: BigInt!) {
-    ${typename === "allele" ? getToolQuery(typename, relType, returnToolUses) : ""}
-    ${typename === "allele" ? getInsertionToolQuery(typename, relType, returnToolUses) : ""}
-    ${getConstructToolQuery(typename, relType, returnToolUses)}
-  }
-`;
-  }
-});
-
 // server/plugins/fbPostgraphileToApolloPlugin/toolSummariesPlugin/batchedToolSummaries.js
 var require_batchedToolSummaries = __commonJS({
   "server/plugins/fbPostgraphileToApolloPlugin/toolSummariesPlugin/batchedToolSummaries.js"(exports2, module2) {
@@ -143053,6 +142299,178 @@ var require_pg_many_to_many = __commonJS({
   }
 });
 
+// server/plugins/fbPostgraphileToApolloPlugin/geneGroupCondition.js
+var require_geneGroupCondition = __commonJS({
+  "server/plugins/fbPostgraphileToApolloPlugin/geneGroupCondition.js"(exports2, module2) {
+    var { makeAddPgTableConditionPlugin } = require_node8plus12();
+    module2.exports = makeAddPgTableConditionPlugin("dataclass_relationship", "gene_human_orthologv2", "geneGroupMinimumDioptScore", (build) => ({ type: build.graphql.GraphQLInt, description: "Return ortholog relationships with score strictly greater than this value." }), (value, { sql, sqlTableAlias }) => value == null ? null : sql.fragment`${sqlTableAlias}.diopt_score > ${sql.value(value)}`);
+  }
+});
+
+// server/plugins/geneGroupDelivery/index.js
+var require_geneGroupDelivery = __commonJS({
+  "server/plugins/geneGroupDelivery/index.js"(exports2, module2) {
+    var { stripIgnoredCharacters } = require_graphql2();
+    var { EventEmitter } = require("events");
+    function createGeneGroupDelivery2(documents, options = {}) {
+      const maxBytes = options.maxBytes || 64 * 1024 * 1024;
+      const ttl = options.ttl || 3e5;
+      const now = options.now || Date.now;
+      const approved = new Set(documents.filter((s) => /query GeneGroupTables\(/.test(s)).map(stripIgnoredCharacters));
+      const cache = new Map(), pending = new Map();
+      let bytes = 0;
+      function remove(key) {
+        const old = cache.get(key);
+        if (old)
+          bytes -= old.body.length;
+        cache.delete(key);
+      }
+      function put(key, body) {
+        if (body.length > maxBytes / 2)
+          return;
+        remove(key);
+        while (cache.size && (bytes + body.length > maxBytes || cache.size >= 32))
+          remove(cache.keys().next().value);
+        cache.set(key, { body, expires: now() + ttl });
+        bytes += body.length;
+      }
+      function send(res, result) {
+        if (res.destroyed || res.finished)
+          return;
+        res.statusCode = result.status;
+        res.setHeader("Content-Type", "application/json; charset=utf-8");
+        res.setHeader("Cache-Control", "no-store");
+        res.end(result.body);
+      }
+      return function geneGroupDelivery(req, res, next) {
+        const b = req.body || {};
+        if (typeof b.query !== "string" || typeof (b.variables || {}).FBgg !== "string" || !/^FBgg[0-9]{7}$/.test((b.variables || {}).FBgg || "") || b.operationName != null && b.operationName !== "GeneGroupTables")
+          return next();
+        let doc;
+        try {
+          doc = stripIgnoredCharacters(b.query);
+        } catch (_) {
+          return next();
+        }
+        if (!approved.has(doc))
+          return next();
+        const key = doc + "\n" + b.variables.FBgg;
+        const hit = cache.get(key);
+        if (hit && hit.expires > now()) {
+          cache.delete(key);
+          cache.set(key, hit);
+          res.setHeader("X-FlyBase-Group-Cache", "HIT");
+          return send(res, { status: 200, body: hit.body });
+        }
+        if (hit)
+          remove(key);
+        let work = pending.get(key);
+        if (work && !work.aborted && work.clients.size < 16) {
+          work.clients.add(res);
+          res.once("close", () => {
+            res.emit("graphql_delivery_finished");
+            work.clients.delete(res);
+            if (!work.done && !work.clients.size) {
+              work.aborted = true;
+              work.emit("abort");
+            }
+          });
+          res.setHeader("X-FlyBase-Group-Cache", "COALESCED");
+          return;
+        }
+        if (pending.size >= 8 || work)
+          return next();
+        work = new EventEmitter();
+        work.clients = new Set([res]);
+        work.aborted = false;
+        work.done = false;
+        pending.set(key, work);
+        req.geneGroupWork = work;
+        res.setHeader("X-FlyBase-Group-Cache", "MISS");
+        res.once("close", () => {
+          work.clients.delete(res);
+          if (!work.done && !work.clients.size) {
+            work.aborted = true;
+            work.emit("abort");
+          }
+        });
+        const end = res.end;
+        res.end = function(chunk, encoding, callback) {
+          if (!work.done) {
+            work.done = true;
+            clearTimeout(work.timer);
+            pending.delete(key);
+            const body = Buffer.isBuffer(chunk) ? chunk : Buffer.from(typeof chunk === "string" ? chunk : "", typeof encoding === "string" ? encoding : "utf8");
+            const result = { status: res.statusCode, body };
+            if (!work.aborted && result.status === 200) {
+              try {
+                const parsed = JSON.parse(body.toString());
+                if (parsed.data && !parsed.errors)
+                  put(key, body);
+              } catch (_) {
+              }
+            }
+            for (const client of work.clients)
+              if (client !== res)
+                send(client, result);
+            work.clients.clear();
+          }
+          return end.apply(this, arguments);
+        };
+        work.timer = setTimeout(() => {
+          if (work.done)
+            return;
+          work.aborted = true;
+          work.emit("abort");
+          work.done = true;
+          pending.delete(key);
+          const result = { status: 503, body: Buffer.from('{"errors":[{"message":"Gene group request timed out."}]}') };
+          for (const client of work.clients)
+            send(client, result);
+          work.clients.clear();
+        }, options.timeout || 3e4);
+        work.timer.unref();
+        next();
+      };
+    }
+    function withGeneGroupCancellation(plugin, pool) {
+      return { requestDidStart(ctx) {
+        const hooks = plugin.requestDidStart(ctx);
+        let work, cancelPromise, abort, finished = false;
+        return Object.assign({}, hooks, {
+          async didResolveOperation(rc) {
+            await hooks.didResolveOperation(rc);
+            work = rc.context.geneGroupWork;
+            const client = rc.context.pgClient;
+            if (!work || !client)
+              return;
+            abort = () => {
+              if (finished || cancelPromise)
+                return;
+              cancelPromise = pool.query("select pg_cancel_backend($1)", [client.processID]).catch(() => {
+              });
+            };
+            work.on("abort", abort);
+            if (work.aborted) {
+              abort();
+              throw new Error("Gene group request disconnected.");
+            }
+          },
+          async willSendResponse(rc) {
+            finished = true;
+            if (work && abort)
+              work.removeListener("abort", abort);
+            if (cancelPromise)
+              await cancelPromise;
+            return hooks.willSendResponse(rc);
+          }
+        });
+      } };
+    }
+    module2.exports = { createGeneGroupDelivery: createGeneGroupDelivery2, withGeneGroupCancellation };
+  }
+});
+
 // server/plugins/fbPostgraphileToApolloPlugin/index.js
 var require_fbPostgraphileToApolloPlugin = __commonJS({
   "server/plugins/fbPostgraphileToApolloPlugin/index.js"(exports2, module2) {
@@ -143081,6 +142499,7 @@ var require_fbPostgraphileToApolloPlugin = __commonJS({
         disableQueryLog: true,
         legacyRelations: "omit",
         appendPlugins: [
+          require_geneGroupCondition(),
           import_pg_many_to_many.default,
           import_pg_simplify_inflector.default,
           import_fbInflectorPlugin.default,
@@ -143094,7 +142513,7 @@ var require_fbPostgraphileToApolloPlugin = __commonJS({
       await (0, import_exportPostGraphileSchema.default)(schema, {
         exportGqlSchemaPath: "/tmp/postgraphileGeneratedSchema.graphql"
       });
-      return { postgraphileSchema: schema, postgraphileToApolloPlugin: plugin };
+      return { postgraphileSchema: schema, postgraphileToApolloPlugin: require_geneGroupDelivery().withGeneGroupCancellation(plugin, new import_pg.default.Pool({ max: 2, connectionTimeoutMillis: 2e3, idleTimeoutMillis: 1e3 })) };
     };
   }
 });
@@ -143260,7 +142679,8 @@ var approved_documents_default = [
   "query insertionsWithoutAllelesByGene($fbgn: String!) {\n  genes(condition: {id: $fbgn}) {\n    id\n    symbol\n    insertions {\n      id\n      symbol\n      stocksCount\n      pubCount\n      ...InsertionToolTable\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment InsertionToolTable on Insertion {\n  insertedElementTypes {\n    id\n    name\n    __typename\n  }\n  regRegions {\n    id\n    symbol\n    __typename\n  }\n  encodedTools {\n    id\n    symbol\n    __typename\n  }\n  encodedToolUses {\n    id\n    name\n    __typename\n  }\n  taggedWith {\n    id\n    symbol\n    __typename\n  }\n  tagUses {\n    id\n    name\n    __typename\n  }\n  alsoCarries {\n    id\n    symbol\n    __typename\n  }\n}\n",
   "fragment AlleleFields on Allele {\n  id\n  symbol\n  isConstruct\n  stocksCount\n  pubCount\n  knownLesion\n  hasImage\n  geneIsRegulatoryRegion\n  mutagens {\n    id\n    name\n    __typename\n  }\n  classes @skip(if: $isConstruct) {\n    id\n    name\n    __typename\n  }\n  insertions {\n    id\n    symbol\n    __typename\n  }\n  constructs {\n    id\n    symbol\n    __typename\n  }\n  transgenicProductClasses {\n    soId\n    transgenicProductClass\n    __typename\n  }\n}\n\nfragment AlleleToolTable on Allele {\n  insertedElementTypes {\n    id\n    name\n    __typename\n  }\n  regRegions {\n    id\n    symbol\n    __typename\n  }\n  encodedTools {\n    id\n    symbol\n    __typename\n  }\n  encodedToolUses {\n    id\n    name\n    __typename\n  }\n  taggedWith {\n    id\n    symbol\n    __typename\n  }\n  tagUses {\n    id\n    name\n    __typename\n  }\n  alsoCarries {\n    id\n    symbol\n    __typename\n  }\n}\n\nquery transgenicConstructAllelesByGene($fbgn: String!, $geneIsRegulatoryRegion: Boolean = false, $isConstruct: Boolean = true) {\n  genes(condition: {id: $fbgn}) {\n    id\n    symbol\n    alleles(\n      condition: {isConstruct: $isConstruct, geneIsRegulatoryRegion: $geneIsRegulatoryRegion}\n    ) {\n      ...AlleleFields\n      ...AlleleToolTable\n      __typename\n    }\n    __typename\n  }\n}\n",
   "query alleleDiseaseVariantsByFBgn($fbgn: String!) {\n  variants: diseaseVariantsByFbgn(fbgn: $fbgn) {\n    id: alleleDiseaseVariantId\n    comment\n    dbxref\n    divDesignation\n    pubs\n    divSynonym\n    fbalId\n    fbalPubs\n    symbol: fbalSymbol\n    fbhhId\n    fbhhSymbol\n    __typename\n  }\n}\n",
-  "query alleleDiseaseVariantsByFBhh($fbhh: String) {\n  variants: diseaseVariantsByFbhh(fbhh: $fbhh) {\n    id: alleleDiseaseVariantId\n    comment\n    dbxref\n    divDesignation\n    pubs\n    divSynonym\n    fbalId\n    fbalPubs\n    symbol: fbalSymbol\n    __typename\n  }\n}\n"
+  "query alleleDiseaseVariantsByFBhh($fbhh: String) {\n  variants: diseaseVariantsByFbhh(fbhh: $fbhh) {\n    id: alleleDiseaseVariantId\n    comment\n    dbxref\n    divDesignation\n    pubs\n    divSynonym\n    fbalId\n    fbalPubs\n    symbol: fbalSymbol\n    __typename\n  }\n}\n",
+  "query GeneGroupTables($FBgg: String!) {\n  geneGroupv2(id: $FBgg) {\n    id\n    type\n    subgroups: geneGroupv2sByGeneGroupMemberv2GeneGroupIdAndSubgroupIdList {\n      id\n      name\n      nameSgml\n      symbol\n      symbolSgml\n      memberships: geneGroupMemberv2sBySubgroupId(condition: {geneGroupId: $FBgg}) {\n        ...GeneGroupMember\n        __typename\n      }\n      __typename\n    }\n    memberships: geneGroupMemberv2sByGeneGroupId(condition: {subgroupId: null}) {\n      ...GeneGroupMember\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment GeneGroupMember on GeneGroupMemberv2 {\n  geneGroupPubs\n  gene {\n    id\n    symbol\n    symbolSgml\n    name\n    nameSgml\n    aka\n    pubs\n    antibody\n    transgenicConstructsCount: geneAllelev2SByGeneIdConnection(\n      condition: {isConstruct: true}\n    ) {\n      totalCount\n      __typename\n    }\n    classicalAndInsertionAllelesCount: geneAllelev2SByGeneIdConnection(\n      condition: {isConstruct: false}\n    ) {\n      totalCount\n      __typename\n    }\n    geneGroups: geneGroupMemberv2sByGeneId(condition: {subgroupId: null}) {\n      geneGroup {\n        id\n        symbol\n        name\n        type\n        __typename\n      }\n      __typename\n    }\n    experimentalDiseaseModels: geneDiseasev2sByGeneId(\n      condition: {isExperimental: true}\n    ) {\n      disease {\n        id\n        name\n        __typename\n      }\n      __typename\n    }\n    potentialDiseaseModels: geneDiseasev2sByGeneId(\n      condition: {isExperimental: false}\n    ) {\n      disease {\n        id\n        name\n        __typename\n      }\n      __typename\n    }\n    humanOrthologs: geneHumanOrthologv2sByGeneId(\n      condition: {geneGroupMinimumDioptScore: 2}\n    ) {\n      dioptScore\n      name\n      url\n      ortholog {\n        id\n        symbol\n        organismId\n        __typename\n      }\n      __typename\n    }\n    testisSpecificityIndex\n    enzymes: enzymev2sByGeneEnzymev2GeneIdAndEnzymeIdList {\n      id\n      name\n      __typename\n    }\n    experimentalGoMolecularFunctions: geneGoMolecularFunctionv2sByGeneId(\n      condition: {isExperimental: true}\n    ) {\n      goId\n      goMolecularFunction\n      __typename\n    }\n    nonExperimentalGoMolecularFunctions: geneGoMolecularFunctionv2sByGeneId(\n      condition: {isExperimental: false}\n    ) {\n      goId\n      goMolecularFunction\n      __typename\n    }\n    cytogenicMap\n    __typename\n  }\n  __typename\n}\n"
 ];
 
 // server/plugins/allianceExtensions/allianceTypeExtensions.graphql
@@ -143398,6 +142818,7 @@ var errorLogging_default = ErrorLoggingPlugin;
 
 // server/index.js
 var import_httpErrorMiddleware = __toModule(require_httpErrorMiddleware());
+var { createGeneGroupDelivery } = require_geneGroupDelivery();
 var main = async () => {
   const allianceSchema = (0, import_apollo_server.makeExecutableSchema)({
     typeDefs: allianceTypeExtensions_default,
@@ -143405,6 +142826,7 @@ var main = async () => {
   });
   const { postgraphileSchema, postgraphileToApolloPlugin } = await (0, import_fbPostgraphileToApolloPlugin.default)();
   const server = new import_apollo_server_express.ApolloServer({
+    context: ({ req }) => ({ geneGroupWork: req.geneGroupWork }),
     introspection: false,
     playground: false,
     debug: false,
@@ -143427,6 +142849,7 @@ var main = async () => {
   app.use(import_gal4OperationBoundary.gal4JsonErrorBoundary);
   app.use(import_gal4OperationBoundary.gal4BodyBoundary);
   app.use((0, import_gal4OperationBoundary.createGal4DocumentBoundary)(approved_documents_default));
+  app.use(createGeneGroupDelivery(approved_documents_default));
   app.use(import_httpErrorMiddleware.emptyBodyGuard);
   server.applyMiddleware({ app, path: "/" });
   app.listen(4e3, () => {
