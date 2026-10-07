@@ -1,12 +1,37 @@
 const { stripIgnoredCharacters } = require('graphql');
 const { EventEmitter } = require('events');
 
-// Per-worker, release/process-local serialized LRU. No disk or cross-release cache.
+// Per-worker, release/process-local serialized LRU shared by approved report/tool queries.
+// No disk or cross-release cache; variable validation only controls cache eligibility.
+// Never substitute a different query, truncate an ID list, or cache a malformed
+// input in place of Apollo's ordinary validation. List order/duplicates and all
+// variable values participate in the key; a different selection has a different key.
+function cacheableVariables(operation, variables) {
+  if (!variables || typeof variables !== 'object' || Array.isArray(variables)) return false;
+  if (operation === 'GeneGroupTables') return typeof variables.FBgg === 'string' && /^FBgg[0-9]{7}$/.test(variables.FBgg);
+  if (operation === 'getAlleles') return Array.isArray(variables.fbal_ids) && variables.fbal_ids.length <= 10000 &&
+    variables.fbal_ids.every(id => typeof id === 'string' && /^FBal[0-9]{7}$/.test(id));
+  if (operation === 'findTools') {
+    if (variables.gene != null && (typeof variables.gene !== 'string' || variables.gene.length > 512)) return false;
+    const expression = variables.expression;
+    if (expression == null) return true;
+    if (typeof expression !== 'object' || Array.isArray(expression)) return false;
+    const fields = ['stage', 'stageq', 'anatomy', 'anatomyq', 'subcellular', 'subcellularq'];
+    return Object.keys(expression).every(k => fields.includes(k) &&
+      (expression[k] == null || (typeof expression[k] === 'string' && expression[k].length <= 512)));
+  }
+  return false;
+}
+
 function createGeneGroupDelivery(documents, options = {}) {
   const maxBytes = options.maxBytes || 64 * 1024 * 1024;
   const ttl = options.ttl || 300000;
   const now = options.now || Date.now;
-  const approved = new Set(documents.filter(s => /query GeneGroupTables\(/.test(s)).map(stripIgnoredCharacters));
+  const approved = new Map();
+  for (const source of documents) {
+    const match = source.match(/query (GeneGroupTables|getAlleles|findTools)\(/);
+    if (match) approved.set(stripIgnoredCharacters(source), match[1]);
+  }
   const cache = new Map(), pending = new Map(); let bytes = 0;
   function remove(key) { const old = cache.get(key); if (old) bytes -= old.body.length; cache.delete(key); }
   function put(key, body) {
@@ -26,11 +51,16 @@ function createGeneGroupDelivery(documents, options = {}) {
   }
   return function geneGroupDelivery(req, res, next) {
     const b = req.body || {};
-    if (typeof b.query !== 'string' || typeof (b.variables || {}).FBgg !== 'string' || !/^FBgg[0-9]{7}$/.test((b.variables || {}).FBgg || '') ||
-        (b.operationName != null && b.operationName !== 'GeneGroupTables')) return next();
+    if (typeof b.query !== 'string') return next();
     let doc; try { doc = stripIgnoredCharacters(b.query); } catch (_) { return next(); }
-    if (!approved.has(doc)) return next();
-    const key = doc + '\n' + b.variables.FBgg;
+    const operation = approved.get(doc);
+    if (!operation || (b.operationName != null && b.operationName !== operation)) return next();
+    const variables = b.variables == null ? {} : b.variables;
+    if (!cacheableVariables(operation, variables)) return next();
+    const encoded = JSON.stringify(variables);
+    // Account for unusually large extra/unused variables without retaining them.
+    if (Buffer.byteLength(encoded) > 256 * 1024) return next();
+    const key = doc + '\n' + encoded;
     const hit = cache.get(key);
     if (hit && hit.expires > now()) {
       cache.delete(key); cache.set(key, hit);

@@ -142312,11 +142312,36 @@ var require_geneGroupDelivery = __commonJS({
   "server/plugins/geneGroupDelivery/index.js"(exports2, module2) {
     var { stripIgnoredCharacters } = require_graphql2();
     var { EventEmitter } = require("events");
+    function cacheableVariables(operation, variables) {
+      if (!variables || typeof variables !== "object" || Array.isArray(variables))
+        return false;
+      if (operation === "GeneGroupTables")
+        return typeof variables.FBgg === "string" && /^FBgg[0-9]{7}$/.test(variables.FBgg);
+      if (operation === "getAlleles")
+        return Array.isArray(variables.fbal_ids) && variables.fbal_ids.length <= 1e4 && variables.fbal_ids.every((id) => typeof id === "string" && /^FBal[0-9]{7}$/.test(id));
+      if (operation === "findTools") {
+        if (variables.gene != null && (typeof variables.gene !== "string" || variables.gene.length > 512))
+          return false;
+        const expression = variables.expression;
+        if (expression == null)
+          return true;
+        if (typeof expression !== "object" || Array.isArray(expression))
+          return false;
+        const fields = ["stage", "stageq", "anatomy", "anatomyq", "subcellular", "subcellularq"];
+        return Object.keys(expression).every((k) => fields.includes(k) && (expression[k] == null || typeof expression[k] === "string" && expression[k].length <= 512));
+      }
+      return false;
+    }
     function createGeneGroupDelivery2(documents, options = {}) {
       const maxBytes = options.maxBytes || 64 * 1024 * 1024;
       const ttl = options.ttl || 3e5;
       const now = options.now || Date.now;
-      const approved = new Set(documents.filter((s) => /query GeneGroupTables\(/.test(s)).map(stripIgnoredCharacters));
+      const approved = new Map();
+      for (const source of documents) {
+        const match = source.match(/query (GeneGroupTables|getAlleles|findTools)\(/);
+        if (match)
+          approved.set(stripIgnoredCharacters(source), match[1]);
+      }
       const cache = new Map(), pending = new Map();
       let bytes = 0;
       function remove(key) {
@@ -142326,7 +142351,7 @@ var require_geneGroupDelivery = __commonJS({
         cache.delete(key);
       }
       function put(key, body) {
-        if (body.length > maxBytes / 2)
+        if (body.length > maxBytes)
           return;
         remove(key);
         while (cache.size && (bytes + body.length > maxBytes || cache.size >= 32))
@@ -142344,7 +142369,7 @@ var require_geneGroupDelivery = __commonJS({
       }
       return function geneGroupDelivery(req, res, next) {
         const b = req.body || {};
-        if (typeof b.query !== "string" || typeof (b.variables || {}).FBgg !== "string" || !/^FBgg[0-9]{7}$/.test((b.variables || {}).FBgg || "") || b.operationName != null && b.operationName !== "GeneGroupTables")
+        if (typeof b.query !== "string")
           return next();
         let doc;
         try {
@@ -142352,9 +142377,16 @@ var require_geneGroupDelivery = __commonJS({
         } catch (_) {
           return next();
         }
-        if (!approved.has(doc))
+        const operation = approved.get(doc);
+        if (!operation || b.operationName != null && b.operationName !== operation)
           return next();
-        const key = doc + "\n" + b.variables.FBgg;
+        const variables = b.variables == null ? {} : b.variables;
+        if (!cacheableVariables(operation, variables))
+          return next();
+        const encoded = JSON.stringify(variables);
+        if (Buffer.byteLength(encoded) > 256 * 1024)
+          return next();
+        const key = doc + "\n" + encoded;
         const hit = cache.get(key);
         if (hit && hit.expires > now()) {
           cache.delete(key);

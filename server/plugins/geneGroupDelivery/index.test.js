@@ -45,6 +45,30 @@ function request(m,id='FBgg0001106',query=doc,operationName){const req={body:{qu
  store('FBgg0000004',sized(budget+1)); // Oversized response is delivered but never retained.
  const oversizedRetry=request(large,'FBgg0000004');assert.equal(oversizedRetry.next,1);oversizedRetry.res.end('{}');
  assert.deepEqual(request(large,'FBgg0000003').res.body,sized(budget));
+ // Real approved tool documents share the same bounded cache but keep every
+ // request's scientific input distinct. Invalid input still reaches Apollo.
+ const approvedDocs=require('../gal4OperationBoundary/approved-documents.json');
+ const alleleDoc=approvedDocs.find(d=>d.startsWith('query getAlleles('));
+ const toolDoc=approvedDocs.find(d=>d.startsWith('query findTools('));
+ const tools=createGeneGroupDelivery(approvedDocs,{maxBytes:128});
+ const toolRequest=(query,variables,operationName)=>{const req={body:{query,variables,operationName}},res=response();let next=0;tools(req,res,()=>next++);return {req,res,next};};
+ const alleles={fbal_ids:['FBal0000001','FBal0000002','FBal0000001']};
+ const first=toolRequest(alleleDoc,alleles);assert.equal(first.next,1);first.res.end('{"data":{"alleles":[{"id":"FBal0000001"}]}}');
+ assert.equal(toolRequest(alleleDoc,alleles).res.headers['X-FlyBase-Group-Cache'],'HIT');
+ const reordered=toolRequest(alleleDoc,{fbal_ids:alleles.fbal_ids.slice(1)});assert.equal(reordered.next,1);reordered.res.end('{}');
+ for(const vars of [{fbal_ids:'FBal0000001'},{fbal_ids:[null]},{fbal_ids:['*']},{fbal_ids:Array(10001).fill('FBal0000001')}])assert.equal(toolRequest(alleleDoc,vars).next,1);
+ const expression={expression:{anatomy:'brain',stage:'adult stage'}};
+ const search=toolRequest(toolDoc,expression);assert.equal(search.next,1);search.res.end('{"data":{"alleles":[]}}');
+ assert.equal(toolRequest(toolDoc,expression).res.headers['X-FlyBase-Group-Cache'],'HIT');
+ const different=toolRequest(toolDoc,{expression:{anatomy:'wing disc'}});assert.equal(different.next,1);different.res.end('{}');
+ for(const vars of [{gene:['rut']},{expression:[]},{expression:{unknown:'brain'}},{expression:{anatomy:{toString:()=> 'brain'}}}])assert.equal(toolRequest(toolDoc,vars).next,1);
+ assert.equal(toolRequest(toolDoc,expression,'getAlleles').next,1);
+ const extra=toolRequest(toolDoc,Object.assign({unused:'x'.repeat(262144)},expression));assert.equal(extra.next,1);
+ const emptySearch=toolRequest(toolDoc,{});assert.equal(emptySearch.next,1);
+ for(const v of [false,0,'']) { const x=toolRequest(toolDoc,v);assert.equal(x.next,1);assert.equal(x.res.headers['X-FlyBase-Group-Cache'],undefined); }
+ emptySearch.res.end('{"data":{"alleles":null}}');
+ assert.equal(toolRequest(toolDoc,{}).res.headers['X-FlyBase-Group-Cache'],'HIT');
+ for(const v of [false,0,'']) { const x=toolRequest(toolDoc,v);assert.equal(x.next,1);assert.equal(x.res.headers['X-FlyBase-Group-Cache'],undefined); }
  let release=0,cancel=0,finishCancel;
  const plugin={requestDidStart:()=>({didResolveOperation:async rc=>{rc.context.pgClient={processID:123};},willSendResponse:()=>{release++;}})};
  const pool={query:(sql,args)=>{assert.equal(sql,'select pg_cancel_backend($1)');assert.deepEqual(args,[123]);cancel++;return new Promise(r=>finishCancel=r);}};
