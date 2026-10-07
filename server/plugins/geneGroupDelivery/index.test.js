@@ -26,6 +26,25 @@ function request(m,id='FBgg0001106',query=doc,operationName){const req={body:{qu
  const small=createGeneGroupDelivery([doc],{maxBytes:100});
  for(let i=1;i<=6;i++){const x=request(small,'FBgg000000'+i);x.res.end('{"data":{"id":"'+i+'"}}');}
  const eviction=request(small,'FBgg0000001');assert.equal(eviction.next,1);eviction.res.end('{}');
+ // Byte-boundary regression: a valid response larger than half the budget
+ // must be reusable, without allowing the total retained bytes to grow.
+ const budget=128;
+ const sized = n => Buffer.from(JSON.stringify({data:{text:"x".repeat(n-Buffer.byteLength(JSON.stringify({data:{text:""}})))}}));
+ assert.equal(sized(budget).length,budget);
+ const large=createGeneGroupDelivery([doc],{maxBytes:budget});
+ const store=(id,body)=>{const x=request(large,id);assert.equal(x.next,1);x.res.end(body);};
+ store('FBgg0000001',sized(40));
+ store('FBgg0000002',sized(90)); // Forces eviction: 40 + 90 > 128.
+ const bigHit=request(large,'FBgg0000002');assert.equal(bigHit.next,0);
+ assert.equal(bigHit.res.headers['X-FlyBase-Group-Cache'],'HIT');
+ assert.deepEqual(bigHit.res.body,sized(90));
+ const evictedSmall=request(large,'FBgg0000001');assert.equal(evictedSmall.next,1);evictedSmall.res.end('{}');
+ store('FBgg0000003',sized(budget)); // Exact full budget is admitted.
+ assert.deepEqual(request(large,'FBgg0000003').res.body,sized(budget));
+ const evictedLarge=request(large,'FBgg0000002');assert.equal(evictedLarge.next,1);evictedLarge.res.end('{}');
+ store('FBgg0000004',sized(budget+1)); // Oversized response is delivered but never retained.
+ const oversizedRetry=request(large,'FBgg0000004');assert.equal(oversizedRetry.next,1);oversizedRetry.res.end('{}');
+ assert.deepEqual(request(large,'FBgg0000003').res.body,sized(budget));
  let release=0,cancel=0,finishCancel;
  const plugin={requestDidStart:()=>({didResolveOperation:async rc=>{rc.context.pgClient={processID:123};},willSendResponse:()=>{release++;}})};
  const pool={query:(sql,args)=>{assert.equal(sql,'select pg_cancel_backend($1)');assert.deepEqual(args,[123]);cancel++;return new Promise(r=>finishCancel=r);}};

@@ -10,7 +10,9 @@ function createGeneGroupDelivery(documents, options = {}) {
   const cache = new Map(), pending = new Map(); let bytes = 0;
   function remove(key) { const old = cache.get(key); if (old) bytes -= old.body.length; cache.delete(key); }
   function put(key, body) {
-    if (body.length > maxBytes / 2) return;
+    // Large groups may exceed half the cache budget (ENZYMES is ~38 MB).
+    // Admit any response that fits; the LRU below still caps TOTAL bytes.
+    if (body.length > maxBytes) return;
     remove(key);
     while (cache.size && (bytes + body.length > maxBytes || cache.size >= 32)) remove(cache.keys().next().value);
     cache.set(key, {body, expires: now() + ttl}); bytes += body.length;
